@@ -204,6 +204,58 @@ We welcome contributions from researchers, developers, and visionaries:
 
 ---
 
+<div align="center">
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Build](https://img.shields.io/github/workflow/status/HelloblueAI/neural-quantum-consciousness-framework/CI)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/actions)
 [![AGI](https://img.shields.io/badge/AGI-Superintelligence-red.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Contributors](https://img.shields.io/github/contributors/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/pulls)
+
+[![Quantum Computing](https://img.shields.io/badge/Quantum-Computing-purple.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Neural Networks](https://img.shields.io/badge/Neural-Networks-orange.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Consciousness](https://img.shields.io/badge/Consciousness-Simulation-cyan.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Meta Learning](https://img.shields.io/badge/Meta-Learning-magenta.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Self Improvement](https://img.shields.io/badge/Self-Improvement-green.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Creative AI](https://img.shields.io/badge/Creative-AI-pink.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+[![Superposition](https://img.shields.io/badge/Superposition-Quantum-blue.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Entanglement](https://img.shields.io/badge/Entanglement-Physics-indigo.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Qualia](https://img.shields.io/badge/Qualia-Experience-yellow.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Meta Cognition](https://img.shields.io/badge/Meta-Cognition-Brain-teal.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Self Awareness](https://img.shields.io/badge/Self-Awareness-Mind-lime.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Emergent Intelligence](https://img.shields.io/badge/Emergent-Intelligence-violet.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+[![Multi Modal Logic](https://img.shields.io/badge/Multi-Modal-Logic-brown.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Fuzzy Logic](https://img.shields.io/badge/Fuzzy-Logic-gray.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Temporal Logic](https://img.shields.io/badge/Temporal-Logic-silver.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Modal Logic](https://img.shields.io/badge/Modal-Logic-gold.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Probabilistic Logic](https://img.shields.io/badge/Probabilistic-Logic-navy.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Classical Logic](https://img.shields.io/badge/Classical-Logic-maroon.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+[![Transfer Learning](https://img.shields.io/badge/Transfer-Learning-olive.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Active Learning](https://img.shields.io/badge/Active-Learning-coral.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Online Learning](https://img.shields.io/badge/Online-Learning-skyblue.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Reinforcement Learning](https://img.shields.io/badge/Reinforcement-Learning-orchid.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Unsupervised Learning](https://img.shields.io/badge/Unsupervised-Learning-salmon.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Supervised Learning](https://img.shields.io/badge/Supervised-Learning-turquoise.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+[![Neural Plasticity](https://img.shields.io/badge/Neural-Plasticity-plum.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Adaptive Reasoning](https://img.shields.io/badge/Adaptive-Reasoning-khaki.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Quantum Awareness](https://img.shields.io/badge/Quantum-Awareness-lavender.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Consciousness Adaptation](https://img.shields.io/badge/Consciousness-Adaptation-mint.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Experience Novelty](https://img.shields.io/badge/Experience-Novelty-peach.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Quantum Measurement](https://img.shields.io/badge/Quantum-Measurement-aqua.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+[![AGI Research](https://img.shields.io/badge/AGI-Research-crimson.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Future of AI](https://img.shields.io/badge/Future-of-AI-azure.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Consciousness Theory](https://img.shields.io/badge/Consciousness-Theory-chartreuse.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Quantum Consciousness](https://img.shields.io/badge/Quantum-Consciousness-fuchsia.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Neural Quantum](https://img.shields.io/badge/Neural-Quantum-springgreen.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+[![Superintelligence](https://img.shields.io/badge/Superintelligence-Development-tomato.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
+</div>
