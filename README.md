@@ -211,7 +211,7 @@ We welcome contributions from researchers, developers, and visionaries:
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Build](https://img.shields.io/github/workflow/status/HelloblueAI/neural-quantum-consciousness-framework/CI)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/actions)
 [![AGI](https://img.shields.io/badge/AGI-Superintelligence-red.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
+
 [![Contributors](https://img.shields.io/github/contributors/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/graphs/contributors)
 [![Issues](https://img.shields.io/github/issues/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/HelloblueAI/neural-quantum-consciousness-framework?style=flat-square)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/pulls)
