@@ -1,0 +1,83 @@
+/**
+ * Advanced Reasoning Engine
+ * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
+ */
+import { ReasoningResult } from '../types';
+export declare class ReasoningEngine {
+    private readonly logger;
+    private classicalLogic;
+    private fuzzyLogic;
+    private probabilisticLogic;
+    private modalLogic;
+    private temporalLogic;
+    private quantumLogic;
+    private decisionEngine;
+    private inferenceEngine;
+    private problemSolver;
+    private reasoningHistory;
+    private reasoningStrategies;
+    private metaReasoning;
+    private currentConfidence;
+    constructor();
+    initialize(): Promise<void>;
+    reason(input: any, context?: Record<string, any>): Promise<ReasoningResult>;
+    solveProblem(problem: string, context?: Record<string, any>): Promise<ReasoningResult>;
+    makeDecision(options: string[], context?: Record<string, any>): Promise<ReasoningResult>;
+    infer(premises: string[], context?: Record<string, any>): Promise<ReasoningResult>;
+    getReasoningHistory(): ReasoningResult[];
+    getReasoningStrategies(): Map<string, any>;
+    getMetaReasoning(): Promise<any>;
+    private analyzeReasoningRequirements;
+    private calculateInputComplexity;
+    private assessUncertainty;
+    private detectTemporalAspects;
+    private detectModalAspects;
+    private detectProbabilisticAspects;
+    private detectFuzzyAspects;
+    private detectQuantumAspects;
+    private detectDecisionRequirements;
+    private detectInferenceRequirements;
+    private detectProblemSolvingRequirements;
+    private selectReasoningStrategies;
+    private executeMultiModalReasoning;
+    private synthesizeReasoningResults;
+    private deduplicateConclusions;
+    private performMetaReasoning;
+    private assessReasoningQuality;
+    private justifyConfidence;
+    private suggestAlternativeApproaches;
+    private identifyReasoningLimitations;
+    private suggestImprovements;
+    private generateFinalResult;
+    private setupReasoningStrategies;
+    private initializeMetaReasoning;
+    private enhanceSolutionWithReasoning;
+    private enhanceInferenceWithReasoning;
+    private implementQuantumInspiredReasoning;
+    private generateQuantumStates;
+    private createSuperposition;
+    private performQuantumMeasurement;
+    private calculateQuantumConfidence;
+    private calculateQuantumUncertainty;
+    private calculateCoherence;
+    private calculateEntanglement;
+    private calculateStateCorrelation;
+    private analyzeClassicalLogic;
+    private analyzeFuzzyLogic;
+    private analyzeProbabilisticLogic;
+    private analyzeModalLogic;
+    private implementMetaReasoning;
+    private performSelfReflection;
+    private calculateReasoningCreativity;
+    private optimizeReasoningProcesses;
+    private selectOptimalStrategies;
+    private calibrateConfidence;
+    private calculateHistoricalAccuracy;
+    private detectConfidenceBias;
+    private quantifyUncertainty;
+    private calculateEpistemicUncertainty;
+    private calculateAleatoryUncertainty;
+    private calculateVariance;
+    processTask(task: any): Promise<any>;
+}
+//# sourceMappingURL=ReasoningEngine.d.ts.map
