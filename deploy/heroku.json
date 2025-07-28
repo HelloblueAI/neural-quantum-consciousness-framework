@@ -1,0 +1,36 @@
+{
+  "name": "neuralcore-agi",
+  "description": "NeuralCore - True AGI System",
+  "repository": "https://github.com/yourusername/neuralcore-agi",
+  "logo": "https://your-logo-url.com/logo.png",
+  "keywords": ["agi", "artificial-intelligence", "neural-core", "true-agi"],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment",
+      "value": "production"
+    },
+    "PUBLIC_URL": {
+      "description": "Your public URL (will be set automatically)",
+      "required": false
+    },
+    "ALLOWED_ORIGINS": {
+      "description": "Comma-separated list of allowed origins",
+      "value": "*",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "scripts": {
+    "start": "node deploy/cloud-deployment.js"
+  }
+} 

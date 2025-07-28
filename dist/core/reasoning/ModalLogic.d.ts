@@ -1,4 +1,4 @@
-import { ReasoningResult } from '../../types';
+import { ReasoningResult } from '@/types';
 export interface ModalOperator {
     symbol: string;
     name: string;

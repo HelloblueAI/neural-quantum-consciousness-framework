@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class FuzzyLogic extends EventEmitter {
     id;
     logger;
@@ -36,6 +36,8 @@ export class FuzzyLogic extends EventEmitter {
                 averageConfidence: 0,
                 uncertaintyHandled: 0
             };
+            // Mark as initialized
+            this.isInitialized = true;
             this.logger.info('Fuzzy Logic initialized successfully');
         }
         catch (error) {

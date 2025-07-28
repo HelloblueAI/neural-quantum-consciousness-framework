@@ -361,7 +361,8 @@ async function main() {
   await runner.runAllTests();
 }
 
-if (require.main === module) {
+// Check if this is the main module (ES module equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(console.error);
 }
 

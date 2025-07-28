@@ -70,6 +70,9 @@ export interface ReasoningResult {
   readonly conclusions: Conclusion[];
   readonly uncertainty: UncertaintyModel;
   readonly alternatives: Alternative[];
+  readonly complexity?: number;
+  readonly reasoningTime?: number;
+  readonly input?: any;
   readonly metadata?: Record<string, unknown>;
 }
 
@@ -87,6 +90,7 @@ export interface ReasoningStep {
   readonly conclusion: Proposition;
   readonly confidence: number;
   readonly reasoning: string;
+  readonly description?: string;
 }
 
 export type LogicType = 'classical' | 'fuzzy' | 'probabilistic' | 'modal' | 'temporal' | 'quantum' | 'hybrid';
@@ -1271,6 +1275,9 @@ export interface ConsciousState {
   readonly qualia: Qualia[];
   readonly selfModel: SelfModel;
   readonly metaCognition: MetaCognition;
+  readonly awareness: Awareness;
+  readonly attention: Attention;
+  readonly emotions: Emotion[];
   readonly timestamp: number;
 }
 

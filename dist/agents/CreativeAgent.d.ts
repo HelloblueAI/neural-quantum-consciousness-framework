@@ -1,7 +1,7 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, ReasoningResult, LearningResult } from '../types';
-import { ReasoningEngine } from '../core/ReasoningEngine';
-import { LearningEngine } from '../core/LearningEngine';
+import { Goal, Action, Experience, ReasoningResult, LearningResult } from '@/types';
+import { ReasoningEngine } from '@/core/ReasoningEngine';
+import { LearningEngine } from '@/core/LearningEngine';
 export interface CreativeAgentConfig extends AgentConfig {
     reasoningEngine: ReasoningEngine;
     learningEngine: LearningEngine;

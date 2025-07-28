@@ -1,6 +1,6 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, ReasoningResult, LearningResult } from '../types';
-import { LearningEngine } from '../core/LearningEngine';
+import { Goal, Action, Experience, ReasoningResult, LearningResult } from '@/types';
+import { LearningEngine } from '@/core/LearningEngine';
 export interface LearningAgentConfig extends AgentConfig {
     learningEngine: LearningEngine;
     learningAlgorithms: string[];

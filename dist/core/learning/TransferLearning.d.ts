@@ -1,4 +1,4 @@
-import { LearningResult, Experience } from '../../types';
+import { LearningResult, Experience } from '@/types';
 export interface TransferTask {
     id: string;
     name: string;

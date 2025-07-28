@@ -1,5 +1,5 @@
-import { Vector } from '../../types';
-import { Experience, LearningResult } from '../../types';
+import { Vector } from '@/types';
+import { Experience, LearningResult } from '@/types';
 export interface UnsupervisedLearningConfig {
     clusteringAlgorithm: 'kmeans' | 'dbscan' | 'hierarchical';
     dimensionalityReduction: 'pca' | 'tsne' | 'umap';

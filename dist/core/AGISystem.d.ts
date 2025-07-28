@@ -3,12 +3,12 @@
  * Next-generation artificial general intelligence with advanced reasoning, learning, and autonomous capabilities
  */
 import { EventEmitter } from 'events';
-import { Agent, AgentInput, ReasoningResult, LearningResult, ActionPlan, ActionResult, SystemConfig, SystemMetrics } from '../types';
-import { SystemCoordinator } from './SystemCoordinator';
-import { KnowledgeBase } from './KnowledgeBase';
-import { LearningEngine } from './LearningEngine';
-import { ReasoningEngine } from './ReasoningEngine';
-import { CommunicationProtocol } from './CommunicationProtocol';
+import { Agent, AgentInput, ReasoningResult, LearningResult, ActionPlan, ActionResult, SystemConfig, SystemMetrics } from '../types/index.js';
+import { SystemCoordinator } from './SystemCoordinator.js';
+import { KnowledgeBase } from './KnowledgeBase.js';
+import { LearningEngine } from './LearningEngine.js';
+import { ReasoningEngine } from './ReasoningEngine.js';
+import { CommunicationProtocol } from './CommunicationProtocol.js';
 /**
  * AGI Superintelligence System
  *

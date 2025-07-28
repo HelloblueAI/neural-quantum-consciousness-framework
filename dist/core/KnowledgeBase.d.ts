@@ -3,7 +3,7 @@
  * Advanced knowledge storage, retrieval, and integration system
  */
 import { EventEmitter } from 'events';
-import { Knowledge } from '../types';
+import { Knowledge } from '@/types';
 export declare class KnowledgeBase extends EventEmitter {
     private readonly id;
     private readonly logger;

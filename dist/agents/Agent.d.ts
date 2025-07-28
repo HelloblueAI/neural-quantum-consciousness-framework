@@ -1,5 +1,5 @@
-import { AgentState, Goal, Capability, Action, Experience, ReasoningResult, LearningResult } from '../types';
-import { Logger } from '../utils/Logger';
+import { AgentState, Goal, Capability, Action, Experience, ReasoningResult, LearningResult } from '@/types';
+import { Logger } from '@/utils/Logger';
 export interface AgentConfig {
     id: string;
     name: string;

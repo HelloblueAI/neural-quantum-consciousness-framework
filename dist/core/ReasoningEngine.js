@@ -1,8 +1,9 @@
 /**
- * Advanced Reasoning Engine
+ * Advanced Neural Quantum Reasoning Engine
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
+ * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 import { ClassicalLogic } from './reasoning/ClassicalLogic';
 import { FuzzyLogic } from './reasoning/FuzzyLogic';
 import { ProbabilisticLogic } from './reasoning/ProbabilisticLogic';
@@ -25,10 +26,14 @@ export class ReasoningEngine {
     problemSolver;
     reasoningHistory = [];
     reasoningStrategies = new Map();
+    adaptiveStrategies = new Map();
+    neuralQuantumState;
     metaReasoning = {};
     currentConfidence = 0.8;
+    plasticityFactor = 0.1;
+    adaptationThreshold = 0.7;
     constructor() {
-        this.logger = new Logger('ReasoningEngine');
+        this.logger = new Logger('NeuralQuantumReasoningEngine');
         this.classicalLogic = new ClassicalLogic();
         this.fuzzyLogic = new FuzzyLogic();
         this.probabilisticLogic = new ProbabilisticLogic();
@@ -38,9 +43,17 @@ export class ReasoningEngine {
         this.decisionEngine = new DecisionEngine();
         this.inferenceEngine = new InferenceEngine();
         this.problemSolver = new ProblemSolver();
+        // Initialize neural quantum state
+        this.neuralQuantumState = {
+            superposition: [],
+            entanglement: 0.5,
+            coherence: 0.8,
+            plasticity: 0.3,
+            adaptation: 0.6
+        };
     }
     async initialize() {
-        this.logger.info('Initializing reasoning engine');
+        this.logger.info('Initializing neural quantum reasoning engine');
         try {
             // Initialize all reasoning systems
             await Promise.all([
@@ -56,41 +69,47 @@ export class ReasoningEngine {
             ]);
             // Set up reasoning strategies
             this.setupReasoningStrategies();
+            // Initialize adaptive strategies
+            await this.initializeAdaptiveStrategies();
             // Initialize meta-reasoning capabilities
             await this.initializeMetaReasoning();
-            this.logger.info('Reasoning engine initialized successfully');
+            // Initialize neural quantum state
+            await this.initializeNeuralQuantumState();
+            this.logger.info('Neural quantum reasoning engine initialized successfully');
         }
         catch (error) {
-            this.logger.error('Failed to initialize reasoning engine', error);
+            this.logger.error('Failed to initialize neural quantum reasoning engine', error);
             throw error;
         }
     }
     async reason(input, context) {
         try {
-            this.logger.debug('Starting reasoning process', { input, context });
+            this.logger.debug('Starting neural quantum reasoning process', { input, context });
+            // Update neural quantum state based on input
+            await this.updateNeuralQuantumState(input, context);
             // Analyze input to determine reasoning approach
             const reasoningAnalysis = await this.analyzeReasoningRequirements(input, context);
-            // Select appropriate reasoning strategies
-            const selectedStrategies = await this.selectReasoningStrategies(reasoningAnalysis);
-            // Execute reasoning with multiple approaches
-            const reasoningResults = await this.executeMultiModalReasoning(input, selectedStrategies, context);
+            // Select adaptive reasoning strategies
+            const selectedStrategies = await this.selectAdaptiveReasoningStrategies(reasoningAnalysis);
+            // Execute reasoning with neural quantum enhancement
+            const reasoningResults = await this.executeNeuralQuantumReasoning(input, selectedStrategies, context);
             // Synthesize results from different reasoning systems
             const synthesizedResult = await this.synthesizeReasoningResults(reasoningResults);
             // Perform meta-reasoning on the results
             const metaReasoningResult = await this.performMetaReasoning(synthesizedResult);
             // Generate final reasoning result
             const finalResult = await this.generateFinalResult(synthesizedResult, metaReasoningResult);
+            // Update adaptive strategies based on performance
+            await this.updateAdaptiveStrategies(selectedStrategies, finalResult);
             // Store in reasoning history
             this.reasoningHistory.push(finalResult);
-            this.logger.debug('Reasoning process completed', {
-                confidence: finalResult.confidence,
-                strategiesUsed: selectedStrategies.length,
-                conclusionsCount: finalResult.conclusions.length
-            });
+            // Apply neural plasticity
+            await this.applyNeuralPlasticity(finalResult);
+            this.logger.debug('Neural quantum reasoning process completed', { result: finalResult });
             return finalResult;
         }
         catch (error) {
-            this.logger.error('Error in reasoning process', error);
+            this.logger.error('Error in neural quantum reasoning process', error);
             throw error;
         }
     }
@@ -873,6 +892,260 @@ export class ReasoningEngine {
         const mean = values.reduce((sum, v) => sum + v, 0) / values.length;
         const squaredDiffs = values.map(v => Math.pow(v - mean, 2));
         return squaredDiffs.reduce((sum, v) => sum + v, 0) / values.length;
+    }
+    async initializeAdaptiveStrategies() {
+        this.logger.info('Initializing adaptive reasoning strategies');
+        const strategies = [
+            { id: 'classical-adaptive', name: 'Adaptive Classical Logic', confidence: 0.8, successRate: 0.85, adaptationRate: 0.1 },
+            { id: 'quantum-adaptive', name: 'Adaptive Quantum Logic', confidence: 0.7, successRate: 0.75, adaptationRate: 0.15 },
+            { id: 'fuzzy-adaptive', name: 'Adaptive Fuzzy Logic', confidence: 0.75, successRate: 0.8, adaptationRate: 0.12 },
+            { id: 'probabilistic-adaptive', name: 'Adaptive Probabilistic Logic', confidence: 0.8, successRate: 0.82, adaptationRate: 0.08 },
+            { id: 'temporal-adaptive', name: 'Adaptive Temporal Logic', confidence: 0.7, successRate: 0.78, adaptationRate: 0.13 },
+            { id: 'modal-adaptive', name: 'Adaptive Modal Logic', confidence: 0.65, successRate: 0.72, adaptationRate: 0.18 }
+        ];
+        for (const strategy of strategies) {
+            this.adaptiveStrategies.set(strategy.id, {
+                ...strategy,
+                lastUsed: new Date(),
+                performanceHistory: []
+            });
+        }
+    }
+    async initializeNeuralQuantumState() {
+        this.logger.info('Initializing neural quantum state');
+        // Generate initial quantum superposition
+        this.neuralQuantumState.superposition = await this.generateQuantumStates('initialization');
+        // Calculate initial entanglement and coherence
+        this.neuralQuantumState.entanglement = this.calculateEntanglement(this.neuralQuantumState.superposition);
+        this.neuralQuantumState.coherence = this.calculateCoherence(this.neuralQuantumState.superposition);
+        this.logger.info('Neural quantum state initialized', { state: this.neuralQuantumState });
+    }
+    async updateNeuralQuantumState(input, context) {
+        // Update superposition based on input complexity
+        const complexity = this.calculateInputComplexity(input);
+        const newStates = await this.generateQuantumStates(input);
+        // Merge with existing superposition
+        this.neuralQuantumState.superposition = [
+            ...this.neuralQuantumState.superposition,
+            ...newStates
+        ];
+        // Update quantum properties
+        this.neuralQuantumState.entanglement = this.calculateEntanglement(this.neuralQuantumState.superposition);
+        this.neuralQuantumState.coherence = this.calculateCoherence(this.neuralQuantumState.superposition);
+        // Update plasticity based on input novelty
+        const novelty = this.calculateInputNovelty(input);
+        this.neuralQuantumState.plasticity = Math.min(1.0, this.neuralQuantumState.plasticity + novelty * 0.1);
+        this.logger.debug('Neural quantum state updated', {
+            complexity,
+            novelty,
+            state: this.neuralQuantumState
+        });
+    }
+    async selectAdaptiveReasoningStrategies(analysis) {
+        const strategies = [];
+        // Select strategies based on adaptive performance
+        for (const [id, strategy] of this.adaptiveStrategies) {
+            const shouldUse = this.shouldUseAdaptiveStrategy(strategy, analysis);
+            if (shouldUse) {
+                strategies.push({
+                    id,
+                    strategy,
+                    confidence: strategy.confidence,
+                    adaptationRate: strategy.adaptationRate
+                });
+            }
+        }
+        // Sort by confidence and adaptation rate
+        strategies.sort((a, b) => {
+            const scoreA = a.confidence * a.adaptationRate;
+            const scoreB = b.confidence * b.adaptationRate;
+            return scoreB - scoreA;
+        });
+        this.logger.debug('Selected adaptive strategies', { strategies });
+        return strategies;
+    }
+    shouldUseAdaptiveStrategy(strategy, analysis) {
+        // Check if strategy hasn't been used recently
+        const timeSinceLastUse = Date.now() - strategy.lastUsed.getTime();
+        const timeThreshold = 24 * 60 * 60 * 1000; // 24 hours
+        // Check if strategy matches analysis requirements
+        const matchesRequirements = this.strategyMatchesRequirements(strategy, analysis);
+        // Check if strategy has good performance history
+        const recentPerformance = strategy.performanceHistory.slice(-5);
+        const avgPerformance = recentPerformance.length > 0
+            ? recentPerformance.reduce((a, b) => a + b, 0) / recentPerformance.length
+            : strategy.successRate;
+        return timeSinceLastUse > timeThreshold || matchesRequirements || avgPerformance > this.adaptationThreshold;
+    }
+    strategyMatchesRequirements(strategy, analysis) {
+        // Simple matching logic - can be enhanced
+        if (analysis.complexity > 0.7 && strategy.id.includes('quantum'))
+            return true;
+        if (analysis.uncertainty > 0.6 && strategy.id.includes('probabilistic'))
+            return true;
+        if (analysis.temporalAspects && strategy.id.includes('temporal'))
+            return true;
+        if (analysis.modalAspects && strategy.id.includes('modal'))
+            return true;
+        if (analysis.fuzzyAspects && strategy.id.includes('fuzzy'))
+            return true;
+        return false;
+    }
+    async executeNeuralQuantumReasoning(input, strategies, context) {
+        const results = [];
+        for (const strategyInfo of strategies) {
+            try {
+                const strategy = strategyInfo.strategy;
+                strategy.lastUsed = new Date();
+                let result;
+                // Execute reasoning based on strategy type
+                switch (strategy.id) {
+                    case 'classical-adaptive':
+                        result = await this.executeAdaptiveClassicalReasoning(input, context);
+                        break;
+                    case 'quantum-adaptive':
+                        result = await this.executeAdaptiveQuantumReasoning(input, context);
+                        break;
+                    case 'fuzzy-adaptive':
+                        result = await this.executeAdaptiveFuzzyReasoning(input, context);
+                        break;
+                    case 'probabilistic-adaptive':
+                        result = await this.executeAdaptiveProbabilisticReasoning(input, context);
+                        break;
+                    case 'temporal-adaptive':
+                        result = await this.executeAdaptiveTemporalReasoning(input, context);
+                        break;
+                    case 'modal-adaptive':
+                        result = await this.executeAdaptiveModalReasoning(input, context);
+                        break;
+                    default:
+                        result = await this.executeMultiModalReasoning(input, [], context);
+                }
+                // Enhance result with neural quantum properties
+                result.neuralQuantumState = { ...this.neuralQuantumState };
+                result.adaptiveStrategy = strategyInfo;
+                results.push(result);
+            }
+            catch (error) {
+                this.logger.error(`Error executing adaptive strategy ${strategyInfo.id}`, error);
+            }
+        }
+        return results;
+    }
+    async executeAdaptiveClassicalReasoning(input, context) {
+        const result = await this.classicalLogic.reason(input, context);
+        return {
+            ...result,
+            reasoningType: 'adaptive-classical',
+            adaptationLevel: this.neuralQuantumState.adaptation
+        };
+    }
+    async executeAdaptiveQuantumReasoning(input, context) {
+        const quantumResult = await this.implementQuantumInspiredReasoning(input, context);
+        return {
+            ...quantumResult,
+            reasoningType: 'adaptive-quantum',
+            adaptationLevel: this.neuralQuantumState.adaptation,
+            entanglement: this.neuralQuantumState.entanglement,
+            coherence: this.neuralQuantumState.coherence
+        };
+    }
+    async executeAdaptiveFuzzyReasoning(input, context) {
+        const result = await this.fuzzyLogic.reason(input);
+        return {
+            ...result,
+            reasoningType: 'adaptive-fuzzy',
+            adaptationLevel: this.neuralQuantumState.adaptation
+        };
+    }
+    async executeAdaptiveProbabilisticReasoning(input, context) {
+        const result = await this.probabilisticLogic.reason(input, context);
+        return {
+            ...result,
+            reasoningType: 'adaptive-probabilistic',
+            adaptationLevel: this.neuralQuantumState.adaptation
+        };
+    }
+    async executeAdaptiveTemporalReasoning(input, context) {
+        const result = await this.temporalLogic.reason(input, context);
+        return {
+            ...result,
+            reasoningType: 'adaptive-temporal',
+            adaptationLevel: this.neuralQuantumState.adaptation
+        };
+    }
+    async executeAdaptiveModalReasoning(input, context) {
+        const result = await this.modalLogic.reason(input, context);
+        return {
+            ...result,
+            reasoningType: 'adaptive-modal',
+            adaptationLevel: this.neuralQuantumState.adaptation
+        };
+    }
+    async updateAdaptiveStrategies(selectedStrategies, finalResult) {
+        for (const strategyInfo of selectedStrategies) {
+            const strategy = this.adaptiveStrategies.get(strategyInfo.id);
+            if (strategy) {
+                // Update performance history
+                const performance = this.calculateStrategyPerformance(strategyInfo, finalResult);
+                strategy.performanceHistory.push(performance);
+                // Keep only recent history
+                if (strategy.performanceHistory.length > 10) {
+                    strategy.performanceHistory = strategy.performanceHistory.slice(-10);
+                }
+                // Update success rate
+                const recentPerformance = strategy.performanceHistory.slice(-5);
+                strategy.successRate = recentPerformance.length > 0
+                    ? recentPerformance.reduce((a, b) => a + b, 0) / recentPerformance.length
+                    : strategy.successRate;
+                // Update confidence based on performance
+                strategy.confidence = Math.min(1.0, strategy.confidence + (performance - 0.5) * 0.1);
+                this.logger.debug(`Updated adaptive strategy ${strategyInfo.id}`, {
+                    performance,
+                    newSuccessRate: strategy.successRate,
+                    newConfidence: strategy.confidence
+                });
+            }
+        }
+    }
+    calculateStrategyPerformance(strategyInfo, result) {
+        // Calculate performance based on result quality and confidence
+        const resultQuality = result.confidence || 0.5;
+        const reasoningQuality = this.assessReasoningQuality(result);
+        const adaptationLevel = strategyInfo.adaptationRate || 0.1;
+        return (resultQuality * 0.4 + reasoningQuality * 0.4 + adaptationLevel * 0.2);
+    }
+    async applyNeuralPlasticity(result) {
+        // Apply neural plasticity based on reasoning success
+        const successLevel = result.confidence || 0.5;
+        const plasticityChange = (successLevel - 0.5) * this.plasticityFactor;
+        this.neuralQuantumState.plasticity = Math.max(0.1, Math.min(1.0, this.neuralQuantumState.plasticity + plasticityChange));
+        // Update adaptation level
+        this.neuralQuantumState.adaptation = Math.max(0.1, Math.min(1.0, this.neuralQuantumState.adaptation + plasticityChange * 0.5));
+        this.logger.debug('Applied neural plasticity', {
+            successLevel,
+            plasticityChange,
+            newPlasticity: this.neuralQuantumState.plasticity,
+            newAdaptation: this.neuralQuantumState.adaptation
+        });
+    }
+    calculateInputNovelty(input) {
+        // Calculate how novel/unique the input is compared to recent history
+        const recentInputs = this.reasoningHistory.slice(-10).map(r => r.input);
+        const similarity = recentInputs.reduce((sum, recentInput) => {
+            return sum + this.calculateSimilarity(input, recentInput);
+        }, 0) / Math.max(recentInputs.length, 1);
+        return 1 - similarity; // Higher novelty = lower similarity
+    }
+    calculateSimilarity(input1, input2) {
+        // Simple similarity calculation - can be enhanced
+        if (typeof input1 === 'string' && typeof input2 === 'string') {
+            const words1 = input1.toLowerCase().split(/\s+/);
+            const words2 = input2.toLowerCase().split(/\s+/);
+            const commonWords = words1.filter(word => words2.includes(word));
+            return commonWords.length / Math.max(words1.length, words2.length);
+        }
+        return 0.5; // Default similarity for non-string inputs
     }
     async processTask(task) {
         try {

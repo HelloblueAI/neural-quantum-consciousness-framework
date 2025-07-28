@@ -1,8 +1,9 @@
 /**
- * Advanced Reasoning Engine
+ * Advanced Neural Quantum Reasoning Engine
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
+ * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { ReasoningResult } from '../types';
+import { ReasoningResult } from '@/types';
 export declare class ReasoningEngine {
     private readonly logger;
     private classicalLogic;
@@ -16,8 +17,12 @@ export declare class ReasoningEngine {
     private problemSolver;
     private reasoningHistory;
     private reasoningStrategies;
+    private adaptiveStrategies;
+    private neuralQuantumState;
     private metaReasoning;
     private currentConfidence;
+    private plasticityFactor;
+    private adaptationThreshold;
     constructor();
     initialize(): Promise<void>;
     reason(input: any, context?: Record<string, any>): Promise<ReasoningResult>;
@@ -78,6 +83,24 @@ export declare class ReasoningEngine {
     private calculateEpistemicUncertainty;
     private calculateAleatoryUncertainty;
     private calculateVariance;
+    private initializeAdaptiveStrategies;
+    private initializeNeuralQuantumState;
+    private updateNeuralQuantumState;
+    private selectAdaptiveReasoningStrategies;
+    private shouldUseAdaptiveStrategy;
+    private strategyMatchesRequirements;
+    private executeNeuralQuantumReasoning;
+    private executeAdaptiveClassicalReasoning;
+    private executeAdaptiveQuantumReasoning;
+    private executeAdaptiveFuzzyReasoning;
+    private executeAdaptiveProbabilisticReasoning;
+    private executeAdaptiveTemporalReasoning;
+    private executeAdaptiveModalReasoning;
+    private updateAdaptiveStrategies;
+    private calculateStrategyPerformance;
+    private applyNeuralPlasticity;
+    private calculateInputNovelty;
+    private calculateSimilarity;
     processTask(task: any): Promise<any>;
 }
 //# sourceMappingURL=ReasoningEngine.d.ts.map

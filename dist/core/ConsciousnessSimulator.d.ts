@@ -1,4 +1,4 @@
-import { ConsciousState, Emotion, Thought, Qualia } from '../types';
+import { ConsciousState, Emotion, Thought, Qualia } from '@/types';
 export declare class ConsciousnessSimulator {
     private readonly logger;
     private consciousState;
@@ -12,9 +12,14 @@ export declare class ConsciousnessSimulator {
     private consciousnessLevel;
     private introspectionDepth;
     private subjectiveExperience;
+    private neuralPlasticity;
+    private consciousnessAdaptation;
+    private quantumAwareness;
+    private neuralQuantumState;
     constructor();
     initialize(): Promise<void>;
     updateConsciousness(input: any, context?: Record<string, any>): Promise<ConsciousState>;
+    processExperience(experience: string, context?: Record<string, any>): Promise<ConsciousState>;
     getConsciousState(): ConsciousState;
     getConsciousnessState(): ConsciousState;
     getConsciousnessStateLegacy(): any;
@@ -87,5 +92,23 @@ export declare class ConsciousnessSimulator {
     private generateTemporalAwareness;
     private calculateExperientialUnity;
     private calculateIneffability;
+    private updateNeuralQuantumConsciousness;
+    private generateEnhancedQualia;
+    private processQuantumAwareness;
+    private updateConsciousnessWithPlasticity;
+    private applyConsciousnessAdaptation;
+    private calculateExperienceComplexity;
+    private calculateExperienceNovelty;
+    private calculateExperienceSimilarity;
+    private generateQuantumConsciousnessStates;
+    private calculateQuantumEntanglement;
+    private calculateQuantumCoherence;
+    private generateQuantumAwarenessStates;
+    private createAwarenessSuperposition;
+    private performQuantumAwarenessMeasurement;
+    private calculateAwarenessCoherence;
+    private calculateAwarenessEntanglement;
+    private calculateAwarenessUncertainty;
+    private calculateExperienceSuccess;
 }
 //# sourceMappingURL=ConsciousnessSimulator.d.ts.map

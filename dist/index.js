@@ -2,8 +2,8 @@
  * AGI Superintelligence System - Main Entry Point
  * Next-generation artificial general intelligence with advanced capabilities
  */
-import { AGISystem } from './core/AGISystem';
-import { Logger } from './utils/Logger';
+import { AGISystem } from './core/AGISystem.js';
+import { Logger } from './utils/Logger.js';
 /**
  * AGI Superintelligence System
  *
@@ -450,8 +450,8 @@ async function main() {
         process.exit(1);
     }
 }
-// Run if this is the main module
-if (require.main === module) {
+// Run if this is the main module (ES module equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
     main().catch(console.error);
 }
 //# sourceMappingURL=index.js.map

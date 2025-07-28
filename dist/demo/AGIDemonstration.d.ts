@@ -1,26 +1,15 @@
 export declare class AGIDemonstration {
+    private readonly logger;
     private agiSystem;
-    private configManager;
-    private memoryManager;
-    private externalServiceManager;
-    private apiServer;
-    private logger;
     constructor();
-    private initializeSystem;
-    runComprehensiveDemonstration(): Promise<void>;
-    private demonstrateSystemCapabilities;
-    private demonstrateReasoningCapabilities;
-    private demonstrateLearningCapabilities;
-    private demonstrateCreativeCapabilities;
-    private demonstrateConsciousnessCapabilities;
-    private demonstrateMemoryCapabilities;
-    private demonstrateMultiAgentCoordination;
-    private demonstrateExternalServiceIntegration;
-    private demonstrateAPICapabilities;
-    private demonstratePerformanceMonitoring;
-    private demonstrateComplexProblemSolving;
+    runFullDemonstration(): Promise<void>;
+    private demonstrateInitialization;
+    private demonstrateConsciousness;
+    private demonstrateQuantumReasoning;
+    private demonstrateMetaLearning;
+    private demonstrateAdvancedProblemSolving;
     private demonstrateSelfImprovement;
-    cleanup(): Promise<void>;
+    private demonstrateCreativity;
+    private demonstrateSystemStatus;
 }
-export declare function runAGIDemonstration(): Promise<void>;
 //# sourceMappingURL=AGIDemonstration.d.ts.map

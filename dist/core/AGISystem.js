@@ -4,15 +4,15 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { SystemCoordinator } from './SystemCoordinator';
-import { KnowledgeBase } from './KnowledgeBase';
-import { LearningEngine } from './LearningEngine';
-import { ReasoningEngine } from './ReasoningEngine';
-import { CommunicationProtocol } from './CommunicationProtocol';
-import { SecurityManager } from './SecurityManager';
-import { PerformanceMonitor } from './PerformanceMonitor';
-import { ErrorHandler } from './ErrorHandler';
-import { Logger } from '../utils/Logger';
+import { SystemCoordinator } from './SystemCoordinator.js';
+import { KnowledgeBase } from './KnowledgeBase.js';
+import { LearningEngine } from './LearningEngine.js';
+import { ReasoningEngine } from './ReasoningEngine.js';
+import { CommunicationProtocol } from './CommunicationProtocol.js';
+import { SecurityManager } from './SecurityManager.js';
+import { PerformanceMonitor } from './PerformanceMonitor.js';
+import { ErrorHandler } from './ErrorHandler.js';
+import { Logger } from '../utils/Logger.js';
 /**
  * AGI Superintelligence System
  *

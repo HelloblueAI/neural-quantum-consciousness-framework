@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 import { SupervisedLearning } from './learning/SupervisedLearning';
 import { UnsupervisedLearning } from './learning/UnsupervisedLearning';
 import { ReinforcementLearning } from './learning/ReinforcementLearning';
@@ -410,9 +410,9 @@ export class LearningEngine extends EventEmitter {
         return 'general';
     }
     analyzeComplexity(experience) {
-        const inputLength = JSON.stringify(experience.data).length;
-        const contextComplexity = Object.keys(experience.context).length;
-        const actionComplexity = experience.action.effects.length;
+        const inputLength = JSON.stringify(experience.data || {}).length;
+        const contextComplexity = Object.keys(experience.context || {}).length;
+        const actionComplexity = experience.action?.effects?.length || 0;
         // Normalize complexity score (0-1)
         const complexity = Math.min(1, (inputLength / 1000 + contextComplexity / 10 + actionComplexity / 5) / 3);
         return Math.max(0.1, Math.min(1, complexity));
@@ -442,14 +442,14 @@ export class LearningEngine extends EventEmitter {
         return Math.max(0.1, Math.min(1, value));
     }
     analyzeApplicability(experience) {
-        const context = experience.context;
-        const action = experience.action;
+        const context = experience.context || {};
+        const action = experience.action || {};
         // Check how widely applicable this experience might be
         let applicability = 0.5;
         // More general contexts have higher applicability
         if (Object.keys(context).length > 5)
             applicability += 0.2;
-        if (action.effects.length > 3)
+        if (action.effects?.length > 3)
             applicability += 0.2;
         if (experience.learning && experience.learning.length > 0)
             applicability += 0.1;
