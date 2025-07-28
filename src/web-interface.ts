@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 NeuralCore - True AGI System</title>
+    <title>NeuralCore AGI</title>
     <style>
         * {
             margin: 0;
@@ -35,352 +35,203 @@ app.get('/', (req, res) => {
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-tertiary: #1a1a1a;
-            --accent-primary: #00d4ff;
-            --accent-secondary: #ff0080;
+            --accent: #00d4ff;
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
             --text-muted: #666666;
             --border-color: #333333;
-            --glow-primary: 0 0 20px rgba(0, 212, 255, 0.3);
-            --glow-secondary: 0 0 20px rgba(255, 0, 128, 0.3);
         }
         
         body {
-            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Animated background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
-            z-index: -1;
-            animation: backgroundShift 20s ease-in-out infinite;
-        }
-        
-        @keyframes backgroundShift {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(1deg); }
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
+            padding: 40px 20px;
         }
         
         .header {
             text-align: center;
             margin-bottom: 60px;
-            position: relative;
-        }
-        
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
         }
         
         .header h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 300;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8)); }
+            color: var(--accent);
         }
         
         .header p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
-            font-weight: 300;
-            letter-spacing: 1px;
         }
         
         .status-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-bottom: 50px;
         }
         
         .status-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .status-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .status-card:hover::before {
-            left: 100%;
-        }
-        
-        .status-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--glow-primary);
-            border-color: var(--accent-primary);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
         }
         
         .status-card h3 {
-            color: var(--accent-primary);
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         .status-card .value {
-            font-size: 2.5rem;
-            font-weight: 200;
+            font-size: 2rem;
+            font-weight: 300;
             color: var(--text-primary);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
         
         .interaction-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 50px;
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-        
-        .interaction-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
         }
         
         .interaction-section h2 {
-            color: var(--accent-primary);
-            margin-bottom: 30px;
+            color: var(--accent);
+            margin-bottom: 25px;
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 300;
-            letter-spacing: 2px;
         }
         
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .input-group label {
             display: block;
-            margin-bottom: 10px;
-            font-weight: 400;
+            margin-bottom: 8px;
             color: var(--text-secondary);
             font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
         
         .input-group input, .input-group textarea, .input-group select {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 4px;
+            font-size: 14px;
             color: var(--text-primary);
-            transition: all 0.3s ease;
             font-family: inherit;
         }
         
         .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: var(--glow-primary);
-            background: var(--bg-secondary);
+            border-color: var(--accent);
         }
         
         .btn {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: var(--text-primary);
+            background: var(--accent);
+            color: var(--bg-primary);
             border: none;
-            padding: 15px 35px;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 15px;
-            margin-bottom: 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
             font-weight: 500;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-primary);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
+            opacity: 0.9;
         }
         
         .result {
             background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 25px;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
             white-space: pre-wrap;
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-            max-height: 400px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            max-height: 300px;
             overflow-y: auto;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            position: relative;
-        }
-        
-        .result::before {
-            content: '>';
-            position: absolute;
-            top: 25px;
-            left: 10px;
-            color: var(--accent-primary);
-            font-weight: bold;
-        }
-        
-        .result-content {
-            margin-left: 20px;
+            font-size: 0.85rem;
         }
         
         .loading {
             text-align: center;
-            color: var(--accent-primary);
+            color: var(--text-secondary);
             font-style: italic;
-            font-size: 1.1rem;
         }
         
         .endpoints {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 30px;
         }
         
         .endpoints h2 {
-            color: var(--accent-primary);
-            margin-bottom: 30px;
+            color: var(--accent);
+            margin-bottom: 25px;
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 300;
-            letter-spacing: 2px;
         }
         
         .endpoint-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
         }
         
         .endpoint-item {
             background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-        
-        .endpoint-item:hover {
-            transform: translateX(5px);
-            box-shadow: var(--glow-primary);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
         }
         
         .endpoint-item .method {
             font-weight: 600;
-            color: var(--accent-primary);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            color: var(--accent);
+            font-size: 0.8rem;
             text-transform: uppercase;
         }
         
         .endpoint-item .path {
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-family: 'Monaco', 'Menlo', monospace;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.9rem;
             margin: 5px 0;
         }
         
         .endpoint-item .description {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 8px;
+            font-size: 0.8rem;
         }
         
-        /* Scrollbar styling */
+        /* Simple scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         
         ::-webkit-scrollbar-track {
@@ -388,18 +239,14 @@ app.get('/', (req, res) => {
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 4px;
+            background: var(--border-color);
+            border-radius: 3px;
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-secondary);
-        }
-        
-        /* Responsive design */
+        /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .status-grid {
@@ -407,45 +254,24 @@ app.get('/', (req, res) => {
             }
             
             .container {
-                padding: 15px;
+                padding: 20px 15px;
             }
-            
-            .interaction-section, .endpoints {
-                padding: 25px;
-            }
-        }
-        
-        /* Loading animation */
-        .loading-dots {
-            display: inline-block;
-        }
-        
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s steps(5, end) infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: ''; }
-            40% { content: '.'; }
-            60% { content: '..'; }
-            80%, 100% { content: '...'; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>NEURALCORE</h1>
+            <h1>NeuralCore</h1>
             <p>True Artificial General Intelligence System</p>
         </div>
         
         <div class="status-grid" id="statusGrid">
-            <div class="loading">Loading AGI status<span class="loading-dots"></span></div>
+            <div class="loading">Loading AGI status...</div>
         </div>
         
         <div class="interaction-section">
-            <h2>INTERACT WITH AGI</h2>
+            <h2>Interact with AGI</h2>
             
             <div class="input-group">
                 <label for="interactionType">Interaction Type</label>
@@ -464,13 +290,11 @@ app.get('/', (req, res) => {
             <button class="btn" onclick="interactWithAGI()">Send to AGI</button>
             <button class="btn" onclick="clearResult()">Clear Result</button>
             
-            <div id="result" class="result" style="display: none;">
-                <div class="result-content"></div>
-            </div>
+            <div id="result" class="result" style="display: none;"></div>
         </div>
         
         <div class="endpoints">
-            <h2>API ENDPOINTS</h2>
+            <h2>API Endpoints</h2>
             <div class="endpoint-list">
                 <div class="endpoint-item">
                     <div class="method">GET</div>
@@ -553,7 +377,6 @@ app.get('/', (req, res) => {
             const type = document.getElementById('interactionType').value;
             const input = document.getElementById('userInput').value;
             const resultDiv = document.getElementById('result');
-            const resultContent = resultDiv.querySelector('.result-content');
             
             if (!input.trim()) {
                 alert('Please enter some input');
@@ -561,7 +384,7 @@ app.get('/', (req, res) => {
             }
             
             resultDiv.style.display = 'block';
-            resultContent.innerHTML = '🤔 AGI is thinking<span class="loading-dots"></span>';
+            resultDiv.innerHTML = 'AGI is thinking...';
             
             try {
                 let endpoint = '';
@@ -599,12 +422,12 @@ app.get('/', (req, res) => {
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultContent.innerHTML = '✅ AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
+                    resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
                 } else {
-                    resultContent.innerHTML = '❌ Error: ' + data.error;
+                    resultDiv.innerHTML = 'Error: ' + data.error;
                 }
             } catch (error) {
-                resultContent.innerHTML = '❌ Error: ' + error.message;
+                resultDiv.innerHTML = 'Error: ' + error.message;
             }
         }
         
