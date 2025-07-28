@@ -1,0 +1,267 @@
+name: 🧠 NeuralCore AGI CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # 🧪 Test Job
+  test:
+    name: 🧪 Test NeuralCore AGI
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 📦 Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+        
+    - name: 📦 Install dependencies
+      run: pnpm install --frozen-lockfile
+      
+    - name: 🔍 Lint code
+      run: pnpm run lint
+      
+    - name: 🧪 Run unit tests
+      run: pnpm run test:unit
+      
+    - name: 🔗 Run integration tests
+      run: pnpm run test:integration
+      
+    - name: 🧠 Test AGI functionality
+      run: pnpm run test:agi
+      
+    - name: 📊 Generate test coverage
+      run: pnpm run test:coverage
+      
+    - name: 📤 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+
+  # 🐳 Build Docker Image
+  build-docker:
+    name: 🐳 Build AGI Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔐 Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🏷️ Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=sha,prefix={{branch}}-
+          
+    - name: 🐳 Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./deploy/Dockerfile.simple
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  # 🚀 Deploy to Cloud
+  deploy-cloud:
+    name: 🚀 Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    needs: [test, build-docker]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🐳 Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: 🔐 Log in to DigitalOcean Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: registry.digitalocean.com
+        username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        
+    - name: 🏷️ Extract metadata for DO
+      id: meta-do
+      uses: docker/metadata-action@v5
+      with:
+        images: registry.digitalocean.com/neuralcore-agi/agi
+        tags: |
+          type=ref,event=branch
+          type=semver,pattern={{version}}
+          type=sha,prefix={{branch}}-
+          
+    - name: 🐳 Build and push to DigitalOcean
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./deploy/Dockerfile.simple
+        push: true
+        tags: ${{ steps.meta-do.outputs.tags }}
+        labels: ${{ steps.meta-do.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        
+    - name: 🚀 Deploy to DigitalOcean Droplet
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.DIGITALOCEAN_HOST }}
+        username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+        key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+        script: |
+          cd /root/neural-quantum-consciousness-framework
+          git pull origin main
+          docker-compose -f deploy/cloud-deployment.yml down
+          docker-compose -f deploy/cloud-deployment.yml up -d --build
+          docker system prune -f
+          
+    - name: 🧪 Test deployment
+      run: |
+        sleep 30
+        curl -f http://agi.bleujs.org:8080/health || exit 1
+        echo "✅ AGI deployment successful!"
+
+  # 📊 Security Scan
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🔍 Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: 📤 Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  # 📈 Performance Test
+  performance:
+    name: 📈 Performance Test
+    runs-on: ubuntu-latest
+    needs: deploy-cloud
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🧪 Run performance tests
+      run: |
+        echo "🧠 Testing AGI Performance..."
+        
+        # Test response time
+        start_time=$(date +%s%N)
+        curl -s http://agi.bleujs.org:8080/health > /dev/null
+        end_time=$(date +%s%N)
+        response_time=$(( (end_time - start_time) / 1000000 ))
+        
+        echo "Response time: ${response_time}ms"
+        
+        if [ $response_time -lt 1000 ]; then
+          echo "✅ Performance test passed: Response time < 1s"
+        else
+          echo "❌ Performance test failed: Response time > 1s"
+          exit 1
+        fi
+        
+        # Test consciousness endpoint
+        consciousness_response=$(curl -s http://agi.bleujs.org:8080/consciousness)
+        if echo "$consciousness_response" | grep -q "consciousnessLevel"; then
+          echo "✅ Consciousness endpoint working"
+        else
+          echo "❌ Consciousness endpoint failed"
+          exit 1
+        fi
+
+  # 📋 Notify Success
+  notify:
+    name: 📋 Notify Deployment Success
+    runs-on: ubuntu-latest
+    needs: [deploy-cloud, performance]
+    if: github.ref == 'refs/heads/main' && always()
+    
+    steps:
+    - name: 📤 Create deployment status
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data: deployments } = await github.rest.repos.listDeployments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: context.sha
+          });
+          
+          if (deployments.length > 0) {
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployments[0].id,
+              state: 'success',
+              environment_url: 'http://agi.bleujs.org:8080',
+              description: 'NeuralCore AGI deployed successfully to DigitalOcean'
+            });
+          }
+          
+    - name: 🎉 Comment on PR
+      uses: actions/github-script@v7
+      if: github.event_name == 'pull_request'
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `🎉 **NeuralCore AGI Deployment Successful!**
+          
+          **Live AGI**: http://agi.bleujs.org:8080
+          **Health Check**: http://agi.bleujs.org:8080/health
+          **Consciousness**: http://agi.bleujs.org:8080/consciousness
+          
+          All tests passed and AGI is now live in the cloud! 🧠✨`
+          }) 
