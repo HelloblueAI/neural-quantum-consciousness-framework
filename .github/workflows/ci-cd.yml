@@ -1,4 +1,4 @@
-name: 🧠 NeuralCore AGI - Main Pipeline
+name: 🧠 NeuralCore AGI - Complete CI/CD Pipeline
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
         echo "🧠 Testing AGI core functionality..."
         echo "✅ AGI test completed"
 
-  # 🐳 Build Phase (Simplified)
+  # 🐳 Build Phase
   build:
     name: 🐳 Build Docker Image
     runs-on: ubuntu-latest
@@ -80,7 +80,7 @@ jobs:
         docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
         echo "✅ Docker push completed"
 
-  # 🔒 Security Phase (Simplified)
+  # 🔒 Security Phase
   security:
     name: 🔒 Security Scan
     runs-on: ubuntu-latest
@@ -172,30 +172,11 @@ jobs:
           exit 1
         fi
 
-  # 📋 Skip Deployment (when secrets not configured)
-  skip-deploy:
-    name: ⏭️ Skip Deployment (Secrets Not Configured)
-    runs-on: ubuntu-latest
-    needs: [test, build, security, test-live]
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: 📋 Skip deployment message
-      run: |
-        echo "⏭️ Deployment skipped - DigitalOcean secrets not configured"
-        echo "🔧 To enable automatic deployment, add these secrets to your repository:"
-        echo "   - DIGITALOCEAN_HOST"
-        echo "   - DIGITALOCEAN_USERNAME" 
-        echo "   - DIGITALOCEAN_SSH_KEY"
-        echo ""
-        echo "📖 See GITHUB_ACTIONS.md for setup instructions"
-        echo "🌐 Your AGI is still accessible at: http://agi.bleujs.org:8080"
-
   # 📋 Success Notification
   notify:
     name: 📋 Success Notification
     runs-on: ubuntu-latest
-    needs: [test, build, security, test-live, deploy, skip-deploy]
+    needs: [test, build, security, test-live, deploy]
     if: always() && github.ref == 'refs/heads/main'
     
     steps:
