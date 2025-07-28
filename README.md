@@ -1,3 +1,7 @@
+#  NeuralCore True AGI - Artificial General Intelligence
+
+> ** LIVE DEPLOYMENT STATUS: AGI is now live and accessible worldwide with HTTPS!**
+
 - ** API Endpoints**: `https://agi.bleujs.org/health`, `https://agi.bleujs.org/consciousness`
 - ** Security**: SSL certificate with modern encryption
 - ** Performance**: Cloud-deployed on DigitalOcean
