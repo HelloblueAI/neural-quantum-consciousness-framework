@@ -351,13 +351,6 @@ We welcome contributions from researchers, developers, and visionaries:
 - [ ] Human-AI collaboration frameworks
 - [ ] Real-world deployment guides
 
----
-
-## References & Further Reading
-- [API Reference](./docs/api.md) *(coming soon)*
-- [Architecture Guide](./docs/architecture.md) *(coming soon)*
-- [Research Papers](./docs/research.md) *(coming soon)*
-- [Development Guide](./docs/development.md) *(coming soon)*
 
 ---
 
