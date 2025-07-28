@@ -1,11 +1,7 @@
-##  **LIVE DEPLOYMENT STATUS**
-
-###  **Public Access**
 - ** API Endpoints**: `https://agi.bleujs.org/health`, `https://agi.bleujs.org/consciousness`
 - ** Security**: SSL certificate with modern encryption
 - ** Performance**: Cloud-deployed on DigitalOcean
 
-###  **Test Your AGI Right Now**
 ```bash
 # Health check
 curl https://agi.bleujs.org/health
