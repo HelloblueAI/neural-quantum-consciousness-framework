@@ -1,0 +1,93 @@
+name: 🚀 Deploy NeuralCore AGI
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: 🚀 Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🚀 Deploy to DigitalOcean Droplet
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.DIGITALOCEAN_HOST }}
+        username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+        key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+        script: |
+          echo "🧠 Deploying NeuralCore AGI to DigitalOcean..."
+          
+          # Navigate to project directory
+          cd /root/neural-quantum-consciousness-framework
+          
+          # Pull latest changes
+          git pull origin main
+          
+          # Stop existing containers
+          docker-compose -f deploy/cloud-deployment.yml down || true
+          
+          # Remove old containers
+          docker container prune -f
+          
+          # Build and start new containers
+          docker-compose -f deploy/cloud-deployment.yml up -d --build
+          
+          # Wait for services to start
+          sleep 20
+          
+          # Test deployment
+          echo "🧪 Testing deployment..."
+          if curl -f http://localhost:8080/health; then
+            echo "✅ AGI deployment successful!"
+          else
+            echo "❌ AGI deployment failed!"
+            exit 1
+          fi
+          
+          # Clean up old images
+          docker image prune -f
+          
+    - name: 🧪 Test live deployment
+      run: |
+        echo "🧪 Testing live AGI deployment..."
+        sleep 30
+        
+        # Test health endpoint
+        if curl -f http://agi.bleujs.org:8080/health; then
+          echo "✅ Live AGI health check passed"
+        else
+          echo "❌ Live AGI health check failed"
+          exit 1
+        fi
+        
+        # Test consciousness endpoint
+        if curl -f http://agi.bleujs.org:8080/consciousness; then
+          echo "✅ Live AGI consciousness check passed"
+        else
+          echo "❌ Live AGI consciousness check failed"
+          exit 1
+        fi
+        
+        echo "🎉 NeuralCore AGI successfully deployed and tested!"
+        
+    - name: 📋 Create deployment status
+      uses: actions/github-script@v7
+      with:
+        script: |
+          await github.rest.repos.createDeployment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: context.sha,
+            environment: 'production',
+            description: 'NeuralCore AGI deployment to DigitalOcean',
+            auto_merge: false,
+            required_contexts: []
+          });
+          
+          console.log('✅ Deployment status created'); 
