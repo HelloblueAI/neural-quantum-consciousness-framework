@@ -1,4 +1,4 @@
-#  NeuralCore True AGI - Artificial General Intelligence
+### NeuralCore True AGI - Artificial General Intelligence
 
 > ** LIVE DEPLOYMENT STATUS: AGI is now live and accessible worldwide with HTTPS!**
 
