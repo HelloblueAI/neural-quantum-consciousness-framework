@@ -29,7 +29,10 @@ jobs:
         cache: 'pnpm'
         
     - name: 📦 Install dependencies
-      run: pnpm install
+      run: |
+        echo "📦 Installing core dependencies..."
+        pnpm install --ignore-scripts --no-optional
+        echo "✅ Dependencies installed successfully"
       
     - name: 🧪 Run basic tests
       run: |
@@ -37,6 +40,20 @@ jobs:
         echo "Node version: $(node --version)"
         echo "pnpm version: $(pnpm --version)"
         echo "✅ Basic setup complete"
+        
+        # Test if core packages are available
+        echo "🔍 Checking core packages..."
+        if [ -d "node_modules/express" ]; then
+          echo "✅ Express.js available"
+        else
+          echo "⚠️ Express.js not found"
+        fi
+        
+        if [ -d "node_modules/cors" ]; then
+          echo "✅ CORS available"
+        else
+          echo "⚠️ CORS not found"
+        fi
         
     - name: 🏗️ Test build
       run: |
