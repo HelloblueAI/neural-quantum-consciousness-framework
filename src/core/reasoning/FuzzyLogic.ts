@@ -45,6 +45,9 @@ export class FuzzyLogic extends EventEmitter {
         uncertaintyHandled: 0
       };
       
+      // Mark as initialized
+      this.isInitialized = true;
+      
       this.logger.info('Fuzzy Logic initialized successfully');
       
     } catch (error) {

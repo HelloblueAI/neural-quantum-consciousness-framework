@@ -22,7 +22,14 @@
     "clean": "rm -rf dist node_modules/.cache",
     "benchmark": "tsx src/benchmarks/performance.ts",
     "deploy": "npm run build && npm run test:all && echo '🚀 AGI System deployment ready!'",
-    "test:flawless": "npm run test:all && echo '🌟 AGI System is FLAWLESS!'"
+    "test:flawless": "npm run test:all && echo '🌟 AGI System is FLAWLESS!'",
+    "api": "tsx src/api-server.ts",
+    "api:prod": "node dist/api-server.js",
+    "neuralcore": "tsx src/neuralcore-api.ts",
+    "neuralcore:prod": "node dist/neuralcore-api.js",
+    "deploy:heroku": "bash deploy/deploy-heroku.sh",
+    "deploy:docker": "bash deploy/deploy-docker.sh",
+    "deploy:cloud": "tsx deploy/cloud-deployment.js"
   },
   "keywords": ["agi", "artificial-intelligence", "machine-learning", "neural-networks", "autonomous-systems"],
   "author": "AGI Research Team",

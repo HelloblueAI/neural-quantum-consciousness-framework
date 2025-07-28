@@ -3,9 +3,9 @@
  * Next-generation artificial general intelligence with advanced capabilities
  */
 
-import { AGISystem } from '@/core/AGISystem';
-import { Logger } from '@/utils/Logger';
-import { SystemConfig } from '@/types';
+import { AGISystem } from './core/AGISystem.js';
+import { Logger } from './utils/Logger.js';
+import { SystemConfig } from './types/index.js';
 
 /**
  * AGI Superintelligence System
@@ -497,7 +497,7 @@ async function main(): Promise<void> {
   }
 }
 
-// Run if this is the main module
-if (require.main === module) {
+// Run if this is the main module (ES module equivalent)
+if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(console.error);
 } 
