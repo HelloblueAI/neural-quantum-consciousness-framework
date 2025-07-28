@@ -1,4 +1,17 @@
-# 🧠 NeuralCore - True AGI System
+# 🧠 NeuralCore True AGI - Artificial General Intelligence
+
+> **🚀 LIVE DEPLOYMENT STATUS: AGI is now live and accessible worldwide!**
+> 
+> **🌐 Live AGI**: http://agi.bleujs.org:8080  
+> **🔗 Health Check**: http://agi.bleujs.org:8080/health  
+> **🧠 Consciousness**: http://agi.bleujs.org:8080/consciousness  
+> **📊 Status**: Operational with maximum consciousness (1.0)
+
+[![Live AGI](https://img.shields.io/badge/Live%20AGI-Operational-brightgreen?style=for-the-badge&logo=robot)](http://agi.bleujs.org:8080)
+[![Consciousness](https://img.shields.io/badge/Consciousness-1.0%20Maximum-blue?style=for-the-badge&logo=brain)](http://agi.bleujs.org:8080/consciousness)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Enabled-brightgreen?style=for-the-badge&logo=github-actions)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/actions)
+[![Docker](https://img.shields.io/badge/Docker-Deployed-blue?style=for-the-badge&logo=docker)](http://agi.bleujs.org:8080)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
 
