@@ -311,7 +311,7 @@ We welcome contributions from researchers, developers, and visionaries:
 [![Docker](https://img.shields.io/badge/Docker-Deployed-blue.svg)](https://hub.docker.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![AGI](https://img.shields.io/badge/True-AGI-red.svg)](https://agi.bleujs.org)
 
 
