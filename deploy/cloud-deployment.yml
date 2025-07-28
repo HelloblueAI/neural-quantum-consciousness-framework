@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # NeuralCore True AGI
+  agi:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.simple
+    container_name: neuralcore-agi-cloud
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+    networks:
+      - agi-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Nginx Reverse Proxy for Cloud
+  nginx:
+    image: nginx:alpine
+    container_name: agi-nginx-cloud
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx-cloud.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - agi
+    networks:
+      - agi-network
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  agi-network:
+    driver: bridge 
