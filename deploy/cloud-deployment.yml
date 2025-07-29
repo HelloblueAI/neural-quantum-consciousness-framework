@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  # NeuralCore True AGI
+  # SentientCore True AGI
   agi:
     build:
       context: .
       dockerfile: deploy/Dockerfile.simple
-    container_name: neuralcore-agi-cloud
+    container_name: sentientcore-agi-cloud
     restart: unless-stopped
     ports:
       - "8080:8080"

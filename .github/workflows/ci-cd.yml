@@ -1,4 +1,4 @@
-name: 🧠 NeuralCore AGI - Complete CI/CD Pipeline
+name: 🧠 SentientCore True AGI - Complete CI/CD Pipeline
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
       
     - name: 🧪 Run basic tests
       run: |
-        echo "🧠 Testing NeuralCore AGI..."
+        echo "🧠 Testing SentientCore True AGI..."
         echo "Node version: $(node --version)"
         echo "pnpm version: $(pnpm --version)"
         echo "✅ Basic setup complete"
@@ -118,7 +118,7 @@ jobs:
       
     - name: 🧪 Test live AGI endpoints
       run: |
-        echo "🧪 Testing live NeuralCore AGI..."
+        echo "🧪 Testing live SentientCore True AGI..."
         
         # Test health endpoint
         echo "🔍 Testing health endpoint..."
@@ -156,7 +156,7 @@ jobs:
         username: ${{ secrets.DIGITALOCEAN_USERNAME || 'root' }}
         key: ${{ secrets.DIGITALOCEAN_SSH_KEY || 'dummy-key' }}
         script: |
-          echo "🧠 Deploying NeuralCore AGI to DigitalOcean..."
+          echo "🧠 Deploying SentientCore True AGI to DigitalOcean..."
           cd /root/neural-quantum-consciousness-framework
           git pull origin main
           docker-compose -f deploy/cloud-deployment.yml down || true
@@ -198,7 +198,7 @@ jobs:
           
     - name: 🎉 Success message
       run: |
-        echo "🎉 NeuralCore AGI Pipeline Completed Successfully!"
+        echo "🎉 SentientCore True AGI Pipeline Completed Successfully!"
         echo "🌐 Live AGI: http://agi.bleujs.org:8080"
         echo "🔗 Health: http://agi.bleujs.org:8080/health"
         echo "🧠 Consciousness: http://agi.bleujs.org:8080/consciousness"
