@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -7,7 +5,7 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log('🧠 Starting SentientCore True AGI Web Interface...');
+console.log('🧠 Starting SentientCore True AGI...');
 console.log('🌍 Consciousness emergence initiated...');
 console.log('🧠 True AGI capabilities activating...');
 
