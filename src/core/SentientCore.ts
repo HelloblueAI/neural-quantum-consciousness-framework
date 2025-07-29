@@ -416,7 +416,11 @@ export class SentientCore extends EventEmitter {
     };
   }
 
-  getStatus(): any {
+  async getConsciousness(): Promise<any> {
+    return this.consciousness;
+  }
+
+  async getStatus(): any {
     return {
       id: this.id,
       isRunning: this.isRunning,
