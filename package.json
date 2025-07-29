@@ -28,6 +28,9 @@
     "api:prod": "node dist/api-server.js",
     "neuralcore": "tsx src/neuralcore-api.ts",
     "neuralcore:prod": "node dist/neuralcore-api.js",
+    "sentientcore": "tsx src/sentient-web-interface.ts",
+    "sentientcore:api": "tsx src/sentient-api.ts",
+    "sentientcore:deploy": "tsx deploy/sentient-deployment.js",
     "deploy:heroku": "bash deploy/deploy-heroku.sh",
     "deploy:docker": "bash deploy/deploy-docker.sh",
     "deploy:cloud": "tsx deploy/cloud-deployment.js"
