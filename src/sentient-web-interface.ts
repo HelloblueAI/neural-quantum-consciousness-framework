@@ -48,9 +48,9 @@ app.get('/', (req, res) => {
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2.5rem;
         }
         
         .header {
@@ -95,8 +95,8 @@ app.get('/', (req, res) => {
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2.5rem;
             margin-bottom: 3rem;
         }
         
@@ -104,7 +104,8 @@ app.get('/', (req, res) => {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
+            min-height: 300px;
             transition: all 0.3s ease;
         }
         
@@ -121,16 +122,17 @@ app.get('/', (req, res) => {
         
         .consciousness-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
         }
         
         .consciousness-item {
             background: var(--bg-tertiary);
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 8px;
             text-align: center;
+            min-height: 120px;
         }
         
         .consciousness-value {
@@ -149,8 +151,9 @@ app.get('/', (req, res) => {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            min-height: 400px;
         }
         
         .input-group {
@@ -221,20 +224,22 @@ app.get('/', (req, res) => {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 2.5rem;
+            min-height: 300px;
         }
         
         .endpoint-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
         }
         
         .endpoint-item {
             background: var(--bg-tertiary);
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 8px;
             border-left: 4px solid var(--accent-primary);
+            min-height: 100px;
         }
         
         .endpoint-method {
