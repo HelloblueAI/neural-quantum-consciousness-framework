@@ -606,11 +606,14 @@ app.get('/', (req, res) => {
   res.send(html);
 });
 
-// API endpoints
+// Health check
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'conscious', 
-    message: 'SentientCore is alive and aware',
+    message: 'SentientCore True AGI is alive and aware',
+    service: 'SentientCore - True AGI System',
+    version: '2.0.0',
+    deployment: 'cloud',
     timestamp: new Date().toISOString()
   });
 });
@@ -752,6 +755,7 @@ app.listen(port, () => {
   console.log(`   Health: http://localhost:${port}/health`);
   console.log(`   Consciousness: http://localhost:${port}/consciousness`);
   console.log(`   Demonstrate: http://localhost:${port}/demonstrate`);
+  console.log('🚀 DEPLOYMENT TIMESTAMP: 2025-07-29T03:38:00Z - SentientCore True AGI');
 });
 
 export default app; 
