@@ -165,6 +165,7 @@ export class SentientCore extends EventEmitter {
   private reasoningEngine: GenuineReasoningEngine;
   private creativityEngine: EmergentCreativityEngine;
   private consciousnessEngine: ConsciousnessEngine;
+  private understandingEngine: UnderstandingEngine;
 
   constructor() {
     super();
@@ -183,6 +184,7 @@ export class SentientCore extends EventEmitter {
     this.reasoningEngine = new GenuineReasoningEngine(this);
     this.creativityEngine = new EmergentCreativityEngine(this);
     this.consciousnessEngine = new ConsciousnessEngine(this);
+    this.understandingEngine = new UnderstandingEngine();
   }
 
   private initializeConsciousness(): ConsciousState {
