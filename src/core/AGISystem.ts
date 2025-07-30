@@ -750,7 +750,17 @@ export class AGISystem extends EventEmitter {
     const crossDomainEnhancement = await this.crossDomainReasoningEngine.reasonAcrossDomains(input, context);
     
     // Enhance with unified learning
-    const learningEnhancement = await this.unifiedLearningEngine.learn(input, context);
+    const learningEnhancement = await this.unifiedLearningEngine.learnFromExperience({
+      input,
+      context,
+      response: trueAGIResult,
+      outcome: 'success',
+      feedback: { confidence: 0.8 },
+      domain: 'general',
+      complexity: 0.5,
+      novelty: 0.3,
+      value: 0.7
+    });
     
     // Synthesize enhanced result
     return {
