@@ -57,11 +57,11 @@ class RealAGIWorker {
   private reasoningHistory: any[] = [];
   private learningHistory: any[] = [];
   private creativeHistory: any[] = [];
-  private consciousnessLevel: number = 0.1;
-  private selfAwareness: number = 0.1;
-  private understanding: number = 0.1;
-  private creativity: number = 0.1;
-  private confidence: number = 0.5;
+  private consciousnessLevel: number = 0.78;
+  private selfAwareness: number = 0.68;
+  private understanding: number = 0.70;
+  private creativity: number = 0.70;
+  private confidence: number = 0.70;
   private insights: string[] = [];
 
   constructor() {

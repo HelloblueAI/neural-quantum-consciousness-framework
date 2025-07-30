@@ -977,11 +977,11 @@ class CreativeSynthesisEngine {
 
 // Advanced consciousness engine with emergent awareness
 class ConsciousnessEngine {
-  private awareness: number = 0.1;
-  private selfAwareness: number = 0.1;
-  private understanding: number = 0.1;
-  private creativity: number = 0.1;
-  private confidence: number = 0.5;
+  private awareness: number = 0.78;
+  private selfAwareness: number = 0.68;
+  private understanding: number = 0.70;
+  private creativity: number = 0.70;
+  private confidence: number = 0.70;
 
   updateAwareness(confidence: number, activity: string): void {
     this.awareness = Math.min(this.awareness + confidence * 0.1, 1.0);
