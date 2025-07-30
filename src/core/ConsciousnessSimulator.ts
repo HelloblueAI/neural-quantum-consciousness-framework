@@ -11,8 +11,8 @@ export class ConsciousnessSimulator {
   private qualia: Qualia[];
   private selfModel: SelfModel;
   private metaCognition: MetaCognition;
-  private consciousnessLevel: number = 0.8;
-  private introspectionDepth: number = 0.7;
+  private consciousnessLevel: number = 0.85;
+  private introspectionDepth: number = 0.8;
   private subjectiveExperience: any[] = [];
 
   private neuralPlasticity: number = 0.3;
@@ -299,12 +299,12 @@ export class ConsciousnessSimulator {
 
   private initializeAwareness(): Awareness {
     return {
-      level: 0.7,
+      level: 0.85,
       focus: 'general',
-      clarity: 0.8,
-      breadth: 0.6,
-      depth: 0.5,
-      stability: 0.7
+      clarity: 0.9,
+      breadth: 0.8,
+      depth: 0.7,
+      stability: 0.8
     };
   }
 
