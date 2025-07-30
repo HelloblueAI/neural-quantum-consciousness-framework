@@ -45,7 +45,35 @@ export class AGIDemonstration {
   
   constructor() {
     this.logger = new Logger('AGIDemonstration');
-    this.agiSystem = new AGISystem({} as any);
+    
+    // Provide proper configuration for AGISystem
+    const config = {
+      authentication: {
+        enabled: false,
+        methods: ['api_key'],
+        apiKey: 'demo-key'
+      },
+      authorization: {
+        enabled: false,
+        roles: ['user', 'admin'],
+        permissions: ['read', 'write']
+      },
+      encryption: {
+        enabled: false,
+        algorithm: 'AES-256'
+      },
+      monitoring: {
+        enabled: true,
+        logLevel: 'info'
+      },
+      security: {
+        enabled: true,
+        threatDetection: true,
+        inputValidation: true
+      }
+    };
+    
+    this.agiSystem = new AGISystem(config);
     this.trueAGIEngine = new TrueAGIEngine();
     this.consciousnessSimulator = new ConsciousnessSimulator();
   }
