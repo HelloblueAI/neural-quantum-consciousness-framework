@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class TemporalLogic {
     operators = new Map();
     events = new Map();
@@ -545,4 +545,3 @@ export class TemporalLogic {
         this.logger.info('Added temporal event', { eventId: event.id, name: event.name });
     }
 }
-//# sourceMappingURL=TemporalLogic.js.map

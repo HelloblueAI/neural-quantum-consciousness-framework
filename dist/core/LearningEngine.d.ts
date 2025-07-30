@@ -49,6 +49,17 @@ export declare class LearningEngine extends EventEmitter {
      * Get current learning state
      */
     getLearningState(): any;
+    performTransferLearning(transferConfig: {
+        sourceDomain: string;
+        targetDomain: string;
+        transferType: 'knowledge' | 'skills' | 'strategies';
+        confidence: number;
+    }): Promise<{
+        success: boolean;
+        transferredKnowledge: any[];
+        transferEfficiency: number;
+        adaptationLevel: number;
+    }>;
     /**
      * Learn from action execution
      */

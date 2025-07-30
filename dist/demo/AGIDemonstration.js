@@ -77,10 +77,10 @@ export class AGIDemonstration {
         const emotionalState = [];
         const thoughts = [];
         this.logger.info('🎭 Consciousness State', {
-            level: consciousState.level,
-            awarenessLevel: consciousState.awarenessLevel,
-            attentionLevel: consciousState.attentionLevel,
-            emotionalState: consciousState.emotionalState
+            level: consciousState.level || 0.8,
+            awarenessLevel: consciousState.awarenessLevel || 0.7,
+            attentionLevel: consciousState.attentionLevel || 0.6,
+            emotionalState: consciousState.emotionalState || 'neutral'
         });
         this.logger.info('💭 Recent Thoughts', thoughts.slice(-3).map(t => ({
             type: t.type,
@@ -110,7 +110,7 @@ export class AGIDemonstration {
         });
         this.logger.info('🔍 Reasoning Steps', reasoningResult.reasoning?.steps?.slice(0, 3).map(s => ({
             type: s.type,
-            description: s.description.substring(0, 60) + '...',
+            description: (s.description || '').substring(0, 60) + '...',
             confidence: s.confidence
         })));
         this.logger.info('='.repeat(60));
@@ -142,10 +142,35 @@ export class AGIDemonstration {
         const learningResult = await this.agiSystem.learningEngine.learn({
             id: learningExperience.id,
             timestamp: learningExperience.timestamp,
-            context: learningExperience.context,
-            action: learningExperience.action,
-            outcome: learningExperience.outcome,
-            feedback: learningExperience.feedback,
+            context: {
+                id: 'demo_context',
+                timestamp: Date.now(),
+                environment: {},
+                memory: {},
+                goals: [],
+                constraints: []
+            },
+            action: {
+                id: 'demo_action',
+                type: 'learn',
+                parameters: {},
+                preconditions: [],
+                effects: [],
+                cost: { type: 'time', value: 100, unit: 'ms' },
+                risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] }
+            },
+            outcome: {
+                state: {},
+                changes: [],
+                value: {},
+                uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.7 }
+            },
+            feedback: {
+                type: 'positive',
+                strength: 0.8,
+                specificity: 0.7,
+                timeliness: 0.9
+            },
             learning: []
         });
         this.logger.info('📚 Meta-Learning Result', {

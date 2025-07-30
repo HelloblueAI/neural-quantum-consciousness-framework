@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class KnowledgeBase extends EventEmitter {
     id;
     logger;
@@ -279,4 +279,3 @@ export class KnowledgeBase extends EventEmitter {
         return totalConfidence / this.knowledge.size;
     }
 }
-//# sourceMappingURL=KnowledgeBase.js.map

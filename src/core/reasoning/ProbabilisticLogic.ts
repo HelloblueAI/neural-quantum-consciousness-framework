@@ -270,6 +270,12 @@ export class ProbabilisticLogic {
   private identifyUncertaintySources(input: string): string[] {
     const sources: string[] = [];
 
+    // Validate input is a string
+    if (typeof input !== 'string') {
+      sources.push('Input type uncertainty');
+      return sources;
+    }
+
     if (input.includes('?')) {
       sources.push('Question format indicates uncertainty');
     }
@@ -285,6 +291,12 @@ export class ProbabilisticLogic {
 
   private suggestUncertaintyMitigation(input: string): string[] {
     const mitigations: string[] = [];
+
+    // Validate input is a string
+    if (typeof input !== 'string') {
+      mitigations.push('Validate input type');
+      return mitigations;
+    }
 
     if (input.includes('?')) {
       mitigations.push('Gather additional evidence to resolve questions');

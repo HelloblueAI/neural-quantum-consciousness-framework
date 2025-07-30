@@ -1,4 +1,4 @@
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class Agent {
     config;
     state;
@@ -447,4 +447,3 @@ export class Agent {
         });
     }
 }
-//# sourceMappingURL=Agent.js.map

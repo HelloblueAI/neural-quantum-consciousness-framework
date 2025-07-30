@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ActiveLearning {
     tasks = new Map();
     strategies = new Map();
@@ -628,4 +628,3 @@ export class ActiveLearning {
         this.logger.info('Added query result', { resultId: result.id, taskId: result.taskId });
     }
 }
-//# sourceMappingURL=ActiveLearning.js.map

@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class TransferLearning {
     tasks = new Map();
     strategies = new Map();
@@ -659,4 +659,3 @@ export class TransferLearning {
         this.logger.info('Added domain mapping', { mappingId: mapping.id, sourceDomain: mapping.sourceDomain, targetDomain: mapping.targetDomain });
     }
 }
-//# sourceMappingURL=TransferLearning.js.map

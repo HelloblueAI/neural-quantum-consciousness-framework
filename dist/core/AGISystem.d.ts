@@ -9,6 +9,9 @@ import { KnowledgeBase } from './KnowledgeBase.js';
 import { LearningEngine } from './LearningEngine.js';
 import { ReasoningEngine } from './ReasoningEngine.js';
 import { CommunicationProtocol } from './CommunicationProtocol.js';
+import { NeuralFoundationEngine } from './NeuralFoundationEngine.js';
+import { CrossDomainReasoningEngine } from './reasoning/CrossDomainReasoningEngine.js';
+import { UnifiedLearningEngine } from './learning/UnifiedLearningEngine.js';
 /**
  * AGI Superintelligence System
  *
@@ -33,6 +36,9 @@ export declare class AGISystem extends EventEmitter {
     learningEngine: LearningEngine;
     reasoningEngine: ReasoningEngine;
     communicationProtocol: CommunicationProtocol;
+    neuralFoundationEngine: NeuralFoundationEngine;
+    crossDomainReasoningEngine: CrossDomainReasoningEngine;
+    unifiedLearningEngine: UnifiedLearningEngine;
     private readonly securityManager;
     private readonly performanceMonitor;
     private readonly errorHandler;
@@ -40,6 +46,8 @@ export declare class AGISystem extends EventEmitter {
     private _isInitialized;
     private _isRunning;
     private startupTime;
+    private reasoningHistory;
+    private learningHistory;
     constructor(config: SystemConfig);
     /**
      * Initialize the AGI system
@@ -54,7 +62,7 @@ export declare class AGISystem extends EventEmitter {
      */
     stop(): Promise<void>;
     /**
-     * Process input through the AGI system
+     * Process input with advanced AGI capabilities
      */
     processInput(input: AgentInput): Promise<ReasoningResult>;
     /**
@@ -62,7 +70,7 @@ export declare class AGISystem extends EventEmitter {
      */
     executePlan(plan: ActionPlan): Promise<ActionResult>;
     /**
-     * Learn from experience
+     * Learn with advanced unified learning capabilities
      */
     learn(experience: any): Promise<LearningResult>;
     /**
@@ -84,7 +92,13 @@ export declare class AGISystem extends EventEmitter {
     getSystemStatus(): any;
     getAgents(): Agent[];
     getPerformanceMetrics(): any;
+    /**
+     * Reason with advanced cross-domain capabilities
+     */
     reason(input: string, context?: any): Promise<any>;
+    /**
+     * Create with advanced generative capabilities
+     */
     create(prompt: string, type: string, constraints?: any): Promise<any>;
     /**
      * Check if system is initialized
@@ -106,7 +120,24 @@ export declare class AGISystem extends EventEmitter {
     private createAgentContext;
     private startAgent;
     private stopAgent;
+    /**
+     * Initialize advanced AGI capabilities
+     */
     private initializeAdvancedCapabilities;
+    private synthesizeAdvancedResults;
+    private updateSystemState;
+    /**
+     * Perform advanced meta-reasoning
+     */
+    private performAdvancedMetaReasoning;
+    private calculateAdvancedConfidence;
+    private synthesizeLearningResults;
+    private calculateLearningConfidence;
+    private getLearningPerformance;
+    private synthesizeReasoningResults;
+    private calculateReasoningConfidence;
+    private generateAdvancedCreation;
+    private calculateCreationConfidence;
     private generateMetaReasoningInsights;
     private get _creativity();
 }

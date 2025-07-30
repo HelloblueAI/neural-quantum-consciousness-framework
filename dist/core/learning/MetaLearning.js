@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class MetaLearning {
     tasks = new Map();
     strategies = new Map();
@@ -664,4 +664,3 @@ export class MetaLearning {
         this.logger.info('Added hyperparameter config', { configId: config.id, name: config.name });
     }
 }
-//# sourceMappingURL=MetaLearning.js.map

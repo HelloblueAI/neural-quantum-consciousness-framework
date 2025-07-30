@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class UnsupervisedLearning {
     _config = {
         clusteringAlgorithm: 'kmeans',
@@ -205,4 +205,3 @@ export class UnsupervisedLearning {
         this.logger.info('Added dimensionality reduction model', { modelId: model.id, method: model.method });
     }
 }
-//# sourceMappingURL=UnsupervisedLearning.js.map

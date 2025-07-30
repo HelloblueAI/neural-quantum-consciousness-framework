@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class APIServer {
     app;
     agiSystem;
@@ -877,6 +877,47 @@ export class APIServer {
     }
     getPort() {
         return this.port;
+    }
+    getStatus() {
+        return {
+            isRunning: this.isRunning(),
+            port: this.port,
+            uptime: this.isRunning() ? Date.now() - this.startTime : 0
+        };
+    }
+    getEndpoints() {
+        return [
+            { path: '/health', method: 'GET', handler: this.healthCheck.bind(this), description: 'Health check endpoint' },
+            { path: '/status', method: 'GET', handler: this.getSystemStatus.bind(this), description: 'System status endpoint' },
+            { path: '/reason', method: 'POST', handler: this.reason.bind(this), description: 'Reasoning endpoint' },
+            { path: '/learn', method: 'POST', handler: this.learn.bind(this), description: 'Learning endpoint' },
+            { path: '/create', method: 'POST', handler: this.create.bind(this), description: 'Creation endpoint' },
+            { path: '/agents', method: 'GET', handler: this.getAgents.bind(this), description: 'Get all agents' },
+            { path: '/agents', method: 'POST', handler: this.createAgent.bind(this), description: 'Create agent' },
+            { path: '/agents/:id', method: 'GET', handler: this.getAgent.bind(this), description: 'Get specific agent' },
+            { path: '/agents/:id', method: 'PUT', handler: this.updateAgent.bind(this), description: 'Update agent' },
+            { path: '/agents/:id', method: 'DELETE', handler: this.deleteAgent.bind(this), description: 'Delete agent' },
+            { path: '/memory', method: 'GET', handler: this.getMemoryStatus.bind(this), description: 'Memory status' },
+            { path: '/memory/consolidate', method: 'POST', handler: this.consolidateMemory.bind(this), description: 'Consolidate memory' },
+            { path: '/memory/optimize', method: 'POST', handler: this.optimizeMemory.bind(this), description: 'Optimize memory' },
+            { path: '/memory/clear', method: 'POST', handler: this.clearMemory.bind(this), description: 'Clear memory' },
+            { path: '/config', method: 'GET', handler: this.getConfiguration.bind(this), description: 'Get configuration' },
+            { path: '/config', method: 'PUT', handler: this.updateConfiguration.bind(this), description: 'Update configuration' },
+            { path: '/config/reset', method: 'POST', handler: this.resetConfiguration.bind(this), description: 'Reset configuration' },
+            { path: '/features', method: 'GET', handler: this.getFeatureFlags.bind(this), description: 'Get feature flags' },
+            { path: '/features/:flag', method: 'PUT', handler: this.updateFeatureFlag.bind(this), description: 'Update feature flag' },
+            { path: '/metrics', method: 'GET', handler: this.getPerformanceMetrics.bind(this), description: 'Performance metrics' },
+            { path: '/monitoring', method: 'GET', handler: this.getMonitoringData.bind(this), description: 'Monitoring data' },
+            { path: '/services', method: 'GET', handler: this.getServices.bind(this), description: 'Get services' },
+            { path: '/services/connect', method: 'POST', handler: this.connectService.bind(this), description: 'Connect service' },
+            { path: '/services/disconnect', method: 'POST', handler: this.disconnectService.bind(this), description: 'Disconnect service' },
+            { path: '/services/health', method: 'GET', handler: this.checkServiceHealth.bind(this), description: 'Service health check' },
+            { path: '/consciousness', method: 'GET', handler: this.getConsciousnessState.bind(this), description: 'Consciousness state' },
+            { path: '/insights', method: 'POST', handler: this.generateInsight.bind(this), description: 'Generate insight' },
+            { path: '/knowledge', method: 'GET', handler: this.getKnowledge.bind(this), description: 'Get knowledge' },
+            { path: '/knowledge', method: 'POST', handler: this.addKnowledge.bind(this), description: 'Add knowledge' },
+            { path: '/knowledge/:id', method: 'DELETE', handler: this.removeKnowledge.bind(this), description: 'Remove knowledge' }
+        ];
     }
 }
 //# sourceMappingURL=APIServer.js.map

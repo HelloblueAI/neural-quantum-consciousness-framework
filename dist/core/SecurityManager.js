@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class SecurityManager extends EventEmitter {
     id;
     logger;
@@ -320,4 +320,3 @@ export class SecurityManager extends EventEmitter {
         return user.permissions.includes(action.type);
     }
 }
-//# sourceMappingURL=SecurityManager.js.map

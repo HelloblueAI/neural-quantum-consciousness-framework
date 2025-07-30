@@ -117,6 +117,38 @@ export class ReasoningEngine {
     try {
       this.logger.debug('Starting neural quantum reasoning process', { input, context });
 
+      // Handle null/undefined input gracefully
+      if (!input) {
+        return {
+          conclusions: [{
+            id: 'no_input',
+            statement: 'No input provided for reasoning',
+            confidence: 0.0,
+            evidence: [],
+            reasoning: 'Input validation failed',
+            implications: []
+          }],
+          confidence: 0.0,
+          reasoning: {
+            steps: [],
+            logic: 'classical',
+            evidence: [],
+            assumptions: []
+          },
+          uncertainty: {
+            type: 'probabilistic',
+            parameters: {},
+            confidence: 0.0
+          },
+          metadata: {
+            error: 'Invalid input: input cannot be null or undefined',
+            inputType: typeof input,
+            timestamp: new Date().toISOString()
+          },
+          alternatives: []
+        };
+      }
+
       // Update neural quantum state based on input
       await this.updateNeuralQuantumState(input, context);
 

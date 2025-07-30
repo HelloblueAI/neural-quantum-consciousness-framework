@@ -91,5 +91,11 @@ export declare class APIServer {
     getApp(): express.Application;
     isRunning(): boolean;
     getPort(): number;
+    getStatus(): {
+        isRunning: boolean;
+        port: number;
+        uptime: number;
+    };
+    getEndpoints(): APIEndpoint[];
 }
 //# sourceMappingURL=APIServer.d.ts.map

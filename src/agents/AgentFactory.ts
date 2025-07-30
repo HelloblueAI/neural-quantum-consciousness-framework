@@ -2,10 +2,10 @@ import { Agent, AgentConfig } from './Agent';
 import { ReasoningAgent, ReasoningAgentConfig } from './ReasoningAgent';
 import { LearningAgent, LearningAgentConfig } from './LearningAgent';
 import { CreativeAgent, CreativeAgentConfig } from './CreativeAgent';
-import { ReasoningEngine } from '@/core/ReasoningEngine';
-import { LearningEngine } from '@/core/LearningEngine';
-import { Capability, Goal } from '@/types';
-import { Logger } from '@/utils/Logger';
+import { ReasoningEngine } from '../core/ReasoningEngine';
+import { LearningEngine } from '../core/LearningEngine';
+import { Capability, Goal } from '../types';
+import { Logger } from '../utils/Logger';
 
 export interface AgentFactoryConfig {
   reasoningEngine: ReasoningEngine;

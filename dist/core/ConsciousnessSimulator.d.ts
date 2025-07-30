@@ -21,7 +21,7 @@ export declare class ConsciousnessSimulator {
     updateConsciousness(input: any, context?: Record<string, any>): Promise<ConsciousState>;
     processExperience(experience: string, context?: Record<string, any>): Promise<ConsciousState>;
     getConsciousState(): ConsciousState;
-    getConsciousnessState(): ConsciousState;
+    getConsciousnessState(): any;
     getConsciousnessStateLegacy(): any;
     generateConsciousnessInsight(type: string, content: string): any;
     getSubjectiveExperience(): any[];
@@ -102,6 +102,7 @@ export declare class ConsciousnessSimulator {
     private calculateExperienceSimilarity;
     private generateQuantumConsciousnessStates;
     private calculateQuantumEntanglement;
+    private calculateStateCorrelation;
     private calculateQuantumCoherence;
     private generateQuantumAwarenessStates;
     private createAwarenessSuperposition;

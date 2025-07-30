@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ProbabilisticLogic {
     distributions = new Map();
     bayesianUpdates = [];
@@ -208,6 +208,11 @@ export class ProbabilisticLogic {
     }
     identifyUncertaintySources(input) {
         const sources = [];
+        // Validate input is a string
+        if (typeof input !== 'string') {
+            sources.push('Input type uncertainty');
+            return sources;
+        }
         if (input.includes('?')) {
             sources.push('Question format indicates uncertainty');
         }
@@ -221,6 +226,11 @@ export class ProbabilisticLogic {
     }
     suggestUncertaintyMitigation(input) {
         const mitigations = [];
+        // Validate input is a string
+        if (typeof input !== 'string') {
+            mitigations.push('Validate input type');
+            return mitigations;
+        }
         if (input.includes('?')) {
             mitigations.push('Gather additional evidence to resolve questions');
         }

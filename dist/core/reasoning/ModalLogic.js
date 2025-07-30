@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ModalLogic {
     operators = new Map();
     worlds = new Map();
@@ -204,6 +204,10 @@ export class ModalLogic {
     }
     extractModalOperators(input) {
         const detectedOperators = [];
+        // Validate input is a string
+        if (typeof input !== 'string') {
+            return detectedOperators;
+        }
         for (const [symbol, operator] of this.operators) {
             if (input.includes(symbol) || input.toLowerCase().includes(operator.name)) {
                 detectedOperators.push(operator);
@@ -329,6 +333,10 @@ export class ModalLogic {
     }
     extractPropositions(input) {
         const propositions = new Map();
+        // Validate input is a string
+        if (typeof input !== 'string') {
+            return propositions;
+        }
         // Simple proposition extraction - could be enhanced with NLP
         const sentences = input.split(/[.!?]+/).filter(s => s.trim().length > 0);
         sentences.forEach((sentence, index) => {
@@ -369,7 +377,7 @@ export class ModalLogic {
         if (operators.some(op => op.name === 'possibility')) {
             sources.push('Possibility operators introduce uncertainty');
         }
-        if (input.includes('?')) {
+        if (typeof input === 'string' && input.includes('?')) {
             sources.push('Question format indicates uncertainty');
         }
         if (operators.length > 2) {

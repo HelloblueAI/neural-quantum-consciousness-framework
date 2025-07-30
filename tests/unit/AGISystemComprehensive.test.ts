@@ -46,6 +46,11 @@ describe('AGI System Comprehensive Tests', () => {
     reasoningEngine = new ReasoningEngine();
     learningEngine = new LearningEngine();
 
+    // Initialize the engines and knowledge base
+    await knowledgeBase.initialize();
+    await reasoningEngine.initialize();
+    await learningEngine.initialize();
+
     // Initialize system monitor
     systemMonitor = new SystemMonitor(
       performanceMonitor,

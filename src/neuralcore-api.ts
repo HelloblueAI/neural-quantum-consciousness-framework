@@ -46,24 +46,12 @@ app.get('/status', async (req, res) => {
 app.post('/reason', async (req, res) => {
   try {
     const { input } = req.body;
-    
-    if (!input) {
-      return res.status(400).json({
-        success: false,
-        error: 'Input is required'
-      });
-    }
-    
     const result = await neuralCore.reason(input);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Reasoning failed'
-    });
+    res.status(500).json({ error: 'Reasoning failed' });
+    return;
   }
 });
 
@@ -71,49 +59,25 @@ app.post('/reason', async (req, res) => {
 app.post('/learn', async (req, res) => {
   try {
     const { experience } = req.body;
-    
-    if (!experience) {
-      return res.status(400).json({
-        success: false,
-        error: 'Experience data is required'
-      });
-    }
-    
     const result = await neuralCore.learn(experience);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Learning failed'
-    });
+    res.status(500).json({ error: 'Learning failed' });
+    return;
   }
 });
 
 // True AGI creativity endpoint
 app.post('/create', async (req, res) => {
   try {
-    const { prompt, type = 'solution' } = req.body;
-    
-    if (!prompt) {
-      return res.status(400).json({
-        success: false,
-        error: 'Prompt is required'
-      });
-    }
-    
+    const { prompt, type, constraints } = req.body;
     const result = await neuralCore.create(prompt, type);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Creation failed'
-    });
+    res.status(500).json({ error: 'Creation failed' });
+    return;
   }
 });
 

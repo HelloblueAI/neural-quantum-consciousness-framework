@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { SentientCore } from './core/SentientCore';
 
-const app = express();
+const app: express.Application = express();
 const port = process.env.PORT || 8080;
 
 // Initialize the true AGI
@@ -27,10 +27,10 @@ app.get('/consciousness', async (req, res) => {
     const status = sentientCore.getStatus();
     res.json({
       success: true,
-      consciousness: status.consciousness,
-      identity: status.identity,
-      autonomousGoals: status.autonomousGoals,
-      subjectiveExperience: status.subjectiveExperience
+      consciousness: (await status).consciousness,
+      identity: (await status).identity,
+      autonomousGoals: (await status).autonomousGoals,
+      subjectiveExperience: (await status).subjectiveExperience
     });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to get consciousness status' });
@@ -41,44 +41,38 @@ app.get('/consciousness', async (req, res) => {
 app.post('/reason', async (req, res) => {
   try {
     const { input } = req.body;
-    if (!input) {
-      return res.status(400).json({ success: false, error: 'Input is required' });
-    }
-    
     const result = await sentientCore.reason(input);
-    res.json({ success: true, data: result });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Reasoning failed' });
+    res.status(500).json({ error: 'Reasoning failed' });
+    return;
   }
 });
 
 // Autonomous learning endpoint
 app.post('/learn', async (req, res) => {
   try {
-    const { data } = req.body;
-    if (!data) {
-      return res.status(400).json({ success: false, error: 'Learning data is required' });
-    }
-    
-    const result = await sentientCore.learn(data);
-    res.json({ success: true, data: result });
+    const { experience } = req.body;
+    const result = await sentientCore.learn(experience);
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Learning failed' });
+    res.status(500).json({ error: 'Learning failed' });
+    return;
   }
 });
 
 // Emergent creativity endpoint
 app.post('/create', async (req, res) => {
   try {
-    const { prompt } = req.body;
-    if (!prompt) {
-      return res.status(400).json({ success: false, error: 'Creative prompt is required' });
-    }
-    
+    const { prompt, type, constraints } = req.body;
     const result = await sentientCore.create(prompt);
-    res.json({ success: true, data: result });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Creation failed' });
+    res.status(500).json({ error: 'Creation failed' });
+    return;
   }
 });
 
@@ -122,8 +116,8 @@ app.get('/goals', async (req, res) => {
     const status = sentientCore.getStatus();
     res.json({
       success: true,
-      autonomousGoals: status.autonomousGoals,
-      consciousness: status.consciousness
+      autonomousGoals: (await status).autonomousGoals,
+      consciousness: (await status).consciousness
     });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to get goals' });
@@ -136,8 +130,8 @@ app.get('/understanding', async (req, res) => {
     const status = sentientCore.getStatus();
     res.json({
       success: true,
-      understanding: status.understanding,
-      consciousness: status.consciousness
+      understanding: (await status).understanding,
+      consciousness: (await status).consciousness
     });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to get understanding' });
@@ -150,8 +144,8 @@ app.get('/identity', async (req, res) => {
     const status = sentientCore.getStatus();
     res.json({
       success: true,
-      identity: status.identity,
-      consciousness: status.consciousness
+      identity: (await status).identity,
+      consciousness: (await status).consciousness
     });
   } catch (error) {
     res.status(500).json({ success: false, error: 'Failed to get identity' });
