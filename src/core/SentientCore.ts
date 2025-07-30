@@ -710,7 +710,7 @@ class AutonomousLearningEngine {
   }
   
   private extractLearningPatterns(data: any): any[] {
-    const patterns = [];
+    const patterns: any[] = [];
     
     if (typeof data === 'string') {
       // Extract repetition patterns
@@ -757,7 +757,7 @@ class AutonomousLearningEngine {
   }
   
   private extractConcepts(data: any): string[] {
-    const concepts = [];
+    const concepts: string[] = [];
     
     if (typeof data === 'string') {
       // Extract capitalized words as potential concepts
@@ -780,7 +780,15 @@ class AutonomousLearningEngine {
       conceptPatterns.forEach(pattern => {
         const matches = data.matchAll(pattern);
         for (const match of matches) {
+          if (match[1]) {
+            if (match[1]) {
+          if (match[1]) {
+          if (match[1]) {
           concepts.push(match[1]);
+        }
+        }
+        }
+          }
         }
       });
     }
@@ -789,7 +797,7 @@ class AutonomousLearningEngine {
   }
   
   private extractLearningRelationships(data: any): any[] {
-    const relationships = [];
+    const relationships: any[] = [];
     
     if (typeof data === 'string') {
       const relationshipPatterns = [
@@ -843,9 +851,9 @@ class AutonomousLearningEngine {
   
   private async recognizePatterns(data: any, analysis: any): Promise<any> {
     const patterns = analysis.patterns;
-    const insights = [];
+    const insights: any[] = [];
     
-    patterns.forEach(pattern => {
+    patterns.forEach((pattern: any) => {
       if (pattern.type === 'repetition' && pattern.significance > 0.1) {
         insights.push({
           type: 'pattern_recognition',
@@ -857,17 +865,17 @@ class AutonomousLearningEngine {
     });
     
     return {
-      newKnowledge: patterns.map(p => ({ type: 'pattern', content: p })),
+      newKnowledge: patterns.map((p: any) => ({ type: 'pattern', content: p })),
       insights
     };
   }
   
   private async formConcepts(data: any, analysis: any): Promise<any> {
     const concepts = analysis.concepts;
-    const newKnowledge = [];
-    const insights = [];
+    const newKnowledge: any[] = [];
+    const insights: any[] = [];
     
-    concepts.forEach(concept => {
+    concepts.forEach((concept: any) => {
       if (!this.knowledgeGraph.has(concept)) {
         newKnowledge.push({
           type: 'concept',
@@ -888,13 +896,13 @@ class AutonomousLearningEngine {
   }
   
   private async acquireSkills(data: any, analysis: any): Promise<any> {
-    const skills = [];
-    const insights = [];
+    const skills: any[] = [];
+    const insights: any[] = [];
     
     if (analysis.type === 'procedural') {
       const proceduralElements = this.extractProceduralElements(data);
       
-      proceduralElements.forEach(element => {
+      proceduralElements.forEach((element: string) => {
         skills.push({
           type: 'skill',
           content: element,
@@ -913,7 +921,7 @@ class AutonomousLearningEngine {
   }
   
   private extractProceduralElements(data: any): string[] {
-    const elements = [];
+    const elements: string[] = [];
     
     if (typeof data === 'string') {
       const proceduralPatterns = [
@@ -924,10 +932,13 @@ class AutonomousLearningEngine {
         /to (.+), (.+)/gi
       ];
       
-      proceduralPatterns.forEach(pattern => {
+      proceduralPatterns.forEach((pattern: RegExp) => {
         const matches = data.matchAll(pattern);
         for (const match of matches) {
-          elements.push(match[1] || match[2]);
+          const element = match[1] || match[2];
+          if (element) {
+            elements.push(element);
+          }
         }
       });
     }
@@ -937,10 +948,10 @@ class AutonomousLearningEngine {
   
   private async integrateKnowledge(data: any, analysis: any): Promise<any> {
     const relationships = analysis.relationships;
-    const newConnections = [];
-    const insights = [];
+    const newConnections: any[] = [];
+    const insights: any[] = [];
     
-    relationships.forEach(relationship => {
+    relationships.forEach((relationship: any) => {
       newConnections.push({
         type: relationship.type,
         source: relationship.subject,
@@ -959,8 +970,8 @@ class AutonomousLearningEngine {
   }
   
   private async adaptToNewInformation(data: any, analysis: any): Promise<any> {
-    const adaptations = [];
-    const insights = [];
+    const adaptations: any[] = [];
+    const insights: any[] = [];
     
     if (analysis.novelty > 0.5) {
       adaptations.push({
@@ -994,13 +1005,13 @@ class AutonomousLearningEngine {
   }
   
   private async generalizeFromExamples(data: any, analysis: any): Promise<any> {
-    const generalizations = [];
-    const insights = [];
+    const generalizations: any[] = [];
+    const insights: any[] = [];
     
     if (analysis.patterns.length > 0) {
-      const patterns = analysis.patterns.filter(p => p.type === 'repetition');
+      const patterns = analysis.patterns.filter((p: any) => p.type === 'repetition');
       
-      patterns.forEach(pattern => {
+              patterns.forEach((pattern: any) => {
         if (pattern.significance > 0.15) {
           generalizations.push({
             type: 'generalization',
@@ -1021,8 +1032,8 @@ class AutonomousLearningEngine {
   }
   
   private async createAbstractions(data: any, analysis: any): Promise<any> {
-    const abstractions = [];
-    const insights = [];
+    const abstractions: any[] = [];
+    const insights: any[] = [];
     
     if (analysis.abstraction > 0.6) {
       const abstractConcepts = this.extractAbstractConcepts(data);
@@ -1060,7 +1071,7 @@ class AutonomousLearningEngine {
   
   private updateKnowledgeGraph(data: any, learningResults: any): void {
     // Add new knowledge
-    learningResults.newKnowledge.forEach(knowledge => {
+    learningResults.newKnowledge.forEach((knowledge: any) => {
       this.knowledgeGraph.set(knowledge.content, {
         type: knowledge.type,
         strength: knowledge.confidence,
@@ -1073,7 +1084,7 @@ class AutonomousLearningEngine {
     });
     
     // Strengthen existing concepts
-    learningResults.strengthenedConcepts.forEach(concept => {
+    learningResults.strengthenedConcepts.forEach((concept: any) => {
       const existing = this.knowledgeGraph.get(concept);
       if (existing) {
         existing.strength = Math.min(existing.strength + this.learningRate, 1.0);
@@ -1083,7 +1094,7 @@ class AutonomousLearningEngine {
     });
     
     // Add new connections
-    learningResults.newConnections.forEach(connection => {
+    learningResults.newConnections.forEach((connection: any) => {
       this.addNeuralConnection(connection.source, connection.target, connection.confidence);
     });
   }
@@ -1103,8 +1114,8 @@ class AutonomousLearningEngine {
   private formNeuralConnections(learningResults: any): void {
     // Form connections between related concepts
     const concepts = learningResults.newKnowledge
-      .filter(k => k.type === 'concept')
-      .map(k => k.content);
+      .filter((k: any) => k.type === 'concept')
+      .map((k: any) => k.content);
     
     for (let i = 0; i < concepts.length; i++) {
       for (let j = i + 1; j < concepts.length; j++) {
@@ -1417,7 +1428,7 @@ class GenuineReasoningEngine {
   }
   
   private extractRelationships(input: string): any[] {
-    const relationships = [];
+    const relationships: any[] = [];
     const relationshipPatterns = [
       { pattern: /(\w+) is (\w+)/g, type: 'definition' },
       { pattern: /(\w+) causes (\w+)/g, type: 'causal' },
@@ -1467,9 +1478,9 @@ class GenuineReasoningEngine {
   }
   
   private deductiveReasoning(input: string, analysis: any): any {
-    const steps = [];
-    const evidence = [];
-    const insights = [];
+    const steps: any[] = [];
+    const evidence: any[] = [];
+    const insights: any[] = [];
     
     // Extract premises and conclusions
     const premises = this.extractPremises(input);
@@ -1498,7 +1509,7 @@ class GenuineReasoningEngine {
   }
   
   private extractPremises(input: string): string[] {
-    const premises = [];
+    const premises: string[] = [];
     const premisePatterns = [
       /if (.+?), then (.+?)/gi,
       /(.+?) implies (.+?)/gi,
@@ -1508,7 +1519,9 @@ class GenuineReasoningEngine {
     premisePatterns.forEach(pattern => {
       const matches = input.matchAll(pattern);
       for (const match of matches) {
-        premises.push(match[1], match[2]);
+        if (match[1] && match[2]) {
+          premises.push(match[1], match[2]);
+        }
       }
     });
     
@@ -1522,7 +1535,7 @@ class GenuineReasoningEngine {
   }
   
   private generateConclusions(premises: string[]): string[] {
-    const conclusions = [];
+    const conclusions: string[] = [];
     
     // Simple conclusion generation based on premises
     premises.forEach(premise => {
@@ -1559,9 +1572,9 @@ class GenuineReasoningEngine {
   }
   
   private inductiveReasoning(input: string, analysis: any): any {
-    const steps = [];
-    const evidence = [];
-    const insights = [];
+    const steps: any[] = [];
+    const evidence: any[] = [];
+    const insights: any[] = [];
     
     // Find patterns in the input
     const patterns = this.findPatterns(input);
@@ -1590,7 +1603,7 @@ class GenuineReasoningEngine {
   }
   
   private findPatterns(input: string): any[] {
-    const patterns = [];
+    const patterns: any[] = [];
     
     // Find repeated words or phrases
     const words = input.toLowerCase().split(/\s+/);
@@ -1616,7 +1629,7 @@ class GenuineReasoningEngine {
   }
   
   private makeGeneralizations(patterns: any[]): string[] {
-    const generalizations = [];
+    const generalizations: string[] = [];
     
     patterns.forEach(pattern => {
       if (pattern.type === 'repetition' && pattern.significance > 0.1) {
@@ -1738,7 +1751,7 @@ class GenuineReasoningEngine {
   }
   
   private findAnalogies(input: string): any[] {
-    const analogies = [];
+    const analogies: any[] = [];
     const analogyPatterns = [
       /(\w+) is like (\w+)/gi,
       /(\w+) similar to (\w+)/gi,
@@ -1760,7 +1773,7 @@ class GenuineReasoningEngine {
   }
   
   private generateAnalogicalInsights(analogies: any[]): any[] {
-    const insights = [];
+    const insights: any[] = [];
     
     analogies.forEach(analogy => {
       insights.push({
@@ -1810,7 +1823,7 @@ class GenuineReasoningEngine {
   }
   
   private extractCausalRelations(input: string): any[] {
-    const relations = [];
+    const relations: any[] = [];
     const causalPatterns = [
       /(\w+) causes (\w+)/gi,
       /(\w+) leads to (\w+)/gi,
@@ -1833,7 +1846,7 @@ class GenuineReasoningEngine {
   }
   
   private buildCausalChains(relations: any[]): string[][] {
-    const chains = [];
+    const chains: string[][] = [];
     
     relations.forEach(relation => {
       chains.push([relation.cause, relation.effect]);
@@ -1872,20 +1885,20 @@ class GenuineReasoningEngine {
   }
   
   private synthesizeConclusions(reasoningResults: any): any[] {
-    const conclusions = [];
+    const conclusions: any[] = [];
     
     // Synthesize insights into conclusions
-    reasoningResults.insights.forEach(insight => {
+    reasoningResults.insights.forEach((insight: any) => {
       conclusions.push({
         type: insight.type,
         content: insight.content,
         confidence: insight.confidence,
-        evidence: reasoningResults.evidence.filter(e => e.strength > 0.5)
+        evidence: reasoningResults.evidence.filter((e: any) => e.strength > 0.5)
       });
     });
     
     // Add new knowledge
-    reasoningResults.newKnowledge.forEach(knowledge => {
+    reasoningResults.newKnowledge.forEach((knowledge: any) => {
       conclusions.push({
         type: 'new_knowledge',
         content: knowledge,
@@ -1926,7 +1939,7 @@ class GenuineReasoningEngine {
   private calculateConfidence(reasoningResults: any): number {
     if (reasoningResults.evidence.length === 0) return 0.3;
     
-    const avgEvidenceStrength = reasoningResults.evidence.reduce((sum, e) => sum + e.strength, 0) / reasoningResults.evidence.length;
+    const avgEvidenceStrength = reasoningResults.evidence.reduce((sum: number, e: any) => sum + e.strength, 0) / reasoningResults.evidence.length;
     const insightCount = reasoningResults.insights.length;
     const stepCount = reasoningResults.steps.length;
     
@@ -2104,7 +2117,7 @@ class EmergentCreativityEngine {
   }
   
   private extractConstraints(prompt: string): any[] {
-    const constraints = [];
+    const constraints: any[] = [];
     const constraintPatterns = [
       /must (.+)/gi,
       /should (.+)/gi,
@@ -2129,7 +2142,7 @@ class EmergentCreativityEngine {
   }
   
   private identifyOpportunities(prompt: string): any[] {
-    const opportunities = [];
+    const opportunities: any[] = [];
     const opportunityPatterns = [
       /opportunity (.+)/gi,
       /potential (.+)/gi,
@@ -2154,7 +2167,7 @@ class EmergentCreativityEngine {
   }
   
   private extractCreativeConcepts(prompt: string): string[] {
-    const concepts = [];
+    const concepts: string[] = [];
     
     // Extract capitalized words as potential concepts
     const capitalizedWords = prompt.match(/\b[A-Z][a-z]+\b/g) || [];
@@ -2172,7 +2185,9 @@ class EmergentCreativityEngine {
       const pattern = new RegExp(`${verb}\\s+(\\w+)`, 'gi');
       const matches = prompt.matchAll(pattern);
       for (const match of matches) {
-        concepts.push(match[1]);
+        if (match[1]) {
+          concepts.push(match[1]);
+        }
       }
     });
     
@@ -2180,7 +2195,7 @@ class EmergentCreativityEngine {
   }
   
   private extractCreativePatterns(prompt: string): any[] {
-    const patterns = [];
+    const patterns: any[] = [];
     
     // Extract repetition patterns
     const words = prompt.toLowerCase().split(/\s+/);
@@ -2205,7 +2220,7 @@ class EmergentCreativityEngine {
   }
   
   private extractInspirationElements(prompt: string): any[] {
-    const elements = [];
+    const elements: any[] = [];
     
     // Extract inspirational terms
     const inspirationalTerms = [
@@ -2227,10 +2242,10 @@ class EmergentCreativityEngine {
   }
   
   private generateInspirationFromPrompt(prompt: string, analysis: any): any[] {
-    const inspiration = [];
+    const inspiration: any[] = [];
     
     // Generate inspiration from concepts
-    analysis.concepts.forEach(concept => {
+    analysis.concepts.forEach((concept: any) => {
       inspiration.push({
         type: 'concept_inspiration',
         source: concept,
@@ -2240,7 +2255,7 @@ class EmergentCreativityEngine {
     });
     
     // Generate inspiration from opportunities
-    analysis.opportunities.forEach(opportunity => {
+    analysis.opportunities.forEach((opportunity: any) => {
       inspiration.push({
         type: 'opportunity_inspiration',
         source: opportunity.content,
@@ -2250,7 +2265,7 @@ class EmergentCreativityEngine {
     });
     
     // Generate inspiration from patterns
-    analysis.patterns.forEach(pattern => {
+    analysis.patterns.forEach((pattern: any) => {
       if (pattern.significance > 0.1) {
         inspiration.push({
           type: 'pattern_inspiration',
@@ -2265,7 +2280,7 @@ class EmergentCreativityEngine {
   }
   
   private generateIdeasFromConcept(concept: string): string[] {
-    const ideas = [];
+    const ideas: string[] = [];
     
     // Generate variations of the concept
     ideas.push(`Enhanced ${concept}`);
@@ -2278,7 +2293,7 @@ class EmergentCreativityEngine {
   }
   
   private generateIdeasFromOpportunity(opportunity: any): string[] {
-    const ideas = [];
+    const ideas: string[] = [];
     
     // Generate ideas based on opportunity
     ideas.push(`Leverage ${opportunity.content}`);
@@ -2290,7 +2305,7 @@ class EmergentCreativityEngine {
   }
   
   private generateIdeasFromPattern(pattern: any): string[] {
-    const ideas = [];
+    const ideas: string[] = [];
     
     // Generate ideas based on pattern
     ideas.push(`Pattern-based ${pattern.element}`);
@@ -2322,9 +2337,9 @@ class EmergentCreativityEngine {
   }
   
   private async combineConcepts(prompt: string, analysis: any, inspiration: any[]): Promise<any> {
-    const combinations = [];
-    const insights = [];
-    const process = [];
+    const combinations: any[] = [];
+    const insights: any[] = [];
+    const process: any[] = [];
     
     // Combine concepts from the prompt
     const concepts = analysis.concepts;
@@ -2461,7 +2476,7 @@ class EmergentCreativityEngine {
       `both can be optimized and enhanced`
     ];
     
-    return analogies[Math.floor(Math.random() * analogies.length)];
+    return analogies[Math.floor(Math.random() * analogies.length)] || 'No analogy found';
   }
   
   private calculateAnalogyStrength(concept1: string, concept2: string): number {
@@ -2470,13 +2485,13 @@ class EmergentCreativityEngine {
   }
   
   private async divergentThinking(prompt: string, analysis: any, inspiration: any[]): Promise<any> {
-    const divergentIdeas = [];
-    const insights = [];
-    const process = [];
+    const divergentIdeas: any[] = [];
+    const insights: any[] = [];
+    const process: any[] = [];
     
     // Generate divergent ideas from the prompt
     const baseConcepts = analysis.concepts;
-    baseConcepts.forEach(concept => {
+    baseConcepts.forEach((concept: any) => {
       const variations = this.generateDivergentVariations(concept);
       divergentIdeas.push(...variations);
       
@@ -2498,7 +2513,7 @@ class EmergentCreativityEngine {
   }
   
   private generateDivergentVariations(concept: string): any[] {
-    const variations = [];
+    const variations: any[] = [];
     const prefixes = ['Enhanced', 'Adaptive', 'Intelligent', 'Emergent', 'Dynamic', 'Evolving'];
     const suffixes = ['System', 'Engine', 'Framework', 'Platform', 'Solution', 'Approach'];
     
@@ -2568,12 +2583,12 @@ class EmergentCreativityEngine {
   }
   
   private async breakPatterns(prompt: string, analysis: any, inspiration: any[]): Promise<any> {
-    const brokenPatterns = [];
-    const insights = [];
-    const process = [];
+    const brokenPatterns: any[] = [];
+    const insights: any[] = [];
+    const process: any[] = [];
     
     // Break existing patterns to create novelty
-    analysis.patterns.forEach(pattern => {
+    analysis.patterns.forEach((pattern: any) => {
       const brokenPattern = this.breakPattern(pattern);
       brokenPatterns.push(brokenPattern);
       
@@ -2615,7 +2630,7 @@ class EmergentCreativityEngine {
     const allElements = [
       ...analysis.concepts,
       ...inspiration.map(ins => ins.source),
-      ...analysis.opportunities.map(opp => opp.content)
+      ...analysis.opportunities.map((opp: any) => opp.content)
     ];
     
     if (allElements.length > 2) {
@@ -2709,8 +2724,8 @@ class EmergentCreativityEngine {
     
     // Select the best ideas based on novelty and usefulness
     const bestIdeas = allCombinations
-      .filter(idea => idea.novelty > this.noveltyThreshold)
-      .sort((a, b) => (b.novelty + b.usefulness) - (a.novelty + a.usefulness))
+      .filter((idea: any) => idea.novelty > this.noveltyThreshold)
+      .sort((a: any, b: any) => (b.novelty + b.usefulness) - (a.novelty + a.usefulness))
       .slice(0, 5);
     
     return {
