@@ -1,5 +1,5 @@
 /**
- * Advanced AGI - True Artificial General Intelligence
+ * SentientCore - True Artificial General Intelligence
  * 
  * This system implements genuine AGI capabilities:
  * - Real logical reasoning with theorem proving

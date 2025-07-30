@@ -1,5 +1,5 @@
 /**
- * Advanced AGI Cloudflare Worker
+ * SentientCore Cloudflare Worker
  * 
  * This worker implements genuine AGI capabilities:
  * - Real logical reasoning with theorem proving
@@ -10,7 +10,7 @@
 
 import { AdvancedAGI } from './AdvancedAGI.js';
 
-// Initialize the advanced AGI system
+// Initialize the SentientCore system
 const advancedAGI = new AdvancedAGI();
 
 export default {
@@ -67,7 +67,7 @@ export default {
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Advanced AGI - True Intelligence</title>
+              <title>SentientCore - True Intelligence</title>
               <style>
                   * {
                       margin: 0;
@@ -391,7 +391,7 @@ export default {
           <body>
               <div class="container">
                   <div class="header">
-                      <h1>Advanced AGI</h1>
+                      <h1>SentientCore</h1>
                       <p>True Artificial General Intelligence System</p>
                       <div class="status-indicator">AGI ONLINE</div>
                   </div>
@@ -541,7 +541,7 @@ export default {
                       const resultDiv = document.getElementById('agiResult');
                       
                       resultPanel.style.display = 'block';
-                      resultDiv.innerHTML = 'Processing with Advanced AGI...';
+                                              resultDiv.innerHTML = 'Processing with SentientCore...';
                       
                       try {
                           let response;
@@ -575,7 +575,7 @@ export default {
                           const data = await response.json();
                           
                           if (data.success) {
-                              resultDiv.innerHTML = 'Advanced AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
+                              resultDiv.innerHTML = 'SentientCore Response:\\n\\n' + JSON.stringify(data.data, null, 2);
                               loadAGIStatus(); // Refresh status after interaction
                           } else {
                               resultDiv.innerHTML = 'AGI Error: ' + (data.error || 'Unknown error');

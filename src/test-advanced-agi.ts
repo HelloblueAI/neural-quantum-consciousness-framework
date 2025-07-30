@@ -1,7 +1,7 @@
 import { AdvancedAGI } from './AdvancedAGI.js';
 
 async function testAdvancedAGI() {
-  console.log('🧠 Testing Advanced AGI System...\n');
+  console.log('🧠 Testing SentientCore System...\n');
   
   const agi = new AdvancedAGI();
   
@@ -29,7 +29,7 @@ async function testAdvancedAGI() {
   console.log('Status Result:', JSON.stringify(statusResult, null, 2));
   console.log('\n');
   
-  console.log('✅ Advanced AGI System Test Complete!');
+  console.log('✅ SentientCore System Test Complete!');
 }
 
 testAdvancedAGI().catch(console.error); 
