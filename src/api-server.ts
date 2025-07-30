@@ -53,15 +53,11 @@ app.post('/reason', async (req, res) => {
     }
     
     const result = await agi.reason(input);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Reasoning failed'
-    });
+    res.status(500).json({ error: 'Reasoning failed' });
+    return;
   }
 });
 
@@ -78,15 +74,11 @@ app.post('/learn', async (req, res) => {
     }
     
     const result = await agi.learn(experience);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Learning failed'
-    });
+    res.status(500).json({ error: 'Learning failed' });
+    return;
   }
 });
 
@@ -103,15 +95,11 @@ app.post('/create', async (req, res) => {
     }
     
     const result = await agi.create(prompt, type);
-    res.json({
-      success: true,
-      data: result
-    });
+    res.json(result);
+    return;
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Creation failed'
-    });
+    res.status(500).json({ error: 'Creation failed' });
+    return;
   }
 });
 

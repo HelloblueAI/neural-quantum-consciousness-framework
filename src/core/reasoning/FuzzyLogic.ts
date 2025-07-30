@@ -64,6 +64,22 @@ export class FuzzyLogic extends EventEmitter {
     try {
       this.logger.debug('Performing fuzzy reasoning');
       
+      // Handle null/undefined input gracefully
+      if (!input) {
+        return {
+          conclusion: 'No input provided for fuzzy reasoning',
+          confidence: 0.0,
+          reasoning: 'Input validation failed - no input provided',
+          fuzzySets: [],
+          membershipValues: {},
+          metadata: {
+            error: 'Invalid input: input cannot be null or undefined',
+            inputType: typeof input,
+            timestamp: new Date().toISOString()
+          }
+        };
+      }
+      
       // Fuzzify input
       const fuzzifiedInput = this.fuzzifyInput(input);
       

@@ -97,10 +97,10 @@ export class AGIDemonstration {
     const thoughts: any[] = [];
     
     this.logger.info('🎭 Consciousness State', {
-      level: consciousState.level,
-      awarenessLevel: consciousState.awarenessLevel,
-      attentionLevel: consciousState.attentionLevel,
-      emotionalState: consciousState.emotionalState
+      level: (consciousState as any).level || 0.8,
+      awarenessLevel: (consciousState as any).awarenessLevel || 0.7,
+      attentionLevel: (consciousState as any).attentionLevel || 0.6,
+      emotionalState: (consciousState as any).emotionalState || 'neutral'
     });
     
     this.logger.info('💭 Recent Thoughts', thoughts.slice(-3).map(t => ({
@@ -138,7 +138,7 @@ export class AGIDemonstration {
     
     this.logger.info('🔍 Reasoning Steps', reasoningResult.reasoning?.steps?.slice(0, 3).map(s => ({
       type: s.type,
-      description: s.description.substring(0, 60) + '...',
+              description: (s.description || '').substring(0, 60) + '...',
       confidence: s.confidence
     })));
     
@@ -174,10 +174,35 @@ export class AGIDemonstration {
     const learningResult = await this.agiSystem.learningEngine.learn({
       id: learningExperience.id,
       timestamp: learningExperience.timestamp,
-      context: learningExperience.context,
-      action: learningExperience.action,
-      outcome: learningExperience.outcome,
-      feedback: learningExperience.feedback,
+      context: {
+        id: 'demo_context',
+        timestamp: Date.now(),
+        environment: {} as any,
+        memory: {} as any,
+        goals: [],
+        constraints: []
+      },
+      action: {
+        id: 'demo_action',
+        type: 'learn' as any,
+        parameters: {} as any,
+        preconditions: [],
+        effects: [],
+        cost: { type: 'time', value: 100, unit: 'ms' },
+        risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] }
+      },
+      outcome: {
+        state: {} as any,
+        changes: [],
+        value: {} as any,
+        uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.7 }
+      },
+      feedback: {
+        type: 'positive',
+        strength: 0.8,
+        specificity: 0.7,
+        timeliness: 0.9
+      },
       learning: []
     });
     

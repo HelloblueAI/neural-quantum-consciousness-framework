@@ -29,6 +29,20 @@ export class ClassicalLogic {
     try {
       this.logger.debug('Starting classical logic reasoning', { input, context });
 
+      // Handle null/undefined input gracefully
+      if (!input || typeof input !== 'string') {
+        return {
+          id: `classical_logic_invalid_${Date.now()}`,
+          premises: [],
+          conclusions: ['Invalid input for classical logic reasoning'],
+          proof: [],
+          confidence: 0.0,
+          validity: false,
+          soundness: false,
+          timestamp: Date.now()
+        };
+      }
+
       // Parse input into logical form
       const parsedInput = await this.parseLogicalInput(input);
       

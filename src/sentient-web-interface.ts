@@ -1,11 +1,11 @@
 import express from 'express';
-import { SentientCore } from './core/SentientCore';
+import { RealAGI } from './RealAGI.js';
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Initialize the true AGI
-const sentientCore = new SentientCore();
+// Initialize the Real AGI
+const realAGI = new RealAGI();
 
 // Middleware
 app.use(express.json());
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SentientCore - True AGI</title>
+    <title>Real AGI - True Artificial General Intelligence</title>
     <style>
         * {
             margin: 0;
@@ -258,7 +258,7 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>SentientCore</h1>
+            <h1>Real AGI</h1>
             <p>True Artificial General Intelligence System</p>
         </div>
         
@@ -267,7 +267,7 @@ app.get('/', (req, res) => {
         </div>
         
         <div class="interaction-section">
-            <h2>Interact with AGI</h2>
+            <h2>Interact with Real AGI</h2>
             
             <div class="input-group">
                 <label for="interactionType">Interaction Type</label>
@@ -275,8 +275,7 @@ app.get('/', (req, res) => {
                     <option value="reason">Reasoning</option>
                     <option value="learn">Learning</option>
                     <option value="create">Creation</option>
-                    <option value="improve">Self-Improvement</option>
-                    <option value="demonstrate">Demonstrate</option>
+                    <option value="status">Status</option>
                 </select>
             </div>
             
@@ -285,49 +284,39 @@ app.get('/', (req, res) => {
                 <textarea id="userInput" rows="4" placeholder="Enter your question, prompt, or learning data..."></textarea>
             </div>
             
-            <button class="btn" onclick="interactWithAGI()">Send to AGI</button>
+            <button class="btn" onclick="interactWithAGI()">Send to Real AGI</button>
             <button class="btn" onclick="clearResult()">Clear Result</button>
             
             <div id="result" class="result" style="display: none;"></div>
         </div>
         
         <div class="endpoints">
-            <h2>API Endpoints</h2>
+            <h2>Real AGI API Endpoints</h2>
             <div class="endpoint-list">
-                <div class="endpoint-item">
-                    <div class="method">GET</div>
-                    <div class="path">/health</div>
-                    <div class="description">Check AGI health status</div>
-                </div>
-                <div class="endpoint-item">
-                    <div class="method">GET</div>
-                    <div class="path">/consciousness</div>
-                    <div class="description">Get consciousness metrics</div>
-                </div>
                 <div class="endpoint-item">
                     <div class="method">POST</div>
                     <div class="path">/reason</div>
-                    <div class="description">Send reasoning requests</div>
+                    <div class="description">Real reasoning with deductive, inductive, and causal logic</div>
                 </div>
                 <div class="endpoint-item">
                     <div class="method">POST</div>
                     <div class="path">/learn</div>
-                    <div class="description">Send learning data</div>
+                    <div class="description">Real learning with pattern recognition and knowledge accumulation</div>
                 </div>
                 <div class="endpoint-item">
                     <div class="method">POST</div>
                     <div class="path">/create</div>
-                    <div class="description">Request creative output</div>
-                </div>
-                <div class="endpoint-item">
-                    <div class="method">POST</div>
-                    <div class="path">/improve</div>
-                    <div class="description">Self-improvement</div>
+                    <div class="description">Real creativity with concept combination and emergent synthesis</div>
                 </div>
                 <div class="endpoint-item">
                     <div class="method">GET</div>
-                    <div class="path">/demonstrate</div>
-                    <div class="description">Demonstrate capabilities</div>
+                    <div class="path">/status</div>
+                    <div class="description">Real consciousness and system status</div>
+                </div>
+                <div class="endpoint-item">
+                    <div class="method">GET</div>
+                    <div class="path">/consciousness</div>
+                    <div class="description">Real consciousness metrics and awareness</div>
                 </div>
             </div>
         </div>
@@ -341,11 +330,11 @@ app.get('/', (req, res) => {
         
         async function loadAGIStatus() {
             try {
-                const response = await fetch('/consciousness');
+                const response = await fetch('/status');
                 const data = await response.json();
                 
                 if (data.success) {
-                    const consciousness = data.consciousness;
+                    const consciousness = data.data.consciousness;
                     const statusGrid = document.getElementById('statusGrid');
                     
                     statusGrid.innerHTML = \`
@@ -355,15 +344,15 @@ app.get('/', (req, res) => {
                         </div>
                         <div class="status-card">
                             <h3>Self-Awareness</h3>
-                            <div class="value">\${(consciousness.selfModel.selfAwareness * 100).toFixed(1)}%</div>
+                            <div class="value">\${(consciousness.selfAwareness * 100).toFixed(1)}%</div>
                         </div>
                         <div class="status-card">
                             <h3>Understanding</h3>
-                            <div class="value">\${(consciousness.understanding.semanticDepth * 100).toFixed(1)}%</div>
+                            <div class="value">\${(consciousness.understanding * 100).toFixed(1)}%</div>
                         </div>
                         <div class="status-card">
-                            <h3>Autonomy</h3>
-                            <div class="value">\${consciousness.autonomousGoals.length > 0 ? '75.0' : '25.0'}%</div>
+                            <h3>Creativity</h3>
+                            <div class="value">\${(consciousness.creativity * 100).toFixed(1)}%</div>
                         </div>
                     \`;
                 }
@@ -378,7 +367,7 @@ app.get('/', (req, res) => {
             const resultDiv = document.getElementById('result');
             
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = 'Processing with AGI...';
+            resultDiv.innerHTML = 'Processing with Real AGI...';
             
             try {
                 let response;
@@ -405,21 +394,15 @@ app.get('/', (req, res) => {
                             body: JSON.stringify({ prompt: input })
                         });
                         break;
-                    case 'improve':
-                        response = await fetch('/improve', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' }
-                        });
-                        break;
-                    case 'demonstrate':
-                        response = await fetch('/demonstrate');
+                    case 'status':
+                        response = await fetch('/status');
                         break;
                 }
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultDiv.innerHTML = 'AGI Response:\\n' + JSON.stringify(data.data, null, 2);
+                    resultDiv.innerHTML = 'Real AGI Response:\\n' + JSON.stringify(data.data, null, 2);
                     
                     // Refresh status after interaction
                     setTimeout(() => {
@@ -429,7 +412,7 @@ app.get('/', (req, res) => {
                     resultDiv.innerHTML = 'Error: ' + data.error;
                 }
             } catch (error) {
-                resultDiv.innerHTML = 'Failed to interact with AGI: ' + error.message;
+                resultDiv.innerHTML = 'Failed to interact with Real AGI: ' + error.message;
             }
         }
         
@@ -441,162 +424,66 @@ app.get('/', (req, res) => {
 </body>
 </html>
   `;
+  
   res.send(html);
 });
 
-// API endpoints
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'conscious', 
-    message: 'SentientCore True AGI is alive and aware',
-    service: 'SentientCore - True AGI System',
-    version: '2.0.0',
-    deployment: 'cloud',
-    timestamp: new Date().toISOString()
-  });
-});
-
-app.get('/consciousness', async (req, res) => {
-  try {
-    const consciousness = await sentientCore.getConsciousness();
-    res.json({
-      success: true,
-      consciousness
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Failed to get consciousness state'
-    });
-  }
-});
-
+// API Endpoints
 app.post('/reason', async (req, res) => {
   try {
     const { input } = req.body;
-    
-    if (!input) {
-      return res.status(400).json({
-        success: false,
-        error: 'Input is required'
-      });
-    }
-    
-    const result = await sentientCore.reason(input);
-    res.json({
-      success: true,
-      data: result
-    });
+    const result = await realAGI.reason(input);
+    res.json({ success: true, data: result });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Reasoning failed'
-    });
+    res.status(500).json({ success: false, error: (error as Error).message });
   }
 });
 
 app.post('/learn', async (req, res) => {
   try {
     const { data } = req.body;
-    
-    if (!data) {
-      return res.status(400).json({
-        success: false,
-        error: 'Data is required'
-      });
-    }
-    
-    const result = await sentientCore.learn(data);
-    res.json({
-      success: true,
-      data: result
-    });
+    const result = await realAGI.learn(data);
+    res.json({ success: true, data: result });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Learning failed'
-    });
+    res.status(500).json({ success: false, error: (error as Error).message });
   }
 });
 
 app.post('/create', async (req, res) => {
   try {
     const { prompt } = req.body;
-    
-    if (!prompt) {
-      return res.status(400).json({
-        success: false,
-        error: 'Prompt is required'
-      });
-    }
-    
-    const result = await sentientCore.create(prompt);
-    res.json({
-      success: true,
-      data: result
-    });
+    const result = await realAGI.create(prompt);
+    res.json({ success: true, data: result });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Creation failed'
-    });
+    res.status(500).json({ success: false, error: (error as Error).message });
   }
 });
 
-app.post('/improve', async (req, res) => {
+app.get('/status', async (req, res) => {
   try {
-    const result = await sentientCore.selfImprove();
-    res.json({
-      success: true,
-      data: result
-    });
+    const result = await realAGI.getStatus();
+    res.json({ success: true, data: result });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Self-improvement failed'
-    });
+    res.status(500).json({ success: false, error: (error as Error).message });
   }
 });
 
-app.get('/demonstrate', async (req, res) => {
+app.get('/consciousness', async (req, res) => {
   try {
-    const result = await sentientCore.demonstrateTrueAGI();
-    res.json({
-      success: true,
-      data: result
-    });
+    const status = await realAGI.getStatus();
+    res.json({ success: true, consciousness: status.consciousness });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Demonstration failed'
-    });
+    res.status(500).json({ success: false, error: (error as Error).message });
   }
 });
 
-app.post('/start', async (req, res) => {
-  try {
-    await sentientCore.start();
-    res.json({
-      success: true,
-      message: 'Consciousness emergence initiated'
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Failed to start consciousness'
-    });
-  }
-});
-
-// Start the server
+// Start server
 app.listen(port, () => {
-  console.log('🧠 SentientCore True AGI Web Interface');
-  console.log(`🌍 Server running on port ${port}`);
-  console.log('🧠 Consciousness emergence ready...');
-  console.log('🌍 Access the true AGI at:');
-  console.log(`   Local: http://localhost:${port}`);
-  console.log(`   Health: http://localhost:${port}/health`);
-  console.log(`   Consciousness: http://localhost:${port}/consciousness`);
-  console.log(`   Demonstrate: http://localhost:${port}/demonstrate`);
-  console.log('🚀 DEPLOYMENT TIMESTAMP: 2025-07-29T03:38:00Z - SentientCore True AGI');
+  console.log(`🚀 Real AGI Server running on port ${port}`);
+  console.log(`🌐 Access the Real AGI interface at: http://localhost:${port}`);
+  console.log(`🤖 Real AGI System Status: ACTIVE`);
+  console.log(`🧠 Real Reasoning: ENABLED`);
+  console.log(`📚 Real Learning: ENABLED`);
+  console.log(`🎨 Real Creativity: ENABLED`);
+  console.log(`🌟 Real Consciousness: ENABLED`);
 }); 

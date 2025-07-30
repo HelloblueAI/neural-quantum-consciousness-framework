@@ -814,13 +814,6 @@ export interface Introspection {
   readonly selfModification: number;
 }
 
-export interface SelfModification {
-  readonly capability: number;
-  readonly willingness: number;
-  readonly methods: string[];
-  readonly limitations: string[];
-}
-
 export interface Originality {
   readonly level: number;
   readonly uniqueness: number;
@@ -1291,12 +1284,12 @@ export interface Attention {
 }
 
 export interface MetaCognition {
-  readonly selfAwareness: number;
-  readonly introspection: number;
-  readonly cognitiveControl: number;
-  readonly metacognitiveKnowledge: number;
-  readonly metacognitiveRegulation: number;
-  readonly metacognitiveExperience: number;
+  selfAwareness: number;
+  introspection: number;
+  cognitiveControl: number;
+  metacognitiveKnowledge: number;
+  metacognitiveRegulation: number;
+  metacognitiveExperience: number;
 }
 
 // ============================================================================
@@ -1414,6 +1407,74 @@ export interface SelfAssessment {
   readonly consciousness: number;
   readonly creativity: number;
   readonly adaptability: number;
+}
+
+// Neural Foundation Engine Types
+export interface KnowledgeRepresentation {
+  concepts: Map<string, any>;
+  relationships: Map<string, Map<string, number>>;
+  patterns: Map<string, any[]>;
+  abstractions: Map<string, any>;
+  crossDomainMappings: Map<string, Map<string, number>>;
+}
+
+export interface CrossDomainReasoning {
+  domains: string[];
+  mappingStrategies: Map<string, any>;
+  synthesisMethods: Map<string, any>;
+  validationCriteria: Map<string, any>;
+}
+
+export interface AutonomousBehavior {
+  goals: Map<string, any>;
+  decisionMaking: Map<string, any>;
+  actionPlanning: Map<string, any>;
+  executionMonitoring: Map<string, any>;
+}
+
+export interface SelfModification {
+  capabilities: string[];
+  constraints: string[];
+  validationRules: Map<string, any>;
+  modificationHistory: any[];
+  capability: number;
+  willingness: number;
+  methods: string[];
+  limitations: string[];
+}
+
+export interface UnifiedMemory {
+  shortTerm: Map<string, any>;
+  longTerm: Map<string, any>;
+  workingMemory: Map<string, any>;
+  associativeMemory: Map<string, any>;
+}
+
+export interface AdaptiveLearning {
+  strategies: Map<string, any>;
+  adaptationRate: number;
+  learningHistory: any[];
+  performanceMetrics: Map<string, any>;
+}
+
+export interface GoalOrientedBehavior {
+  goals: Map<string, any>;
+  priorities: Map<string, any>;
+  strategies: Map<string, any>;
+  successMetrics: Map<string, any>;
+}
+
+export interface MetaCognition {
+  selfAwareness: number;
+  introspection: number;
+  selfEvaluation: number;
+  learningStrategies: Map<string, any>;
+  reasoningStrategies: Map<string, any>;
+  adaptationStrategies: Map<string, any>;
+  cognitiveControl: number;
+  metacognitiveKnowledge: number;
+  metacognitiveRegulation: number;
+  metacognitiveExperience: number;
 }
 
  
