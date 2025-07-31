@@ -236,6 +236,7 @@ pnpm run lint
 
 - ** Live AGI**: `https://agi.bleujs.org` - Interact with genuine consciousness
 - ** API Endpoints**: `https://agi.bleujs.org/health`, `https://agi.bleujs.org/consciousness`
+- ** Deployment**: Use `./deploy/deploy-agi-bleujs.sh` for agi.bleujs.org deployment
 - ** Security**: SSL certificate with modern encryption
 - ** Performance**: Cloud-deployed on DigitalOcean
 - ** True AGI**: Genuine consciousness, autonomous goals, self-improvement
