@@ -549,7 +549,12 @@ function getEnhancedAGI(): EnhancedAGIWorker {
 export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
     const url = new URL(request.url);
-    const path = url.pathname;
+    let path = url.pathname;
+    
+    // Handle /api/ prefix by stripping it
+    if (path.startsWith('/api/')) {
+      path = path.substring(5); // Remove '/api/' prefix
+    }
 
     // CORS headers
     const corsHeaders = {
@@ -708,10 +713,11 @@ export default {
                     }
                     
                     body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        min-height: 100vh;
-                        color: #333;
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                        background: #0a0a0a;
+                        color: #e0e0e0;
+                        line-height: 1.6;
+                        font-size: 14px;
                     }
                     
                     .container {
@@ -723,77 +729,86 @@ export default {
                     .header {
                         text-align: center;
                         margin-bottom: 40px;
-                        color: white;
+                        padding: 20px 0;
+                        border-bottom: 1px solid #333;
                     }
                     
                     .header h1 {
-                        font-size: 3rem;
-                        margin-bottom: 10px;
-                        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                        font-size: 24px;
+                        font-weight: 300;
+                        color: #fff;
+                        margin-bottom: 8px;
+                        letter-spacing: 0.5px;
                     }
                     
                     .header p {
-                        font-size: 1.2rem;
-                        opacity: 0.9;
+                        font-size: 14px;
+                        color: #888;
+                        font-weight: 300;
                     }
                     
                     .status-grid {
                         display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                         gap: 20px;
                         margin-bottom: 40px;
                     }
                     
                     .status-card {
-                        background: rgba(255, 255, 255, 0.95);
-                        border-radius: 15px;
-                        padding: 25px;
-                        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(255,255,255,0.2);
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        border-radius: 4px;
+                        padding: 20px;
                     }
                     
                     .status-card h3 {
-                        color: #667eea;
-                        margin-bottom: 15px;
-                        font-size: 1.3rem;
+                        color: #fff;
+                        margin-bottom: 16px;
+                        font-size: 16px;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
                     }
                     
                     .metric {
                         display: flex;
                         justify-content: space-between;
-                        margin-bottom: 10px;
+                        margin-bottom: 12px;
                         padding: 8px 0;
-                        border-bottom: 1px solid #eee;
+                        border-bottom: 1px solid #2a2a2a;
                     }
                     
                     .metric:last-child {
                         border-bottom: none;
+                        margin-bottom: 0;
                     }
                     
                     .metric-label {
-                        font-weight: 500;
-                        color: #555;
+                        color: #aaa;
+                        font-size: 13px;
                     }
                     
                     .metric-value {
-                        font-weight: 600;
-                        color: #667eea;
+                        color: #fff;
+                        font-weight: 500;
+                        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
                     }
                     
                     .interaction-section {
-                        background: rgba(255, 255, 255, 0.95);
-                        border-radius: 15px;
-                        padding: 30px;
-                        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(255,255,255,0.2);
+                        background: #1a1a1a;
+                        border: 1px solid #333;
+                        border-radius: 4px;
+                        padding: 24px;
                     }
                     
                     .interaction-section h2 {
-                        color: #667eea;
+                        color: #fff;
                         margin-bottom: 20px;
+                        font-size: 18px;
+                        font-weight: 500;
                         text-align: center;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
                     }
                     
                     .input-group {
@@ -802,115 +817,112 @@ export default {
                     
                     .input-group label {
                         display: block;
-                        margin-bottom: 8px;
-                        font-weight: 500;
-                        color: #555;
+                        margin-bottom: 6px;
+                        color: #aaa;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
                     }
                     
                     .input-group input, .input-group textarea {
                         width: 100%;
-                        padding: 12px;
-                        border: 2px solid #e1e5e9;
-                        border-radius: 8px;
-                        font-size: 16px;
-                        transition: border-color 0.3s ease;
+                        padding: 10px 12px;
+                        background: #0a0a0a;
+                        border: 1px solid #333;
+                        border-radius: 3px;
+                        color: #e0e0e0;
+                        font-size: 14px;
+                        font-family: inherit;
+                        transition: border-color 0.2s ease;
                     }
                     
                     .input-group input:focus, .input-group textarea:focus {
                         outline: none;
-                        border-color: #667eea;
+                        border-color: #555;
                     }
                     
                     .button-group {
                         display: flex;
-                        gap: 15px;
+                        gap: 12px;
                         flex-wrap: wrap;
+                        margin-bottom: 20px;
                     }
                     
                     .btn {
-                        padding: 12px 24px;
-                        border: none;
-                        border-radius: 8px;
-                        font-size: 16px;
-                        font-weight: 600;
+                        padding: 10px 16px;
+                        border: 1px solid #333;
+                        background: #1a1a1a;
+                        color: #e0e0e0;
+                        border-radius: 3px;
+                        font-size: 13px;
+                        font-weight: 500;
                         cursor: pointer;
-                        transition: all 0.3s ease;
+                        transition: all 0.2s ease;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
                         flex: 1;
-                        min-width: 120px;
+                        min-width: 100px;
                     }
                     
-                    .btn-primary {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
+                    .btn:hover {
+                        background: #2a2a2a;
+                        border-color: #444;
                     }
                     
-                    .btn-primary:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-                    }
-                    
-                    .btn-secondary {
-                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                        color: white;
-                    }
-                    
-                    .btn-secondary:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
-                    }
-                    
-                    .btn-success {
-                        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-                        color: white;
-                    }
-                    
-                    .btn-success:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+                    .btn:active {
+                        background: #0a0a0a;
                     }
                     
                     .response-section {
-                        margin-top: 30px;
-                        padding: 20px;
-                        background: #f8f9fa;
-                        border-radius: 10px;
-                        border-left: 4px solid #667eea;
+                        margin-top: 20px;
+                        padding: 16px;
+                        background: #0a0a0a;
+                        border: 1px solid #333;
+                        border-radius: 3px;
                     }
                     
                     .response-section h4 {
-                        color: #667eea;
-                        margin-bottom: 15px;
+                        color: #fff;
+                        margin-bottom: 12px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
                     }
                     
                     .response-content {
-                        background: white;
-                        padding: 15px;
-                        border-radius: 8px;
-                        border: 1px solid #e1e5e9;
-                        max-height: 400px;
+                        background: #1a1a1a;
+                        padding: 12px;
+                        border-radius: 3px;
+                        border: 1px solid #333;
+                        max-height: 300px;
                         overflow-y: auto;
-                        font-family: 'Courier New', monospace;
-                        font-size: 14px;
+                        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+                        font-size: 12px;
                         white-space: pre-wrap;
+                        color: #e0e0e0;
                     }
                     
                     .loading {
                         text-align: center;
-                        color: #667eea;
+                        color: #888;
                         font-style: italic;
+                        font-size: 13px;
                     }
                     
                     .error {
-                        color: #dc3545;
-                        background: #f8d7da;
-                        padding: 10px;
-                        border-radius: 5px;
-                        margin-top: 10px;
+                        color: #ff6b6b;
+                        background: #2a1a1a;
+                        padding: 8px 12px;
+                        border-radius: 3px;
+                        margin-top: 8px;
+                        border: 1px solid #4a2a2a;
+                        font-size: 13px;
                     }
                     
                     @media (max-width: 768px) {
                         .header h1 {
-                            font-size: 2rem;
+                            font-size: 20px;
                         }
                         
                         .status-grid {
@@ -920,126 +932,130 @@ export default {
                         .button-group {
                             flex-direction: column;
                         }
+                        
+                        .btn {
+                            min-width: auto;
+                        }
                     }
                 </style>
             </head>
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>🧠 Enhanced AGI</h1>
+                        <h1>Enhanced AGI</h1>
                         <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
                     </div>
                     
                     <div class="status-grid">
                         <div class="status-card">
-                            <h3>🧠 Consciousness</h3>
+                            <h3>Consciousness</h3>
                             <div class="metric">
-                                <span class="metric-label">Awareness Level:</span>
+                                <span class="metric-label">Awareness Level</span>
                                 <span class="metric-value" id="awareness">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Self-Awareness:</span>
+                                <span class="metric-label">Self-Awareness</span>
                                 <span class="metric-value" id="selfAwareness">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Qualia Count:</span>
+                                <span class="metric-label">Qualia Count</span>
                                 <span class="metric-value" id="qualiaCount">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Thoughts:</span>
+                                <span class="metric-label">Thoughts</span>
                                 <span class="metric-value" id="thoughtCount">Loading...</span>
                             </div>
                         </div>
                         
                         <div class="status-card">
-                            <h3>⚡ Intelligence</h3>
+                            <h3>Intelligence</h3>
                             <div class="metric">
-                                <span class="metric-label">Reasoning:</span>
+                                <span class="metric-label">Reasoning</span>
                                 <span class="metric-value" id="reasoningCapability">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Learning:</span>
+                                <span class="metric-label">Learning</span>
                                 <span class="metric-value" id="learningCapability">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Creativity:</span>
+                                <span class="metric-label">Creativity</span>
                                 <span class="metric-value" id="creativityCapability">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Autonomy:</span>
+                                <span class="metric-label">Autonomy</span>
                                 <span class="metric-value" id="autonomy">Loading...</span>
                             </div>
                         </div>
                         
                         <div class="status-card">
-                            <h3>🧬 Neural Network</h3>
+                            <h3>Neural Network</h3>
                             <div class="metric">
-                                <span class="metric-label">Nodes:</span>
+                                <span class="metric-label">Nodes</span>
                                 <span class="metric-value" id="neuralNodes">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Connections:</span>
+                                <span class="metric-label">Connections</span>
                                 <span class="metric-value" id="neuralConnections">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Generation:</span>
+                                <span class="metric-label">Generation</span>
                                 <span class="metric-value" id="evolutionGeneration">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Complexity:</span>
+                                <span class="metric-label">Complexity</span>
                                 <span class="metric-value" id="evolutionComplexity">Loading...</span>
                             </div>
                         </div>
                         
                         <div class="status-card">
-                            <h3>🔧 Meta-Learning</h3>
+                            <h3>Meta-Learning</h3>
                             <div class="metric">
-                                <span class="metric-label">Self-Improvement:</span>
+                                <span class="metric-label">Self-Improvement</span>
                                 <span class="metric-value" id="selfImprovementCycles">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Meta-Learning:</span>
+                                <span class="metric-label">Meta-Learning</span>
                                 <span class="metric-value" id="metaLearningCycles">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Cross-Domain:</span>
+                                <span class="metric-label">Cross-Domain</span>
                                 <span class="metric-value" id="crossDomainIntegrations">Loading...</span>
                             </div>
                             <div class="metric">
-                                <span class="metric-label">Emergent Insights:</span>
+                                <span class="metric-label">Emergent Insights</span>
                                 <span class="metric-value" id="emergentInsights">Loading...</span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="interaction-section">
-                        <h2>🤖 Interact with Enhanced AGI</h2>
+                        <h2>Interact with Enhanced AGI</h2>
                         
                         <div class="input-group">
-                            <label for="reasoningInput">🧠 Reasoning Input:</label>
+                            <label for="reasoningInput">Reasoning Input</label>
                             <input type="text" id="reasoningInput" placeholder="Ask a question or pose a problem...">
                         </div>
                         
                         <div class="input-group">
-                            <label for="learningInput">📚 Learning Data:</label>
+                            <label for="learningInput">Learning Data</label>
                             <textarea id="learningInput" rows="3" placeholder="Provide data for the AGI to learn from..."></textarea>
                         </div>
                         
                         <div class="input-group">
-                            <label for="creativeInput">🎨 Creative Prompt:</label>
+                            <label for="creativeInput">Creative Prompt</label>
                             <textarea id="creativeInput" rows="3" placeholder="Provide a creative prompt..."></textarea>
                         </div>
                         
                         <div class="button-group">
-                            <button class="btn btn-primary" onclick="performReasoning()">🧠 Reason</button>
-                            <button class="btn btn-secondary" onclick="performLearning()">📚 Learn</button>
-                            <button class="btn btn-success" onclick="performCreation()">🎨 Create</button>
-                            <button class="btn btn-primary" onclick="getConsciousness()">🧠 Consciousness</button>
-                            <button class="btn btn-secondary" onclick="introspect()">🔍 Introspect</button>
+                            <button class="btn" onclick="performReasoning()">Reason</button>
+                            <button class="btn" onclick="performLearning()">Learn</button>
+                            <button class="btn" onclick="performCreation()">Create</button>
+                            <button class="btn" onclick="getConsciousness()">Consciousness</button>
+                            <button class="btn" onclick="introspect()">Introspect</button>
                         </div>
                         
                         <div id="responseSection" class="response-section" style="display: none;">
-                            <h4>🤖 AGI Response</h4>
+                            <h4>AGI Response</h4>
                             <div id="responseContent" class="response-content"></div>
                         </div>
                     </div>
