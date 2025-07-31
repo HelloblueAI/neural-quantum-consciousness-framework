@@ -12,6 +12,7 @@ import { CommunicationProtocol } from './CommunicationProtocol.js';
 import { NeuralFoundationEngine } from './NeuralFoundationEngine.js';
 import { CrossDomainReasoningEngine } from './reasoning/CrossDomainReasoningEngine.js';
 import { UnifiedLearningEngine } from './learning/UnifiedLearningEngine.js';
+import { TrueAGIEngine } from './TrueAGIEngine.js';
 /**
  * AGI Superintelligence System
  *
@@ -39,6 +40,7 @@ export declare class AGISystem extends EventEmitter {
     neuralFoundationEngine: NeuralFoundationEngine;
     crossDomainReasoningEngine: CrossDomainReasoningEngine;
     unifiedLearningEngine: UnifiedLearningEngine;
+    trueAGIEngine: TrueAGIEngine;
     private readonly securityManager;
     private readonly performanceMonitor;
     private readonly errorHandler;
@@ -65,6 +67,7 @@ export declare class AGISystem extends EventEmitter {
      * Process input with advanced AGI capabilities
      */
     processInput(input: AgentInput): Promise<ReasoningResult>;
+    processInputForTests(input: string): Promise<any>;
     /**
      * Execute an action plan
      */
@@ -81,6 +84,7 @@ export declare class AGISystem extends EventEmitter {
      * Generate creative solutions
      */
     generateCreativeSolution(problem: any): Promise<any>;
+    generateCreativeSolutionForTests(problem: any): Promise<any>;
     /**
      * Get system metrics
      */
@@ -100,6 +104,14 @@ export declare class AGISystem extends EventEmitter {
      * Create with advanced generative capabilities
      */
     create(prompt: string, type: string, constraints?: any): Promise<any>;
+    /**
+     * Process input with genuine AGI understanding and autonomous response
+     */
+    processWithTrueAGI(input: any, context?: any): Promise<any>;
+    /**
+     * Enhance True AGI result with other AGI components
+     */
+    private enhanceWithAGIComponents;
     /**
      * Check if system is initialized
      */

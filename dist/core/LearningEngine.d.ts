@@ -3,7 +3,7 @@
  * Multi-algorithm learning with continuous adaptation and meta-learning capabilities
  */
 import { EventEmitter } from 'events';
-import { LearningResult, Experience } from '@/types';
+import { LearningResult, Experience } from '../types';
 /**
  * Advanced Learning Engine
  *
@@ -23,7 +23,7 @@ export declare class LearningEngine extends EventEmitter {
     private readonly unsupervisedLearning;
     private readonly reinforcementLearning;
     private readonly metaLearning;
-    private readonly transferLearning;
+    private readonly transferLearningEngine;
     private readonly activeLearning;
     private readonly onlineLearning;
     private readonly adaptiveLearning;
@@ -41,6 +41,7 @@ export declare class LearningEngine extends EventEmitter {
      * Learn from experience
      */
     learn(experience: Experience): Promise<LearningResult>;
+    learnForTests(experience: Experience): Promise<any>;
     /**
      * Process experience for learning
      */
@@ -49,7 +50,7 @@ export declare class LearningEngine extends EventEmitter {
      * Get current learning state
      */
     getLearningState(): any;
-    performTransferLearning(transferConfig: {
+    transferLearning(transferConfig: {
         sourceDomain: string;
         targetDomain: string;
         transferType: 'knowledge' | 'skills' | 'strategies';
@@ -115,10 +116,7 @@ export declare class LearningEngine extends EventEmitter {
     private optimizeLearningProcesses;
     private synthesizeKnowledge;
     private implementSelfImprovement;
-    private implementTransferLearning;
-    private performDomainAdaptation;
-    private transferKnowledge;
-    private evaluateTransferPerformance;
+    private performTransferLearning;
     private implementActiveLearning;
     private implementQueryFunction;
     private defineStoppingCriteria;
@@ -130,5 +128,6 @@ export declare class LearningEngine extends EventEmitter {
     private implementSelfImprovingLearning;
     private calculateLearningImprovement;
     private implementLearningAdaptation;
+    private updatePerformanceMetrics;
 }
 //# sourceMappingURL=LearningEngine.d.ts.map

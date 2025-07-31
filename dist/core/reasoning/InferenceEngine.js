@@ -1,4 +1,4 @@
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../../utils/Logger';
 export class InferenceEngine {
     rules = new Map();
     premises = new Map();
@@ -431,3 +431,4 @@ export class InferenceEngine {
         return this.chains;
     }
 }
+//# sourceMappingURL=InferenceEngine.js.map

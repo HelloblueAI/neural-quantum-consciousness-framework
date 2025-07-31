@@ -1,4 +1,4 @@
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../../utils/Logger';
 export class ProblemSolver {
     strategies = new Map();
     problems = new Map();
@@ -519,3 +519,4 @@ export class ProblemSolver {
         this.logger.info('Added problem-solving strategy', { strategyId: strategy.id, name: strategy.name });
     }
 }
+//# sourceMappingURL=ProblemSolver.js.map

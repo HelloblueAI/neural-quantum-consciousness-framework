@@ -3,7 +3,7 @@
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
  * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { ReasoningResult } from '@/types';
+import { ReasoningResult } from '../types';
 export declare class ReasoningEngine {
     private readonly logger;
     private classicalLogic;
@@ -26,6 +26,9 @@ export declare class ReasoningEngine {
     constructor();
     initialize(): Promise<void>;
     reason(input: any, context?: Record<string, any>): Promise<ReasoningResult>;
+    reasonForTests(input: any, context?: Record<string, any>): Promise<any>;
+    private simpleReasoningForTests;
+    private generateInsights;
     solveProblem(problem: string, context?: Record<string, any>): Promise<ReasoningResult>;
     makeDecision(options: string[], context?: Record<string, any>): Promise<ReasoningResult>;
     infer(premises: string[], context?: Record<string, any>): Promise<ReasoningResult>;

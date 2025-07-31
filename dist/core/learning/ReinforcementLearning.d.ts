@@ -1,4 +1,4 @@
-import { Experience, LearningResult } from '@/types';
+import { Experience, LearningResult } from '../../types';
 export interface ReinforcementLearningConfig {
     learningRate: number;
     discountFactor: number;

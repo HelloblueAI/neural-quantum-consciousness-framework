@@ -1,5 +1,5 @@
 import { Agent } from './Agent';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export class ReasoningAgent extends Agent {
     reasoningEngine;
     reasoningCapabilities;
@@ -224,3 +224,4 @@ export class ReasoningAgent extends Agent {
         }
     }
 }
+//# sourceMappingURL=ReasoningAgent.js.map

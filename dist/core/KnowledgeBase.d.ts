@@ -3,7 +3,7 @@
  * Advanced knowledge storage, retrieval, and integration system
  */
 import { EventEmitter } from 'events';
-import { Knowledge } from '@/types';
+import { Knowledge } from '../types';
 export declare class KnowledgeBase extends EventEmitter {
     private readonly id;
     private readonly logger;
@@ -19,6 +19,7 @@ export declare class KnowledgeBase extends EventEmitter {
     addKnowledge(id: string, knowledge: Knowledge): Promise<void>;
     retrieve(query: any): Promise<Knowledge[]>;
     getKnowledge(id: string): Promise<Knowledge | null>;
+    getKnowledgeSync(id: string): any;
     integrateLearning(learningResult: any): Promise<void>;
     getMetrics(): any;
     private initializeIndexes;

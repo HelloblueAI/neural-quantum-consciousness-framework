@@ -1,4 +1,4 @@
-import { ConsciousState, Emotion, Thought, Qualia } from '@/types';
+import { ConsciousState, Emotion, Thought, Qualia } from '../types';
 export declare class ConsciousnessSimulator {
     private readonly logger;
     private consciousState;
@@ -19,6 +19,7 @@ export declare class ConsciousnessSimulator {
     constructor();
     initialize(): Promise<void>;
     updateConsciousness(input: any, context?: Record<string, any>): Promise<ConsciousState>;
+    updateConsciousnessSync(input: any, context?: Record<string, any>): any;
     processExperience(experience: string, context?: Record<string, any>): Promise<ConsciousState>;
     getConsciousState(): ConsciousState;
     getConsciousnessState(): any;
@@ -111,5 +112,6 @@ export declare class ConsciousnessSimulator {
     private calculateAwarenessEntanglement;
     private calculateAwarenessUncertainty;
     private calculateExperienceSuccess;
+    getPerformanceMetrics(): any;
 }
 //# sourceMappingURL=ConsciousnessSimulator.d.ts.map

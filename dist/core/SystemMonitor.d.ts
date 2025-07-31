@@ -1,10 +1,10 @@
-import { PerformanceMonitor } from '@/core/PerformanceMonitor';
-import { SecurityManager } from '@/core/SecurityManager';
-import { ErrorHandler } from '@/core/ErrorHandler';
-import { ConfigurationManager } from '@/config/ConfigurationManager';
-import { MemoryManager } from '@/core/MemoryManager';
-import { ConsciousnessSimulator } from '@/core/ConsciousnessSimulator';
-import { ExternalServiceManager } from '@/services/ExternalServiceManager';
+import { PerformanceMonitor } from './PerformanceMonitor';
+import { SecurityManager } from './SecurityManager';
+import { ErrorHandler } from './ErrorHandler';
+import { ConfigurationManager } from '../config/ConfigurationManager';
+import { MemoryManager } from './MemoryManager';
+import { ConsciousnessSimulator } from './ConsciousnessSimulator';
+import { ExternalServiceManager } from '../services/ExternalServiceManager';
 export interface SystemHealth {
     overall: 'healthy' | 'warning' | 'critical';
     components: {

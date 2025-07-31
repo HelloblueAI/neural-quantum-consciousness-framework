@@ -3,7 +3,7 @@
  * Orchestrates all AGI components and manages multi-agent coordination
  */
 import { EventEmitter } from 'events';
-import { AGISystem, AgentInput, ReasoningResult, ActionPlan, ActionResult } from '@/types';
+import { AGISystem, AgentInput, ReasoningResult, ActionPlan, ActionResult } from '../types';
 export declare class SystemCoordinator extends EventEmitter {
     private readonly id;
     private readonly logger;

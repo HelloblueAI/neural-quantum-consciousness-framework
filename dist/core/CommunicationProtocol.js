@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export class CommunicationProtocol extends EventEmitter {
     id;
     logger;
@@ -213,3 +213,4 @@ export class CommunicationProtocol extends EventEmitter {
         this.emit('disconnection', connection);
     }
 }
+//# sourceMappingURL=CommunicationProtocol.js.map

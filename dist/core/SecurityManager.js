@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export class SecurityManager extends EventEmitter {
     id;
     logger;
@@ -145,6 +145,9 @@ export class SecurityManager extends EventEmitter {
      * Get security metrics for monitoring
      */
     getSecurityMetrics() {
+        const threatLevel = this.threats.length > 10 ? 'critical' :
+            this.threats.length > 5 ? 'high' :
+                this.threats.length > 2 ? 'medium' : 'low';
         return {
             threatsDetected: this.securityMetrics.threatsDetected,
             threatsBlocked: this.securityMetrics.threatsBlocked,
@@ -153,7 +156,13 @@ export class SecurityManager extends EventEmitter {
             threats: this.threats.length,
             vulnerabilityCount: this.vulnerabilities.length,
             securityThreats: this.threats.length,
-            securityScore: this.calculateSecurityScore()
+            securityScore: this.calculateSecurityScore(),
+            threatLevel: threatLevel,
+            activeThreats: this.threats.length,
+            threatCount: this.threats.length,
+            vulnerabilityLevel: this.vulnerabilities.length > 5 ? 'critical' :
+                this.vulnerabilities.length > 2 ? 'high' :
+                    this.vulnerabilities.length > 0 ? 'medium' : 'low'
         };
     }
     calculateSecurityScore() {
@@ -320,3 +329,4 @@ export class SecurityManager extends EventEmitter {
         return user.permissions.includes(action.type);
     }
 }
+//# sourceMappingURL=SecurityManager.js.map
