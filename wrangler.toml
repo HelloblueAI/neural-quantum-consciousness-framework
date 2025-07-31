@@ -10,7 +10,7 @@ watch_dir = "src"
 # Custom domain configuration
 [env.production]
 name = "agi-bleujs"
-route = "agi.bleujs.org/*"
+# route = "agi.bleujs.org/*"  # Temporarily commented out
 
 # Staging environment
 [env.staging]
