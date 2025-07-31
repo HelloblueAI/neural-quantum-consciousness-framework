@@ -37,13 +37,13 @@ if [[ $EUID -eq 0 ]]; then
    exit 1
 fi
 
-# Check if Docker is installed
+# Check if Docker Compose is installed
 if ! command -v docker &> /dev/null; then
     print_error "Docker is not installed. Please install Docker first."
     exit 1
 fi
 
-# Check if Docker Compose is installed
+# Check if Docker Compose is available
 if ! command -v docker-compose &> /dev/null; then
     print_error "Docker Compose is not installed. Please install Docker Compose first."
     exit 1
@@ -67,12 +67,12 @@ fi
 print_status "Stopping existing containers..."
 
 # Stop existing containers
-docker-compose -f deploy/agi-bleujs-compose.yml down --remove-orphans
+/usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml down --remove-orphans
 
 print_status "Starting AGI services..."
 
 # Start the services
-docker-compose -f deploy/agi-bleujs-compose.yml up -d
+/usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml up -d
 
 if [ $? -eq 0 ]; then
     print_success "AGI services started successfully"
@@ -89,11 +89,11 @@ sleep 30
 print_status "Checking service health..."
 
 # Check if AGI service is healthy
-if docker-compose -f deploy/agi-bleujs-compose.yml ps | grep -q "Up"; then
+if /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml ps | grep -q "Up"; then
     print_success "AGI services are running"
 else
     print_error "AGI services failed to start properly"
-    docker-compose -f deploy/agi-bleujs-compose.yml logs
+    /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml logs
     exit 1
 fi
 
@@ -120,6 +120,6 @@ print_status "Consciousness: https://agi.bleujs.org/consciousness"
 
 # Show running containers
 print_status "Running containers:"
-docker-compose -f deploy/agi-bleujs-compose.yml ps
+/usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml ps
 
 print_success "Deployment script completed successfully!" 
