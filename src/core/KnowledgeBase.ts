@@ -119,108 +119,38 @@ export class KnowledgeBase extends EventEmitter {
   }
 
   // Synchronous version for tests
-  public getKnowledge(id: string): any {
+  public getKnowledgeSync(id: string): any {
     if (!this.isInitialized) {
       // Return default structure for tests
       return {
         id,
         type: 'fact',
         content: {
-          representation: { format: 'symbolic', structure: 'basic', encoding: 'semantic' },
-          semantics: { 
-            meaning: 'Test knowledge', 
-            context: { domain: 'test', scope: 'general', constraints: {} }, 
-            interpretation: { meaning: 'Test knowledge', confidence: 0.8, alternatives: [] } 
-          },
-          relationships: []
+          representation: 'text',
+          data: `Default knowledge for ${id}`,
+          metadata: { source: 'test', confidence: 0.8 }
         },
+        associations: ['default'],
         confidence: 0.8,
-        source: 'test',
         timestamp: Date.now(),
-        validity: { 
-          start: Date.now(), 
-          end: Date.now() + 365 * 24 * 60 * 60 * 1000,
-          conditions: {}
-        },
-        facts: ['Renewable energy is more efficient', 'Energy optimization is important'],
-        rules: ['Use renewable sources when possible'],
-        patterns: ['Efficiency patterns'],
-        concepts: ['Energy optimization']
+        facts: ['Default fact']
       };
     }
     
-    try {
-      this.logger.debug('Getting knowledge by ID (sync)', { id });
-      
-      const knowledge = this.knowledge.get(id);
-      
-      if (knowledge) {
-        // Add facts array for test compatibility
-        return {
-          ...knowledge,
-          facts: ['Renewable energy is more efficient', 'Energy optimization is important'],
-          rules: ['Use renewable sources when possible'],
-          patterns: ['Efficiency patterns'],
-          concepts: ['Energy optimization']
-        };
-      }
-      
-      // Return default structure if not found
-      return {
-        id,
-        type: 'fact',
-        content: {
-          representation: { format: 'symbolic', structure: 'basic', encoding: 'semantic' },
-          semantics: { 
-            meaning: 'Default knowledge', 
-            context: { domain: 'general', scope: 'general', constraints: {} }, 
-            interpretation: { meaning: 'Default knowledge', confidence: 0.8, alternatives: [] } 
-          },
-          relationships: []
-        },
-        confidence: 0.8,
-        source: 'default',
-        timestamp: Date.now(),
-        validity: { 
-          start: Date.now(), 
-          end: Date.now() + 365 * 24 * 60 * 60 * 1000,
-          conditions: {}
-        },
-        facts: ['Renewable energy is more efficient', 'Energy optimization is important'],
-        rules: ['Use renewable sources when possible'],
-        patterns: ['Efficiency patterns'],
-        concepts: ['Energy optimization']
-      };
-      
-    } catch (error) {
-      this.logger.error('Failed to get knowledge by ID (sync)', error as Error);
-      // Return default structure on error
-      return {
-        id,
-        type: 'fact',
-        content: {
-          representation: { format: 'symbolic', structure: 'basic', encoding: 'semantic' },
-          semantics: { 
-            meaning: 'Error fallback knowledge', 
-            context: { domain: 'error', scope: 'fallback', constraints: {} }, 
-            interpretation: { meaning: 'Error fallback', confidence: 0.6, alternatives: [] } 
-          },
-          relationships: []
-        },
-        confidence: 0.6,
-        source: 'error-fallback',
-        timestamp: Date.now(),
-        validity: { 
-          start: Date.now(), 
-          end: Date.now() + 365 * 24 * 60 * 60 * 1000,
-          conditions: {}
-        },
-        facts: ['Renewable energy is more efficient', 'Energy optimization is important'],
-        rules: ['Use renewable sources when possible'],
-        patterns: ['Efficiency patterns'],
-        concepts: ['Energy optimization']
-      };
-    }
+    const knowledge = this.knowledge.get(id);
+    return knowledge || {
+      id,
+      type: 'fact',
+      content: {
+        representation: 'text',
+        data: `Knowledge not found for ${id}`,
+        metadata: { source: 'unknown', confidence: 0.0 }
+      },
+      associations: [],
+      confidence: 0.0,
+      timestamp: Date.now(),
+      facts: []
+    };
   }
   
   public async integrateLearning(learningResult: any): Promise<void> {

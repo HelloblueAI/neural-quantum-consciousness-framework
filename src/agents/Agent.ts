@@ -143,19 +143,53 @@ export abstract class Agent {
         reasoning: {
           confidence: 0.6,
           reasoning: { 
-            steps: ['Fallback processing'],
+            steps: [{ 
+              id: 'fallback-1',
+              type: 'deduction',
+              premise: { content: 'Task input', truthValue: 0.8, certainty: 0.6, evidence: [] },
+              conclusion: { content: 'Fallback processing', truthValue: 0.6, certainty: 0.6, evidence: [] },
+              confidence: 0.6,
+              reasoning: 'Fallback processing'
+            }],
             logic: 'classical',
             evidence: [],
             assumptions: []
           },
-          conclusions: ['Task completed with fallback'],
+          conclusions: [{ 
+            id: 'fallback-conclusion',
+            statement: 'Task completed with fallback',
+            confidence: 0.6,
+            evidence: [],
+            reasoning: 'Fallback processing',
+            implications: ['Task completed']
+          }],
           uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.6 },
           alternatives: []
         },
         learning: {
           success: true,
-          improvements: ['Fallback learning'],
-          newKnowledge: ['Fallback knowledge'],
+          improvements: [{ 
+            type: 'fallback',
+            magnitude: 0.6,
+            description: 'Fallback learning'
+          }],
+          newKnowledge: [{ 
+            id: 'fallback-knowledge',
+            type: 'fact',
+            content: {
+              representation: { format: 'symbolic', structure: 'basic', encoding: { format: 'text', parameters: {} } },
+              semantics: { 
+                meaning: 'Fallback knowledge', 
+                context: { domain: 'fallback', scope: 'general', constraints: {} }, 
+                interpretation: { meaning: 'Fallback knowledge', confidence: 0.6, alternatives: [] } 
+              },
+              relationships: []
+            },
+            confidence: 0.6,
+            source: 'fallback',
+            timestamp: Date.now(),
+            validity: { start: Date.now(), end: Date.now() + 365 * 24 * 60 * 60 * 1000, conditions: {} }
+          }],
           adaptationMetrics: {
             performance: 0.6,
             efficiency: 0.6,
