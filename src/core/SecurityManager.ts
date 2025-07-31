@@ -178,6 +178,10 @@ export class SecurityManager extends EventEmitter {
    * Get security metrics for monitoring
    */
   public getSecurityMetrics(): any {
+    const threatLevel = this.threats.length > 10 ? 'critical' : 
+                       this.threats.length > 5 ? 'high' : 
+                       this.threats.length > 2 ? 'medium' : 'low';
+    
     return {
       threatsDetected: this.securityMetrics.threatsDetected,
       threatsBlocked: this.securityMetrics.threatsBlocked,
@@ -186,7 +190,13 @@ export class SecurityManager extends EventEmitter {
       threats: this.threats.length,
       vulnerabilityCount: this.vulnerabilities.length,
       securityThreats: this.threats.length,
-      securityScore: this.calculateSecurityScore()
+      securityScore: this.calculateSecurityScore(),
+      threatLevel: threatLevel,
+      activeThreats: this.threats.length,
+      threatCount: this.threats.length,
+      vulnerabilityLevel: this.vulnerabilities.length > 5 ? 'critical' : 
+                         this.vulnerabilities.length > 2 ? 'high' : 
+                         this.vulnerabilities.length > 0 ? 'medium' : 'low'
     };
   }
 
