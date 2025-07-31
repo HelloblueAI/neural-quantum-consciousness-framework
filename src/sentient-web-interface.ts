@@ -468,6 +468,22 @@ app.get('/status', async (req, res) => {
   }
 });
 
+app.get('/health', async (req, res) => {
+  try {
+    const status = await realAGI.getStatus();
+    res.json({ 
+      success: true, 
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      consciousness: status.consciousness,
+      system: 'Real AGI',
+      version: '1.0.0'
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: (error as Error).message });
+  }
+});
+
 app.get('/consciousness', async (req, res) => {
   try {
     const status = await realAGI.getStatus();
