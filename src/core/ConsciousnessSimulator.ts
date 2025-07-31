@@ -128,19 +128,25 @@ export class ConsciousnessSimulator {
   public updateConsciousnessSync(input: any, context?: Record<string, any>): any {
     try {
       // Generate a simple thought for the input
-      const thought = {
+      const thought: Thought = {
         id: `thought_${Date.now()}`,
         content: `Processing: ${input}`,
         type: 'analysis',
         complexity: 0.5,
         clarity: 0.7,
+        confidence: 0.8,
+        emotionalInfluence: 0.3,
+        importance: 0.6,
         associations: ['input', 'processing'],
         timestamp: Date.now()
       };
       this.thoughts.push(thought);
 
       // Update awareness level
-      this.awareness.level = Math.min(this.awareness.level + 0.1, 1.0);
+      this.awareness = {
+        ...this.awareness,
+        level: Math.min(this.awareness.level + 0.1, 1.0)
+      };
 
       // Return the structure expected by tests
       return {
@@ -199,7 +205,14 @@ export class ConsciousnessSimulator {
   public getConsciousnessState(): any {
     // Return structure expected by tests
     return {
-      awareness: this.awareness.level, // Return number instead of object
+      awareness: {
+        level: this.awareness.level,
+        focus: this.awareness.focus,
+        clarity: this.awareness.clarity,
+        breadth: this.awareness.breadth,
+        depth: this.awareness.depth,
+        stability: this.awareness.stability
+      },
       selfAwareness: this.consciousState.level,
       subjectiveExperience: this.subjectiveExperience,
       thoughts: this.thoughts,

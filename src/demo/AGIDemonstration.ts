@@ -15,9 +15,9 @@
  */
 
 import { AGISystem } from '@/core/AGISystem';
-import { TrueAGIEngine } from '@/core/TrueAGIEngine';
 import { ConsciousnessSimulator } from '@/core/ConsciousnessSimulator';
 import { Logger } from '@/utils/Logger';
+import { SystemConfig } from '@/types';
 
 interface DemonstrationScenario {
   id: string;
@@ -39,7 +39,6 @@ interface DemonstrationResult {
 export class AGIDemonstration {
   private readonly logger: Logger;
   private agiSystem: AGISystem;
-  private trueAGIEngine: TrueAGIEngine;
   private consciousnessSimulator: ConsciousnessSimulator;
   private results: DemonstrationResult[] = [];
   
@@ -47,34 +46,72 @@ export class AGIDemonstration {
     this.logger = new Logger('AGIDemonstration');
     
     // Provide proper configuration for AGISystem
-    const config = {
-      authentication: {
-        enabled: false,
-        methods: ['api_key'],
-        apiKey: 'demo-key'
+    const config: SystemConfig = {
+      agents: [
+        {
+          id: 'reasoning-agent',
+          type: 'reasoning',
+          capabilities: ['logical-reasoning', 'problem-solving'],
+          parameters: {},
+          constraints: []
+        }
+      ],
+      learning: {
+        algorithms: ['supervised', 'reinforcement'],
+        parameters: {},
+        evaluation: {
+          metrics: ['accuracy', 'efficiency'],
+          thresholds: {},
+          validation: true
+        },
+        adaptation: {
+          enabled: true,
+          strategies: ['gradient-descent'],
+          thresholds: {}
+        }
       },
-      authorization: {
-        enabled: false,
-        roles: ['user', 'admin'],
-        permissions: ['read', 'write']
+      reasoning: {
+        logics: ['classical', 'fuzzy'],
+        inference: {
+          method: 'deductive',
+          accuracy: 0.9,
+          efficiency: 0.8,
+          reliability: 0.9
+        },
+        decisionMaking: {
+          strategy: 'utility-maximization',
+          criteria: ['efficiency', 'accuracy'],
+          weights: {},
+          confidence: 0.8
+        },
+        problemSolving: {
+          approach: 'systematic',
+          heuristics: ['divide-and-conquer'],
+          strategies: ['backtracking'],
+          success: 0.8
+        }
       },
-      encryption: {
-        enabled: false,
-        algorithm: 'AES-256'
-      },
-      monitoring: {
-        enabled: true,
-        logLevel: 'info'
+      communication: {
+        protocol: 'http',
+        format: 'json',
+        encoding: 'utf-8',
+        reliability: 0.9
       },
       security: {
-        enabled: true,
-        threatDetection: true,
-        inputValidation: true
+        authentication: true,
+        authorization: true,
+        encryption: true,
+        monitoring: true
+      },
+      performance: {
+        maxResponseTime: 5000,
+        maxThroughput: 1000,
+        resourceLimits: {},
+        optimization: true
       }
     };
     
     this.agiSystem = new AGISystem(config);
-    this.trueAGIEngine = new TrueAGIEngine();
     this.consciousnessSimulator = new ConsciousnessSimulator();
   }
   
@@ -85,7 +122,6 @@ export class AGIDemonstration {
       // Initialize all components
       await Promise.all([
         this.agiSystem.initialize(),
-        this.trueAGIEngine.initialize(),
         this.consciousnessSimulator.initialize()
       ]);
       
@@ -153,8 +189,8 @@ export class AGIDemonstration {
     const learningResult = await this.agiSystem.learningEngine.learnForTests({
       id: `demo_${scenario.id}`,
       timestamp: Date.now(),
-      context: { scenario: scenario.name },
-      action: { id: 'demo_action', type: 'demonstrate', parameters: {}, preconditions: [], effects: [], cost: { type: 'time', value: 1, unit: 'seconds' }, risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] } },
+      context: { id: 'demo-context', timestamp: Date.now(), environment: { objects: [], agents: [], events: [], constraints: [], resources: [] }, memory: { totalMemories: 0, shortTermCount: 0, longTermCount: 0, workingCount: 0, episodicCount: 0, semanticCount: 0, proceduralCount: 0, shortTerm: { capacity: 10, items: [], decay: { type: 'exponential', rate: 0.1, parameters: {} } }, longTerm: { knowledge: [], patterns: [], skills: [], experiences: [] }, working: { active: [], focus: { target: '', intensity: 0.5, duration: 0 }, capacity: 10 }, episodic: { events: [], timeline: { events: [], order: 'chronological', granularity: 'minute' }, associations: [] }, semantic: { concepts: [], relationships: [], schemas: [] } }, goals: [], constraints: [] },
+      action: { id: 'demo_action', type: 'reason', parameters: {}, preconditions: [], effects: [], cost: { type: 'time', value: 1, unit: 'seconds' }, risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] } },
       outcome: { state: { objects: [], agents: [], events: [], constraints: [], resources: [] }, changes: [], value: { utility: 0.8, ethical: { fairness: 0.8, harm: 0.1, autonomy: 0.8, beneficence: 0.8 }, aesthetic: { beauty: 0.5, harmony: 0.5, creativity: 0.5, elegance: 0.5 }, practical: { efficiency: 0.8, effectiveness: 0.8, sustainability: 0.8, scalability: 0.8 } }, uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.8 } },
       feedback: { type: 'positive', strength: 0.8, specificity: 0.7, timeliness: 0.9 },
       learning: [],
@@ -424,7 +460,6 @@ export class AGIDemonstration {
   public async getSystemStatus(): Promise<any> {
     return {
       agiSystem: await this.agiSystem.getStatus(),
-      trueAGIEngine: await this.trueAGIEngine.getStatus(),
       consciousnessSimulator: this.consciousnessSimulator.getConsciousnessState(),
       demonstrationResults: this.results.length,
       timestamp: new Date()

@@ -249,7 +249,17 @@ export class AGISystem extends EventEmitter {
       const crossDomainResult = await this.crossDomainReasoningEngine.reasonAcrossDomains(input, undefined);
       
       // Use unified learning for continuous improvement
-      const learningResult = await this.unifiedLearningEngine.learn(input, undefined);
+      const learningResult = await this.unifiedLearningEngine.learnFromExperience({
+        input,
+        context: undefined,
+        response: { success: true },
+        outcome: { success: true },
+        feedback: { type: 'positive', strength: 0.8 },
+        domain: 'general',
+        complexity: 0.5,
+        novelty: 0.3,
+        value: 0.7
+      });
       
       // Synthesize advanced results
       const advancedResult = await this.synthesizeAdvancedResults(foundationResult, crossDomainResult, learningResult);
@@ -275,7 +285,7 @@ export class AGISystem extends EventEmitter {
         confidence,
         reasoning: {
           steps: [],
-          logic: 'advanced',
+          logic: 'hybrid',
           evidence: [],
           assumptions: []
         },
@@ -304,8 +314,8 @@ export class AGISystem extends EventEmitter {
       const coordination = {
         strategy: 'sequential',
         agents: this.agents.map(agent => ({
-          id: agent.getConfig().id,
-          type: agent.getConfig().type,
+          id: (agent as any).getConfig?.()?.id || (agent as any).id || 'unknown',
+          type: (agent as any).getConfig?.()?.type || (agent as any).type || 'unknown',
           status: 'active',
           contribution: 'processed input'
         })),
@@ -319,7 +329,7 @@ export class AGISystem extends EventEmitter {
           id: 'test_experience',
           timestamp: Date.now(),
           context: this.createAgentContext(),
-          action: { id: 'test_action', type: 'process', parameters: {}, preconditions: [], effects: [], cost: { type: 'time', value: 1, unit: 'seconds' }, risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] } },
+          action: { id: 'test_action', type: 'reason', parameters: {}, preconditions: [], effects: [], cost: { type: 'time', value: 1, unit: 'seconds' }, risk: { level: 'low', probability: 0.1, impact: 0.1, mitigation: [] } },
           outcome: { state: { objects: [], agents: [], events: [], constraints: [], resources: [] }, changes: [], value: { utility: 0.8, ethical: { fairness: 0.8, harm: 0.1, autonomy: 0.8, beneficence: 0.8 }, aesthetic: { beauty: 0.5, harmony: 0.5, creativity: 0.5, elegance: 0.5 }, practical: { efficiency: 0.8, effectiveness: 0.8, sustainability: 0.8, scalability: 0.8 } }, uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.8 } },
           feedback: { type: 'positive', strength: 0.8, specificity: 0.7, timeliness: 0.9 },
           learning: [],
@@ -772,7 +782,7 @@ export class AGISystem extends EventEmitter {
       synthesis: {
         understanding: Math.max(trueAGIResult.understanding.confidence, neuralEnhancement?.confidence || 0),
         reasoning: crossDomainEnhancement?.confidence || 0,
-        learning: learningEnhancement?.confidence || 0
+        learning: learningEnhancement && learningEnhancement.length > 0 && learningEnhancement[0] ? learningEnhancement[0].confidence || 0 : 0
       }
     };
   }
@@ -910,7 +920,7 @@ export class AGISystem extends EventEmitter {
           reasoning: {
             conclusion: `Processed task: ${task}`,
             confidence: 0.8,
-            reasoning: { steps: [], logic: 'classical', evidence: [], assumptions: [] },
+            reasoning: { steps: [], logic: 'hybrid', evidence: [], assumptions: [] },
             conclusions: [],
             uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.7 },
             alternatives: []

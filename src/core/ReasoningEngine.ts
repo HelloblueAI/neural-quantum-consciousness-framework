@@ -248,7 +248,7 @@ export class ReasoningEngine {
       id: 'test_step_1',
       type: 'deduction' as const,
       premise: { content: inputStr, truthValue: confidence },
-      conclusion: { content: conclusions[0].statement, truthValue: confidence },
+      conclusion: { content: conclusions[0]?.statement || 'No conclusion reached', truthValue: confidence },
       confidence,
       reasoning: isInvalid ? 'Invalid input processing' : 'Basic logical deduction',
       description: 'Test reasoning step'
@@ -265,7 +265,7 @@ export class ReasoningEngine {
       reasoning: {
         steps,
         logic: 'classical',
-        evidence: conclusions[0].evidence,
+        evidence: conclusions[0]?.evidence || [],
         assumptions: isInvalid ? ['Input is invalid'] : ['Input is valid', 'Basic reasoning applies']
       },
       uncertainty: {
