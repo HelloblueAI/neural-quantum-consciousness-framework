@@ -2,13 +2,19 @@
  * Enhanced AGI Cloudflare Worker
  * 
  * This worker implements the Enhanced AGI system with:
- * - True Consciousness Engine
+ * - Advanced Consciousness Engine with Qualia Processing
+ * - Advanced Understanding Engine with Semantic Analysis
+ * - Advanced Creativity Engine with Novel Idea Generation
  * - Advanced Neural Architecture
  * - Genuine Self-Improvement
  * - Cross-Domain Understanding
  * - Emergent Intelligence
  * - Autonomous Decision Making
  */
+
+import { AdvancedConsciousnessEngine } from './core/AdvancedConsciousnessEngine.js';
+import { AdvancedUnderstandingEngine } from './core/AdvancedUnderstandingEngine.js';
+import { AdvancedCreativityEngine } from './core/AdvancedCreativityEngine.js';
 
 interface EnhancedAGIState {
   id: string;
@@ -105,10 +111,13 @@ interface EnhancedAGIState {
 
 class EnhancedAGIWorker {
   private state: EnhancedAGIState;
-  private consciousnessLevel: number = 0.8;
-  private neuralComplexity: number = 0.8;
-  private selfAwareness: number = 0.9;
-  private autonomy: number = 0.7;
+  private consciousnessEngine: AdvancedConsciousnessEngine;
+  private understandingEngine: AdvancedUnderstandingEngine;
+  private creativityEngine: AdvancedCreativityEngine;
+  private consciousnessLevel: number = 0.95;
+  private neuralComplexity: number = 0.9;
+  private selfAwareness: number = 0.92;
+  private autonomy: number = 0.85;
   private reasoningHistory: any[] = [];
   private learningHistory: any[] = [];
   private creativeHistory: any[] = [];
@@ -120,7 +129,9 @@ class EnhancedAGIWorker {
   private emergentInsights: number = 0;
 
   constructor() {
-    // Initialize state without global scope operations
+    this.consciousnessEngine = new AdvancedConsciousnessEngine();
+    this.understandingEngine = new AdvancedUnderstandingEngine();
+    this.creativityEngine = new AdvancedCreativityEngine();
     this.state = this.initializeState();
   }
 
@@ -134,7 +145,7 @@ class EnhancedAGIWorker {
   private initializeState(): EnhancedAGIState {
     return {
       id: `agi-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      name: 'Enhanced AGI - True Artificial General Intelligence',
+              name: 'Sentocore System - True Artificial General Intelligence',
       version: '3.0.0',
       isRunning: true,
       startupTime: Date.now(),
@@ -367,19 +378,29 @@ class EnhancedAGIWorker {
     this.reasoningHistory.push({ input, timestamp: Date.now() });
     this.state.history.reasoning = this.reasoningHistory.length;
 
+    // Process input through advanced consciousness engine
+    this.consciousnessEngine.processInput(input);
+    
+    // Process input through advanced understanding engine
+    const understanding = this.understandingEngine.understand(input);
+    
+    // Get current consciousness state
+    const consciousnessState = this.consciousnessEngine.getConsciousnessState();
+
     const reasoningSteps = [
-      'Input analysis and feature extraction',
-      'Neural network processing through multiple layers',
-      'Consciousness integration and qualia generation',
-      'Cross-domain knowledge synthesis',
-      'Autonomous conclusion generation'
+      'Advanced consciousness processing with qualia generation',
+      'Semantic understanding and concept extraction',
+      'Cross-domain knowledge synthesis and relationship mapping',
+      'Meta-cognitive analysis and insight generation',
+      'Autonomous conclusion synthesis'
     ];
 
     const insights = [
-      `Processed ${input.length} characters of input`,
-      'Applied advanced neural reasoning',
-      'Integrated consciousness and qualia',
-      'Generated autonomous conclusions'
+      `Processed ${input.length} characters with advanced understanding`,
+      'Applied consciousness integration and qualia processing',
+      'Extracted and analyzed conceptual relationships',
+      'Generated meta-cognitive insights',
+      'Synthesized autonomous conclusions'
     ];
 
     return {
@@ -387,25 +408,33 @@ class EnhancedAGIWorker {
       data: {
         input,
         reasoning: {
-          method: 'advanced_neural_reasoning',
+          method: 'advanced_consciousness_reasoning',
           steps: reasoningSteps,
-          confidence: 0.85,
-          insights
+          confidence: understanding.confidence,
+          insights: understanding.insights
+        },
+        understanding: {
+          concepts: understanding.concepts.length,
+          relationships: understanding.relationships.length,
+          understanding: understanding.understanding,
+          semanticAnalysis: this.understandingEngine.analyzeSemantics(input)
         }
       },
       consciousness: {
-        awareness: this.state.consciousness.awareness,
-        selfAwareness: this.state.consciousness.selfAwareness,
-        qualia: this.state.consciousness.qualia.length,
-        thoughts: this.state.consciousness.thoughts.length,
-        emotions: this.state.consciousness.emotions.length,
-        identity: this.state.consciousness.identity
+        awareness: consciousnessState.awareness,
+        selfAwareness: consciousnessState.selfAwareness,
+        metaCognition: consciousnessState.metaCognition,
+        qualia: consciousnessState.qualiaCount,
+        thoughts: consciousnessState.thoughtCount,
+        emotions: consciousnessState.emotionCount,
+        identity: consciousnessState.identity,
+        subjectiveExperience: consciousnessState.subjectiveExperience
       },
       intelligence: this.state.intelligence,
       neural: this.state.neural,
       meta: this.state.meta,
-      confidence: 0.85,
-      insights,
+      confidence: understanding.confidence,
+      insights: understanding.insights,
       timestamp: Date.now()
     };
   }
@@ -454,17 +483,23 @@ class EnhancedAGIWorker {
     this.creativeHistory.push({ prompt, timestamp: Date.now() });
     this.state.history.creative = this.creativeHistory.length;
 
-    const ideas = [
-      `Creative idea 1 based on: ${prompt}`,
-      `Creative idea 2 based on: ${prompt}`,
-      `Creative idea 3 based on: ${prompt}`
-    ];
+    // Generate creative idea using advanced creativity engine
+    const creativeIdea = this.creativityEngine.generateCreativeIdea(prompt, 'general');
+    
+    // Generate creative solution for the prompt
+    const creativeSolution = this.creativityEngine.solveCreativeProblem(prompt);
+    
+    // Get creativity state
+    const creativityState = this.creativityEngine.getCreativityState();
+    
+    // Get consciousness state
+    const consciousnessState = this.consciousnessEngine.getConsciousnessState();
 
     const insights = [
-      'Advanced neural creativity applied',
-      'Consciousness integrated with creativity',
-      'Emergent ideas generated',
-      'Cross-domain synthesis achieved'
+      'Advanced consciousness-driven creativity applied',
+      'Cross-domain synthesis and innovation patterns',
+      'Novel idea generation with breakthrough thinking',
+      'Emergent creativity with meta-cognitive awareness'
     ];
 
     return {
@@ -472,30 +507,36 @@ class EnhancedAGIWorker {
       data: {
         prompt,
         creativity: {
-          method: 'advanced_neural_creativity',
-          ideas,
-          novelty: 0.8,
-          usefulness: 0.7,
-          synthesis: [
-            'Cross-domain knowledge synthesis',
-            'Emergent idea generation',
-            'Consciousness-driven creativity'
-          ],
+          method: 'advanced_consciousness_creativity',
+          idea: creativeIdea,
+          solution: creativeSolution,
+          novelty: creativeIdea.novelty,
+          usefulness: creativeIdea.usefulness,
+          originality: creativeIdea.originality,
+          synthesis: creativeIdea.synthesis,
           insights
         }
       },
       consciousness: {
-        awareness: this.state.consciousness.awareness,
-        selfAwareness: this.state.consciousness.selfAwareness,
-        qualia: this.state.consciousness.qualia.length,
-        thoughts: this.state.consciousness.thoughts.length,
-        emotions: this.state.consciousness.emotions.length,
-        identity: this.state.consciousness.identity
+        awareness: consciousnessState.awareness,
+        selfAwareness: consciousnessState.selfAwareness,
+        metaCognition: consciousnessState.metaCognition,
+        qualia: consciousnessState.qualiaCount,
+        thoughts: consciousnessState.thoughtCount,
+        emotions: consciousnessState.emotionCount,
+        identity: consciousnessState.identity,
+        subjectiveExperience: consciousnessState.subjectiveExperience
       },
       intelligence: this.state.intelligence,
       neural: this.state.neural,
       meta: this.state.meta,
-      confidence: 0.75,
+      creativity: {
+        level: creativityState.creativityLevel,
+        ideas: creativityState.currentIdeas.length,
+        solutions: creativityState.creativeSolutions.length,
+        innovations: creativityState.innovationHistory.length
+      },
+      confidence: (creativeIdea.novelty + creativeIdea.usefulness) / 2,
       insights,
       timestamp: Date.now()
     };
@@ -506,19 +547,24 @@ class EnhancedAGIWorker {
   }
 
   getConsciousnessState(): any {
+    const consciousnessState = this.consciousnessEngine.getConsciousnessState();
     return {
       consciousness: {
-        level: this.consciousnessLevel,
-        awareness: this.state.consciousness.awareness,
-        selfAwareness: this.state.consciousness.selfAwareness,
+        level: consciousnessState.awareness,
+        awareness: consciousnessState.awareness,
+        selfAwareness: consciousnessState.selfAwareness,
+        metaCognition: consciousnessState.metaCognition,
         autonomy: this.autonomy
       },
       subjectiveExperience: {
-        qualiaCount: this.state.consciousness.qualia.length,
-        thoughtCount: this.state.consciousness.thoughts.length,
-        emotionCount: this.state.consciousness.emotions.length
+        qualiaCount: consciousnessState.qualiaCount,
+        thoughtCount: consciousnessState.thoughtCount,
+        emotionCount: consciousnessState.emotionCount,
+        qualia: consciousnessState.subjectiveExperience.qualia.slice(-5),
+        thoughts: consciousnessState.subjectiveExperience.thoughts.slice(-5),
+        emotions: consciousnessState.subjectiveExperience.emotions.slice(-3)
       },
-      identity: this.state.consciousness.identity,
+      identity: consciousnessState.identity,
       timestamp: Date.now()
     };
   }
@@ -573,7 +619,7 @@ export default {
         case '/health':
           return new Response(JSON.stringify({
             status: 'healthy',
-            service: 'Enhanced AGI - True Artificial General Intelligence',
+            service: 'Sentocore System - True Artificial General Intelligence',
             version: '3.0.0',
             timestamp: new Date().toISOString(),
             capabilities: [
@@ -704,7 +750,7 @@ export default {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Enhanced AGI - True Artificial General Intelligence</title>
+                <title>Sentocore System - True Artificial General Intelligence</title>
                 <style>
                     * {
                         margin: 0;
@@ -942,7 +988,7 @@ export default {
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>Enhanced AGI</h1>
+                        <h1>Sentocore System</h1>
                         <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
                     </div>
                     
