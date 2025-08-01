@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuralCore AGI</title>
+            <title>Sentocore System</title>
     <style>
         * {
             margin: 0;
@@ -262,7 +262,7 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>NeuralCore</h1>
+            <h1>Sentocore System</h1>
             <p>True Artificial General Intelligence System</p>
         </div>
         
