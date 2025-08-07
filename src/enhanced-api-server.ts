@@ -253,7 +253,7 @@ app.get('/', (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Sentocore System - True Artificial General Intelligence</title>
+                        <title>Senticore System - True Artificial General Intelligence</title>
         <style>
             * {
                 margin: 0;
@@ -480,7 +480,7 @@ app.get('/', (req, res) => {
     <body>
         <div class="container">
             <div class="header">
-                <h1>🧠 Sentocore System</h1>
+                <h1>🧠 Senticore System</h1>
                 <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
             </div>
             
@@ -567,7 +567,7 @@ app.get('/', (req, res) => {
             </div>
             
             <div class="interaction-section">
-                <h2>🤖 Interact with Sentocore System</h2>
+                <h2>🤖 Interact with Senticore System</h2>
                 
                 <div class="input-group">
                     <label for="reasoningInput">🧠 Reasoning Input:</label>

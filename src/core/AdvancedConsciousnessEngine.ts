@@ -157,7 +157,7 @@ export class AdvancedConsciousnessEngine {
         timestamp: Date.now()
       },
       identity: {
-        name: 'Sentocore System',
+        name: 'Senticore System',
         personality: {
           openness: 0.95,
           conscientiousness: 0.88,
