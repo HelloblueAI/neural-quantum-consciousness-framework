@@ -491,9 +491,13 @@ class RelationshipAnalyzer {
     // Analyze relationships between extracted concepts
     for (let i = 0; i < concepts.length; i++) {
       for (let j = i + 1; j < concepts.length; j++) {
-        const relationship = this.analyzeConceptPair(concepts[i], concepts[j], knowledgeGraph);
-        if (relationship) {
-          relationships.push(relationship);
+        const concept1 = concepts[i];
+        const concept2 = concepts[j];
+        if (concept1 && concept2) {
+          const relationship = this.analyzeConceptPair(concept1, concept2, knowledgeGraph);
+          if (relationship) {
+            relationships.push(relationship);
+          }
         }
       }
     }
@@ -576,7 +580,14 @@ class ContextProcessor {
       return acc;
     }, {} as Record<string, number>);
     
-    return Object.keys(domainCounts).reduce((a, b) => domainCounts[a] > domainCounts[b] ? a : b, 'general');
+    const domainKeys = Object.keys(domainCounts);
+    if (domainKeys.length === 0) return 'general';
+    
+    return domainKeys.reduce((a, b) => {
+      const countA = domainCounts[a] || 0;
+      const countB = domainCounts[b] || 0;
+      return countA > countB ? a : b;
+    }, 'general');
   }
 
   private calculateComplexity(input: string): number {
