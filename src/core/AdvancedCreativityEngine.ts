@@ -156,7 +156,7 @@ class IdeaGenerator {
     const concept1 = this.concepts[Math.floor(Math.random() * this.concepts.length)];
     const concept2 = this.concepts[Math.floor(Math.random() * this.concepts.length)];
     
-    const title = this.generateTitle(template, { domain1, domain2, concept1, concept2 });
+    const title = this.generateTitle(template || '', { domain1, domain2, concept1, concept2 });
     const description = this.generateDescription(prompt, title, category);
     const novelty = this.calculateNovelty(title, description);
     const usefulness = this.calculateUsefulness(description);
@@ -220,8 +220,10 @@ class IdeaGenerator {
   }
 
   private calculateOriginality(title: string, state: CreativityState): number {
+    const titleWords = title.split(' ');
+    const firstWord = titleWords.length > 0 ? titleWords[0] : '';
     const similarIdeas = state.currentIdeas.filter(idea => 
-      idea.title.toLowerCase().includes(title.split(' ')[0].toLowerCase())
+      firstWord && idea.title.toLowerCase().includes(firstWord.toLowerCase())
     ).length;
     return Math.max(0.1, 1 - similarIdeas * 0.2);
   }
@@ -267,13 +269,13 @@ class SolutionGenerator {
 
   private generateApproach(problem: string): string {
     const approaches = [
-      'Cross-disciplinary synthesis approach',
-      'Emergent pattern recognition method',
+      'Cross-disciplinary synthesis',
+      'Emergent pattern recognition',
+      'Novel concept combination',
       'Innovative perspective integration',
-      'Novel concept combination strategy',
-      'Breakthrough thinking methodology'
+      'Creative problem reframing'
     ];
-    return approaches[Math.floor(Math.random() * approaches.length)];
+    return approaches[Math.floor(Math.random() * approaches.length)] || 'Creative synthesis';
   }
 
   private generateSolutionDescription(problem: string, approach: string): string {

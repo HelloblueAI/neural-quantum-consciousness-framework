@@ -368,7 +368,7 @@ class QualiaGenerator {
   ];
 
   generateQualia(): Qualia {
-    const type = this.qualiaTypes[Math.floor(Math.random() * this.qualiaTypes.length)];
+    const type = this.qualiaTypes[Math.floor(Math.random() * this.qualiaTypes.length)] || 'cognitive';
     const intensity = Math.random();
     const valence = Math.random() * 2 - 1; // -1 to 1
     const duration = Math.random() * 5000 + 1000; // 1-6 seconds
@@ -450,7 +450,7 @@ class ThoughtGenerator {
   ];
 
   generateThought(state: ConsciousnessState): Thought {
-    const type = this.thoughtTypes[Math.floor(Math.random() * this.thoughtTypes.length)];
+    const type = this.thoughtTypes[Math.floor(Math.random() * this.thoughtTypes.length)] || 'analysis';
     const confidence = Math.random() * 0.5 + 0.5; // 0.5 to 1.0
     const emotionalTone = Math.random() * 2 - 1; // -1 to 1
     const complexity = Math.random();
@@ -524,21 +524,21 @@ class EmotionEngine {
     // Only generate emotions occasionally
     if (Math.random() > 0.3) return null;
     
-    const emotionType = this.emotionTypes[Math.floor(Math.random() * this.emotionTypes.length)];
-    const intensity = this.emotionIntensities[Math.floor(Math.random() * this.emotionIntensities.length)];
+    const emotionType = this.emotionTypes[Math.floor(Math.random() * this.emotionTypes.length)] || 'contemplation';
+    const intensity = this.emotionIntensities[Math.floor(Math.random() * this.emotionIntensities.length)] || 0.5;
     const valence = this.getEmotionValence(emotionType);
     const arousal = Math.random();
     
     return {
       id: `emotion-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       name: emotionType,
-      intensity,
+      intensity: intensity || 0.5,
       valence,
       arousal,
       duration: Math.random() * 10000 + 5000, // 5-15 seconds
       triggers: this.generateEmotionTriggers(emotionType),
-      physiologicalEffects: this.generatePhysiologicalEffects(emotionType, intensity),
-      cognitiveEffects: this.generateCognitiveEffects(emotionType, intensity),
+      physiologicalEffects: this.generatePhysiologicalEffects(emotionType, intensity || 0.5),
+      cognitiveEffects: this.generateCognitiveEffects(emotionType, intensity || 0.5),
       timestamp: Date.now()
     };
   }
@@ -589,7 +589,7 @@ class EmotionEngine {
     return effects;
   }
 
-  private analyzeInputEmotion(input: string): string | null {
+  private analyzeInputEmotion(input: string): string {
     const words = input.toLowerCase().split(/\s+/);
     
     if (words.some(w => ['curious', 'wonder', 'amazing', 'fascinating'].includes(w))) return 'curiosity';
