@@ -158,7 +158,7 @@ export class SelfModificationEngine extends EventEmitter {
       this.logger.info('Self-Modification Engine initialized successfully');
       
     } catch (error) {
-      this.logger.error('Failed to initialize Self-Modification Engine', error as Error);
+      this.logger.error('Failed to initialize Self-Modification Engine', error instanceof Error ? error : new Error('Unknown error'));
       throw error;
     }
   }
@@ -228,7 +228,7 @@ export class SelfModificationEngine extends EventEmitter {
       return request;
       
     } catch (error) {
-      this.logger.error('Error requesting modification', error as Error);
+      this.logger.error('Error requesting modification', error instanceof Error ? error : new Error('Unknown error'));
       throw error;
     }
   }
@@ -266,7 +266,7 @@ export class SelfModificationEngine extends EventEmitter {
       return result;
       
     } catch (error) {
-      this.logger.error('Error executing modification', error as Error);
+      this.logger.error('Error executing modification', error instanceof Error ? error : new Error('Unknown error'));
       throw error;
     }
   }
@@ -294,12 +294,12 @@ export class SelfModificationEngine extends EventEmitter {
         this.logger.info('Modification rollback successful', { id: requestId });
         return true;
       } else {
-        this.logger.error('Modification rollback failed', { id: requestId });
+        this.logger.error('Modification rollback failed', undefined, { id: requestId });
         return false;
       }
       
     } catch (error) {
-      this.logger.error('Error rolling back modification', error as Error);
+      this.logger.error('Error rolling back modification', error instanceof Error ? error : new Error('Unknown error'));
       return false;
     }
   }
@@ -334,7 +334,7 @@ export class SelfModificationEngine extends EventEmitter {
       this.logger.info('Safety constraints updated successfully');
       
     } catch (error) {
-      this.logger.error('Error updating safety constraints', error as Error);
+      this.logger.error('Error updating safety constraints', error instanceof Error ? error : new Error('Unknown error'));
       throw error;
     }
   }
@@ -424,7 +424,7 @@ export class SelfModificationEngine extends EventEmitter {
       this.lastBackup = Date.now();
       this.logger.info('Initial system backup created');
     } catch (error) {
-      this.logger.warn('Failed to create initial backup', error as Error);
+      this.logger.warn('Failed to create initial backup', error instanceof Error ? error : new Error('Unknown error'));
     }
   }
   
@@ -537,7 +537,7 @@ export class SelfModificationEngine extends EventEmitter {
       };
       
     } catch (error) {
-      this.logger.error('Error validating modification request', error as Error);
+      this.logger.error('Error validating modification request', error instanceof Error ? error : new Error('Unknown error'));
       return {
         isSafe: false,
         riskLevel: 1.0,
@@ -601,7 +601,7 @@ export class SelfModificationEngine extends EventEmitter {
     
     if (change1.operation === 'delete' || change2.operation === 'delete') return true;
     
-    if (change1.lineStart && change2.lineStart) {
+    if (change1.lineStart && change2.lineStart && change1.lineEnd && change2.lineEnd) {
       // Check for line overlap
       const overlap = !(change1.lineEnd < change2.lineStart || change2.lineEnd < change1.lineStart);
       if (overlap) return true;
@@ -670,7 +670,7 @@ export class SelfModificationEngine extends EventEmitter {
     return Math.min(1.0, riskLevel);
   }
   
-  private calculateSafetyLevel(validation: ModificationValidation): string {
+  private calculateSafetyLevel(validation: ModificationValidation): 'safe' | 'moderate' | 'risky' | 'dangerous' {
     if (validation.riskLevel < 0.3) return 'safe';
     if (validation.riskLevel < 0.6) return 'moderate';
     if (validation.riskLevel < 0.8) return 'risky';
@@ -702,7 +702,7 @@ export class SelfModificationEngine extends EventEmitter {
           changesApplied.push(change);
         } catch (error) {
           conflicts.push(`Failed to apply change: ${change.description}`);
-          this.logger.error('Failed to apply code change', { change, error });
+          this.logger.error('Failed to apply code change', error instanceof Error ? error : new Error('Unknown error'), { change });
         }
       }
       
@@ -731,7 +731,7 @@ export class SelfModificationEngine extends EventEmitter {
         id: request.id,
         success: false,
         changesApplied,
-        conflicts: [...conflicts, error.message],
+        conflicts: [...conflicts, error instanceof Error ? error.message : 'Unknown error'],
         warnings,
         executionTime,
         timestamp: Date.now(),
@@ -756,9 +756,9 @@ export class SelfModificationEngine extends EventEmitter {
           if (change.content && change.lineStart && change.lineEnd) {
             const lines = fileContent.split('\n');
             const newLines = [
-              ...lines.slice(0, change.lineStart - 1),
+              ...lines.slice(0, Math.max(0, change.lineStart - 1)),
               change.content,
-              ...lines.slice(change.lineEnd)
+              ...lines.slice(Math.min(change.lineEnd, lines.length))
             ];
             await fs.writeFile(filePath, newLines.join('\n'));
           }
@@ -768,8 +768,8 @@ export class SelfModificationEngine extends EventEmitter {
           if (change.lineStart && change.lineEnd) {
             const lines = fileContent.split('\n');
             const newLines = [
-              ...lines.slice(0, change.lineStart - 1),
-              ...lines.slice(change.lineEnd)
+              ...lines.slice(0, Math.max(0, change.lineStart - 1)),
+              ...lines.slice(Math.min(change.lineEnd, lines.length))
             ];
             await fs.writeFile(filePath, newLines.join('\n'));
           }
@@ -785,7 +785,7 @@ export class SelfModificationEngine extends EventEmitter {
       this.logger.debug('Code change applied successfully', { change });
       
     } catch (error) {
-      this.logger.error('Failed to apply code change', { change, error });
+      this.logger.error('Failed to apply code change', error instanceof Error ? error : new Error('Unknown error'), { change });
       throw error;
     }
   }
@@ -865,7 +865,7 @@ export class SelfModificationEngine extends EventEmitter {
         this.lastBackup = now;
         this.logger.debug('Periodic backup created');
       } catch (error) {
-        this.logger.warn('Failed to create periodic backup', error as Error);
+        this.logger.warn('Failed to create periodic backup', error instanceof Error ? error : new Error('Unknown error'));
       }
     }
   }

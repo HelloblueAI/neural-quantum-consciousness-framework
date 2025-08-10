@@ -445,7 +445,7 @@ export class GenuineUnderstandingEngine extends EventEmitter {
     const words = input.split(/\s+/);
     const concepts = words.filter(word => 
       word.length > 3 && 
-      (word[0] === word[0].toUpperCase() || 
+      word[0] && (word[0] === word[0].toUpperCase() || 
        /[A-Z]/.test(word) ||
        /[0-9]/.test(word))
     );
@@ -529,6 +529,8 @@ export class GenuineUnderstandingEngine extends EventEmitter {
       for (let j = i + 1; j < concepts.length; j++) {
         const source = concepts[i];
         const target = concepts[j];
+        
+        if (!source || !target) continue;
         
         // Analyze relationship strength based on context
         const strength = this.analyzeRelationshipStrength(source, target);
@@ -785,6 +787,9 @@ export class GenuineUnderstandingEngine extends EventEmitter {
     // Update relationships
     for (const [key, strength] of understanding.connections) {
       const [source, target] = key.split('_');
+      
+      if (!source || !target) continue;
+      
       const relationshipId = `${source}_related_${target}`;
       
       if (!this.semanticRelationships.has(relationshipId)) {

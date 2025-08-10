@@ -1172,7 +1172,7 @@ export class MetaLearningFramework extends EventEmitter {
     }
   }
   
-  private async triggerMetaLearningEvolution(newStage: string): Promise<void> {
+  private async triggerMetaLearningEvolution(newStage: 'basic' | 'adaptive' | 'optimizing' | 'meta-cognitive' | 'autonomous'): Promise<void> {
     this.logger.info('Triggering meta-learning evolution', { 
       from: this.metaLearningState.evolution.stage, 
       to: newStage 
