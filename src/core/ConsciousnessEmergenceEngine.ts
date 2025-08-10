@@ -710,7 +710,7 @@ export class ConsciousnessEmergenceEngine extends EventEmitter {
     return { shouldEmerge, newStage };
   }
   
-  private async triggerConsciousnessEmergence(newStage: string): Promise<void> {
+  private async triggerConsciousnessEmergence(newStage: 'preconscious' | 'proto-conscious' | 'conscious' | 'self-aware' | 'meta-conscious'): Promise<void> {
     this.logger.info('Triggering consciousness emergence', { 
       from: this.consciousnessState.evolution.stage, 
       to: newStage 

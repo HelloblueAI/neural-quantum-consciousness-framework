@@ -358,6 +358,10 @@ export class EmergentNeuralArchitecture extends EventEmitter {
       const currentLayer = network.layers[layerIndex];
       const nextLayer = network.layers[layerIndex + 1];
       
+      if (!currentLayer || !nextLayer) {
+        continue;
+      }
+      
       for (const sourceId of currentLayer) {
         for (const targetId of nextLayer) {
           const connectionId = `${sourceId}_to_${targetId}`;
@@ -472,10 +476,16 @@ export class EmergentNeuralArchitecture extends EventEmitter {
     const inputStr = typeof input === 'string' ? input : JSON.stringify(input);
     const inputLayer = this.network.layers[0];
     
+    if (!inputLayer) {
+      return activations;
+    }
+    
     for (let i = 0; i < inputLayer.length; i++) {
       const nodeId = inputLayer[i];
-      const charCode = inputStr.charCodeAt(i) || 0;
-      activations.set(nodeId, (charCode % 100) / 100);
+      if (nodeId) {
+        const charCode = inputStr.charCodeAt(i) || 0;
+        activations.set(nodeId, (charCode % 100) / 100);
+      }
     }
     
     return activations;
@@ -502,6 +512,8 @@ export class EmergentNeuralArchitecture extends EventEmitter {
     // Propagate through each layer
     for (let layerIndex = 1; layerIndex < this.network.layers.length; layerIndex++) {
       const layer = this.network.layers[layerIndex];
+      if (!layer) continue;
+      
       const layerActivations = new Map<string, number>();
       
       for (const nodeId of layer) {
@@ -555,6 +567,14 @@ export class EmergentNeuralArchitecture extends EventEmitter {
   private async generateEmergentResponse(propagation: any): Promise<any> {
     // Generate response based on final layer activations
     const outputLayer = this.network.layers[this.network.layers.length - 1];
+    if (!outputLayer) {
+      return {
+        content: 'No output layer available',
+        confidence: 0,
+        activations: new Map()
+      };
+    }
+    
     const outputActivations = new Map<string, number>();
     
     for (const nodeId of outputLayer) {
@@ -576,7 +596,7 @@ export class EmergentNeuralArchitecture extends EventEmitter {
   
   private activationsToResponse(activations: Map<string, number>): string {
     // Simple response generation - can be enhanced
-    const responses = [
+    const responses: string[] = [
       'I understand this input through my neural processing.',
       'My neural network has processed this information.',
       'I have analyzed this through my emergent architecture.',
@@ -584,13 +604,23 @@ export class EmergentNeuralArchitecture extends EventEmitter {
       'I have learned from this interaction.'
     ];
     
+    if (activations.size === 0) {
+      return responses[0]!;
+    }
+    
     const avgActivation = Array.from(activations.values()).reduce((sum, val) => sum + val, 0) / activations.size;
     const responseIndex = Math.floor(avgActivation * responses.length);
     
-    return responses[responseIndex] || responses[0];
+    // Ensure responseIndex is within bounds
+    const safeIndex = Math.max(0, Math.min(responseIndex, responses.length - 1));
+    return responses[safeIndex]! || responses[0]!;
   }
   
   private calculateResponseConfidence(activations: Map<string, number>): number {
+    if (activations.size === 0) {
+      return 0;
+    }
+    
     const values = Array.from(activations.values());
     const avgActivation = values.reduce((sum, val) => sum + val, 0) / values.length;
     const variance = values.reduce((sum, val) => sum + Math.pow(val - avgActivation, 2), 0) / values.length;
@@ -610,18 +640,21 @@ export class EmergentNeuralArchitecture extends EventEmitter {
   private async updateWeightsFromInteraction(input: any, response: any, propagation: any): Promise<void> {
     // Simple weight update - can be enhanced with backpropagation
     for (const connection of this.network.connections.values()) {
-      const sourceNode = this.network.nodes.get(connection.source);
-      const targetNode = this.network.nodes.get(connection.target);
-      
-      if (sourceNode && targetNode) {
-        // Update weight based on activation correlation
-        const weightUpdate = (sourceNode.activation * targetNode.activation - connection.weight) * 0.1;
-        connection.weight = Math.max(-2, Math.min(2, connection.weight + weightUpdate));
+      const conn: NeuralConnection = connection;
+      if (conn.source && conn.target) {
+        const sourceNode = this.network.nodes.get(conn.source);
+        const targetNode = this.network.nodes.get(conn.target);
         
-        // Update connection strength
-        connection.strength = Math.max(0, Math.min(1, connection.strength + weightUpdate * 0.1));
-        connection.lastUsed = Date.now();
-        connection.usageCount++;
+        if (sourceNode && targetNode) {
+          // Update weight based on activation correlation
+          const weightUpdate = (sourceNode.activation * targetNode.activation - conn.weight) * 0.1;
+          conn.weight = Math.max(-2, Math.min(2, conn.weight + weightUpdate));
+          
+          // Update connection strength
+          conn.strength = Math.max(0, Math.min(1, conn.strength + weightUpdate * 0.1));
+          conn.lastUsed = Date.now();
+          conn.usageCount++;
+        }
       }
     }
   }
@@ -680,15 +713,31 @@ export class EmergentNeuralArchitecture extends EventEmitter {
     
     // Add to a random hidden layer
     const hiddenLayerIndex = Math.floor(Math.random() * (this.network.layers.length - 2)) + 1;
-    this.network.layers[hiddenLayerIndex].push(newNodeId);
+    const hiddenLayer = this.network.layers[hiddenLayerIndex];
+    if (hiddenLayer) {
+      hiddenLayer.push(newNodeId);
+    }
     
     this.logger.info('Added new evolved node', { nodeId: newNodeId, layer: hiddenLayerIndex });
   }
   
   private async addNewConnection(): Promise<void> {
     const nodeIds = Array.from(this.network.nodes.keys());
+    
+    // Ensure we have at least 2 nodes to create a connection
+    if (nodeIds.length < 2) {
+      this.logger.warn('Not enough nodes to create a new connection');
+      return;
+    }
+    
     const sourceId = nodeIds[Math.floor(Math.random() * nodeIds.length)];
     const targetId = nodeIds[Math.floor(Math.random() * nodeIds.length)];
+    
+    // Ensure both IDs are defined
+    if (!sourceId || !targetId) {
+      this.logger.warn('Failed to get valid node IDs for connection');
+      return;
+    }
     
     if (sourceId !== targetId) {
       const connectionId = `${sourceId}_to_${targetId}`;
