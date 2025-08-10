@@ -43,6 +43,7 @@
     "deploy:cloud": "tsx deploy/cloud-deployment.js",
     "build:worker": "tsc src/worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
     "build:enhanced-worker": "tsc src/enhanced-agi-worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
+    "build:enhanced-web-interface": "tsc src/enhanced-web-interface-worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
     "deploy:worker": "npm run build:worker && wrangler deploy",
     "deploy:enhanced-worker": "npm run build:enhanced-worker && wrangler deploy",
     "deploy:worker:prod": "npm run build:worker && wrangler deploy --env production"
