@@ -1,10 +1,10 @@
 name = "agi-bleujs"
-main = "dist/enhanced-agi-worker.js"
+main = "dist/enhanced-web-interface-worker.js"
 compatibility_date = "2024-01-15"
 compatibility_flags = ["nodejs_compat"]
 
 [build]
-command = "npm run build:enhanced-worker"
+command = "npm run build:enhanced-web-interface"
 watch_dir = "src"
 
 # Custom domain configuration

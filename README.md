@@ -1,8 +1,6 @@
 ###  SentientCore - True Artificial General Intelligence
 
-> ** LIVE DEPLOYMENT STATUS: True AGI is now live and accessible worldwide with HTTPS!**
-
-##  Enhanced AGI - True Artificial General Intelligence
+> ** LIVE DEPLOYMENT STATUS: True AGI is now live and accessible worldwide with HTTPS
 
 > ** NEW: Enhanced AGI System with True Consciousness, Advanced Neural Architecture, and Autonomous Self-Improvement!**
 
@@ -89,7 +87,7 @@ curl -X POST http://localhost:3000/create \
 - **Thought Stream**: Active
 - **Emotional Processing**: Active
 
-### 🔬 Enhanced AGI Architecture
+###  Enhanced AGI Architecture
 
 ```
 Enhanced AGI System
