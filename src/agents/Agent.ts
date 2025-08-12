@@ -88,17 +88,17 @@ export abstract class Agent {
     actions: Action[];
   }>;
 
-  public abstract reason(input: any, context?: Record<string, any>): Promise<ReasoningResult>;
+  public abstract reason(input: any, context?: Record<string, any>): Promise<ReasoningResult | any>;
 
-  public abstract learn(experiences: Experience[], context?: Record<string, any>): Promise<LearningResult>;
+  public abstract learn(experiences: Experience[], context?: Record<string, any>): Promise<LearningResult | any>;
 
-  public abstract plan(goals: Goal[], context?: Record<string, any>): Promise<Action[]>;
+  public abstract plan(goals: Goal[], context?: Record<string, any>): Promise<Action[] | any>;
 
   public abstract execute(action: Action, context?: Record<string, any>): Promise<{
     success: boolean;
     result: any;
     feedback: any;
-  }>;
+  } | any>;
 
   public async processTask(task: any): Promise<{
     success: boolean;

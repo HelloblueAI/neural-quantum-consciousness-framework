@@ -75,16 +75,16 @@ app.get('/', (req, res) => {
         
         .status-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .status-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
+            border-radius: 6px;
+            padding: 18px;
             text-align: center;
         }
         
@@ -105,16 +105,16 @@ app.get('/', (req, res) => {
         .interaction-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 40px;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
         }
         
         .interaction-section h2 {
             color: var(--accent);
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 300;
         }
         
@@ -199,8 +199,8 @@ app.get('/', (req, res) => {
         
         .endpoint-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
         }
         
         .endpoint-item {
@@ -270,16 +270,16 @@ app.get('/', (req, res) => {
         
         .doc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
         
         .doc-card {
             background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
+            border-radius: 6px;
+            padding: 18px;
             text-align: center;
             transition: all 0.3s ease;
         }
