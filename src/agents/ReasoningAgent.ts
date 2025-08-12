@@ -163,16 +163,36 @@ export class ReasoningAgent extends Agent {
       
       const learningResult: LearningResult = {
         success: true,
-        knowledge: {
-          patterns: patterns.map(p => p.type),
-          insights: this.gatherLearningEvidence([experience]),
-          confidence: this.calculateLearningConfidence([experience])
-        },
+        newKnowledge: [{
+          id: `knowledge_${Date.now()}`,
+          type: 'learning_outcome' as any,
+          content: {
+            patterns: patterns.map(p => p.type),
+            insights: this.gatherLearningEvidence([experience]) || [],
+            confidence: this.calculateLearningConfidence([experience]) || 0.8,
+            representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
+            semantics: { meaning: 'learning_patterns', context: { domain: 'general', scope: 'learning', constraints: {} }, interpretation: { meaning: 'learning patterns', confidence: 0.8, alternatives: [] } },
+            relationships: []
+          },
+          confidence: this.calculateLearningConfidence([experience]) || 0.8,
+          source: 'experience_learning',
+          timestamp: Date.now(),
+          validity: { start: Date.now(), conditions: {} }
+        }],
         improvements: Array.from(improvements.entries()).map(([capability, level]) => ({
+          type: 'capability_improvement',
+          magnitude: level,
+          description: `Improved ${capability} capability`,
           capability,
           improvement: level,
           previousLevel: this.getCapabilityLevel(capability)
         })),
+        adaptationMetrics: {
+          performance: 0.8,
+          efficiency: 0.7,
+          stability: 0.6,
+          flexibility: 0.8
+        },
         metadata: {
           experienceCount: 1,
           patternsExtracted: patterns.length,
@@ -937,7 +957,7 @@ export class ReasoningAgent extends Agent {
     };
   }
 
-  public getRequiredCapabilitiesForGoal(goal: Goal): string[] {
+  public override getRequiredCapabilitiesForGoal(goal: Goal): string[] {
     // Implementation depends on goal type
     const goalType = (goal as any).type || 'unknown';
     const goalAlgorithmMap: Record<string, string[]> = {
@@ -1039,6 +1059,17 @@ export class ReasoningAgent extends Agent {
     return confidences.reduce((sum, conf) => sum + conf, 0) / confidences.length;
   }
 
+  private gatherLearningEvidence(experiences: Experience[]): string[] {
+    return experiences.map(exp => `Evidence from ${exp.id}: ${(exp as any).type || 'unknown'}`);
+  }
+
+  private calculateLearningConfidence(experiences: Experience[]): number {
+    if (experiences.length === 0) return 0.5;
+    
+    const confidences = experiences.map(exp => (exp as any).confidence || 0);
+    return confidences.reduce((sum, conf) => sum + conf, 0) / confidences.length;
+  }
+
   // Public getter methods for external access
   public get id(): string {
     return (this as any).config?.id || 'unknown';
@@ -1072,33 +1103,35 @@ export class ReasoningAgent extends Agent {
     this.logicalFrameworks.add(framework);
   }
 
-  public getCapabilityLevel(capability: string): number {
+  public override getCapabilityLevel(capability: string): number {
     return this.reasoningCapabilities.get(capability) || 0;
   }
 
-  public updateSkill(capability: string, level: number): void {
+  public override updateSkill(capability: string, level: number): void {
     this.reasoningCapabilities.set(capability, Math.max(0, Math.min(1, level)));
   }
 
-  public getParameter(param: string): number | undefined {
+  public override getParameter(param: string): number | undefined {
     return this.performanceMetrics.get(param);
   }
 
-  public setParameter(param: string, value: number): void {
+  public override setParameter(param: string, value: number): void {
     this.performanceMetrics.set(param, Math.max(0, Math.min(1, value)));
   }
 
-  public getEfficiency(): number {
+  public override getEfficiency(): number {
     return this.performanceMetrics.get('efficiency') || 0.7;
   }
 
-  public updatePerformance(metrics: Partial<Record<string, number>>): void {
-    Object.entries(metrics).forEach(([key, value]) => {
-      this.performanceMetrics.set(key, value);
-    });
+  public override updatePerformance(metrics: Partial<Record<string, number>>): void {
+          Object.entries(metrics).forEach(([key, value]) => {
+        if (value !== undefined) {
+          this.performanceMetrics.set(key, value);
+        }
+      });
   }
 
-  public isCapableOf(actionType: string): boolean {
+  public override isCapableOf(actionType: string): boolean {
     return this.reasoningCapabilities.has(actionType) || 
            this.problemSolvingStrategies.has(actionType) ||
            this.logicalFrameworks.has(actionType);
@@ -1143,12 +1176,16 @@ export class ReasoningAgent extends Agent {
       }
       
       const reasoningResult: ReasoningResult = {
-        success: true,
+        confidence: Math.max(0.1, Math.min(1.0, confidence)),
         reasoning: {
           steps,
-          confidence: Math.max(0.1, Math.min(1.0, confidence))
+          logic: 'hybrid',
+          evidence: [],
+          assumptions: []
         },
         conclusions: conclusionStep.conclusions || [],
+        uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.8 },
+        alternatives: [],
         metadata: {
           timestamp: Date.now(),
           agentId: this.id,
