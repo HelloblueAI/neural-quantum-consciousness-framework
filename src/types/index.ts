@@ -202,6 +202,7 @@ export interface LearningResult {
   readonly adaptationMetrics: AdaptationMetrics;
   readonly confidence?: number;
   readonly insights?: string[];
+  readonly metadata?: Record<string, any>;
 }
 
 export interface Experience {
@@ -509,12 +510,7 @@ export interface ActionParameters {
   readonly [key: string]: unknown;
 }
 
-export interface ActionResult {
-  readonly success: boolean;
-  readonly outcome: Outcome;
-  readonly metrics: ActionMetrics;
-  readonly feedback: Feedback;
-}
+
 
 export interface Outcome {
   readonly state: EnvironmentState;
@@ -549,6 +545,7 @@ export interface Knowledge {
   readonly source: string;
   readonly timestamp: number;
   readonly validity: ValidityPeriod;
+  readonly metadata?: Record<string, any>;
 }
 
 export type KnowledgeType = 
@@ -564,6 +561,9 @@ export interface KnowledgeContent {
   readonly representation: Representation;
   readonly semantics: Semantics;
   readonly relationships: Relationship[];
+  readonly patterns?: string[];
+  readonly insights?: string[];
+  readonly confidence?: number;
 }
 
 export interface Encoding {
@@ -1380,12 +1380,7 @@ export interface ReasoningMetrics {
 
 // All types are already exported individually above
 
-export interface AdaptationResult {
-  readonly success: boolean;
-  readonly changes: AdaptationChange[];
-  readonly performance: AdaptationPerformance;
-  readonly confidence: number;
-}
+
 
 export interface AdaptationChange {
   readonly type: string;

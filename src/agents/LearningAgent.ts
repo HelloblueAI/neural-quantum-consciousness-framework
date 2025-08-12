@@ -79,7 +79,7 @@ export class LearningAgent extends Agent {
 
   public async process(_input: any, context?: Record<string, any>): Promise<{
     output: any;
-    reasoning: ReasoningResult;
+    reasoning: any;
     learning: LearningResult;
     actions: Action[];
   }> {
@@ -227,22 +227,49 @@ export class LearningAgent extends Agent {
       const insights = this.extractInsights([experience]);
       const improvements = this.calculateCapabilityImprovements([experience]);
       
-      this.updateLearningCapabilities(improvements);
+      this.updateLearningCapabilities(Array.from(improvements.entries()).map(([capability, level]) => ({
+        type: 'capability_improvement',
+        magnitude: level,
+        description: `Improved ${capability} capability`,
+        capability,
+        improvement: level,
+        previousLevel: level - 0.1
+      })));
       this.updateLearningStrategies(patterns);
       this.storeExperience(experience);
       
       const learningResult: LearningResult = {
         success: true,
-        knowledge: {
-          patterns: patterns.map(p => p.type),
-          insights: insights,
-          confidence: this.calculateLearningConfidence([experience])
-        },
+        newKnowledge: [{
+          id: `knowledge_${Date.now()}`,
+          type: 'learning_outcome' as any,
+          content: {
+            patterns: patterns.map(p => p.type),
+            insights: insights,
+            confidence: this.calculateLearningConfidence([experience]),
+            representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
+            semantics: { meaning: 'learning_patterns', context: { domain: 'general', scope: 'learning', constraints: {} }, interpretation: { meaning: 'learning patterns', confidence: 0.8, alternatives: [] } },
+            relationships: []
+          },
+          confidence: this.calculateLearningConfidence([experience]),
+          source: 'experience_learning',
+          timestamp: Date.now(),
+          validity: { start: Date.now(), conditions: {} }
+        }],
         improvements: Array.from(improvements.entries()).map(([capability, level]) => ({
+          type: 'capability_improvement',
+          magnitude: level,
+          description: `Improved ${capability} capability`,
           capability,
           improvement: level,
           previousLevel: this.getCapabilityLevel(capability)
         })),
+        adaptationMetrics: {
+          performance: 0.8,
+          efficiency: 0.7,
+          stability: 0.6,
+          flexibility: 0.8
+        },
         metadata: {
           experienceCount: 1,
           patternsExtracted: patterns.length,
@@ -368,7 +395,14 @@ export class LearningAgent extends Agent {
       const improvements = this.identifyLearningImprovements(performance);
       
       await this.adaptLearningStrategies(improvements);
-      this.updateLearningCapabilities(improvements);
+      this.updateLearningCapabilities(Array.from(improvements.entries()).map(([capability, level]) => ({
+        type: 'capability_improvement',
+        magnitude: level,
+        description: `Improved ${capability} capability`,
+        capability,
+        improvement: level,
+        previousLevel: level - 0.1
+      })));
       this.adjustLearningParameters(improvements);
       
       const selfImprovementResult: SelfImprovementResult = {
@@ -700,14 +734,31 @@ export class LearningAgent extends Agent {
     }
     
     // Update learning history
-    this.learningHistory.push({
+        this.learningHistory.push({
       success: true,
-      knowledge: {
-        patterns: [experience.metadata?.learningType || 'general'],
-        insights: [`Experience stored: ${experience.id}`],
-        confidence: experience.confidence || 0.8
-      },
+      newKnowledge: [{
+        id: `knowledge_${Date.now()}`,
+        type: 'learning_outcome' as any,
+        content: {
+          patterns: [experience.metadata?.learningType || 'general'] as string[],
+          insights: [`Experience stored: ${experience.id}`],
+          confidence: experience.confidence || 0.8,
+          representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
+          semantics: { meaning: 'learning_patterns', context: { domain: 'general', scope: 'learning', constraints: {} }, interpretation: { meaning: 'learning patterns', confidence: 0.8, alternatives: [] } },
+          relationships: []
+        },
+        confidence: experience.confidence || 0.8,
+        source: 'experience_learning',
+        timestamp: Date.now(),
+        validity: { start: Date.now(), conditions: {} }
+      }],
       improvements: [],
+      adaptationMetrics: {
+        performance: 0.8,
+        efficiency: 0.7,
+        stability: 0.6,
+        flexibility: 0.8
+      },
       metadata: {
         experienceCount: 1,
         patternsExtracted: 1,
@@ -1024,7 +1075,16 @@ export class LearningAgent extends Agent {
   private async triggerMetaLearning(learningResult: LearningResult): Promise<void> {
     try {
       if (this.metaLearningEngine) {
-        await this.metaLearningEngine.learnFromLearning(learningResult);
+        await this.metaLearningEngine.learnFromLearning({
+          ...learningResult,
+          knowledge: learningResult.newKnowledge,
+          metadata: {
+            experienceCount: 1,
+            patternsExtracted: learningResult.newKnowledge[0]?.content?.patterns?.length || 0,
+            capabilitiesImproved: learningResult.improvements?.length || 0,
+            insightsGenerated: learningResult.newKnowledge[0]?.content?.insights?.length || 0
+          }
+        } as any);
       }
     } catch (error) {
       this.logger.warn('Meta-learning trigger failed', error as Error);
@@ -1036,17 +1096,26 @@ export class LearningAgent extends Agent {
     if (this.knowledgeBase) {
       this.knowledgeBase.store({
         id: `knowledge_${Date.now()}`,
-        type: 'learning_outcome',
-        content: learningResult,
+        type: 'learning_outcome' as any,
+        content: {
+          representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
+          semantics: { meaning: 'learning_result', context: { domain: 'general', scope: 'learning', constraints: {} }, interpretation: { meaning: 'learning result', confidence: 0.8, alternatives: [] } },
+          relationships: []
+        },
+        confidence: 0.8,
+        source: 'learning_process',
+        timestamp: Date.now(),
+        validity: { start: Date.now(), conditions: {} },
         metadata: { input, context, timestamp: Date.now() }
       });
     }
   }
 
   private updateLearningPerformance(learningResult: LearningResult): void {
-    const confidence = learningResult.knowledge.confidence;
-    const efficiency = learningResult.knowledge.patterns.length > 0 ?
-      Math.min(1.0, 10 / learningResult.knowledge.patterns.length) : 0.5;
+    const confidence = learningResult.newKnowledge[0]?.confidence || 0.8;
+    const patternsLength = learningResult.newKnowledge[0]?.content?.patterns?.length || 0;
+    const efficiency = patternsLength > 0 ?
+      Math.min(1.0, 10 / patternsLength) : 0.5;
     
     this.updatePerformance({
       accuracy: confidence,
@@ -1072,10 +1141,10 @@ export class LearningAgent extends Agent {
     const baseline = { accuracy: 0.5, efficiency: 0.5, adaptability: 0.5, retention: 0.5 };
     
     return {
-      accuracy: current.accuracy - baseline.accuracy,
-      efficiency: current.efficiency - baseline.efficiency,
-      adaptability: current.adaptability - baseline.adaptability,
-      retention: current.retention - baseline.retention
+      accuracy: (current.get('accuracy') || 0) - baseline.accuracy,
+      efficiency: (current.get('efficiency') || 0) - baseline.efficiency,
+      adaptability: (current.get('adaptability') || 0) - baseline.adaptability,
+      retention: (current.get('retention') || 0) - baseline.retention
     };
   }
 
@@ -1130,12 +1199,29 @@ export class LearningAgent extends Agent {
       
       const learningResult: LearningResult = {
         success: true,
-        knowledge: {
-          patterns: [learningType, 'general_learning'],
-          insights: [`Successfully learned from ${typeof input} input`],
-          confidence: Math.max(0.1, Math.min(1.0, confidence))
-        },
+        newKnowledge: [{
+          id: `knowledge_${Date.now()}`,
+          type: 'learning_outcome' as any,
+          content: {
+            patterns: [learningType, 'general_learning'],
+            insights: [`Successfully learned from ${typeof input} input`],
+            confidence: Math.max(0.1, Math.min(1.0, confidence)),
+            representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
+            semantics: { meaning: 'learning_patterns', context: { domain: 'general', scope: 'learning', constraints: {} }, interpretation: { meaning: 'learning patterns', confidence: 0.8, alternatives: [] } },
+            relationships: []
+          },
+                  confidence: Math.max(0.1, Math.min(1.0, confidence)),
+        source: 'experience_learning',
+        timestamp: Date.now(),
+        validity: { start: Date.now(), conditions: {} }
+        }],
         improvements: [],
+        adaptationMetrics: {
+          performance: 0.8,
+          efficiency: 0.7,
+          stability: 0.6,
+          flexibility: 0.8
+        },
         metadata: {
           learningType,
           steps: steps.length,
@@ -1225,33 +1311,35 @@ export class LearningAgent extends Agent {
     this.learningFrameworks.add(framework);
   }
 
-  public getCapabilityLevel(capability: string): number {
+  public override getCapabilityLevel(capability: string): number {
     return this.learningCapabilities.get(capability) || 0;
   }
 
-  public updateSkill(capability: string, level: number): void {
+  public override updateSkill(capability: string, level: number): void {
     this.learningCapabilities.set(capability, Math.max(0, Math.min(1, level)));
   }
 
-  public getParameter(param: string): number | undefined {
+  public override getParameter(param: string): number | undefined {
     return this.performanceMetrics.get(param);
   }
 
-  public setParameter(param: string, value: number): void {
+  public override setParameter(param: string, value: number): void {
     this.performanceMetrics.set(param, Math.max(0, Math.min(1, value)));
   }
 
-  public getEfficiency(): number {
+  public override getEfficiency(): number {
     return this.performanceMetrics.get('efficiency') || 0.7;
   }
 
-  public updatePerformance(metrics: Partial<Record<string, number>>): void {
-    Object.entries(metrics).forEach(([key, value]) => {
-      this.performanceMetrics.set(key, value);
-    });
+  public override updatePerformance(metrics: Partial<Record<string, number>>): void {
+          Object.entries(metrics).forEach(([key, value]) => {
+        if (value !== undefined) {
+          this.performanceMetrics.set(key, value);
+        }
+      });
   }
 
-  public isCapableOf(actionType: string): boolean {
+  public override isCapableOf(actionType: string): boolean {
     return this.learningCapabilities.has(actionType) || 
            this.learningStrategies.has(actionType) ||
            this.learningFrameworks.has(actionType);

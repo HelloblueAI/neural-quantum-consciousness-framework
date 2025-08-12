@@ -10,6 +10,9 @@ import { Logger } from '../utils/Logger';
 export interface AgentFactoryConfig {
   reasoningEngine: ReasoningEngine;
   learningEngine: LearningEngine;
+  metaLearningEngine?: any;
+  knowledgeBase?: any;
+  creativeEngine?: any;
   defaultCapabilities: Capability[];
   defaultGoals: Goal[];
   agentParameters: Map<string, any>;
@@ -588,14 +591,17 @@ export class AgentFactory {
           learningEngine: this.config?.learningEngine,
           learningAlgorithms: ['supervised', 'unsupervised', 'reinforcement'],
           knowledgeDomains: ['general', 'specialized'],
-          learningStrategies: ['adaptive', 'meta', 'transfer']
+          learningStrategies: ['adaptive', 'meta', 'transfer'],
+          metaLearningEngine: this.config?.metaLearningEngine || {} as any,
+          knowledgeBase: this.config?.knowledgeBase || {} as any,
+          learningCapabilities: ['supervised', 'unsupervised', 'reinforcement', 'transfer', 'meta'],
+          learningFrameworks: ['neural_networks', 'decision_trees', 'bayesian', 'reinforcement']
         } as LearningAgentConfig;
 
       case 'creative':
         return {
           ...baseConfig,
-          reasoningEngine: this.config?.reasoningEngine,
-          learningEngine: this.config?.learningEngine,
+          creativeEngine: this.config?.creativeEngine || {} as any,
           creativeCapabilities: ['creativity', 'innovation', 'artistic_expression'],
           artisticDomains: ['visual', 'musical', 'literary'],
           innovationStrategies: ['divergent_thinking', 'rapid_prototyping', 'iterative_refinement']
