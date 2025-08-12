@@ -93,6 +93,82 @@ export interface ReasoningStep {
   readonly description?: string;
 }
 
+// Enhanced Agent Task and Session Interfaces
+export interface ReasoningTask {
+  id: string;
+  name: string;
+  type: 'deduction' | 'induction' | 'abduction' | 'analogy' | 'creative';
+  input: any;
+  context: Record<string, any>;
+  constraints: Map<string, any>;
+  expectedOutput: any;
+  complexity: number;
+  priority: number;
+  metadata?: Record<string, any>;
+}
+
+export interface ReasoningSession {
+  id: string;
+  taskId: string;
+  startTime: number;
+  endTime?: number;
+  steps: string[];
+  intermediateResults: any[];
+  finalResult: any;
+  confidence: number;
+  metadata: Map<string, any>;
+}
+
+export interface LearningTask {
+  id: string;
+  name: string;
+  type: 'classification' | 'prediction' | 'optimization' | 'comprehension' | 'generation' | 'problem_solving' | 'pattern_recognition' | 'knowledge_extraction' | 'general_learning';
+  input: any;
+  context: Record<string, any>;
+  constraints: Map<string, any>;
+  expectedOutput: any;
+  complexity: number;
+  priority: number;
+  metadata?: Record<string, any>;
+}
+
+export interface LearningSession {
+  id: string;
+  taskId: string;
+  startTime: number;
+  endTime?: number;
+  steps: string[];
+  intermediateResults: any[];
+  finalResult: any;
+  confidence: number;
+  metadata: Map<string, any>;
+}
+
+export interface CreativeTask {
+  id: string;
+  name: string;
+  type: 'design' | 'problem_solving' | 'narrative' | 'artistic' | 'musical' | 'invention' | 'composition' | 'synthesis' | 'general_creativity';
+  input: any;
+  context: Record<string, any>;
+  constraints: Map<string, any>;
+  expectedOutput: any;
+  complexity: number;
+  priority: number;
+  metadata?: Record<string, any>;
+}
+
+export interface CreativeSession {
+  id: string;
+  taskId: string;
+  startTime: number;
+  endTime?: number;
+  steps: string[];
+  intermediateResults: any[];
+  finalResult: any;
+  confidence: number;
+  metadata: Map<string, any>;
+}
+
 export type LogicType = 'classical' | 'fuzzy' | 'probabilistic' | 'modal' | 'temporal' | 'quantum' | 'hybrid';
 
 export interface Proposition {
@@ -203,6 +279,156 @@ export interface AdaptationMetrics {
   readonly efficiency: number;
   readonly stability: number;
   readonly flexibility: number;
+}
+
+// Enhanced Result Interfaces for Agents
+export interface CreativeResult {
+  success: boolean;
+  creativity: {
+    originality: number;
+    usefulness: number;
+    novelty: number;
+    feasibility: number;
+  };
+  solutions: Array<{
+    id: string;
+    description: string;
+    type: string;
+    confidence: number;
+  }>;
+  insights: string[];
+  patterns: string[];
+  strategies?: string[];
+  metadata: {
+    creativeType?: string;
+    reasoningType?: string;
+    learningType?: string;
+    planningType?: string;
+    steps?: number;
+    insights?: number;
+    patterns?: number;
+    solutions?: number;
+    strategies?: number;
+    originality?: number;
+    usefulness?: number;
+    timestamp: number;
+  };
+}
+
+export interface EnhancedLearningResult {
+  success: boolean;
+  knowledge: {
+    patterns: string[];
+    insights: string[];
+    confidence: number;
+  };
+  improvements: Array<{
+    capability: string;
+    improvement: number;
+    previousLevel: number;
+  }>;
+  metadata: {
+    experienceCount?: number;
+    patternsExtracted?: number;
+    capabilitiesImproved?: number;
+    insightsGenerated?: number;
+    learningType?: string;
+    steps?: number;
+    confidence?: number;
+    timestamp?: number;
+  };
+}
+
+export interface AdaptationResult {
+  success: boolean;
+  adaptations: Array<{
+    type: string;
+    target: string;
+    currentLevel: number;
+    targetLevel: number;
+    confidence: number;
+  }>;
+  newCapabilities: string[];
+  improvedCapabilities: string[];
+  changes?: any[];
+  performance?: any;
+  confidence?: number;
+  metadata: {
+    domain?: string;
+    domainComplexity?: number;
+    contextComplexity?: number;
+    adaptationCount: number;
+    confidence: number;
+  };
+}
+
+export interface ActionResult {
+  success: boolean;
+  results: any[];
+  feedback: any[];
+  result?: any;
+  outcome?: any;
+  metrics?: any;
+  metadata: {
+    actionsExecuted: number;
+    successfulActions: number;
+    totalCost: any;
+  };
+}
+
+export interface SelfImprovementResult {
+  success: boolean;
+  improvements: Array<{
+    type: string;
+    target: number;
+    achieved: number;
+    confidence: number;
+  }>;
+  newCapabilities: string[];
+  performanceGains: any;
+  metadata: {
+    improvementCount: number;
+    confidence: number;
+    timestamp: number;
+  };
+}
+
+// Enhanced Engine Interfaces
+export interface CreativeEngine {
+  create(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+  reason(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+  learn(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+  plan(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+}
+
+export interface MetaLearningEngine {
+  learnFromLearning(learningResult: EnhancedLearningResult): Promise<void>;
+  adaptStrategies(improvements: any[]): Promise<void>;
+  optimizeParameters(performance: any): Promise<void>;
+}
+
+// Enhanced Agent Config Interfaces
+export interface ReasoningAgentConfig extends AgentConfig {
+  reasoningEngine: ReasoningEngine;
+  reasoningCapabilities: string[];
+  problemSolvingStrategies: string[];
+  logicalFrameworks: string[];
+}
+
+export interface LearningAgentConfig extends AgentConfig {
+  learningEngine: LearningEngine;
+  metaLearningEngine: MetaLearningEngine;
+  knowledgeBase: KnowledgeBase;
+  learningCapabilities: string[];
+  learningStrategies: string[];
+  learningFrameworks: string[];
+}
+
+export interface CreativeAgentConfig extends AgentConfig {
+  creativeEngine: CreativeEngine;
+  creativeCapabilities: string[];
+  artisticDomains: string[];
+  innovationStrategies: string[];
 }
 
 // ============================================================================
