@@ -2285,79 +2285,79 @@ export default {
                 type = 'Reasoning';
                 confidence = Math.round(reasoning.confidence * 100) + '%';
                 
-                responseHtml = \`
+                responseHtml = `
                     <div class="response-analysis">
                         <h5>Analysis Results</h5>
-                        <p><strong>Input:</strong> \${reasoning.input}</p>
-                        <p><strong>Analysis:</strong> \${reasoning.analysis}</p>
-                        <p><strong>Conclusion:</strong> \${reasoning.conclusion}</p>
+                        <p><strong>Input:</strong> ${reasoning.input}</p>
+                        <p><strong>Analysis:</strong> ${reasoning.analysis}</p>
+                        <p><strong>Conclusion:</strong> ${reasoning.conclusion}</p>
                         
                         <h6>Insights:</h6>
-                        <ul>\${reasoning.insights.map(insight => \`<li>\${insight}</li>\`).join('')}</ul>
+                        <ul>${reasoning.insights.map(insight => `<li>${insight}</li>`).join('')}</ul>
                         
-                        <h6>Context:</strong> \${reasoning.context}</h6>
-                        <p><strong>Confidence:</strong> \${confidence}</p>
-                        <p><strong>Conversation ID:</strong> \${reasoning.conversationId}</p>
+                        <h6>Context:</strong> ${reasoning.context}</h6>
+                        <p><strong>Confidence:</strong> ${confidence}</p>
+                        <p><strong>Conversation ID:</strong> ${reasoning.conversationId}</p>
                     </div>
-                \`;
+                `;
             } else if (actionType === 'learn') {
                 const learning = data.data.learning;
                 type = 'Learning';
                 confidence = Math.round(learning.confidence * 100) + '%';
                 
-                responseHtml = \`
+                responseHtml = `
                     <div class="response-learning">
                         <h5>Learning Results</h5>
-                        <p><strong>Input:</strong> \${learning.input}</p>
-                        <p><strong>Type:</strong> \${learning.type}</p>
-                        <p><strong>Knowledge:</strong> \${learning.knowledge}</p>
+                        <p><strong>Input:</strong> ${learning.input}</p>
+                        <p><strong>Type:</strong> ${learning.type}</p>
+                        <p><strong>Knowledge:</strong> ${learning.knowledge}</p>
                         
                         <h6>Patterns Identified:</h6>
-                        <ul>\${learning.patterns.map(pattern => \`<li>\${pattern}</li>\`).join('')}</ul>
+                        <ul>${learning.patterns.map(pattern => `<li>${pattern}</li>`).join('')}</ul>
                         
                         <h6>Insights:</h6>
-                        <ul>\${learning.insights.map(insight => \`<li>\${insight}</li>\`).join('')}</ul>
+                        <ul>${learning.insights.map(insight => `<li>${insight}</li>`).join('')}</ul>
                         
                         <h6>Progress Update:</h6>
-                        <p><strong>Total Interactions:</strong> \${learning.progress.totalInteractions}</p>
-                        <p><strong>Knowledge Items:</strong> \${learning.progress.knowledgeItems}</p>
-                        <p><strong>Patterns Learned:</strong> \${learning.progress.patternsLearned}</p>
+                        <p><strong>Total Interactions:</strong> ${learning.progress.totalInteractions}</p>
+                        <p><strong>Knowledge Items:</strong> ${learning.progress.knowledgeItems}</p>
+                        <p><strong>Patterns Learned:</strong> ${learning.progress.patternsLearned}</p>
                     </div>
-                \`;
+                `;
             } else if (actionType === 'create') {
                 const creativity = data.data.creativity;
                 type = 'Creativity';
                 confidence = Math.round(creativity.creativity * 100) + '%';
                 
-                responseHtml = \`
+                responseHtml = `
                     <div class="response-creativity">
                         <h5>Creative Output</h5>
-                        <p><strong>Prompt:</strong> \${creativity.prompt}</p>
-                        <p><strong>Style:</strong> \${creativity.style}</p>
+                        <p><strong>Prompt:</strong> ${creativity.prompt}</p>
+                        <p><strong>Style:</strong> ${creativity.style}</p>
                         
                         <h6>Generated Content:</h6>
-                        <div class="creative-output">\${creativity.output.replace(/\\n/g, '<br>')}</div>
+                        <div class="creative-output">${creativity.output.replace(/\n/g, '<br>')}</div>
                         
                         <h6>Metrics:</h6>
                         <div class="metrics-grid">
                             <div class="metric-item">
                                 <span class="metric-label">Creativity:</span>
-                                <span class="metric-value">\${Math.round(creativity.creativity * 100)}%</span>
+                                <span class="metric-value">${Math.round(creativity.creativity * 100)}%</span>
                             </div>
                             <div class="metric-item">
                                 <span class="metric-label">Originality:</span>
-                                <span class="metric-value">\${Math.round(creativity.originality * 100)}%</span>
+                                <span class="metric-value">${Math.round(creativity.originality * 100)}%</span>
                             </div>
                             <div class="metric-item">
                                 <span class="metric-label">Usefulness:</span>
-                                <span class="metric-value">\${Math.round(creativity.usefulness * 100)}%</span>
+                                <span class="metric-value">${Math.round(creativity.usefulness * 100)}%</span>
                             </div>
                         </div>
                         
                         <h6>Insights:</h6>
-                        <ul>\${creativity.insights.map(insight => \`<li>\${insight}</li>\`).join('')}</ul>
+                        <ul>${creativity.insights.map(insight => `<li>${insight}</li>`).join('')}</ul>
                     </div>
-                \`;
+                `;
             }
             
             responseType.textContent = type;
