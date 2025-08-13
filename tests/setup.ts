@@ -58,6 +58,8 @@ vi.mock('@anthropic-ai/sdk', () => ({
 
 // Mock environment variables
 process.env.NODE_ENV = 'test';
+process.env.ENABLE_RATE_LIMIT = 'true'; // Enable rate limiting for rate limit tests
+process.env.TEST_API_KEY = 'test-api-key'; // Default API key for tests
 process.env.OPENAI_API_KEY = 'test-openai-key';
 process.env.ANTHROPIC_API_KEY = 'test-anthropic-key';
 process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test';

@@ -622,6 +622,21 @@ export default {
                       const endpoint = document.getElementById('agiEndpoint').value;
                       const resultPanel = document.getElementById('resultPanel');
                       const resultDiv = document.getElementById('agiResult');
+                      const submitBtn = document.querySelector('.btn-primary');
+                      
+                      if (!input.trim()) {
+                          alert('Please enter some input');
+                          return;
+                      }
+                      
+                      // Prevent multiple submissions
+                      if (submitBtn.disabled) return;
+                      
+                      // Start processing state
+                      submitBtn.disabled = true;
+                      submitBtn.textContent = 'Processing...';
+                      submitBtn.style.opacity = '0.7';
+                      submitBtn.style.cursor = 'not-allowed';
                       
                       resultPanel.style.display = 'block';
                       resultDiv.innerHTML = 'Processing with AGI...';
@@ -655,16 +670,27 @@ export default {
                                   break;
                           }
                           
+                          if (!response.ok) {
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                          }
+                          
                           const data = await response.json();
                           
                           if (data.success) {
                               resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
                               loadAGIStatus(); // Refresh status after interaction
                           } else {
-                              resultDiv.innerHTML = 'AGI Error: ' + (data.error || 'Unknown error');
+                              resultDiv.innerHTML = 'AGI Error: ' + (data.error || 'Unknown error occurred');
                           }
                       } catch (error) {
                           resultDiv.innerHTML = 'Failed to interact with AGI: ' + error.message;
+                          console.error('AGI interaction error:', error);
+                      } finally {
+                          // Reset processing state
+                          submitBtn.disabled = false;
+                          submitBtn.textContent = 'Process with AGI';
+                          submitBtn.style.opacity = '1';
+                          submitBtn.style.cursor = 'pointer';
                       }
                   }
                   
