@@ -614,14 +614,24 @@ app.get('/', (req, res) => {
             const type = document.getElementById('interactionType').value;
             const input = document.getElementById('userInput').value;
             const resultDiv = document.getElementById('result');
+            const submitBtn = document.querySelector('.btn');
             
             if (!input.trim()) {
                 alert('Please enter some input');
                 return;
             }
             
+            // Prevent multiple submissions
+            if (submitBtn.disabled) return;
+            
+            // Start processing state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.cursor = 'not-allowed';
+            
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = 'AGI is thinking...';
+            resultDiv.innerHTML = '<div class="loading">AGI is thinking...</div>';
             
             try {
                 let endpoint = '';
@@ -656,15 +666,26 @@ app.get('/', (req, res) => {
                     body: JSON.stringify(payload)
                 });
                 
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const data = await response.json();
                 
                 if (data.success) {
                     resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
                 } else {
-                    resultDiv.innerHTML = 'Error: ' + data.error;
+                    resultDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error occurred');
                 }
             } catch (error) {
                 resultDiv.innerHTML = 'Error: ' + error.message;
+                console.error('AGI interaction error:', error);
+            } finally {
+                // Reset processing state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send to AGI';
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
             }
         }
         

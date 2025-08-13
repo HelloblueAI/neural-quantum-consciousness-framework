@@ -734,6 +734,21 @@ export default {
                       const input = document.getElementById('agiInput').value;
                       const endpoint = document.getElementById('agiEndpoint').value;
                       const resultDiv = document.getElementById('agiResult');
+                      const submitBtn = document.querySelector('button');
+                      
+                      if (!input.trim()) {
+                          alert('Please enter some input');
+                          return;
+                      }
+                      
+                      // Prevent multiple submissions
+                      if (submitBtn.disabled) return;
+                      
+                      // Start processing state
+                      submitBtn.disabled = true;
+                      submitBtn.textContent = 'Processing...';
+                      submitBtn.style.opacity = '0.7';
+                      submitBtn.style.cursor = 'not-allowed';
                       
                       resultDiv.style.display = 'block';
                       resultDiv.innerHTML = 'Processing with Real AGI...';
@@ -767,16 +782,27 @@ export default {
                                   break;
                           }
                           
+                          if (!response.ok) {
+                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                          }
+                          
                           const data = await response.json();
                           
                           if (data.success) {
                               resultDiv.innerHTML = 'Real AGI Response:\\n' + JSON.stringify(data.data, null, 2);
                               loadAGIStatus(); // Refresh status after interaction
                           } else {
-                              resultDiv.innerHTML = 'Real AGI Error: ' + (data.error || 'Unknown error');
+                              resultDiv.innerHTML = 'Real AGI Error: ' + (data.error || 'Unknown error occurred');
                           }
                       } catch (error) {
                           resultDiv.innerHTML = 'Failed to interact with Real AGI: ' + error.message;
+                          console.error('AGI interaction error:', error);
+                      } finally {
+                          // Reset processing state
+                          submitBtn.disabled = false;
+                          submitBtn.textContent = 'Process with Real AGI';
+                          submitBtn.style.opacity = '1';
+                          submitBtn.style.cursor = 'pointer';
                       }
                   }
                   
