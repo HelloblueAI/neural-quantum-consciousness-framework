@@ -1,4 +1,4 @@
-import { Vector, Tensor } from '../types';
+import { Vector, Tensor } from '@/types';
 export interface BaseModel {
     id: string;
     createdAt: number;

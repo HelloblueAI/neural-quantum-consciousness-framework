@@ -506,13 +506,16 @@ export class AgentFactory {
                     learningEngine: this.config?.learningEngine,
                     learningAlgorithms: ['supervised', 'unsupervised', 'reinforcement'],
                     knowledgeDomains: ['general', 'specialized'],
-                    learningStrategies: ['adaptive', 'meta', 'transfer']
+                    learningStrategies: ['adaptive', 'meta', 'transfer'],
+                    metaLearningEngine: this.config?.metaLearningEngine || {},
+                    knowledgeBase: this.config?.knowledgeBase || {},
+                    learningCapabilities: ['supervised', 'unsupervised', 'reinforcement', 'transfer', 'meta'],
+                    learningFrameworks: ['neural_networks', 'decision_trees', 'bayesian', 'reinforcement']
                 };
             case 'creative':
                 return {
                     ...baseConfig,
-                    reasoningEngine: this.config?.reasoningEngine,
-                    learningEngine: this.config?.learningEngine,
+                    creativeEngine: this.config?.creativeEngine || {},
                     creativeCapabilities: ['creativity', 'innovation', 'artistic_expression'],
                     artisticDomains: ['visual', 'musical', 'literary'],
                     innovationStrategies: ['divergent_thinking', 'rapid_prototyping', 'iterative_refinement']

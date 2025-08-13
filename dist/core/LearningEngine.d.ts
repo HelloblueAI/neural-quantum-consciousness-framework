@@ -3,7 +3,7 @@
  * Multi-algorithm learning with continuous adaptation and meta-learning capabilities
  */
 import { EventEmitter } from 'events';
-import { LearningResult, Experience } from '../types';
+import { LearningResult, Experience } from '@/types';
 /**
  * Advanced Learning Engine
  *

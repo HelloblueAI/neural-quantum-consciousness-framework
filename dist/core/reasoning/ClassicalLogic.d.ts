@@ -2,7 +2,7 @@
  * Classical Logic Engine
  * Implements classical propositional and predicate logic
  */
-import { LogicalPremise, LogicalConclusion, ProofStep } from '../../types';
+import { LogicalPremise, LogicalConclusion, ProofStep } from '@/types';
 export declare class ClassicalLogic {
     private readonly logger;
     private premises;

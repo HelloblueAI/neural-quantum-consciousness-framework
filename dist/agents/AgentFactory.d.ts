@@ -8,6 +8,9 @@ import { Capability, Goal } from '../types';
 export interface AgentFactoryConfig {
     reasoningEngine: ReasoningEngine;
     learningEngine: LearningEngine;
+    metaLearningEngine?: any;
+    knowledgeBase?: any;
+    creativeEngine?: any;
     defaultCapabilities: Capability[];
     defaultGoals: Goal[];
     agentParameters: Map<string, any>;

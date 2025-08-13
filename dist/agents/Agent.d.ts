@@ -1,5 +1,5 @@
-import { AgentState, Goal, Capability, Action, Experience, ReasoningResult, LearningResult } from '../types';
-import { Logger } from '../utils/Logger';
+import { AgentState, Goal, Capability, Action, Experience, ReasoningResult, LearningResult } from '@/types';
+import { Logger } from '@/utils/Logger';
 export interface AgentConfig {
     id: string;
     name: string;
@@ -69,14 +69,14 @@ export declare abstract class Agent {
         learning: LearningResult;
         actions: Action[];
     }>;
-    abstract reason(input: any, context?: Record<string, any>): Promise<ReasoningResult>;
-    abstract learn(experiences: Experience[], context?: Record<string, any>): Promise<LearningResult>;
-    abstract plan(goals: Goal[], context?: Record<string, any>): Promise<Action[]>;
+    abstract reason(input: any, context?: Record<string, any>): Promise<ReasoningResult | any>;
+    abstract learn(experiences: Experience[], context?: Record<string, any>): Promise<LearningResult | any>;
+    abstract plan(goals: Goal[], context?: Record<string, any>): Promise<Action[] | any>;
     abstract execute(action: Action, context?: Record<string, any>): Promise<{
         success: boolean;
         result: any;
         feedback: any;
-    }>;
+    } | any>;
     processTask(task: any): Promise<{
         success: boolean;
         result: any;

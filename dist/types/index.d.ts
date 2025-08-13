@@ -69,6 +69,75 @@ export interface ReasoningStep {
     readonly reasoning: string;
     readonly description?: string;
 }
+export interface ReasoningTask {
+    id: string;
+    name: string;
+    type: 'deduction' | 'induction' | 'abduction' | 'analogy' | 'creative';
+    input: any;
+    context: Record<string, any>;
+    constraints: Map<string, any>;
+    expectedOutput: any;
+    complexity: number;
+    priority: number;
+    metadata?: Record<string, any>;
+}
+export interface ReasoningSession {
+    id: string;
+    taskId: string;
+    startTime: number;
+    endTime?: number;
+    steps: string[];
+    intermediateResults: any[];
+    finalResult: any;
+    confidence: number;
+    metadata: Map<string, any>;
+}
+export interface LearningTask {
+    id: string;
+    name: string;
+    type: 'classification' | 'prediction' | 'optimization' | 'comprehension' | 'generation' | 'problem_solving' | 'pattern_recognition' | 'knowledge_extraction' | 'general_learning';
+    input: any;
+    context: Record<string, any>;
+    constraints: Map<string, any>;
+    expectedOutput: any;
+    complexity: number;
+    priority: number;
+    metadata?: Record<string, any>;
+}
+export interface LearningSession {
+    id: string;
+    taskId: string;
+    startTime: number;
+    endTime?: number;
+    steps: string[];
+    intermediateResults: any[];
+    finalResult: any;
+    confidence: number;
+    metadata: Map<string, any>;
+}
+export interface CreativeTask {
+    id: string;
+    name: string;
+    type: 'design' | 'problem_solving' | 'narrative' | 'artistic' | 'musical' | 'invention' | 'composition' | 'synthesis' | 'general_creativity';
+    input: any;
+    context: Record<string, any>;
+    constraints: Map<string, any>;
+    expectedOutput: any;
+    complexity: number;
+    priority: number;
+    metadata?: Record<string, any>;
+}
+export interface CreativeSession {
+    id: string;
+    taskId: string;
+    startTime: number;
+    endTime?: number;
+    steps: string[];
+    intermediateResults: any[];
+    finalResult: any;
+    confidence: number;
+    metadata: Map<string, any>;
+}
 export type LogicType = 'classical' | 'fuzzy' | 'probabilistic' | 'modal' | 'temporal' | 'quantum' | 'hybrid';
 export interface Proposition {
     readonly content: string;
@@ -94,6 +163,7 @@ export interface LearningResult {
     readonly adaptationMetrics: AdaptationMetrics;
     readonly confidence?: number;
     readonly insights?: string[];
+    readonly metadata?: Record<string, any>;
 }
 export interface Experience {
     readonly id: string;
@@ -161,6 +231,143 @@ export interface AdaptationMetrics {
     readonly stability: number;
     readonly flexibility: number;
 }
+export interface CreativeResult {
+    success: boolean;
+    creativity: {
+        originality: number;
+        usefulness: number;
+        novelty: number;
+        feasibility: number;
+    };
+    solutions: Array<{
+        id: string;
+        description: string;
+        type: string;
+        confidence: number;
+    }>;
+    insights: string[];
+    patterns: string[];
+    strategies?: string[];
+    metadata: {
+        creativeType?: string;
+        reasoningType?: string;
+        learningType?: string;
+        planningType?: string;
+        steps?: number;
+        insights?: number;
+        patterns?: number;
+        solutions?: number;
+        strategies?: number;
+        originality?: number;
+        usefulness?: number;
+        timestamp: number;
+    };
+}
+export interface EnhancedLearningResult {
+    success: boolean;
+    knowledge: {
+        patterns: string[];
+        insights: string[];
+        confidence: number;
+    };
+    improvements: Array<{
+        capability: string;
+        improvement: number;
+        previousLevel: number;
+    }>;
+    metadata: {
+        experienceCount?: number;
+        patternsExtracted?: number;
+        capabilitiesImproved?: number;
+        insightsGenerated?: number;
+        learningType?: string;
+        steps?: number;
+        confidence?: number;
+        timestamp?: number;
+    };
+}
+export interface AdaptationResult {
+    success: boolean;
+    adaptations: Array<{
+        type: string;
+        target: string;
+        currentLevel: number;
+        targetLevel: number;
+        confidence: number;
+    }>;
+    newCapabilities: string[];
+    improvedCapabilities: string[];
+    changes?: any[];
+    performance?: any;
+    confidence?: number;
+    metadata: {
+        domain?: string;
+        domainComplexity?: number;
+        contextComplexity?: number;
+        adaptationCount: number;
+        confidence: number;
+    };
+}
+export interface ActionResult {
+    success: boolean;
+    results: any[];
+    feedback: any[];
+    result?: any;
+    outcome?: any;
+    metrics?: any;
+    metadata: {
+        actionsExecuted: number;
+        successfulActions: number;
+        totalCost: any;
+    };
+}
+export interface SelfImprovementResult {
+    success: boolean;
+    improvements: Array<{
+        type: string;
+        target: number;
+        achieved: number;
+        confidence: number;
+    }>;
+    newCapabilities: string[];
+    performanceGains: any;
+    metadata: {
+        improvementCount: number;
+        confidence: number;
+        timestamp: number;
+    };
+}
+export interface CreativeEngine {
+    create(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+    reason(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+    learn(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+    plan(input: any, context?: Record<string, any>): Promise<CreativeResult>;
+}
+export interface MetaLearningEngine {
+    learnFromLearning(learningResult: EnhancedLearningResult): Promise<void>;
+    adaptStrategies(improvements: any[]): Promise<void>;
+    optimizeParameters(performance: any): Promise<void>;
+}
+export interface ReasoningAgentConfig extends AgentConfig {
+    reasoningEngine: ReasoningEngine;
+    reasoningCapabilities: string[];
+    problemSolvingStrategies: string[];
+    logicalFrameworks: string[];
+}
+export interface LearningAgentConfig extends AgentConfig {
+    learningEngine: LearningEngine;
+    metaLearningEngine: MetaLearningEngine;
+    knowledgeBase: KnowledgeBase;
+    learningCapabilities: string[];
+    learningStrategies: string[];
+    learningFrameworks: string[];
+}
+export interface CreativeAgentConfig extends AgentConfig {
+    creativeEngine: CreativeEngine;
+    creativeCapabilities: string[];
+    artisticDomains: string[];
+    innovationStrategies: string[];
+}
 export interface ActionPlan {
     readonly id: string;
     readonly goals: Goal[];
@@ -215,12 +422,6 @@ export type ActionType = 'perceive' | 'reason' | 'plan' | 'execute' | 'communica
 export interface ActionParameters {
     readonly [key: string]: unknown;
 }
-export interface ActionResult {
-    readonly success: boolean;
-    readonly outcome: Outcome;
-    readonly metrics: ActionMetrics;
-    readonly feedback: Feedback;
-}
 export interface Outcome {
     readonly state: EnvironmentState;
     readonly changes: Change[];
@@ -247,12 +448,16 @@ export interface Knowledge {
     readonly source: string;
     readonly timestamp: number;
     readonly validity: ValidityPeriod;
+    readonly metadata?: Record<string, any>;
 }
 export type KnowledgeType = 'fact' | 'rule' | 'pattern' | 'concept' | 'skill' | 'strategy' | 'meta-knowledge';
 export interface KnowledgeContent {
     readonly representation: Representation;
     readonly semantics: Semantics;
     readonly relationships: Relationship[];
+    readonly patterns?: string[];
+    readonly insights?: string[];
+    readonly confidence?: number;
 }
 export interface Encoding {
     readonly format: string;
@@ -919,12 +1124,6 @@ export interface ReasoningMetrics {
     readonly efficiency: number;
     readonly creativity: number;
     readonly consistency: number;
-}
-export interface AdaptationResult {
-    readonly success: boolean;
-    readonly changes: AdaptationChange[];
-    readonly performance: AdaptationPerformance;
-    readonly confidence: number;
 }
 export interface AdaptationChange {
     readonly type: string;

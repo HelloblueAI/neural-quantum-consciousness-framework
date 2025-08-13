@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class SystemCoordinator extends EventEmitter {
     id;
     logger;
@@ -117,25 +117,13 @@ export class SystemCoordinator extends EventEmitter {
         const success = agentResults.every(r => r.result.success);
         return {
             success,
-            outcome: {
-                state: {
-                    objects: [],
-                    agents: [],
-                    events: [],
-                    constraints: [],
-                    resources: []
-                },
-                changes: [],
-                value: {
-                    utility: 0.8,
-                    ethical: { fairness: 0.8, harm: 0.1, autonomy: 0.9, beneficence: 0.8 },
-                    aesthetic: { beauty: 0.7, harmony: 0.8, creativity: 0.6, elegance: 0.7 },
-                    practical: { efficiency: 0.8, effectiveness: 0.9, sustainability: 0.7, scalability: 0.8 }
-                },
-                uncertainty: { type: 'probabilistic', parameters: {}, confidence: 0.8 }
-            },
-            metrics: { efficiency: 0.8, effectiveness: 0.9, cost: 0.2, time: 0.7 },
-            feedback: { type: 'positive', strength: 0.8, specificity: 0.7, timeliness: 0.9 }
+            results: agentResults.map(r => r.result),
+            feedback: [{ type: 'positive', strength: 0.8, specificity: 0.7, timeliness: 0.9 }],
+            metadata: {
+                actionsExecuted: agentResults.length,
+                successfulActions: agentResults.filter(r => r.result.success).length,
+                totalCost: 0.2
+            }
         };
     }
 }
