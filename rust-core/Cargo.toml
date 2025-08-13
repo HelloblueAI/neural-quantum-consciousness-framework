@@ -1,0 +1,65 @@
+[package]
+name = "agi-rust-core"
+version = "0.1.0"
+edition = "2021"
+authors = ["AGI Team <agi@bleujs.org>"]
+description = "High-performance Rust core for multi-language AGI system"
+license = "MIT"
+repository = "https://github.com/HelloblueAI/neural-quantum-consciousness-framework"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Neural network and matrix operations
+ndarray = "0.15"
+ndarray-rand = "0.14"
+rand = "0.8"
+rand_distr = "0.4"
+
+# Parallel processing
+rayon = "1.5"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Memory management
+jemallocator = "0.5"
+
+# FFI and system integration
+libc = "0.2"
+nix = "0.26"
+
+# WebAssembly support
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["console"] }
+
+# Performance monitoring
+perf-event = "0.4"
+
+[build-dependencies]
+cc = "1.0"
+
+[lib]
+name = "agi_rust_core"
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true
