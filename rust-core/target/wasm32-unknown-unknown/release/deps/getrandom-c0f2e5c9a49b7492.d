@@ -1,0 +1,10 @@
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/getrandom-c0f2e5c9a49b7492.d: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/util.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error_impls.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/libgetrandom-c0f2e5c9a49b7492.rlib: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/util.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error_impls.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/libgetrandom-c0f2e5c9a49b7492.rmeta: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/util.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error_impls.rs
+
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/lib.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/util.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.2.16/src/error_impls.rs:

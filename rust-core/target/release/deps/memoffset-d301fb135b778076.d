@@ -1,0 +1,10 @@
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/memoffset-d301fb135b778076.d: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/raw_field.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/offset_of.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/span_of.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/libmemoffset-d301fb135b778076.rlib: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/raw_field.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/offset_of.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/span_of.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/libmemoffset-d301fb135b778076.rmeta: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/raw_field.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/offset_of.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/span_of.rs
+
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/lib.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/raw_field.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/offset_of.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/memoffset-0.7.1/src/span_of.rs:

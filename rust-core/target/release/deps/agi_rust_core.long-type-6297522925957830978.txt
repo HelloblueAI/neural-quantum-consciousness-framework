@@ -1,0 +1,1 @@
+impl Future<Output = Result<ConsciousnessStats, Box<(dyn StdError + 'static)>>>

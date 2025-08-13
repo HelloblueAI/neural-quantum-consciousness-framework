@@ -1,0 +1,10 @@
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/log-035ffd3c7c122286.d: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/macros.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/serde.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/__private_api.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/liblog-035ffd3c7c122286.rlib: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/macros.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/serde.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/__private_api.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/wasm32-unknown-unknown/release/deps/liblog-035ffd3c7c122286.rmeta: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/macros.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/serde.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/__private_api.rs
+
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/lib.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/macros.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/serde.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/log-0.4.27/src/__private_api.rs:

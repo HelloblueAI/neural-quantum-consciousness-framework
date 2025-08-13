@@ -47,15 +47,13 @@ impl AGISystem {
     pub async fn process_input(&self, input: &str) -> Result<ProcessingResult, Box<dyn std::error::Error>> {
         info!("Processing input: {} characters", input.len());
         
-        // Parallel processing across all engines
-        let (neural_result, consciousness_result) = tokio::try_join!(
-            self.neural_engine.read().await.process_input(input),
-            self.consciousness_engine.read().await.evolve(input)
-        )?;
+        // Sequential processing for now (will be parallel in future)
+        let neural_result = self.neural_engine.read().await.process_input(input).await?;
+        let consciousness_result = self.consciousness_engine.read().await.evolve(input).await?;
         
         // Synthesize results
         let final_result = ProcessingResult {
-            neural_output: neural_result,
+            neural_output: neural_result.clone(),
             consciousness: consciousness_result,
             confidence: self.calculate_confidence(&neural_result),
             processing_time: std::time::Instant::now().elapsed(),
@@ -79,9 +77,9 @@ impl AGISystem {
     
     /// Get system status and metrics
     pub async fn get_status(&self) -> Result<SystemStatus, Box<dyn std::error::Error>> {
-        let memory_stats = self.memory_manager.read().await.get_stats()?;
-        let neural_stats = self.neural_engine.read().await.get_stats()?;
-        let consciousness_stats = self.consciousness_engine.read().await.get_stats()?;
+        let memory_stats = self.memory_manager.read().await.get_stats().await?;
+        let neural_stats = self.neural_engine.read().await.get_stats().await?;
+        let consciousness_stats = self.consciousness_engine.read().await.get_stats().await?;
         
         Ok(SystemStatus {
             memory: memory_stats,
@@ -97,12 +95,10 @@ impl AGISystem {
         
         let start_time = std::time::Instant::now();
         
-        // Parallel optimization across all components
-        let (memory_opt, neural_opt, consciousness_opt) = tokio::try_join!(
-            self.memory_manager.write().await.optimize(),
-            self.neural_engine.write().await.optimize(),
-            self.consciousness_engine.write().await.optimize()
-        )?;
+        // Sequential optimization for now (will be parallel in future)
+        let memory_opt = self.memory_manager.write().await.optimize().await?;
+        let neural_opt = self.neural_engine.write().await.optimize().await?;
+        let consciousness_opt = self.consciousness_engine.write().await.optimize().await?;
         
         let optimization_time = start_time.elapsed();
         
@@ -120,7 +116,7 @@ impl AGISystem {
 }
 
 /// Result of processing input through the AGI system
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone)]
 pub struct ProcessingResult {
     pub neural_output: neural_engine::NeuralResponse,
     pub consciousness: consciousness::ConsciousnessState,
@@ -129,7 +125,7 @@ pub struct ProcessingResult {
 }
 
 /// System status and metrics
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone)]
 pub struct SystemStatus {
     pub memory: memory_manager::MemoryStats,
     pub neural: neural_engine::NeuralStats,
@@ -138,7 +134,7 @@ pub struct SystemStatus {
 }
 
 /// Result of system optimization
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone)]
 pub struct OptimizationResult {
     pub memory_improvements: memory_manager::OptimizationResult,
     pub neural_improvements: neural_engine::OptimizationResult,

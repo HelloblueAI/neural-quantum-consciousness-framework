@@ -1,0 +1,10 @@
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/lock_api-f4af69416acc7756.d: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/mutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/remutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/rwlock.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/liblock_api-f4af69416acc7756.rlib: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/mutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/remutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/rwlock.rs
+
+/home/pejmanhaghighatnia/Documents/AGI/rust-core/target/release/deps/liblock_api-f4af69416acc7756.rmeta: /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/lib.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/mutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/remutex.rs /home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/rwlock.rs
+
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/lib.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/mutex.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/remutex.rs:
+/home/pejmanhaghighatnia/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lock_api-0.4.13/src/rwlock.rs:

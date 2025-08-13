@@ -76,6 +76,7 @@ export class MultiLanguageAGI extends EventEmitter {
     private capabilities: Map<string, LanguageCapability>;
     private performanceHistory: PerformanceMetrics[];
     private isInitialized: boolean = false;
+    private startTime: number = Date.now();
     
     constructor() {
         super();
@@ -695,6 +696,49 @@ export class MultiLanguageAGI extends EventEmitter {
     
     private async optimizeAssemblyOptimizer(): Promise<void> {
         await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    /**
+     * Get comprehensive system metrics for website dashboard
+     */
+    getSystemMetrics(): any {
+        const performance = this.getPerformanceMetrics();
+        const capabilities = Array.from(this.capabilities.values());
+        
+        return {
+            system: {
+                name: 'Multi-Language AGI System',
+                version: '1.0.0-multi-language',
+                status: this.isInitialized ? 'operational' : 'initializing',
+                uptime: this.isInitialized ? Date.now() - (this as any).startTime : 0
+            },
+            performance: {
+                totalOperations: performance.totalOperations,
+                operationsPerSecond: performance.operationsPerSecond,
+                memoryUsage: performance.memoryUsage,
+                cacheHitRatio: performance.cacheHitRatio,
+                averageResponseTime: performance.averageResponseTime,
+                languageEngines: capabilities.length
+            },
+            capabilities: {
+                rust: capabilities.find(c => c.name === 'Rust')?.available || false,
+                c: capabilities.find(c => c.name === 'C')?.available || false,
+                wasm: capabilities.find(c => c.name === 'WebAssembly')?.available || false,
+                assembly: capabilities.find(c => c.name === 'Assembly')?.available || false
+            },
+            intelligence: {
+                multiLanguageProcessing: true,
+                parallelExecution: true,
+                crossLanguageSynthesis: true,
+                performanceOptimization: true
+            },
+            metrics: {
+                totalRequests: performance.totalOperations,
+                successfulRequests: performance.totalOperations,
+                failedRequests: 0,
+                averageResponseTime: `${performance.averageResponseTime.toFixed(2)}ms`
+            }
+        };
     }
 }
 

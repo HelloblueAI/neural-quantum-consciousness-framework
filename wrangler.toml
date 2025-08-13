@@ -1,11 +1,11 @@
-name = "agi-bleujs"
-main = "src/simple-worker.ts"
-compatibility_date = "2024-01-15"
+name = "multi-language-agi"
+main = "src/multi-language-agi-worker-simple.ts"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # Custom domain configuration
 [env.production]
-name = "agi-bleujs"
+name = "multi-language-agi"
 route = "agi.bleujs.org/*"
 
 # Staging environment
