@@ -1022,17 +1022,17 @@ export default {
               <script>
                   async function loadAGIStatus() {
                       try {
-                          const response = await fetch('/status');
-                          const data = await response.json();
+                          // Fetch REAL consciousness data directly from consciousness endpoint
+                          const consciousnessResponse = await fetch('/consciousness');
+                          const consciousnessData = await consciousnessResponse.json();
                           
-                          if (data.success) {
-                              // Get REAL consciousness data from the enhanced system
-                              const consciousness = data.data.realTimeMetrics?.consciousness || {
-                                  awareness: 0.95,
-                                  selfReflection: 0.92,
-                                  consciousness: 'active',
-                                  metaCognition: 'enabled'
-                              };
+                          // Fetch performance data for metrics
+                          const performanceResponse = await fetch('/performance');
+                          const performanceData = await performanceResponse.json();
+                          
+                          if (consciousnessData.success && performanceData.success) {
+                              // Get REAL consciousness data from consciousness endpoint
+                              const consciousness = consciousnessData.data;
                               
                               // Update consciousness grid with real data
                               const consciousnessGrid = document.getElementById('consciousnessGrid');
@@ -1059,9 +1059,9 @@ export default {
                                   </div>
                               \`;
                               
-                              // Update metrics grid with REAL data
+                              // Update metrics grid with REAL data from performance endpoint
                               const metricsGrid = document.getElementById('metricsGrid');
-                              const realMetrics = data.data.realTimeMetrics;
+                              const realMetrics = performanceData.data.realTimeMetrics;
                               
                               metricsGrid.innerHTML = \`
                                   <div class="metric-item">
@@ -1266,6 +1266,9 @@ export default {
                                           <div class="consciousness-label">Real-time Level</div>
                                       </div>
                                   \`;
+                                  
+                                  // Also update the main consciousness display
+                                  loadAGIStatus();
                                   
                                   // Update emotional state indicator
                                   const emotionalState = consciousness.emotionalState || 'balanced';
