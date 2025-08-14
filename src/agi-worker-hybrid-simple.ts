@@ -554,7 +554,7 @@ export default {
         .result-panel h3 {
             margin-bottom: 20px;
             color: var(--accent);
-            font-size: 1.5em;
+            font-size: 1.2em;  /* Reduced from 1.5em for smaller AGI Response title */
         }
         
         .result-content {
@@ -650,6 +650,10 @@ export default {
             .metrics-panel h2,
             .documentation-panel h2 {
                 font-size: 1.0em;  /* Even smaller section titles on mobile */
+            }
+            
+            .result-panel h3 {
+                font-size: 1.0em;  /* Smaller AGI Response title on mobile */
             }
             
             .documentation-tab-content h3 {
