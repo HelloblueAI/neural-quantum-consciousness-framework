@@ -460,7 +460,7 @@ export default {
             }
             
             .header h1 {
-                font-size: 2.0em;  /* Smaller font size on mobile */
+                font-size: 1.6em;  /* Even smaller font size on mobile */
             }
             
             .header p {
