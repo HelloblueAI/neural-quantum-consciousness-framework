@@ -252,7 +252,7 @@ export default {
         .consciousness-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.8em;
+            font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
         }
         
         .consciousness-grid {
@@ -299,7 +299,7 @@ export default {
         .interaction-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.8em;
+            font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
         }
         
         .form-group {
@@ -419,7 +419,7 @@ export default {
         .metrics-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.8em;
+            font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
         }
         
         .metrics-grid {
@@ -481,8 +481,11 @@ export default {
                 padding: 8px 16px;  /* Smaller padding on mobile */
             }
             
+            .consciousness-panel h2,
+            .interaction-panel h2,
+            .metrics-panel h2,
             .documentation-panel h2 {
-                font-size: 1.5em;  /* Smaller documentation title on mobile */
+                font-size: 1.2em;  /* Even smaller section titles on mobile */
             }
             
             .documentation-tab-content h3 {
@@ -534,7 +537,7 @@ export default {
         .documentation-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.8em;
+            font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
         }
 
         .documentation-tabs {
