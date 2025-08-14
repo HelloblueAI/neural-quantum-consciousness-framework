@@ -211,7 +211,7 @@ export default {
         }
         
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.0em;  /* Smaller desktop title */
             margin-bottom: 15px;
             color: var(--accent);
         }
@@ -278,7 +278,7 @@ export default {
         }
         
         .consciousness-value {
-            font-size: 2.5em;
+            font-size: 2.0em;  /* Smaller consciousness values */
             font-weight: bold;
             color: var(--success);
             margin-bottom: 5px;
@@ -460,11 +460,65 @@ export default {
             }
             
             .header h1 {
-                font-size: 2.5em;
+                font-size: 2.0em;  /* Smaller font size on mobile */
+            }
+            
+            .header p {
+                font-size: 0.9em;  /* Smaller subtitle on mobile */
             }
             
             .button-group {
                 flex-direction: column;
+            }
+            
+            .documentation-tabs {
+                flex-direction: column;  /* Stack tabs vertically on mobile */
+            }
+            
+            .documentation-tab {
+                text-align: center;  /* Center tab text on mobile */
+                font-size: 12px;  /* Smaller tab text on mobile */
+                padding: 8px 16px;  /* Smaller padding on mobile */
+            }
+            
+            .documentation-panel h2 {
+                font-size: 1.5em;  /* Smaller documentation title on mobile */
+            }
+            
+            .documentation-tab-content h3 {
+                font-size: 1.2em;  /* Smaller section headers on mobile */
+            }
+            
+            .documentation-tab-content h4 {
+                font-size: 1.0em;  /* Smaller subsection headers on mobile */
+            }
+            
+            .documentation-tab-content p {
+                font-size: 0.9em;  /* Smaller paragraph text on mobile */
+            }
+            
+            .documentation-tab-content li {
+                font-size: 0.9em;  /* Smaller list text on mobile */
+            }
+            
+            .api-endpoint code {
+                font-size: 12px;  /* Smaller code text on mobile */
+            }
+            
+            .metric-value {
+                font-size: 1.5em;  /* Smaller metric values on mobile */
+            }
+            
+            .metric-label {
+                font-size: 0.8em;  /* Smaller metric labels on mobile */
+            }
+            
+            .consciousness-value {
+                font-size: 1.5em;  /* Smaller consciousness values on mobile */
+            }
+            
+            .consciousness-label {
+                font-size: 0.8em;  /* Smaller consciousness labels on mobile */
             }
         }
 
@@ -588,15 +642,7 @@ export default {
             color: var(--text-primary);
         }
 
-        @media (max-width: 768px) {
-            .documentation-tabs {
-                flex-direction: column;
-            }
-            
-            .documentation-tab {
-                text-align: center;
-            }
-        }
+
     </style>
 </head>
 <body>
