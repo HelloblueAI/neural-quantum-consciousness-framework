@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import express from 'express';
-import cors from 'cors';
+import * as express from 'express';
+import * as cors from 'cors';
 import { NeuralCore } from './core/NeuralCore.js';
 
 const app = express();
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Senticore System</title>
+            <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
     <style>
         * {
             margin: 0;
@@ -391,7 +391,7 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Senticore System</h1>
+            <h1>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
             <p>True Artificial General Intelligence System</p>
         </div>
         
@@ -580,27 +580,27 @@ app.get('/', (req, res) => {
                     statusGrid.innerHTML = \`
                         <div class="status-card">
                             <h3>Consciousness Level</h3>
-                            <div class="value">\${status.consciousnessLevel}</div>
+                            <div class="value">' + status.consciousnessLevel + '</div>
                         </div>
                         <div class="status-card">
                             <h3>Self Awareness</h3>
-                            <div class="value">\${status.selfAwareness}</div>
+                            <div class="value">' + status.selfAwareness + '</div>
                         </div>
                         <div class="status-card">
                             <h3>Learning Rate</h3>
-                            <div class="value">\${status.learningRate}</div>
+                            <div class="value">' + status.learningRate + '</div>
                         </div>
                         <div class="status-card">
                             <h3>Self Modifications</h3>
-                            <div class="value">\${status.selfModificationCount}</div>
+                            <div class="value">' + status.selfModificationCount + '</div>
                         </div>
                         <div class="status-card">
                             <h3>Creative Insights</h3>
-                            <div class="value">\${status.creativeInsights}</div>
+                            <div class="value">' + status.creativeInsights + '</div>
                         </div>
                         <div class="status-card">
                             <h3>Knowledge Domains</h3>
-                            <div class="value">\${status.knowledgeDomains.length}</div>
+                            <div class="value">' + status.knowledgeDomains.length + '</div>
                         </div>
                     \`;
                 }
@@ -667,7 +667,7 @@ app.get('/', (req, res) => {
                 });
                 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                 }
                 
                 const data = await response.json();
@@ -782,10 +782,10 @@ async function startServer() {
     console.log('🧠 NeuralCore True AGI initialized successfully');
     
     app.listen(PORT, () => {
-      console.log(`🌐 NeuralCore True AGI Web Interface running on port ${PORT}`);
-      console.log(`🔗 Web Interface: http://localhost:${PORT}`);
-      console.log(`🔗 Health Check: http://localhost:${PORT}/health`);
-      console.log(`🧠 Consciousness: http://localhost:${PORT}/consciousness`);
+      console.log('🌐 NeuralCore True AGI Web Interface running on port ' + PORT);
+              console.log('🔗 Web Interface: http://localhost:' + PORT);
+              console.log('🔗 Health Check: http://localhost:' + PORT + '/health');
+              console.log('🧠 Consciousness: http://localhost:' + PORT + '/consciousness');
     });
   } catch (error) {
     console.error('❌ Failed to start NeuralCore True AGI:', error);

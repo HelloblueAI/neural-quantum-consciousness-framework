@@ -145,7 +145,7 @@ class EnhancedAGIWorker {
   private initializeState(): EnhancedAGIState {
     return {
       id: `agi-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-              name: 'Senticore System - True Artificial General Intelligence',
+              name: 'REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4',
       version: '3.0.0',
       isRunning: true,
       startupTime: Date.now(),
@@ -619,7 +619,7 @@ export default {
         case '/health':
           return new Response(JSON.stringify({
             status: 'healthy',
-            service: 'Senticore System - True Artificial General Intelligence',
+            service: 'REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4',
             version: '3.0.0',
             timestamp: new Date().toISOString(),
             capabilities: [
@@ -750,7 +750,7 @@ export default {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Senticore System - True Artificial General Intelligence</title>
+                <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
                 <style>
                     * {
                         margin: 0;
@@ -988,7 +988,7 @@ export default {
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>Senticore System</h1>
+                        <h1>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
                         <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
                     </div>
                     
