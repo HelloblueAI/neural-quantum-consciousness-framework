@@ -422,3 +422,4 @@ export class KnowledgeBase extends EventEmitter {
         return totalConfidence / this.knowledge.size;
     }
 }
+//# sourceMappingURL=KnowledgeBase.js.map

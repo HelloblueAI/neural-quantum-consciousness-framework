@@ -213,3 +213,4 @@ export class CommunicationProtocol extends EventEmitter {
         this.emit('disconnection', connection);
     }
 }
+//# sourceMappingURL=CommunicationProtocol.js.map

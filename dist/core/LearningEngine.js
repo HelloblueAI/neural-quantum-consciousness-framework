@@ -1531,3 +1531,4 @@ export class LearningEngine extends EventEmitter {
         this.performanceMetrics.adaptationRate = Math.min(1.0, this.performanceMetrics.adaptationRate + 0.01);
     }
 }
+//# sourceMappingURL=LearningEngine.js.map

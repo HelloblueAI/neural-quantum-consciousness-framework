@@ -524,3 +524,4 @@ export class QuantumLogic {
         this.logger.info('Added quantum state', { stateId: state.id, name: state.name });
     }
 }
+//# sourceMappingURL=QuantumLogic.js.map

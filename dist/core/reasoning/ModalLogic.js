@@ -424,3 +424,4 @@ export class ModalLogic {
         this.logger.info('Added modal world', { worldId: world.id, name: world.name });
     }
 }
+//# sourceMappingURL=ModalLogic.js.map

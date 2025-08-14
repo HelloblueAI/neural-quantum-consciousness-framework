@@ -462,3 +462,4 @@ export class SecurityManager extends EventEmitter {
         return maxDepth;
     }
 }
+//# sourceMappingURL=SecurityManager.js.map

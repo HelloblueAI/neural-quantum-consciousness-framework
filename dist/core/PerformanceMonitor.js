@@ -245,3 +245,4 @@ export class PerformanceMonitor extends EventEmitter {
         return successfulOps / recentResults.length;
     }
 }
+//# sourceMappingURL=PerformanceMonitor.js.map
