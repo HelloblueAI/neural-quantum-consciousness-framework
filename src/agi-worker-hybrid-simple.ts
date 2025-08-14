@@ -649,7 +649,7 @@ export default {
             .interaction-panel h2,
             .metrics-panel h2,
             .documentation-panel h2 {
-                font-size: 1.2em;  /* Even smaller section titles on mobile */
+                font-size: 1.0em;  /* Even smaller section titles on mobile */
             }
             
             .documentation-tab-content h3 {
@@ -701,7 +701,7 @@ export default {
         .documentation-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.3em;  /* Even smaller for System Documentation title */
+            font-size: 1.1em;  /* Even smaller for System Documentation title */
             text-align: center;  /* Center the section title */
         }
 
