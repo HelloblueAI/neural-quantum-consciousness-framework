@@ -1,5 +1,5 @@
 name = "advanced-agi"
-main = "src/advanced-agi-worker.ts"
+main = "dist/agi-worker-simple.js"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
