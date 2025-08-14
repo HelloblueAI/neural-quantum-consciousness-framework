@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export class PerformanceMonitor extends EventEmitter {
     id;
     logger;
@@ -245,4 +245,3 @@ export class PerformanceMonitor extends EventEmitter {
         return successfulOps / recentResults.length;
     }
 }
-//# sourceMappingURL=PerformanceMonitor.js.map

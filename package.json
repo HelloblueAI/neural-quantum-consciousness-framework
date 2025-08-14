@@ -106,7 +106,9 @@
     "tsx": "^4.6.0",
     "typescript": "^5.3.0",
     "vitest": "^1.0.0",
-    "wrangler": "^4.26.1"
+    "wrangler": "^4.26.1",
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3"
   },
   "engines": {
     "node": ">=18.0.0"
