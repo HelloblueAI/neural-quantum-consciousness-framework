@@ -52,12 +52,13 @@ export class APIServer {
   private logger: Logger;
   private server: any;
   private port: number;
+  private requestCounts: Map<string, { count: number; resetTime: number }> = new Map();
   // private _isRunning: boolean = false; // Used in start/stop methods
 
   private readonly DEFAULT_PORT = 3000;
   private readonly MAX_REQUEST_SIZE = '10mb';
-  private readonly RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-  private readonly RATE_LIMIT_MAX = 100; // requests per window
+  private readonly RATE_LIMIT_WINDOW = process.env.ENABLE_RATE_LIMIT === 'true' ? 60 * 1000 : 15 * 60 * 1000; // 1 minute for testing, 15 minutes for production
+  private readonly RATE_LIMIT_MAX = process.env.ENABLE_RATE_LIMIT === 'true' ? 10 : 100; // Lower limit for testing
 
   constructor(agiSystem: AGISystem, configManager: ConfigurationManager) {
     this.agiSystem = agiSystem;
@@ -90,21 +91,43 @@ export class APIServer {
     this.app.use(express.json({ limit: this.MAX_REQUEST_SIZE }));
     this.app.use(express.urlencoded({ extended: true, limit: this.MAX_REQUEST_SIZE }));
     
-    // Rate limiting - disabled for test environment
-    if (process.env.NODE_ENV !== 'test') {
-      const limiter = rateLimit({
-        windowMs: this.RATE_LIMIT_WINDOW,
-        max: this.RATE_LIMIT_MAX,
-        message: {
-          success: false,
-          error: 'Too many requests, please try again later.',
-          timestamp: Date.now()
-        },
-        standardHeaders: true,
-        legacyHeaders: false
-      });
-      this.app.use(limiter);
-    }
+    // Dynamic rate limiting middleware
+    this.app.use((req, res, next) => {
+      // Check rate limiting dynamically
+      if (process.env.ENABLE_RATE_LIMIT === 'true') {
+        // Simple in-memory rate limiting for testing
+        const clientId = req.ip || 'unknown';
+        const now = Date.now();
+        
+        if (!this.requestCounts) {
+          this.requestCounts = new Map();
+        }
+        
+        const clientData = this.requestCounts.get(clientId);
+        if (!clientData || now > clientData.resetTime) {
+          // Reset or initialize
+          this.requestCounts.set(clientId, {
+            count: 1,
+            resetTime: now + this.RATE_LIMIT_WINDOW
+          });
+          return next();
+        }
+        
+        if (clientData.count >= this.RATE_LIMIT_MAX) {
+          return res.status(429).json({
+            success: false,
+            error: 'Too many requests, please try again later.',
+            timestamp: now
+          });
+        }
+        
+        // Increment count
+        clientData.count++;
+        this.requestCounts.set(clientId, clientData);
+      }
+      
+      next();
+    });
     
     // Request logging
     this.app.use(this.requestLogger.bind(this));
@@ -301,6 +324,23 @@ export class APIServer {
       this.logger.error('Failed to stop API server', error as Error);
       throw error;
     }
+  }
+
+  /**
+   * Reset rate limiting for testing
+   */
+  public resetRateLimiting(): void {
+    this.requestCounts.clear();
+  }
+
+  /**
+   * Get current rate limiting status
+   */
+  public getRateLimitingStatus(): { enabled: boolean; requestCounts: number } {
+    return {
+      enabled: process.env.ENABLE_RATE_LIMIT === 'true',
+      requestCounts: this.requestCounts.size
+    };
   }
 
   // Health check endpoint

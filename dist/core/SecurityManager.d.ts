@@ -4,6 +4,7 @@
  */
 import { EventEmitter } from 'events';
 export declare class SecurityManager extends EventEmitter {
+    private blockedIdentifiers;
     private readonly id;
     private readonly logger;
     private readonly config;
@@ -11,6 +12,24 @@ export declare class SecurityManager extends EventEmitter {
     private threats;
     private vulnerabilities;
     private securityMetrics;
+    private requestCounts;
+    private readonly rateLimitConfig;
+    /**
+     * Check rate limiting for a request
+     */
+    checkRateLimit(identifier: string): {
+        allowed: boolean;
+        remaining: number;
+        resetTime: number;
+    };
+    /**
+     * Block an identifier for violating rate limits
+     */
+    blockIdentifier(identifier: string, reason?: string): void;
+    /**
+     * Check if an identifier is blocked
+     */
+    isBlocked(identifier: string): boolean;
     constructor(config: any);
     initialize(): Promise<void>;
     validateInput(input: any): void;
@@ -39,5 +58,6 @@ export declare class SecurityManager extends EventEmitter {
     private detectEthicalViolations;
     private validateCredentials;
     private checkPermissions;
+    private getObjectDepth;
 }
 //# sourceMappingURL=SecurityManager.d.ts.map

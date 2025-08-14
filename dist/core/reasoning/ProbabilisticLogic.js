@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ProbabilisticLogic {
     distributions = new Map();
     bayesianUpdates = [];
@@ -268,4 +268,3 @@ export class ProbabilisticLogic {
         return this.distributions.get(id);
     }
 }
-//# sourceMappingURL=ProbabilisticLogic.js.map

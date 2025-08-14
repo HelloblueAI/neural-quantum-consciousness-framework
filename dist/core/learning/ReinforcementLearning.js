@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ReinforcementLearning {
     config;
     logger;
@@ -282,4 +282,3 @@ export class ReinforcementLearning {
         this.performanceMetrics.lastUpdate = Date.now();
     }
 }
-//# sourceMappingURL=ReinforcementLearning.js.map

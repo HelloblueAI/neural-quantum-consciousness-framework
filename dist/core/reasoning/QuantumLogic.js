@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class QuantumLogic {
     operators = new Map();
     states = new Map();
@@ -524,4 +524,3 @@ export class QuantumLogic {
         this.logger.info('Added quantum state', { stateId: state.id, name: state.name });
     }
 }
-//# sourceMappingURL=QuantumLogic.js.map

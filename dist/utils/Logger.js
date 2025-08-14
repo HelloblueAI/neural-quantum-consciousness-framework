@@ -3,6 +3,7 @@
  * Structured logging with multiple levels, performance tracking, and intelligent filtering
  */
 import { EventEmitter } from 'events';
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Advanced Logger
  *
@@ -22,6 +23,9 @@ export class Logger extends EventEmitter {
         warnings: 0,
         averageLogTime: 0
     };
+    // Session and correlation tracking
+    sessionId;
+    correlationCounter = 0;
     static LOG_LEVELS = {
         trace: 0,
         debug: 1,
@@ -40,7 +44,42 @@ export class Logger extends EventEmitter {
             maxEntries: 10000,
             ...config
         };
+        // Generate session ID
+        this.sessionId = uuidv4();
         this.log('info', 'Logger initialized', { component: this.config.component });
+    }
+    /**
+     * Generate a new correlation ID for request tracking
+     */
+    generateCorrelationId() {
+        this.correlationCounter++;
+        return `${this.sessionId}-${this.correlationCounter}`;
+    }
+    /**
+     * Get current session ID
+     */
+    getSessionId() {
+        return this.sessionId;
+    }
+    /**
+     * Log with correlation ID
+     */
+    logWithCorrelation(level, message, correlationId, data) {
+        this.log(level, message, {
+            ...data,
+            correlationId,
+            sessionId: this.sessionId
+        });
+    }
+    /**
+     * Log with user context
+     */
+    logWithUser(level, message, userId, data) {
+        this.log(level, message, {
+            ...data,
+            userId,
+            sessionId: this.sessionId
+        });
     }
     /**
      * Log a trace message
@@ -324,4 +363,3 @@ export class Logger extends EventEmitter {
         return messageCount;
     }
 }
-//# sourceMappingURL=Logger.js.map

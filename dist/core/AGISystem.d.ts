@@ -145,7 +145,6 @@ export declare class AGISystem extends EventEmitter {
     private calculateAdvancedConfidence;
     private synthesizeLearningResults;
     private calculateLearningConfidence;
-    private getLearningPerformance;
     private synthesizeReasoningResults;
     private calculateReasoningConfidence;
     private generateAdvancedCreation;

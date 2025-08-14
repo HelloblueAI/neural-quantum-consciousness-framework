@@ -1,4 +1,4 @@
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ModalLogic {
     operators = new Map();
     worlds = new Map();
@@ -424,4 +424,3 @@ export class ModalLogic {
         this.logger.info('Added modal world', { worldId: world.id, name: world.name });
     }
 }
-//# sourceMappingURL=ModalLogic.js.map

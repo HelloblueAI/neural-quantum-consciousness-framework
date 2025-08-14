@@ -2,7 +2,7 @@
  * Classical Logic Engine
  * Implements classical propositional and predicate logic
  */
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class ClassicalLogic {
     logger;
     premises = new Map();
@@ -596,4 +596,3 @@ export class ClassicalLogic {
         return true;
     }
 }
-//# sourceMappingURL=ClassicalLogic.js.map

@@ -3,7 +3,7 @@
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
  * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 import { ClassicalLogic } from './reasoning/ClassicalLogic';
 import { FuzzyLogic } from './reasoning/FuzzyLogic';
 import { ProbabilisticLogic } from './reasoning/ProbabilisticLogic';
@@ -1317,4 +1317,3 @@ export class ReasoningEngine {
         }
     }
 }
-//# sourceMappingURL=ReasoningEngine.js.map

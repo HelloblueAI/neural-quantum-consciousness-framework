@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import rateLimit from 'express-rate-limit';
 import { Logger } from '@/utils/Logger';
 export class APIServer {
     app;
@@ -11,11 +10,12 @@ export class APIServer {
     logger;
     server;
     port;
+    requestCounts = new Map();
     // private _isRunning: boolean = false; // Used in start/stop methods
     DEFAULT_PORT = 3000;
     MAX_REQUEST_SIZE = '10mb';
-    RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-    RATE_LIMIT_MAX = 100; // requests per window
+    RATE_LIMIT_WINDOW = process.env.ENABLE_RATE_LIMIT === 'true' ? 60 * 1000 : 15 * 60 * 1000; // 1 minute for testing, 15 minutes for production
+    RATE_LIMIT_MAX = process.env.ENABLE_RATE_LIMIT === 'true' ? 10 : 100; // Lower limit for testing
     constructor(agiSystem, configManager) {
         this.agiSystem = agiSystem;
         this.configManager = configManager;
@@ -41,21 +41,38 @@ export class APIServer {
         // Body parsing
         this.app.use(express.json({ limit: this.MAX_REQUEST_SIZE }));
         this.app.use(express.urlencoded({ extended: true, limit: this.MAX_REQUEST_SIZE }));
-        // Rate limiting - disabled for test environment
-        if (process.env.NODE_ENV !== 'test') {
-            const limiter = rateLimit({
-                windowMs: this.RATE_LIMIT_WINDOW,
-                max: this.RATE_LIMIT_MAX,
-                message: {
-                    success: false,
-                    error: 'Too many requests, please try again later.',
-                    timestamp: Date.now()
-                },
-                standardHeaders: true,
-                legacyHeaders: false
-            });
-            this.app.use(limiter);
-        }
+        // Dynamic rate limiting middleware
+        this.app.use((req, res, next) => {
+            // Check rate limiting dynamically
+            if (process.env.ENABLE_RATE_LIMIT === 'true') {
+                // Simple in-memory rate limiting for testing
+                const clientId = req.ip || 'unknown';
+                const now = Date.now();
+                if (!this.requestCounts) {
+                    this.requestCounts = new Map();
+                }
+                const clientData = this.requestCounts.get(clientId);
+                if (!clientData || now > clientData.resetTime) {
+                    // Reset or initialize
+                    this.requestCounts.set(clientId, {
+                        count: 1,
+                        resetTime: now + this.RATE_LIMIT_WINDOW
+                    });
+                    return next();
+                }
+                if (clientData.count >= this.RATE_LIMIT_MAX) {
+                    return res.status(429).json({
+                        success: false,
+                        error: 'Too many requests, please try again later.',
+                        timestamp: now
+                    });
+                }
+                // Increment count
+                clientData.count++;
+                this.requestCounts.set(clientId, clientData);
+            }
+            next();
+        });
         // Request logging
         this.app.use(this.requestLogger.bind(this));
         // Authentication middleware (if enabled)
@@ -217,6 +234,21 @@ export class APIServer {
             this.logger.error('Failed to stop API server', error);
             throw error;
         }
+    }
+    /**
+     * Reset rate limiting for testing
+     */
+    resetRateLimiting() {
+        this.requestCounts.clear();
+    }
+    /**
+     * Get current rate limiting status
+     */
+    getRateLimitingStatus() {
+        return {
+            enabled: process.env.ENABLE_RATE_LIMIT === 'true',
+            requestCounts: this.requestCounts.size
+        };
     }
     // Health check endpoint
     async healthCheck(req, res) {

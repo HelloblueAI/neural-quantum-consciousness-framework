@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class FuzzyLogic extends EventEmitter {
     id;
     logger;
@@ -366,4 +366,3 @@ export class FuzzyLogic extends EventEmitter {
         this.performanceMetrics.uncertaintyHandled += result.uncertainty?.parameters?.averageUncertainty || 0;
     }
 }
-//# sourceMappingURL=FuzzyLogic.js.map

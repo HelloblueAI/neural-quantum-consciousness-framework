@@ -58,7 +58,7 @@ vi.mock('@anthropic-ai/sdk', () => ({
 
 // Mock environment variables
 process.env.NODE_ENV = 'test';
-process.env.ENABLE_RATE_LIMIT = 'true'; // Enable rate limiting for rate limit tests
+process.env.ENABLE_RATE_LIMIT = 'false'; // Disable rate limiting by default for tests
 process.env.TEST_API_KEY = 'test-api-key'; // Default API key for tests
 process.env.OPENAI_API_KEY = 'test-openai-key';
 process.env.ANTHROPIC_API_KEY = 'test-anthropic-key';
@@ -80,4 +80,14 @@ global.console = {
 vi.setConfig({
   testTimeout: 10000,
   hookTimeout: 10000
-}); 
+});
+
+// Reset rate limiting between tests
+export const resetRateLimiting = () => {
+  // Clear any rate limiting state
+  process.env.ENABLE_RATE_LIMIT = 'false';
+  // Re-enable after a short delay
+  setTimeout(() => {
+    process.env.ENABLE_RATE_LIMIT = 'true';
+  }, 100);
+}; 

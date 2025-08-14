@@ -1,4 +1,4 @@
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class MemoryManager {
     shortTermMemory = new Map();
     longTermMemory = new Map();
@@ -876,4 +876,3 @@ export class MemoryManager {
         }
     }
 }
-//# sourceMappingURL=MemoryManager.js.map

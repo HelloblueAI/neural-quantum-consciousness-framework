@@ -22,5 +22,11 @@ export declare class PerformanceMonitor extends EventEmitter {
     private calculateEfficiency;
     private calculateTrend;
     private calculateResourceTrends;
+    private getCurrentCPUUsage;
+    private getCurrentMemoryUsage;
+    private getCurrentDiskUsage;
+    private getCurrentNetworkLatency;
+    private getActiveConnections;
+    private calculateAccuracy;
 }
 //# sourceMappingURL=PerformanceMonitor.d.ts.map

@@ -658,7 +658,7 @@ app.get('/', (req, res) => {
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultDiv.innerHTML = 'Real AGI Response:\\n' + JSON.stringify(data.data, null, 2);
+                    resultDiv.innerHTML = 'Real AGI Response:\n' + JSON.stringify(data.data, null, 2);
                     
                     // Refresh status after interaction
                     setTimeout(() => {

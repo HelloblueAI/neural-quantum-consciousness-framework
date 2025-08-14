@@ -677,7 +677,7 @@ export default {
                           const data = await response.json();
                           
                           if (data.success) {
-                              resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
+                              resultDiv.innerHTML = 'AGI Response:\n\n' + JSON.stringify(data.data, null, 2);
                               loadAGIStatus(); // Refresh status after interaction
                           } else {
                               resultDiv.innerHTML = 'AGI Error: ' + (data.error || 'Unknown error occurred');

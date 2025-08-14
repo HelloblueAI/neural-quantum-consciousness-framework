@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class PerformanceMonitor extends EventEmitter {
     id;
     logger;
@@ -72,19 +72,34 @@ export class PerformanceMonitor extends EventEmitter {
         }
     }
     getMetrics() {
+        const currentTime = Date.now();
+        const uptime = this.isRunning ? currentTime - this.startTime : 0;
+        // Calculate real metrics from history
+        const recentMetrics = this.history.slice(-100); // Last 100 metrics
+        const avgResponseTime = recentMetrics.length > 0
+            ? recentMetrics.reduce((sum, m) => sum + (m.name === 'response_time' ? m.value : 0), 0) / recentMetrics.length
+            : 0;
+        // Calculate throughput (operations per second)
+        const throughput = recentMetrics.length > 0
+            ? recentMetrics.filter(m => m.name === 'operation').length / (uptime / 1000)
+            : 0;
+        // Calculate error rate
+        const errorCount = recentMetrics.filter(m => m.name === 'error').length;
+        const totalOperations = recentMetrics.filter(m => m.name === 'operation').length;
+        const errorRate = totalOperations > 0 ? errorCount / totalOperations : 0;
         return {
-            cpuUsage: this.metrics.resourceUsage?.cpu || 25,
-            memoryUsage: this.metrics.resourceUsage?.memory || 45,
-            diskUsage: this.metrics.resourceUsage?.disk || 30,
-            networkLatency: this.metrics.resourceUsage?.network || 50,
-            responseTime: this.metrics.responseTime || 100,
-            throughput: this.metrics.throughput || 1000,
-            errorRate: 0.1,
-            activeConnections: 10,
-            uptime: this.isRunning ? Date.now() - this.startTime : 0,
+            cpuUsage: this.getCurrentCPUUsage(),
+            memoryUsage: this.getCurrentMemoryUsage(),
+            diskUsage: this.getCurrentDiskUsage(),
+            networkLatency: this.getCurrentNetworkLatency(),
+            responseTime: avgResponseTime || 100,
+            throughput: throughput || 1000,
+            errorRate: errorRate,
+            activeConnections: this.getActiveConnections(),
+            uptime: uptime,
             historySize: this.history.length,
-            accuracy: 0.95,
-            efficiency: this.metrics.efficiency || 0.85
+            accuracy: this.calculateAccuracy(),
+            efficiency: this.calculateEfficiency()
         };
     }
     async analyze() {
@@ -164,14 +179,12 @@ export class PerformanceMonitor extends EventEmitter {
         return recommendations;
     }
     calculateEfficiency() {
-        // Calculate overall system efficiency
-        const factors = [
-            this.metrics.responseTime < 1000 ? 1.0 : 0.5,
-            this.metrics.resourceUsage.cpu < 80 ? 1.0 : 0.7,
-            this.metrics.resourceUsage.memory < 80 ? 1.0 : 0.7,
-            this.metrics.throughput > 100 ? 1.0 : 0.8
-        ];
-        return factors.reduce((sum, factor) => sum + factor, 0) / factors.length;
+        const recentOps = this.history.slice(-100).filter(m => m.name === 'operation_time');
+        if (recentOps.length === 0)
+            return 0.85;
+        const avgTime = recentOps.reduce((sum, m) => sum + m.value, 0) / recentOps.length;
+        // Lower time = higher efficiency
+        return Math.max(0.1, Math.min(1.0, 1.0 - (avgTime / 1000)));
     }
     calculateTrend(metricName) {
         // Calculate trend for a specific metric
@@ -197,5 +210,38 @@ export class PerformanceMonitor extends EventEmitter {
             network: this.calculateTrend('network')
         };
     }
+    getCurrentCPUUsage() {
+        // In a real implementation, this would read from system metrics
+        // For now, simulate based on activity
+        const recentActivity = this.history.slice(-10).length;
+        return Math.min(100, recentActivity * 5);
+    }
+    getCurrentMemoryUsage() {
+        // In a real implementation, this would read from system metrics
+        // For now, simulate based on history size
+        return Math.min(100, (this.history.length / 1000) * 100);
+    }
+    getCurrentDiskUsage() {
+        // In a real implementation, this would read from system metrics
+        return 30; // Default value
+    }
+    getCurrentNetworkLatency() {
+        // In a real implementation, this would measure actual network latency
+        // For now, simulate based on recent operations
+        const recentOps = this.history.slice(-20).filter(m => m.name === 'network_operation');
+        return recentOps.length > 0 ? 50 : 100;
+    }
+    getActiveConnections() {
+        // In a real implementation, this would count actual connections
+        // For now, simulate based on recent activity
+        const recentConnections = this.history.slice(-50).filter(m => m.name === 'connection');
+        return Math.min(100, recentConnections.length);
+    }
+    calculateAccuracy() {
+        const recentResults = this.history.slice(-100).filter(m => m.name === 'operation_result');
+        if (recentResults.length === 0)
+            return 0.95;
+        const successfulOps = recentResults.filter(m => m.value > 0.5).length;
+        return successfulOps / recentResults.length;
+    }
 }
-//# sourceMappingURL=PerformanceMonitor.js.map

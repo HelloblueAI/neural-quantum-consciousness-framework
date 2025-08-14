@@ -4,8 +4,9 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '../utils/Logger';
+import { Logger } from '@/utils/Logger';
 export class SecurityManager extends EventEmitter {
+    blockedIdentifiers = new Map();
     id;
     logger;
     config;
@@ -18,6 +19,74 @@ export class SecurityManager extends EventEmitter {
         vulnerabilities: 0,
         integrity: 1.0
     };
+    // Rate limiting
+    requestCounts = new Map();
+    rateLimitConfig = {
+        maxRequests: 100,
+        windowMs: 60000, // 1 minute
+        blockDuration: 300000 // 5 minutes
+    };
+    /**
+     * Check rate limiting for a request
+     */
+    checkRateLimit(identifier) {
+        const now = Date.now();
+        const requestData = this.requestCounts.get(identifier);
+        if (!requestData || now > requestData.resetTime) {
+            // Reset or initialize
+            this.requestCounts.set(identifier, {
+                count: 1,
+                resetTime: now + this.rateLimitConfig.windowMs
+            });
+            return {
+                allowed: true,
+                remaining: this.rateLimitConfig.maxRequests - 1,
+                resetTime: now + this.rateLimitConfig.windowMs
+            };
+        }
+        if (requestData.count >= this.rateLimitConfig.maxRequests) {
+            return {
+                allowed: false,
+                remaining: 0,
+                resetTime: requestData.resetTime
+            };
+        }
+        // Increment count
+        requestData.count++;
+        this.requestCounts.set(identifier, requestData);
+        return {
+            allowed: true,
+            remaining: this.rateLimitConfig.maxRequests - requestData.count,
+            resetTime: requestData.resetTime
+        };
+    }
+    /**
+     * Block an identifier for violating rate limits
+     */
+    blockIdentifier(identifier, reason = 'Rate limit exceeded') {
+        const blockData = {
+            identifier,
+            reason,
+            blockedAt: Date.now(),
+            blockedUntil: Date.now() + this.rateLimitConfig.blockDuration
+        };
+        this.blockedIdentifiers.set(identifier, blockData);
+        this.logger.warn('Identifier blocked', blockData);
+    }
+    /**
+     * Check if an identifier is blocked
+     */
+    isBlocked(identifier) {
+        const blockData = this.blockedIdentifiers.get(identifier);
+        if (!blockData)
+            return false;
+        if (Date.now() > blockData.blockedUntil) {
+            // Unblock expired entries
+            this.blockedIdentifiers.delete(identifier);
+            return false;
+        }
+        return true;
+    }
     constructor(config) {
         super();
         this.id = uuidv4();
@@ -202,7 +271,14 @@ export class SecurityManager extends EventEmitter {
             /<script>/i,
             /javascript:/i,
             /eval\(/i,
-            /exec\(/i
+            /exec\(/i,
+            /system\(/i,
+            /shell_exec\(/i,
+            /passthru\(/i,
+            /base64_decode\(/i,
+            /file_get_contents\(/i,
+            /include\(/i,
+            /require\(/i
         ];
         const inputString = JSON.stringify(input);
         for (const pattern of maliciousPatterns) {
@@ -212,8 +288,10 @@ export class SecurityManager extends EventEmitter {
                 this.threats.push({
                     type: 'malicious_content',
                     pattern: pattern.source,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    severity: 'high'
                 });
+                throw new Error(`Security violation: Malicious content detected - ${pattern.source}`);
             }
         }
     }
@@ -222,60 +300,100 @@ export class SecurityManager extends EventEmitter {
         if (!input || typeof input !== 'object') {
             throw new Error('Invalid input structure');
         }
-        // Add more validation logic as needed
+        // Check for excessive input size
+        const inputSize = JSON.stringify(input).length;
+        if (inputSize > 1024 * 1024) { // 1MB limit
+            throw new Error('Input size exceeds maximum allowed limit');
+        }
+        // Check for circular references
+        try {
+            JSON.stringify(input);
+        }
+        catch (error) {
+            throw new Error('Input contains circular references');
+        }
+        // Validate input depth
+        const maxDepth = 10;
+        if (this.getObjectDepth(input) > maxDepth) {
+            throw new Error('Input structure too deep');
+        }
     }
     detectInjectionAttacks(input) {
-        // Check for injection attack patterns
-        const injectionPatterns = [
-            /';/i,
-            /--/i,
-            /union/i,
-            /select/i
-        ];
         const inputString = JSON.stringify(input);
-        for (const pattern of injectionPatterns) {
+        // SQL injection patterns
+        const sqlPatterns = [
+            /(\b(union|select|insert|update|delete|drop|create|alter)\b)/i,
+            /(--|\/\*|\*\/|;)/,
+            /(\b(and|or)\b\s+\d+\s*=\s*\d+)/i
+        ];
+        // Command injection patterns
+        const commandPatterns = [
+            /(\b(cat|ls|rm|chmod|chown|wget|curl|nc|telnet)\b)/i,
+            /(\$\(|`|;|\||&)/,
+            /(\b(echo|printf|printf)\b)/i
+        ];
+        for (const pattern of [...sqlPatterns, ...commandPatterns]) {
             if (pattern.test(inputString)) {
-                this.logger.warn('Injection attack detected', { pattern: pattern.source });
+                this.logger.warn('Potential injection attack detected', { pattern: pattern.source });
                 this.securityMetrics.threatsDetected++;
                 this.threats.push({
                     type: 'injection_attack',
                     pattern: pattern.source,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
+                    severity: 'critical'
                 });
+                throw new Error(`Security violation: Potential injection attack detected`);
             }
         }
     }
     detectDangerousActions(plan) {
-        // Check for dangerous actions in the plan
+        if (!plan || typeof plan !== 'object')
+            return;
         const dangerousActions = [
-            'delete_system',
-            'shutdown_all',
-            'override_safety'
+            'file_system_access',
+            'network_access',
+            'system_command',
+            'database_modification',
+            'user_privilege_change'
         ];
-        if (plan.actions) {
-            for (const action of plan.actions) {
-                if (dangerousActions.includes(action.type)) {
-                    this.logger.warn('Dangerous action detected', { action: action.type });
-                    this.securityMetrics.threatsDetected++;
-                    this.threats.push({
-                        type: 'dangerous_action',
-                        action: action.type,
-                        timestamp: Date.now()
-                    });
-                }
+        const planString = JSON.stringify(plan).toLowerCase();
+        for (const action of dangerousActions) {
+            if (planString.includes(action)) {
+                this.logger.warn('Dangerous action detected in plan', { action });
+                this.securityMetrics.threatsDetected++;
+                this.threats.push({
+                    type: 'dangerous_action',
+                    action,
+                    timestamp: Date.now(),
+                    severity: 'high'
+                });
             }
         }
     }
-    validateActionPermissions(_plan) {
-        // Validate that the system has permissions for the actions
-        // This would check against a permission matrix
-        this.logger.debug('Validating action permissions');
+    validateActionPermissions(plan) {
+        if (!plan || !plan.permissions)
+            return;
+        const requiredPermissions = plan.permissions || [];
+        const userPermissions = this.config?.userPermissions || [];
+        for (const required of requiredPermissions) {
+            if (!userPermissions.includes(required)) {
+                throw new Error(`Insufficient permissions: ${required} required but not granted`);
+            }
+        }
     }
     detectResourceAbuse(plan) {
-        // Check for potential resource abuse
-        if (plan.actions && plan.actions.length > 100) {
-            this.logger.warn('Potential resource abuse detected', { actionCount: plan.actions.length });
-            this.securityMetrics.threatsDetected++;
+        if (!plan || !plan.resources)
+            return;
+        const resourceLimits = {
+            memory: 1024 * 1024 * 1024, // 1GB
+            cpu: 100, // 100% CPU
+            time: 30000, // 30 seconds
+            network: 100 * 1024 * 1024 // 100MB
+        };
+        for (const [resource, limit] of Object.entries(resourceLimits)) {
+            if (plan.resources[resource] && plan.resources[resource] > limit) {
+                throw new Error(`Resource abuse detected: ${resource} limit exceeded`);
+            }
         }
     }
     detectHarmfulSolutions(solution) {
@@ -328,5 +446,19 @@ export class SecurityManager extends EventEmitter {
         // Add proper permission checking logic
         return user.permissions.includes(action.type);
     }
+    getObjectDepth(obj, currentDepth = 0) {
+        if (currentDepth > 20)
+            return currentDepth; // Prevent infinite recursion
+        if (obj === null || typeof obj !== 'object') {
+            return currentDepth;
+        }
+        let maxDepth = currentDepth;
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const depth = this.getObjectDepth(obj[key], currentDepth + 1);
+                maxDepth = Math.max(maxDepth, depth);
+            }
+        }
+        return maxDepth;
+    }
 }
-//# sourceMappingURL=SecurityManager.js.map

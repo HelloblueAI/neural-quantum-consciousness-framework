@@ -16,9 +16,40 @@ export declare class KnowledgeBase extends EventEmitter {
     /**
      * Add knowledge with a specific ID
      */
-    addKnowledge(id: string, knowledge: Knowledge): Promise<void>;
+    addKnowledge(id: string, knowledge: any): Promise<void>;
+    /**
+     * Add knowledge with facts array
+     */
+    addKnowledgeWithFacts(id: string, facts: string[], type?: string): Promise<void>;
     retrieve(query: any): Promise<Knowledge[]>;
-    getKnowledge(id: string): Promise<Knowledge | null>;
+    /**
+     * Get knowledge by ID
+     */
+    getKnowledge(id: string): Knowledge | undefined;
+    /**
+     * Get knowledge by type
+     */
+    getKnowledgeByType(type: string): Knowledge[];
+    /**
+     * Get all knowledge
+     */
+    getAllKnowledge(): Knowledge[];
+    /**
+     * Get knowledge count
+     */
+    getKnowledgeCount(): number;
+    /**
+     * Check if knowledge exists
+     */
+    hasKnowledge(id: string): boolean;
+    /**
+     * Delete knowledge by ID
+     */
+    deleteKnowledge(id: string): boolean;
+    /**
+     * Clear all knowledge
+     */
+    clear(): void;
     getKnowledgeSync(id: string): any;
     integrateLearning(learningResult: any): Promise<void>;
     getMetrics(): any;
@@ -31,7 +62,7 @@ export declare class KnowledgeBase extends EventEmitter {
     private updateRelatedKnowledge;
     private findRelatedKnowledge;
     private isRelated;
-    private getKnowledgeByType;
+    private getKnowledgeTypeDistribution;
     private getAverageConfidence;
 }
 //# sourceMappingURL=KnowledgeBase.d.ts.map

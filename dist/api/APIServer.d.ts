@@ -43,6 +43,7 @@ export declare class APIServer {
     private logger;
     private server;
     private port;
+    private requestCounts;
     private readonly DEFAULT_PORT;
     private readonly MAX_REQUEST_SIZE;
     private readonly RATE_LIMIT_WINDOW;
@@ -55,6 +56,17 @@ export declare class APIServer {
     private authenticateRequest;
     start(): Promise<void>;
     stop(): Promise<void>;
+    /**
+     * Reset rate limiting for testing
+     */
+    resetRateLimiting(): void;
+    /**
+     * Get current rate limiting status
+     */
+    getRateLimitingStatus(): {
+        enabled: boolean;
+        requestCounts: number;
+    };
     private healthCheck;
     private getSystemStatus;
     private reason;

@@ -56,9 +56,6 @@ export class AGISystem extends EventEmitter {
     _isInitialized = false;
     _isRunning = false;
     startupTime = 0;
-    // Advanced capabilities (unused for now)
-    // private _metaReasoning: MetaReasoning = {} as MetaReasoning;
-    // private _consciousness: Consciousness = {} as Consciousness;
     // Add missing history tracking
     reasoningHistory = [];
     learningHistory = [];
@@ -86,8 +83,6 @@ export class AGISystem extends EventEmitter {
         this.trueAGIEngine = new TrueAGIEngine();
         // Initialize advanced capabilities
         this.initializeAdvancedCapabilities();
-        // Initialize metrics
-        // this._metrics = this.initializeMetrics(); // This line is removed
         this.logger.info('AGI System constructed with advanced capabilities', { id: this.id, version: this.version });
     }
     /**
@@ -301,8 +296,8 @@ export class AGISystem extends EventEmitter {
             const result = await this.coordinator.executePlan(plan);
             // Learn from execution
             await this.learningEngine.learnFromExecution(plan, result);
-            // Update metrics
-            // this.updateMetrics('plan_executed'); // This line is removed
+            // Update metrics tracking
+            this.performanceMonitor.recordMetric('plan_executed', 1);
             return result;
         }
         catch (error) {
@@ -394,8 +389,8 @@ export class AGISystem extends EventEmitter {
             const solution = await this._creativity.generateSolution(problem);
             // Validate solution
             this.securityManager.validateSolution(solution);
-            // Update metrics
-            // this.updateMetrics('creative_solution_generated'); // This line is removed
+            // Update metrics tracking
+            this.performanceMonitor.recordMetric('creative_solution_generated', 1);
             return solution;
         }
         catch (error) {
@@ -878,13 +873,6 @@ export class AGISystem extends EventEmitter {
     calculateLearningConfidence(result) {
         return 0.8;
     }
-    async getLearningPerformance() {
-        return {
-            efficiency: 0.8,
-            growth: 0.7,
-            adaptation: 0.6
-        };
-    }
     async synthesizeReasoningResults(crossDomainResult, foundationUnderstanding) {
         return {
             crossDomain: crossDomainResult,
@@ -906,49 +894,6 @@ export class AGISystem extends EventEmitter {
     calculateCreationConfidence(creation) {
         return 0.8;
     }
-    // private initializeMetrics(): SystemMetrics {
-    //   return {
-    //     performance: {
-    //       responseTime: 50,
-    //       throughput: 1000,
-    //       resourceUsage: {
-    //         cpu: 0.3,
-    //         memory: 0.5,
-    //         disk: 0.2,
-    //         network: 0.1
-    //       },
-    //       efficiency: 0.85
-    //     },
-    //     learning: {
-    //       accuracy: 0.9,
-    //       improvement: 0.1,
-    //       adaptation: 0.8,
-    //       generalization: 0.7
-    //     },
-    //     reasoning: {
-    //       correctness: 0.85,
-    //       efficiency: 0.9,
-    //       creativity: 0.7,
-    //       consistency: 0.8
-    //     },
-    //     communication: {
-    //       throughput: 1000,
-    //       latency: 10,
-    //       reliability: 0.99,
-    //       efficiency: 0.9
-    //     },
-    //     security: {
-    //       threats: 5,
-    //       vulnerabilities: 3,
-    //       incidents: 1,
-    //       riskLevel: 'low'
-    //     }
-    //   };
-    // }
-    // private updateMetrics(event: string): void {
-    //   // Update metrics based on event
-    //   this.logger.debug('Metrics updated', { event });
-    // }
     async generateMetaReasoningInsights(_performanceAnalysis, _reasoningAnalysis, _learningAnalysis) {
         return {
             selfReflection: {
@@ -1034,4 +979,3 @@ export class AGISystem extends EventEmitter {
         };
     }
 }
-//# sourceMappingURL=AGISystem.js.map

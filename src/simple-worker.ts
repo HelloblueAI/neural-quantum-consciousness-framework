@@ -239,7 +239,7 @@ export default {
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
+                                                  resultDiv.innerHTML = 'AGI Response:\n\n' + JSON.stringify(data.data, null, 2);
                 } else {
                     resultDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error occurred');
                 }

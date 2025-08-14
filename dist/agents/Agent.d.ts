@@ -82,11 +82,16 @@ export declare abstract class Agent {
         result: any;
         reasoning: ReasoningResult;
         learning: LearningResult;
+        output?: any;
+        learnedPatterns?: any;
     }>;
-    processExperience(experience: Experience): Promise<{
+    /**
+     * Process an experience for learning
+     */
+    processExperience(experience: any): Promise<{
         success: boolean;
         result: any;
-        learning: LearningResult;
+        learnedPatterns: any[];
     }>;
     abstract adapt(performance: AgentPerformance, context?: Record<string, any>): Promise<void>;
     start(): void;

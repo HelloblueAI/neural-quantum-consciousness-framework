@@ -16,6 +16,9 @@ export interface LogEntry {
         readonly memoryUsage: number;
         readonly cpuUsage: number;
     };
+    readonly correlationId?: string;
+    readonly sessionId?: string;
+    readonly userId?: string;
 }
 export interface LoggerConfig {
     readonly level: LogLevel;
@@ -38,8 +41,26 @@ export declare class Logger extends EventEmitter {
     private readonly config;
     private readonly logHistory;
     private readonly performanceMetrics;
+    private sessionId;
+    private correlationCounter;
     private static readonly LOG_LEVELS;
     constructor(component: string, config?: Partial<LoggerConfig>);
+    /**
+     * Generate a new correlation ID for request tracking
+     */
+    generateCorrelationId(): string;
+    /**
+     * Get current session ID
+     */
+    getSessionId(): string;
+    /**
+     * Log with correlation ID
+     */
+    logWithCorrelation(level: LogLevel, message: string, correlationId: string, data?: any): void;
+    /**
+     * Log with user context
+     */
+    logWithUser(level: LogLevel, message: string, userId: string, data?: any): void;
     /**
      * Log a trace message
      */
