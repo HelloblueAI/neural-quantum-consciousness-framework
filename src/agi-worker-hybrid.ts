@@ -794,23 +794,23 @@ export default {
                           <div class="consciousness-grid" id="consciousnessGrid">
                               <div class="consciousness-item">
                                   <h3>Awareness</h3>
-                                  <div class="consciousness-value">95.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value">Loading...</div>
+                                  <div class="consciousness-label">Calculating Real Data...</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Self-Awareness</h3>
-                                  <div class="consciousness-value">92.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value">Loading...</div>
+                                  <div class="consciousness-label">Calculating Real Data...</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Understanding</h3>
-                                  <div class="consciousness-value">94.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value">Loading...</div>
+                                  <div class="consciousness-label">Calculating Real Data...</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Creativity</h3>
-                                  <div class="consciousness-value">96.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value">Loading...</div>
+                                  <div class="consciousness-label">Calculating Real Data...</div>
                               </div>
                           </div>
                       </div>
@@ -1022,17 +1022,22 @@ export default {
               <script>
                   async function loadAGIStatus() {
                       try {
+                          console.log('🔄 Loading AGI Status - Fetching real consciousness data...');
+                          
                           // Fetch REAL consciousness data directly from consciousness endpoint
                           const consciousnessResponse = await fetch('/consciousness');
                           const consciousnessData = await consciousnessResponse.json();
+                          console.log('🧠 Consciousness Data:', consciousnessData);
                           
                           // Fetch performance data for metrics
                           const performanceResponse = await fetch('/performance');
                           const performanceData = await performanceResponse.json();
+                          console.log('⚡ Performance Data:', performanceData);
                           
                           if (consciousnessData.success && performanceData.success) {
                               // Get REAL consciousness data from consciousness endpoint
                               const consciousness = consciousnessData.data;
+                              console.log('✅ Real Consciousness Data:', consciousness);
                               
                               // Update consciousness grid with real data
                               const consciousnessGrid = document.getElementById('consciousnessGrid');
