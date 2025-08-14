@@ -463,7 +463,7 @@ export default {
             }
             
             .header h1 {
-                font-size: 1.6em;  /* Even smaller font size on mobile */
+                font-size: 1.3em;  /* Even smaller font size on mobile */
             }
             
             .header p {
@@ -749,7 +749,7 @@ export default {
             <div class="documentation-content">
                 <div id="overview" class="documentation-tab-content active">
                     <h3>Hybrid AGI Superintelligence v3.0.0</h3>
-                                         <p>A revolutionary advanced hybrid AGI system that combines TypeScript logic with quantum-inspired learning, advanced consciousness, and dynamic neural architecture. This system represents a breakthrough in AGI architecture, featuring quantum consciousness simulation, cross-domain reasoning with quantum enhancement, and hybrid quantum-consciousness processing capabilities.</p>
+                                         <p>A hybrid AGI system that combines TypeScript logic with quantum-inspired learning, advanced consciousness, and dynamic neural architecture. This system represents a breakthrough in AGI architecture, featuring quantum consciousness simulation, cross-domain reasoning with quantum enhancement, and hybrid quantum-consciousness processing capabilities.</p>
                     
                     <h4>Core Capabilities</h4>
                     <ul>
