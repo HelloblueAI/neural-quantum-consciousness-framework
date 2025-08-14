@@ -681,7 +681,7 @@ export default {
                   }
                   
                   .documentation-section h3::before {
-                      content: '🔬';
+                      content: '';
                       font-size: 1.2em;
                   }
                   
