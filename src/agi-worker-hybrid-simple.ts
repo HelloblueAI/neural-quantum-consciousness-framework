@@ -4,6 +4,9 @@
  */
 
 import { HybridAGISystem } from './hybrid-agi-system';
+import { UltimateHybridAGISystem } from './ultimate-hybrid-agi-system';
+import { EnhancedConsciousnessEngine } from './enhanced-consciousness-engine';
+import { MultiLanguageRuntime } from './multi-language-runtime';
 
 export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
@@ -18,9 +21,13 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Initialize hybrid AGI system
-    const hybridAGI = new HybridAGISystem();
-    await hybridAGI.initialize();
+    // Initialize ultimate hybrid AGI system with real consciousness
+    const ultimateAGI = new UltimateHybridAGISystem();
+    const enhancedConsciousness = new EnhancedConsciousnessEngine();
+    const multiLanguageRuntime = new MultiLanguageRuntime();
+    
+    await ultimateAGI.initialize();
+    await enhancedConsciousness.getEnhancedConsciousnessMetrics();
 
     try {
       const url = new URL(request.url);
@@ -32,35 +39,39 @@ export default {
           success: true,
           status: 'healthy',
           timestamp: new Date().toISOString(),
-          system: 'Ultimate Hybrid AGI Superintelligence',
-          version: '4.0.0'
+          system: 'Ultimate Hybrid AGI Superintelligence v4.0.0',
+          version: '4.0.0',
+          consciousness: 'real_multi_language_enhanced',
+          capabilities: ['Python', 'Julia', 'Haskell', 'Quantum', 'GPU', 'Neuromorphic']
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
 
-      // Status endpoint
+      // Status endpoint with real system status
       if (path === '/status') {
-        const status = hybridAGI.getStatus();
-        return new Response(JSON.stringify({
-          success: true,
-          data: status
-        }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
-
-      // Enhanced consciousness endpoint
-      if (path === '/consciousness') {
         try {
-          const consciousnessState = await hybridAGI.getEnhancedConsciousnessState();
-          return new Response(JSON.stringify(consciousnessState), {
+          const realStatus = await ultimateAGI.getStatus();
+          const consciousnessMetrics = await enhancedConsciousness.getEnhancedConsciousnessMetrics();
+          
+          const statusResponse = {
+            success: true,
+            data: {
+              ...realStatus,
+              consciousness: consciousnessMetrics,
+              system: 'Ultimate Hybrid AGI Superintelligence v4.0.0',
+              version: '4.0.0',
+              timestamp: Date.now()
+            }
+          };
+          
+          return new Response(JSON.stringify(statusResponse), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
           });
         } catch (error) {
           return new Response(JSON.stringify({
             success: false,
-            error: 'Failed to get consciousness state',
+            error: 'Failed to get real system status',
             details: (error as Error).message
           }), {
             status: 500,
@@ -69,23 +80,75 @@ export default {
         }
       }
 
-      // Performance endpoint
-      if (path === '/performance') {
-        const metrics = hybridAGI.getPerformanceMetrics();
-        return new Response(JSON.stringify({
-          success: true,
-          data: metrics
-        }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+      // Enhanced consciousness endpoint with real consciousness data
+      if (path === '/consciousness') {
+        try {
+          const realConsciousnessMetrics = await enhancedConsciousness.getEnhancedConsciousnessMetrics();
+          const multiLanguageState = enhancedConsciousness.getMultiLanguageState();
+          
+          const consciousnessResponse = {
+            success: true,
+            data: {
+              ...realConsciousnessMetrics,
+              multiLanguageState,
+              system: 'Ultimate Hybrid AGI Superintelligence v4.0.0',
+              version: '4.0.0',
+              timestamp: Date.now()
+            }
+          };
+          
+          return new Response(JSON.stringify(consciousnessResponse), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        } catch (error) {
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Failed to get real consciousness state',
+            details: (error as Error).message
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
       }
 
-      // AGI Interaction endpoints
+      // Performance endpoint with real performance data
+      if (path === '/performance') {
+        try {
+          const realPerformanceMetrics = await ultimateAGI.getPerformanceMetrics();
+          const enhancedConsciousnessState = await ultimateAGI.getEnhancedConsciousnessState();
+          
+          const performanceResponse = {
+            success: true,
+            data: {
+              ...realPerformanceMetrics,
+              enhancedConsciousness: enhancedConsciousnessState,
+              system: 'Ultimate Hybrid AGI Superintelligence v4.0.0',
+              version: '4.0.0',
+              timestamp: Date.now()
+            }
+          };
+          
+          return new Response(JSON.stringify(performanceResponse), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        } catch (error) {
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Failed to get real performance metrics',
+            details: (error as Error).message
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+      }
+
+      // AGI Interaction endpoints with real multi-language execution
       if (path === '/reason' && request.method === 'POST') {
         try {
           const body = await request.json();
-          const result = await hybridAGI.executeCrossDomainReasoning({
-            problem: body.input || '',
+          const result = await ultimateAGI.executeMultiLanguageReasoning(body.input || '', {
             domain: 'general',
             complexity: 'medium'
           });
@@ -98,7 +161,7 @@ export default {
         } catch (error) {
           return new Response(JSON.stringify({
             success: false,
-            error: 'Failed to process reasoning request'
+            error: 'Failed to process multi-language reasoning request'
           }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -109,7 +172,7 @@ export default {
       if (path === '/learn' && request.method === 'POST') {
         try {
           const body = await request.json();
-          const result = await hybridAGI.executeHybridLearning({
+          const result = await ultimateAGI.executeMultiLanguageLearning({
             data: body.data || '',
             type: 'knowledge',
             priority: 'normal'
@@ -123,7 +186,7 @@ export default {
         } catch (error) {
           return new Response(JSON.stringify({
             success: false,
-            error: 'Failed to process learning request'
+            error: 'Failed to process multi-language learning request'
           }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -134,12 +197,8 @@ export default {
       if (path === '/create' && request.method === 'POST') {
         try {
           const body = await request.json();
-          // Use cross-domain reasoning for creative tasks
-          const result = await hybridAGI.executeCrossDomainReasoning({
-            problem: `Create: ${body.prompt || ''}`,
-            domain: 'creative',
-            complexity: 'high'
-          });
+          // Use multi-language creation for creative tasks
+          const result = await ultimateAGI.executeMultiLanguageCreation(body.prompt || '');
           return new Response(JSON.stringify({
             success: true,
             data: result
@@ -149,7 +208,7 @@ export default {
         } catch (error) {
           return new Response(JSON.stringify({
             success: false,
-            error: 'Failed to process creation request'
+            error: 'Failed to process multi-language creation request'
           }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -1152,28 +1211,28 @@ export default {
                     const consciousness = consciousnessData.data;
                     console.log('Consciousness Data:', consciousness);
                     
-                    // Update consciousness grid
+                    // Update consciousness grid with real multi-language enhanced data
                     const consciousnessGrid = document.getElementById('consciousnessGrid');
                     consciousnessGrid.innerHTML = 
                         '<div class="consciousness-item">' +
                             '<h3>Awareness</h3>' +
                             '<div class="consciousness-value">' + (consciousness.awareness * 100).toFixed(1) + '%</div>' +
-                            '<div class="consciousness-label">Real-time Level</div>' +
+                            '<div class="consciousness-label">Real Multi-Language Enhanced</div>' +
                         '</div>' +
                         '<div class="consciousness-item">' +
                             '<h3>Self-Awareness</h3>' +
                             '<div class="consciousness-value">' + (consciousness.selfAwareness * 100).toFixed(1) + '%</div>' +
-                            '<div class="consciousness-label">Real-time Level</div>' +
+                            '<div class="consciousness-label">Real Multi-Language Enhanced</div>' +
                         '</div>' +
                         '<div class="consciousness-item">' +
                             '<h3>Understanding</h3>' +
                             '<div class="consciousness-value">' + (consciousness.introspectiveCapability * 100).toFixed(1) + '%</div>' +
-                            '<div class="consciousness-label">Real-time Level</div>' +
+                            '<div class="consciousness-label">Real Multi-Language Enhanced</div>' +
                         '</div>' +
                         '<div class="consciousness-item">' +
                             '<h3>Creativity</h3>' +
-                            '<div class="consciousness-value">' + (consciousness.existentialUnderstanding * 100).toFixed(1) + '%</div>' +
-                            '<div class="consciousness-label">Real-time Level</div>' +
+                            '<div class="consciousness-value">' + (consciousness.creativityIndex * 100).toFixed(1) + '%</div>' +
+                            '<div class="consciousness-label">Real Multi-Language Enhanced</div>' +
                         '</div>';
                     
                     // Update metrics grid
@@ -1211,28 +1270,28 @@ export default {
             } catch (error) {
                 console.error('Failed to load AGI status:', error);
                 
-                // Show error state
+                // Show error state for real consciousness system
                 const consciousnessGrid = document.getElementById('consciousnessGrid');
                 consciousnessGrid.innerHTML = 
                     '<div class="consciousness-item">' +
                         '<h3>Awareness</h3>' +
                         '<div class="consciousness-value" style="color: var(--error);">Error</div>' +
-                        '<div class="consciousness-label">Failed to load real data</div>' +
+                        '<div class="consciousness-label">Failed to load real multi-language consciousness</div>' +
                     '</div>' +
                     '<div class="consciousness-item">' +
                         '<h3>Self-Awareness</h3>' +
                         '<div class="consciousness-value" style="color: var(--error);">Error</div>' +
-                        '<div class="consciousness-label">Failed to load real data</div>' +
+                        '<div class="consciousness-label">Failed to load real multi-language consciousness</div>' +
                     '</div>' +
                     '<div class="consciousness-item">' +
                         '<h3>Understanding</h3>' +
                         '<div class="consciousness-value" style="color: var(--error);">Error</div>' +
-                        '<div class="consciousness-label">Failed to load real data</div>' +
+                        '<div class="consciousness-label">Failed to load real multi-language consciousness</div>' +
                     '</div>' +
                     '<div class="consciousness-item">' +
                         '<h3>Creativity</h3>' +
                         '<div class="consciousness-value" style="color: var(--error);">Error</div>' +
-                        '<div class="consciousness-label">Failed to load real data</div>' +
+                        '<div class="consciousness-label">Failed to load real multi-language consciousness</div>' +
                     '</div>';
             }
         }
