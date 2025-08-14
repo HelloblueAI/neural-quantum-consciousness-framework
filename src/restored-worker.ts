@@ -540,7 +540,7 @@ class MultiLanguageAGI {
         
         return {
             system: {
-                name: 'REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4',
+                name: 'True AGI -- Live v4',
                 version: '3.0.0-revolutionary-beyond-technology',
                 status: this.isInitialized ? 'operational' : 'initializing',
                 uptime: this.uptime,
@@ -712,7 +712,7 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
+            <title>True AGI -- Live v4</title>
     <style>
         * {
             margin: 0;
@@ -992,7 +992,7 @@ export default {
 <body>
     <div class="container">
         <div class="header">
-                            <h1>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
+                            <h1>True AGI -- Live v4</h1>
         </div>
 
         <div class="status-grid">
