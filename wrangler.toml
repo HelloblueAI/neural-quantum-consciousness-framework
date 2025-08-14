@@ -1,17 +1,10 @@
 name = "multi-language-agi"
-main = "dist/agi-worker-hybrid.js"
+main = "dist/agi-worker-hybrid-simple.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Custom domain configuration
-[env.production]
-name = "multi-language-agi"
-route = "agi.bleujs.org/*"
-
-# Staging environment
-[env.staging]
-name = "agi-bleujs-staging"
-route = "staging.agi.bleujs.org/*"
+# Route configuration for agi.bleujs.org
+routes = ["agi.bleujs.org/*"]
 
 # [[kv_namespaces]]
 # binding = "AGI_STORAGE"
