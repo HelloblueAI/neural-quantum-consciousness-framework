@@ -15,8 +15,6 @@ import {
   ActionResult,
   SystemConfig,
   SystemMetrics,
-  // MetaReasoning,
-  // Consciousness,
   Creativity
 } from '../types/index.js';
 import { SystemCoordinator } from './SystemCoordinator.js';
@@ -77,10 +75,6 @@ export class AGISystem extends EventEmitter {
   private _isRunning = false;
   private startupTime: number = 0;
   
-  // Advanced capabilities (unused for now)
-  // private _metaReasoning: MetaReasoning = {} as MetaReasoning;
-  // private _consciousness: Consciousness = {} as Consciousness;
-  
   // Add missing history tracking
   private reasoningHistory: any[] = [];
   private learningHistory: any[] = [];
@@ -114,9 +108,6 @@ export class AGISystem extends EventEmitter {
     
     // Initialize advanced capabilities
     this.initializeAdvancedCapabilities();
-    
-    // Initialize metrics
-    // this._metrics = this.initializeMetrics(); // This line is removed
     
     this.logger.info('AGI System constructed with advanced capabilities', { id: this.id, version: this.version });
   }
@@ -375,8 +366,8 @@ export class AGISystem extends EventEmitter {
       // Learn from execution
       await this.learningEngine.learnFromExecution(plan, result);
       
-      // Update metrics
-      // this.updateMetrics('plan_executed'); // This line is removed
+      // Update metrics tracking
+      this.performanceMonitor.recordMetric('plan_executed', 1);
       
       return result;
       
@@ -497,8 +488,8 @@ export class AGISystem extends EventEmitter {
       // Validate solution
       this.securityManager.validateSolution(solution);
       
-      // Update metrics
-      // this.updateMetrics('creative_solution_generated'); // This line is removed
+      // Update metrics tracking
+      this.performanceMonitor.recordMetric('creative_solution_generated', 1);
       
       return solution;
       
@@ -1048,14 +1039,6 @@ export class AGISystem extends EventEmitter {
     return 0.8;
   }
 
-  private async getLearningPerformance(): Promise<any> {
-    return {
-      efficiency: 0.8,
-      growth: 0.7,
-      adaptation: 0.6
-    };
-  }
-
   private async synthesizeReasoningResults(crossDomainResult: any, foundationUnderstanding: any): Promise<any> {
     return {
       crossDomain: crossDomainResult,
@@ -1080,51 +1063,6 @@ export class AGISystem extends EventEmitter {
   private calculateCreationConfidence(creation: any): number {
     return 0.8;
   }
-  
-  // private initializeMetrics(): SystemMetrics {
-  //   return {
-  //     performance: {
-  //       responseTime: 50,
-  //       throughput: 1000,
-  //       resourceUsage: {
-  //         cpu: 0.3,
-  //         memory: 0.5,
-  //         disk: 0.2,
-  //         network: 0.1
-  //       },
-  //       efficiency: 0.85
-  //     },
-  //     learning: {
-  //       accuracy: 0.9,
-  //       improvement: 0.1,
-  //       adaptation: 0.8,
-  //       generalization: 0.7
-  //     },
-  //     reasoning: {
-  //       correctness: 0.85,
-  //       efficiency: 0.9,
-  //       creativity: 0.7,
-  //       consistency: 0.8
-  //     },
-  //     communication: {
-  //       throughput: 1000,
-  //       latency: 10,
-  //       reliability: 0.99,
-  //       efficiency: 0.9
-  //     },
-  //     security: {
-  //       threats: 5,
-  //       vulnerabilities: 3,
-  //       incidents: 1,
-  //       riskLevel: 'low'
-  //     }
-  //   };
-  // }
-  
-  // private updateMetrics(event: string): void {
-  //   // Update metrics based on event
-  //   this.logger.debug('Metrics updated', { event });
-  // }
   
   private async generateMetaReasoningInsights(
     _performanceAnalysis: any,

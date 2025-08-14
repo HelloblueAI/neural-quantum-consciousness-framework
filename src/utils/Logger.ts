@@ -4,6 +4,7 @@
  */
 
 import { EventEmitter } from 'events';
+import { v4 as uuidv4 } from 'uuid';
 
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal';
 
@@ -19,6 +20,9 @@ export interface LogEntry {
     readonly memoryUsage: number;
     readonly cpuUsage: number;
   };
+  readonly correlationId?: string;
+  readonly sessionId?: string;
+  readonly userId?: string;
 }
 
 export interface LoggerConfig {
@@ -49,6 +53,10 @@ export class Logger extends EventEmitter {
     averageLogTime: 0
   };
   
+  // Session and correlation tracking
+  private sessionId: string;
+  private correlationCounter: number = 0;
+  
   private static readonly LOG_LEVELS: Record<LogLevel, number> = {
     trace: 0,
     debug: 1,
@@ -70,7 +78,57 @@ export class Logger extends EventEmitter {
       ...config
     };
     
+    // Generate session ID
+    this.sessionId = uuidv4();
+    
     this.log('info', 'Logger initialized', { component: this.config.component });
+  }
+  
+  /**
+   * Generate a new correlation ID for request tracking
+   */
+  public generateCorrelationId(): string {
+    this.correlationCounter++;
+    return `${this.sessionId}-${this.correlationCounter}`;
+  }
+  
+  /**
+   * Get current session ID
+   */
+  public getSessionId(): string {
+    return this.sessionId;
+  }
+  
+  /**
+   * Log with correlation ID
+   */
+  public logWithCorrelation(
+    level: LogLevel, 
+    message: string, 
+    correlationId: string, 
+    data?: any
+  ): void {
+    this.log(level, message, {
+      ...data,
+      correlationId,
+      sessionId: this.sessionId
+    });
+  }
+  
+  /**
+   * Log with user context
+   */
+  public logWithUser(
+    level: LogLevel, 
+    message: string, 
+    userId: string, 
+    data?: any
+  ): void {
+    this.log(level, message, {
+      ...data,
+      userId,
+      sessionId: this.sessionId
+    });
   }
   
   /**

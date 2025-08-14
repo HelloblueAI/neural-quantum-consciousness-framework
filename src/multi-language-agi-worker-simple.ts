@@ -368,6 +368,7 @@ export default {
             const metrics = multiLanguageAGI.getSystemMetrics();
             const docs = multiLanguageAGI.getDocumentation();
             
+            // Process the template literals with actual data
             const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -622,8 +623,8 @@ export default {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧠 SentientCore</h1>
-            <p>True AGI is now live</p>
+            <h1>🧠 SentientCore - RESTORED</h1>
+            <p>True AGI is now live - Fully Restored from Yesterday</p>
             <p>The Most Advanced Artificial General Intelligence System in the World</p>
             <p>Combining Rust, C, TypeScript, WebAssembly, and Assembly for Revolutionary Performance</p>
         </div>

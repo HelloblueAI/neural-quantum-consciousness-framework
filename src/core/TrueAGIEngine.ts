@@ -370,23 +370,23 @@ export class TrueAGIEngine extends EventEmitter {
     const uniqueWords = new Set(input.toLowerCase().split(/\W+/)).size;
     return Math.min(1.0, (words * uniqueWords) / (sentences * 100));
   }
-  
+
   private analyzeDepth(input: string): number {
-    const abstractConcepts = ['theory', 'principle', 'concept', 'framework', 'model', 'system'];
+    const abstractConcepts = ['theory', 'principle', 'concept', 'framework', 'model', 'system', 'philosophy', 'metaphysics', 'ontology', 'epistemology'];
     const abstractCount = abstractConcepts.filter(concept => 
       input.toLowerCase().includes(concept)
     ).length;
-    return Math.min(1.0, abstractCount / 3);
+    return Math.min(1.0, abstractCount / 5);
   }
-  
+
   private analyzeBreadth(input: string): number {
-    const domains = ['science', 'art', 'philosophy', 'technology', 'nature', 'society'];
+    const domains = ['science', 'art', 'philosophy', 'technology', 'nature', 'society', 'mathematics', 'physics', 'biology', 'psychology', 'economics', 'politics'];
     const domainCount = domains.filter(domain => 
       input.toLowerCase().includes(domain)
     ).length;
-    return Math.min(1.0, domainCount / 3);
+    return Math.min(1.0, domainCount / 4);
   }
-  
+
   private generateInsights(input: string, complexity: number, depth: number, breadth: number): string[] {
     const insights: string[] = [];
     
@@ -402,9 +402,22 @@ export class TrueAGIEngine extends EventEmitter {
       insights.push('Cross-domain content identified - synthesis required');
     }
     
+    // Generate specific insights based on content
+    if (input.toLowerCase().includes('problem') || input.toLowerCase().includes('solve')) {
+      insights.push('Problem-solving approach needed');
+    }
+    
+    if (input.toLowerCase().includes('learn') || input.toLowerCase().includes('understand')) {
+      insights.push('Learning and understanding focus detected');
+    }
+    
+    if (input.toLowerCase().includes('create') || input.toLowerCase().includes('generate')) {
+      insights.push('Creative generation required');
+    }
+    
     return insights;
   }
-  
+
   private createConnections(input: string): Map<string, number> {
     const connections = new Map<string, number>();
     
@@ -414,31 +427,94 @@ export class TrueAGIEngine extends EventEmitter {
       connections.set(keyword, Math.random() * 0.8 + 0.2);
     });
     
+    // Add semantic connections
+    const semanticGroups = {
+      'problem': ['solve', 'analyze', 'approach', 'method'],
+      'learn': ['understand', 'knowledge', 'study', 'research'],
+      'create': ['generate', 'design', 'build', 'develop'],
+      'think': ['reason', 'logic', 'analysis', 'reflection']
+    };
+    
+    for (const [group, related] of Object.entries(semanticGroups)) {
+      if (keywords.some(k => k.includes(group))) {
+        for (const word of related) {
+          if (keywords.some(k => k.includes(word))) {
+            connections.set(`${group}_${word}`, Math.random() * 0.6 + 0.4);
+          }
+        }
+      }
+    }
+    
     return connections;
   }
-  
+
   private calculateCoherence(input: string, connections: Map<string, number>): number {
-    return connections.size > 0 ? 
-      Array.from(connections.values()).reduce((sum, val) => sum + val, 0) / connections.size : 
-      0.5;
+    if (connections.size === 0) return 0.5;
+    
+    // Calculate coherence based on connection strength and semantic relationships
+    const connectionStrengths = Array.from(connections.values());
+    const avgStrength = connectionStrengths.reduce((sum, val) => sum + val, 0) / connectionStrengths.length;
+    
+    // Adjust for input length and complexity
+    const lengthFactor = Math.min(1.0, input.length / 500);
+    const complexityFactor = 1.0 - (this.analyzeComplexity(input) * 0.3);
+    
+    return Math.min(1.0, avgStrength * lengthFactor * complexityFactor);
   }
-  
+
   private calculateNovelty(input: string): number {
     // Simple novelty calculation based on unique word patterns
     const words = input.toLowerCase().split(/\W+/);
     const uniqueWords = new Set(words);
-    return Math.min(1.0, uniqueWords.size / Math.max(words.length, 1));
+    const novelty = uniqueWords.size / Math.max(words.length, 1);
+    
+    // Boost novelty for unusual word combinations
+    const unusualCombinations = this.findUnusualCombinations(words);
+    const combinationBonus = Math.min(0.3, unusualCombinations * 0.1);
+    
+    return Math.min(1.0, novelty + combinationBonus);
   }
-  
+
   private calculateApplicability(input: string, context?: any): number {
     // Calculate how applicable the input is to current context
-    return context ? 0.8 : 0.6;
+    let applicability = 0.6; // Base applicability
+    
+    if (context) {
+      // Check context relevance
+      const contextRelevance = this.calculateContextRelevance(input, context);
+      applicability = Math.min(1.0, applicability + contextRelevance * 0.3);
+    }
+    
+    // Check for actionable content
+    if (input.toLowerCase().includes('how') || input.toLowerCase().includes('what') || input.toLowerCase().includes('why')) {
+      applicability += 0.2;
+    }
+    
+    // Check for specific requests
+    if (input.toLowerCase().includes('help') || input.toLowerCase().includes('assist') || input.toLowerCase().includes('guide')) {
+      applicability += 0.1;
+    }
+    
+    return Math.min(1.0, applicability);
   }
-  
+
   private calculateConfidence(complexity: number, depth: number, breadth: number, coherence: number): number {
-    return (complexity + depth + breadth + coherence) / 4;
+    // Weighted confidence calculation
+    const weights = {
+      complexity: 0.2,
+      depth: 0.25,
+      breadth: 0.25,
+      coherence: 0.3
+    };
+    
+    return (
+      complexity * weights.complexity +
+      depth * weights.depth +
+      breadth * weights.breadth +
+      coherence * weights.coherence
+    );
   }
-  
+
   // Helper methods for autonomous response generation
   private findRelevantGoals(input: any, understanding: Understanding): AutonomousGoal[] {
     return Array.from(this.autonomousGoals.values())
@@ -446,27 +522,49 @@ export class TrueAGIEngine extends EventEmitter {
       .sort((a, b) => b.priority - a.priority)
       .slice(0, 3);
   }
-  
+
   private synthesizeResponse(input: any, understanding: Understanding, goals: AutonomousGoal[], context?: any): any {
     const inputStr = typeof input === 'string' ? input : JSON.stringify(input);
     
+    // Generate response based on understanding and goals
+    let responseContent = `Based on my understanding of "${inputStr}", `;
+    
+    if (understanding.depth > 0.7) {
+      responseContent += `I can provide deep insights. `;
+    }
+    
+    if (understanding.breadth > 0.7) {
+      responseContent += `This spans multiple domains. `;
+    }
+    
+    if (goals.length > 0) {
+      responseContent += `My current goals include ${goals.map(g => g.description).join(', ')}. `;
+    }
+    
+    responseContent += `I'm confident in my analysis with a confidence level of ${(understanding.confidence * 100).toFixed(1)}%.`;
+    
     return {
-      content: `Based on my understanding of "${inputStr}", I can provide insights and analysis. My current goals include ${goals.map(g => g.description).join(', ')}.`,
+      content: responseContent,
       reasoning: `Understanding depth: ${understanding.depth.toFixed(2)}, breadth: ${understanding.breadth.toFixed(2)}, confidence: ${understanding.confidence.toFixed(2)}`,
       confidence: understanding.confidence,
       goals: goals.map(g => g.id)
     };
   }
-  
+
   private makeAutonomousDecision(input: any, understanding: Understanding, response: any): any {
-    return {
+    // Make autonomous decision based on understanding and response
+    const decision = {
       content: response.content,
       reasoning: response.reasoning,
       confidence: response.confidence,
-      autonomy: this.autonomy
+      autonomy: this.autonomy,
+      decisionType: this.determineDecisionType(input, understanding),
+      priority: this.calculateDecisionPriority(understanding, response)
     };
+    
+    return decision;
   }
-  
+
   // Helper methods for insight generation
   private generateCreativeInsight(input: any, understanding: Understanding): EmergentInsight | null {
     if (understanding.novelty > 0.6) {
@@ -483,11 +581,11 @@ export class TrueAGIEngine extends EventEmitter {
     }
     return null;
   }
-  
+
   private generateLogicalInsight(input: any, understanding: Understanding): EmergentInsight | null {
     if (understanding.coherence > 0.7) {
       return {
-        id: uuidv4(),
+        id: 'logical_insight',
         type: 'logical',
         content: 'Logical insight: The patterns in this input follow consistent logical structures',
         confidence: understanding.confidence,
@@ -499,11 +597,11 @@ export class TrueAGIEngine extends EventEmitter {
     }
     return null;
   }
-  
+
   private generateIntuitiveInsight(input: any, understanding: Understanding): EmergentInsight | null {
     if (understanding.depth > 0.6) {
       return {
-        id: uuidv4(),
+        id: 'intuitive_insight',
         type: 'intuitive',
         content: 'Intuitive insight: There are deeper underlying principles at work here',
         confidence: understanding.confidence * 0.8,
@@ -515,11 +613,11 @@ export class TrueAGIEngine extends EventEmitter {
     }
     return null;
   }
-  
+
   private generateSyntheticInsight(insights: EmergentInsight[]): EmergentInsight | null {
     if (insights.length >= 2) {
       return {
-        id: uuidv4(),
+        id: 'synthetic_insight',
         type: 'synthetic',
         content: `Synthetic insight: Combining ${insights.length} insights reveals higher-order patterns`,
         confidence: insights.reduce((sum, i) => sum + i.confidence, 0) / insights.length,
@@ -531,7 +629,7 @@ export class TrueAGIEngine extends EventEmitter {
     }
     return null;
   }
-  
+
   // Helper methods for self-improvement
   private analyzePerformance(input: any, understanding: Understanding, response: any): any {
     return {
@@ -542,7 +640,7 @@ export class TrueAGIEngine extends EventEmitter {
         .reduce((sum, goal) => sum + goal.progress, 0) / this.autonomousGoals.size
     };
   }
-  
+
   private identifyImprovements(performance: any): string[] {
     const improvements: string[] = [];
     
@@ -558,9 +656,13 @@ export class TrueAGIEngine extends EventEmitter {
       improvements.push('enhance_insight_generation');
     }
     
+    if (performance.goalProgress < 0.5) {
+      improvements.push('improve_goal_achievement');
+    }
+    
     return improvements;
   }
-  
+
   private async applyImprovement(improvement: string): Promise<void> {
     switch (improvement) {
       case 'enhance_understanding':
@@ -572,42 +674,52 @@ export class TrueAGIEngine extends EventEmitter {
       case 'enhance_insight_generation':
         this.performanceMetrics.creativity = Math.min(1.0, this.performanceMetrics.creativity + 0.05);
         break;
+      case 'improve_goal_achievement':
+        this.performanceMetrics.goalAchievement = Math.min(1.0, this.performanceMetrics.goalAchievement + 0.05);
+        break;
     }
   }
-  
+
   // Helper methods for learning
   private async learnFromInteraction(input: any, response: any, understanding: Understanding): Promise<void> {
     // Store learning experience
-    this.learningHistory.push({
+    const learningExperience = {
       input,
       response,
       understanding,
-      timestamp: new Date()
-    });
+      timestamp: new Date(),
+      success: response.confidence > 0.7,
+      insights: understanding.insights
+    };
+    
+    this.learningHistory.push(learningExperience);
     
     // Update knowledge base
-    this.knowledgeBase.set(`experience_${Date.now()}`, {
-      input,
-      response,
-      understanding,
-      insights: understanding.insights
-    });
+    this.knowledgeBase.set(`experience_${Date.now()}`, learningExperience);
     
-    // Update performance metrics
+    // Update performance metrics based on understanding
     this.performanceMetrics.understandingDepth = Math.max(
       this.performanceMetrics.understandingDepth,
       understanding.depth
     );
+    
+    // Update learning efficiency
+    if (learningExperience.success) {
+      this.performanceMetrics.adaptation += 0.01;
+    }
   }
-  
+
   private async updateAutonomousGoals(input: any, understanding: Understanding, response: any): Promise<void> {
     // Update goal progress based on current interaction
     for (const goal of this.autonomousGoals.values()) {
       if (goal.status === 'active') {
-        goal.progress = Math.min(1.0, goal.progress + 0.01);
+        // Progress based on understanding quality and response success
+        const progressIncrement = (understanding.confidence + response.confidence) * 0.01;
+        goal.progress = Math.min(1.0, goal.progress + progressIncrement);
         
         if (goal.progress >= 1.0) {
           goal.status = 'completed';
+          this.logger.info('Goal completed', { goalId: goal.id, description: goal.description });
         }
       }
     }
@@ -616,7 +728,7 @@ export class TrueAGIEngine extends EventEmitter {
     this.performanceMetrics.goalAchievement = Array.from(this.autonomousGoals.values())
       .filter(g => g.status === 'completed').length / this.autonomousGoals.size;
   }
-  
+
   private async updateMetaCognition(input: any, understanding: Understanding, response: any): Promise<void> {
     // Update meta-cognitive awareness with more significant improvements
     this.metaCognition.selfAwareness = Math.min(1.0, this.metaCognition.selfAwareness + 0.05);
@@ -641,7 +753,7 @@ export class TrueAGIEngine extends EventEmitter {
     const insight = `Processed input with understanding depth ${understanding.depth.toFixed(2)} and confidence ${understanding.confidence.toFixed(2)}`;
     this.metaCognition.insights.push(insight);
   }
-  
+
   // Initialization helper methods
   private initializeUnderstanding(): Understanding {
     return {
@@ -724,5 +836,56 @@ export class TrueAGIEngine extends EventEmitter {
       knowledgeBaseSize: this.knowledgeBase.size,
       learningHistorySize: this.learningHistory.length
     };
+  }
+
+  // Additional helper methods
+  private findUnusualCombinations(words: string[]): number {
+    // Find unusual word combinations
+    let unusualCount = 0;
+    
+    for (let i = 0; i < words.length - 1; i++) {
+      const combination = `${words[i]}_${words[i + 1]}`;
+      // Check if this combination is unusual (simplified logic)
+      if (words[i].length > 6 && words[i + 1].length > 6) {
+        unusualCount++;
+      }
+    }
+    
+    return unusualCount;
+  }
+
+  private calculateContextRelevance(input: string, context: any): number {
+    // Calculate relevance to context
+    if (!context) return 0.0;
+    
+    const contextString = JSON.stringify(context).toLowerCase();
+    const inputLower = input.toLowerCase();
+    
+    // Count shared words
+    const inputWords = inputLower.split(/\W+/);
+    const contextWords = contextString.split(/\W+/);
+    
+    const sharedWords = inputWords.filter(word => 
+      word.length > 3 && contextWords.includes(word)
+    );
+    
+    return Math.min(1.0, sharedWords.length / Math.max(inputWords.length, 1));
+  }
+
+  private determineDecisionType(input: any, understanding: Understanding): string {
+    if (understanding.depth > 0.7) {
+      return 'analytical';
+    } else if (understanding.novelty > 0.6) {
+      return 'creative';
+    } else if (understanding.coherence > 0.8) {
+      return 'logical';
+    } else {
+      return 'intuitive';
+    }
+  }
+
+  private calculateDecisionPriority(understanding: Understanding, response: any): number {
+    // Calculate decision priority based on understanding and response quality
+    return (understanding.confidence + response.confidence) / 2;
   }
 } 

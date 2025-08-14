@@ -516,7 +516,6 @@ export class UnifiedLearningEngine extends EventEmitter {
       id: uuidv4(),
       type: 'principle',
       content: { principle: 'identified_principle', confidence: 0.6 },
-      confidence: 0.6,
       applicability: [experience.domain, 'general'],
       sourceExperience: experience.id,
       timestamp: Date.now(),
@@ -524,6 +523,20 @@ export class UnifiedLearningEngine extends EventEmitter {
     };
     
     insights.push(principleInsight);
+    
+    // Extract meta-insights
+    const metaInsight: LearningInsight = {
+      id: uuidv4(),
+      type: 'meta_learning',
+      content: { strategy: 'learning_strategy', confidence: 0.8 },
+      confidence: 0.8,
+      applicability: ['general'],
+      sourceExperience: experience.id,
+      timestamp: Date.now(),
+      metaInsights: ['strategy_optimization']
+    };
+    
+    insights.push(metaInsight);
     
     return insights;
   }
@@ -537,6 +550,13 @@ export class UnifiedLearningEngine extends EventEmitter {
           // Update structure with new insight
           structure.lastUpdated = Date.now();
           structure.confidence = Math.min(1.0, structure.confidence + 0.1);
+          
+          // Store insight in appropriate structure
+          if (insight.type === 'pattern') {
+            structure.patterns.set(insight.id, insight.content);
+          } else if (insight.type === 'principle') {
+            structure.principles.set(insight.id, insight.content);
+          }
         }
       }
     }
@@ -549,6 +569,13 @@ export class UnifiedLearningEngine extends EventEmitter {
         strategy.adaptationRate += 0.1;
         strategy.lastUsed = Date.now();
       }
+      
+      // Adapt based on success rate
+      if (experience.outcome && experience.outcome.success) {
+        strategy.successRate = Math.min(1.0, strategy.successRate + 0.05);
+      } else {
+        strategy.successRate = Math.max(0.0, strategy.successRate - 0.05);
+      }
     }
   }
 
@@ -556,106 +583,540 @@ export class UnifiedLearningEngine extends EventEmitter {
     this.learningMetrics.totalInsights += insights.length;
     this.learningMetrics.knowledgeGrowth += insights.length * 0.1;
     this.learningMetrics.understandingDepth = Math.min(1.0, this.learningMetrics.understandingDepth + 0.05);
+    
+    // Update strategy improvements
+    const metaInsights = insights.filter(i => i.type === 'meta_learning');
+    this.learningMetrics.strategyImprovements += metaInsights.length * 0.1;
   }
 
   private async analyzeSituation(situation: any, context?: any): Promise<any> {
     return {
-      complexity: 0.5,
-      domain: 'general',
-      relevantConcepts: [],
+      complexity: this.analyzeSituationComplexity(situation),
+      domain: this.identifySituationDomain(situation),
+      relevantConcepts: this.extractRelevantConcepts(situation),
       context: context || {}
     };
   }
 
   private async findRelevantKnowledge(analysis: any): Promise<any[]> {
-    return [];
+    const relevantKnowledge: any[] = [];
+    
+    // Find knowledge structures relevant to the situation
+    for (const [domain, structure] of this.knowledgeStructures) {
+      if (domain === analysis.domain || domain === 'general') {
+        relevantKnowledge.push({
+          domain,
+          concepts: Array.from(structure.concepts.values()),
+          patterns: Array.from(structure.patterns.values()),
+          principles: Array.from(structure.principles.values())
+        });
+      }
+    }
+    
+    return relevantKnowledge;
   }
 
   private async generateUnderstanding(situation: any, knowledge: any[]): Promise<any> {
-    return {
+    const understanding = {
       understanding: 'situation_understanding',
-      confidence: 0.7,
-      applicableKnowledge: knowledge
+      confidence: this.calculateUnderstandingConfidence(situation, knowledge),
+      applicableKnowledge: knowledge,
+      insights: this.generateSituationInsights(situation, knowledge)
     };
+    
+    return understanding;
   }
 
   private async applyUnderstanding(understanding: any, situation: any): Promise<any> {
-    return {
+    const application = {
       application: 'applied_understanding',
-      confidence: 0.8
+      confidence: understanding.confidence,
+      actions: this.determineActions(understanding, situation),
+      expectedOutcome: this.predictOutcome(understanding, situation)
     };
+    
+    return application;
   }
 
   private async validateApplication(application: any, situation: any): Promise<any> {
-    return {
-      isValid: true,
-      confidence: 0.8
+    const validation = {
+      isValid: application.confidence > 0.6,
+      confidence: application.confidence,
+      feedback: this.generateValidationFeedback(application, situation)
     };
+    
+    return validation;
   }
 
   private async analyzeConceptsAcrossDomains(concepts: any[], domains: string[]): Promise<any> {
-    return {};
+    const analysis: any = {};
+    
+    for (const domain of domains) {
+      analysis[domain] = {
+        concepts: concepts.filter(c => this.isConceptRelevantToDomain(c, domain)),
+        relevance: this.calculateDomainRelevance(concepts, domain),
+        patterns: this.findDomainPatterns(concepts, domain)
+      };
+    }
+    
+    return analysis;
   }
 
   private async findCommonPatterns(analysis: any): Promise<any[]> {
-    return [];
+    const patterns: any[] = [];
+    
+    // Find patterns that appear across multiple domains
+    const allPatterns = new Map<string, number>();
+    
+    for (const [domain, domainAnalysis] of Object.entries(analysis)) {
+      for (const pattern of domainAnalysis.patterns || []) {
+        const patternKey = JSON.stringify(pattern);
+        allPatterns.set(patternKey, (allPatterns.get(patternKey) || 0) + 1);
+      }
+    }
+    
+    // Return patterns that appear in multiple domains
+    for (const [patternKey, count] of allPatterns) {
+      if (count > 1) {
+        patterns.push({
+          pattern: JSON.parse(patternKey),
+          domainCount: count,
+          crossDomain: true
+        });
+      }
+    }
+    
+    return patterns;
   }
 
   private async extractPrinciples(patterns: any[]): Promise<any[]> {
-    return [];
+    const principles: any[] = [];
+    
+    // Extract principles from patterns
+    for (const pattern of patterns) {
+      const principle = this.extractPrincipleFromPattern(pattern);
+      if (principle) {
+        principles.push(principle);
+      }
+    }
+    
+    return principles;
   }
 
   private async createUnifiedStructure(patterns: any[], principles: any[], domains: string[]): Promise<any> {
-    return {
+    const unifiedStructure = {
       concepts: new Map(),
       relationships: new Map(),
       patterns: new Map(),
       abstractions: new Map(),
       principles: new Map()
     };
+    
+    // Populate with patterns and principles
+    for (const pattern of patterns) {
+      unifiedStructure.patterns.set(pattern.id || uuidv4(), pattern);
+    }
+    
+    for (const principle of principles) {
+      unifiedStructure.principles.set(principle.id || uuidv4(), principle);
+    }
+    
+    return unifiedStructure;
   }
 
   private async validateUnifiedStructure(structure: any, domains: string[]): Promise<any> {
-    return { confidence: 0.8 };
+    const validation = {
+      isValid: true,
+      confidence: 0.8,
+      issues: [],
+      recommendations: []
+    };
+    
+    // Validate structure completeness
+    if (structure.patterns.size === 0) {
+      validation.issues.push('No patterns found');
+      validation.isValid = false;
+    }
+    
+    if (structure.principles.size === 0) {
+      validation.issues.push('No principles found');
+      validation.isValid = false;
+    }
+    
+    // Adjust confidence based on validation
+    validation.confidence = Math.max(0.1, validation.confidence - (validation.issues.length * 0.1));
+    
+    return validation;
   }
 
   private async analyzePerformance(performanceData: any): Promise<any> {
-    return {};
+    const analysis = {
+      overall: this.calculateOverallPerformance(performanceData),
+      trends: this.analyzePerformanceTrends(performanceData),
+      bottlenecks: this.identifyBottlenecks(performanceData),
+      opportunities: this.identifyOpportunities(performanceData)
+    };
+    
+    return analysis;
   }
 
   private async identifyImprovementAreas(analysis: any): Promise<any[]> {
-    return [];
+    const improvementAreas: any[] = [];
+    
+    // Identify areas with low performance
+    if (analysis.overall < 0.7) {
+      improvementAreas.push('overall_performance');
+    }
+    
+    // Identify bottlenecks
+    for (const bottleneck of analysis.bottlenecks) {
+      improvementAreas.push(`bottleneck_${bottleneck.type}`);
+    }
+    
+    // Identify opportunities
+    for (const opportunity of analysis.opportunities) {
+      improvementAreas.push(`opportunity_${opportunity.type}`);
+    }
+    
+    return improvementAreas;
   }
 
   private async generateNewStrategies(improvementAreas: any[]): Promise<LearningStrategy[]> {
-    return [];
+    const newStrategies: LearningStrategy[] = [];
+    
+    for (const area of improvementAreas) {
+      const strategy = this.createStrategyForArea(area);
+      if (strategy) {
+        newStrategies.push(strategy);
+      }
+    }
+    
+    return newStrategies;
   }
 
   private async validateStrategies(strategies: LearningStrategy[]): Promise<LearningStrategy[]> {
-    return strategies;
+    const validatedStrategies: LearningStrategy[] = [];
+    
+    for (const strategy of strategies) {
+      if (this.isStrategyValid(strategy)) {
+        validatedStrategies.push(strategy);
+      }
+    }
+    
+    return validatedStrategies;
   }
 
   private async updateMetaLearning(strategies: LearningStrategy[]): Promise<void> {
     // Update meta-learning with new strategies
+    for (const strategy of strategies) {
+      if (strategy.metaStrategy) {
+        this.metaLearning.strategies.set(strategy.id, strategy);
+      }
+    }
   }
 
   private async analyzeLearningPatterns(): Promise<any[]> {
-    return [];
+    const patterns: any[] = [];
+    
+    // Analyze recent learning experiences
+    const recentExperiences = this.experiences.slice(-50);
+    
+    // Find common patterns in successful learning
+    const successfulExperiences = recentExperiences.filter(e => e.outcome && e.outcome.success);
+    
+    for (const experience of successfulExperiences) {
+      const pattern = this.extractLearningPattern(experience);
+      if (pattern) {
+        patterns.push(pattern);
+      }
+    }
+    
+    return patterns;
   }
 
   private async identifyEffectiveStrategies(patterns: any[]): Promise<LearningStrategy[]> {
-    return [];
+    const effectiveStrategies: LearningStrategy[] = [];
+    
+    // Find strategies that align with successful patterns
+    for (const strategy of this.learningStrategies.values()) {
+      if (this.isStrategyEffective(strategy, patterns)) {
+        effectiveStrategies.push(strategy);
+      }
+    }
+    
+    return effectiveStrategies;
   }
 
   private async generateMetaStrategies(strategies: LearningStrategy[]): Promise<LearningStrategy[]> {
-    return [];
+    const metaStrategies: LearningStrategy[] = [];
+    
+    // Generate meta-strategies based on effective strategies
+    for (const strategy of strategies) {
+      const metaStrategy = this.createMetaStrategy(strategy);
+      if (metaStrategy) {
+        metaStrategies.push(metaStrategy);
+      }
+    }
+    
+    return metaStrategies;
   }
 
   private async updateMetaLearningEngine(strategies: LearningStrategy[]): Promise<void> {
     // Update meta-learning engine with new strategies
+    for (const strategy of strategies) {
+      this.metaLearningEngine.set(strategy.name, {
+        enabled: true,
+        confidence: strategy.confidence || 0.7
+      });
+    }
   }
 
   private async calculateEfficiencyImprovement(strategies: LearningStrategy[]): Promise<number> {
-    return 0.1;
+    if (strategies.length === 0) return 0.0;
+    
+    // Calculate average improvement potential
+    const totalImprovement = strategies.reduce((sum, strategy) => {
+      return sum + (strategy.adaptationRate || 0.1);
+    }, 0.0);
+    
+    return Math.min(0.2, totalImprovement / strategies.length);
+  }
+
+  // Helper methods for the above implementations
+  private analyzeSituationComplexity(situation: any): number {
+    const situationString = JSON.stringify(situation);
+    return Math.min(1.0, situationString.length / 1000);
+  }
+
+  private identifySituationDomain(situation: any): string {
+    const situationString = JSON.stringify(situation).toLowerCase();
+    
+    const domainKeywords: Record<string, string[]> = {
+      mathematics: ['math', 'equation', 'formula', 'calculation'],
+      physics: ['physics', 'force', 'energy', 'motion'],
+      biology: ['biology', 'life', 'organism', 'cell'],
+      psychology: ['psychology', 'mind', 'behavior', 'emotion'],
+      philosophy: ['philosophy', 'thought', 'existence', 'knowledge'],
+      art: ['art', 'creative', 'aesthetic', 'expression'],
+      technology: ['technology', 'computer', 'software', 'hardware']
+    };
+    
+    for (const [domain, keywords] of Object.entries(domainKeywords)) {
+      for (const keyword of keywords) {
+        if (situationString.includes(keyword)) {
+          return domain;
+        }
+      }
+    }
+    
+    return 'general';
+  }
+
+  private extractRelevantConcepts(situation: any): string[] {
+    const concepts: string[] = [];
+    const situationString = JSON.stringify(situation).toLowerCase();
+    
+    // Extract common concepts
+    const commonConcepts = ['problem', 'solution', 'analysis', 'understanding', 'learning'];
+    
+    for (const concept of commonConcepts) {
+      if (situationString.includes(concept)) {
+        concepts.push(concept);
+      }
+    }
+    
+    return concepts;
+  }
+
+  private calculateUnderstandingConfidence(situation: any, knowledge: any[]): number {
+    if (knowledge.length === 0) return 0.3;
+    
+    // Calculate confidence based on knowledge coverage
+    const coverage = Math.min(1.0, knowledge.length / 10);
+    const complexity = this.analyzeSituationComplexity(situation);
+    
+    return Math.max(0.1, Math.min(1.0, coverage * (1.0 - complexity * 0.3)));
+  }
+
+  private generateSituationInsights(situation: any, knowledge: any[]): string[] {
+    const insights: string[] = [];
+    
+    if (knowledge.length > 0) {
+      insights.push(`Found ${knowledge.length} relevant knowledge structures`);
+    }
+    
+    if (this.analyzeSituationComplexity(situation) > 0.7) {
+      insights.push('Complex situation detected - may require multiple approaches');
+    }
+    
+    return insights;
+  }
+
+  private determineActions(understanding: any, situation: any): any[] {
+    const actions: any[] = [];
+    
+    if (understanding.confidence > 0.7) {
+      actions.push({
+        type: 'apply_knowledge',
+        confidence: understanding.confidence,
+        description: 'Apply existing knowledge to situation'
+      });
+    } else {
+      actions.push({
+        type: 'gather_more_information',
+        confidence: 0.8,
+        description: 'Need more information to proceed'
+      });
+    }
+    
+    return actions;
+  }
+
+  private predictOutcome(understanding: any, situation: any): any {
+    return {
+      success: understanding.confidence > 0.6,
+      confidence: understanding.confidence,
+      expectedTime: this.estimateProcessingTime(situation),
+      risks: this.assessRisks(understanding, situation)
+    };
+  }
+
+  private generateValidationFeedback(application: any, situation: any): string[] {
+    const feedback: string[] = [];
+    
+    if (application.confidence > 0.8) {
+      feedback.push('High confidence application - proceed with monitoring');
+    } else if (application.confidence > 0.6) {
+      feedback.push('Moderate confidence - proceed with caution');
+    } else {
+      feedback.push('Low confidence - consider alternative approaches');
+    }
+    
+    return feedback;
+  }
+
+  private isConceptRelevantToDomain(concept: any, domain: string): boolean {
+    // Simple relevance check
+    const conceptString = JSON.stringify(concept).toLowerCase();
+    return conceptString.includes(domain.toLowerCase());
+  }
+
+  private calculateDomainRelevance(concepts: any[], domain: string): number {
+    const relevantConcepts = concepts.filter(c => this.isConceptRelevantToDomain(c, domain));
+    return relevantConcepts.length / Math.max(concepts.length, 1);
+  }
+
+  private findDomainPatterns(concepts: any[], domain: string): any[] {
+    // Find patterns specific to a domain
+    return [];
+  }
+
+  private extractPrincipleFromPattern(pattern: any): any | null {
+    // Extract principle from pattern
+    if (pattern && pattern.pattern) {
+      return {
+        id: uuidv4(),
+        type: 'extracted_principle',
+        content: pattern.pattern,
+        confidence: 0.7,
+        source: 'pattern_analysis'
+      };
+    }
+    return null;
+  }
+
+  private calculateOverallPerformance(performanceData: any): number {
+    // Calculate overall performance score
+    return 0.75; // Default value
+  }
+
+  private analyzePerformanceTrends(performanceData: any): any[] {
+    // Analyze performance trends
+    return [];
+  }
+
+  private identifyBottlenecks(performanceData: any): any[] {
+    // Identify performance bottlenecks
+    return [];
+  }
+
+  private identifyOpportunities(performanceData: any): any[] {
+    // Identify improvement opportunities
+    return [];
+  }
+
+  private createStrategyForArea(area: string): LearningStrategy | null {
+    // Create strategy for improvement area
+    return {
+      id: uuidv4(),
+      name: `strategy_${area}`,
+      type: 'adaptive',
+      parameters: { target: area, adaptationRate: 0.1 },
+      successRate: 0.6,
+      adaptationRate: 0.1,
+      lastUsed: Date.now(),
+      performanceHistory: [0.6],
+      metaStrategy: false
+    };
+  }
+
+  private isStrategyValid(strategy: LearningStrategy): boolean {
+    // Validate strategy
+    return strategy && 
+           strategy.name && 
+           strategy.type && 
+           strategy.successRate >= 0.0 && 
+           strategy.successRate <= 1.0;
+  }
+
+  private extractLearningPattern(experience: LearningExperience): any | null {
+    // Extract learning pattern from experience
+    return {
+      type: 'learning_pattern',
+      complexity: experience.complexity,
+      domain: experience.domain,
+      success: experience.outcome && experience.outcome.success
+    };
+  }
+
+  private isStrategyEffective(strategy: LearningStrategy, patterns: any[]): boolean {
+    // Check if strategy is effective based on patterns
+    return strategy.successRate > 0.6;
+  }
+
+  private createMetaStrategy(strategy: LearningStrategy): LearningStrategy | null {
+    // Create meta-strategy based on base strategy
+    return {
+      id: uuidv4(),
+      name: `meta_${strategy.name}`,
+      type: 'meta',
+      parameters: { baseStrategy: strategy.id, optimizationRate: 0.1 },
+      successRate: strategy.successRate * 0.9, // Meta-strategies slightly less effective
+      adaptationRate: strategy.adaptationRate * 1.2, // But more adaptive
+      lastUsed: Date.now(),
+      performanceHistory: [strategy.successRate * 0.9],
+      metaStrategy: true
+    };
+  }
+
+  private estimateProcessingTime(situation: any): number {
+    // Estimate processing time for situation
+    const complexity = this.analyzeSituationComplexity(situation);
+    return Math.max(100, complexity * 1000); // milliseconds
+  }
+
+  private assessRisks(understanding: any, situation: any): string[] {
+    // Assess risks of proceeding
+    const risks: string[] = [];
+    
+    if (understanding.confidence < 0.5) {
+      risks.push('Low confidence may lead to poor outcomes');
+    }
+    
+    if (this.analyzeSituationComplexity(situation) > 0.8) {
+      risks.push('High complexity increases chance of errors');
+    }
+    
+    return risks;
   }
 } 

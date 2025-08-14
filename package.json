@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && tsc-alias",
+    "build:core": "tsc src/core/AGISystem.ts src/core/NeuralCore.ts src/core/TrueAGIEngine.ts src/core/NeuralFoundationEngine.ts src/core/learning/UnifiedLearningEngine.ts src/core/reasoning/CrossDomainReasoningEngine.ts src/core/KnowledgeBase.ts src/core/MemoryManager.ts src/core/PerformanceMonitor.ts src/core/SecurityManager.ts src/utils/Logger.ts src/types/index.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest",
