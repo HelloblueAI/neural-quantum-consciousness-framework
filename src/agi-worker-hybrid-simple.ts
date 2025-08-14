@@ -647,9 +647,12 @@ export default {
             
             .consciousness-panel h2,
             .interaction-panel h2,
-            .metrics-panel h2,
-            .documentation-panel h2 {
+            .metrics-panel h2 {
                 font-size: 1.0em;  /* Even smaller section titles on mobile */
+            }
+            
+            .documentation-panel h2 {
+                font-size: 1.2em;  /* Same size as System Metrics title on mobile */
             }
             
             .result-panel h3 {
@@ -705,7 +708,7 @@ export default {
         .documentation-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.1em;  /* Even smaller for System Documentation title */
+            font-size: 1.5em;  /* Same size as System Metrics title */
             text-align: center;  /* Center the section title */
         }
 
