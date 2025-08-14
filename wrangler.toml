@@ -1,5 +1,5 @@
 name = "multi-language-agi"
-main = "src/restored-worker.ts"
+main = "dist/agi-worker-hybrid.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
@@ -16,7 +16,7 @@ route = "staging.agi.bleujs.org/*"
 # [[kv_namespaces]]
 # binding = "AGI_STORAGE"
 # id = "your-kv-namespace-id"
-# preview_id = "your-preview-kv-namespace-id"
+# preview_id = "your-kv-namespace-id"
 
 # [triggers]
 # crons = ["*/5 * * * *"] 
