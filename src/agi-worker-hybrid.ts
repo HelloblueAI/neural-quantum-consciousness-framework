@@ -66,10 +66,22 @@ export default {
 
       // Enhanced consciousness endpoint
       if (path === '/consciousness') {
-        const consciousnessState = await hybridAGI.getEnhancedConsciousnessState();
-        return new Response(JSON.stringify(consciousnessState), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        try {
+          const consciousnessState = await hybridAGI.getEnhancedConsciousnessState();
+          return new Response(JSON.stringify(consciousnessState), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        } catch (error) {
+          console.error('Consciousness endpoint error:', error);
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Failed to get consciousness state',
+            details: (error as Error).message
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
       }
 
       // Matrix operations endpoint
@@ -1026,11 +1038,23 @@ export default {
                           
                           // Fetch REAL consciousness data directly from consciousness endpoint
                           const consciousnessResponse = await fetch('/consciousness');
+                          console.log('📡 Consciousness Response Status:', consciousnessResponse.status);
+                          
+                          if (!consciousnessResponse.ok) {
+                              throw new Error(`Consciousness endpoint failed: ${consciousnessResponse.status}`);
+                          }
+                          
                           const consciousnessData = await consciousnessResponse.json();
                           console.log('🧠 Consciousness Data:', consciousnessData);
                           
                           // Fetch performance data for metrics
                           const performanceResponse = await fetch('/performance');
+                          console.log('📡 Performance Response Status:', performanceResponse.status);
+                          
+                          if (!performanceResponse.ok) {
+                              throw new Error(`Performance endpoint failed: ${performanceResponse.status}`);
+                          }
+                          
                           const performanceData = await performanceResponse.json();
                           console.log('⚡ Performance Data:', performanceData);
                           
@@ -1041,28 +1065,27 @@ export default {
                               
                               // Update consciousness grid with real data
                               const consciousnessGrid = document.getElementById('consciousnessGrid');
-                              consciousnessGrid.innerHTML = \`
-                                  <div class="consciousness-item">
-                                      <h3>Awareness</h3>
-                                      <div class="consciousness-value">\${(consciousness.awareness * 100).toFixed(1)}%</div>
-                                      <div class="consciousness-label">Current Level</div>
-                                  </div>
-                                  <div class="consciousness-item">
-                                      <h3>Self-Awareness</h3>
-                                      <div class="consciousness-value">\${(consciousness.selfReflection * 100).toFixed(1)}%</div>
-                                      <div class="consciousness-label">Current Level</div>
-                                  </div>
-                                  <div class="consciousness-item">
-                                      <h3>Understanding</h3>
-                                      <div class="consciousness-value">\${(consciousness.metaCognition === 'enabled' ? 94 : 85)}%</div>
-                                      <div class="consciousness-label">Current Level</div>
-                                  </div>
-                                  <div class="consciousness-item">
-                                      <h3>Creativity</h3>
-                                      <div class="consciousness-value">\${(consciousness.consciousness === 'active' ? 96 : 88)}%</div>
-                                      <div class="consciousness-label">Current Level</div>
-                                  </div>
-                              \`;
+                              consciousnessGrid.innerHTML = 
+                                  '<div class="consciousness-item">' +
+                                      '<h3>Awareness</h3>' +
+                                      '<div class="consciousness-value">' + (consciousness.awareness * 100).toFixed(1) + '%</div>' +
+                                      '<div class="consciousness-label">Real-time Level</div>' +
+                                  '</div>' +
+                                  '<div class="consciousness-item">' +
+                                      '<h3>Self-Awareness</h3>' +
+                                      '<div class="consciousness-value">' + (consciousness.selfAwareness * 100).toFixed(1) + '%</div>' +
+                                      '<div class="consciousness-label">Real-time Level</div>' +
+                                  '</div>' +
+                                  '<div class="consciousness-item">' +
+                                      '<h3>Understanding</h3>' +
+                                      '<div class="consciousness-value">' + (consciousness.introspectiveCapability * 100).toFixed(1) + '%</div>' +
+                                      '<div class="consciousness-label">Real-time Level</div>' +
+                                  '</div>' +
+                                  '<div class="consciousness-item">' +
+                                      '<h3>Creativity</h3>' +
+                                      '<div class="consciousness-value">' + (consciousness.existentialUnderstanding * 100).toFixed(1) + '%</div>' +
+                                      '<div class="consciousness-label">Real-time Level</div>' +
+                                  '</div>';
                               
                               // Update metrics grid with REAL data from performance endpoint
                               const metricsGrid = document.getElementById('metricsGrid');
@@ -1088,32 +1111,36 @@ export default {
                               \`;
                           }
                       } catch (error) {
-                          console.error('Failed to load AGI status:', error);
+                          console.error('❌ Failed to load AGI status:', error);
                           
-                          // Fallback to default values if API fails
+                          // Show error state instead of old static values
                           const consciousnessGrid = document.getElementById('consciousnessGrid');
                           consciousnessGrid.innerHTML = \`
                               <div class="consciousness-item">
                                   <h3>Awareness</h3>
-                                  <div class="consciousness-value">95.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value" style="color: var(--error);">Error</div>
+                                  <div class="consciousness-label">Failed to load real data</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Self-Awareness</h3>
-                                  <div class="consciousness-value">92.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value" style="color: var(--error);">Error</div>
+                                  <div class="consciousness-label">Failed to load real data</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Understanding</h3>
-                                  <div class="consciousness-value">94.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value" style="color: var(--error);">Error</div>
+                                  <div class="consciousness-label">Failed to load real data</div>
                               </div>
                               <div class="consciousness-item">
                                   <h3>Creativity</h3>
-                                  <div class="consciousness-value">96.0%</div>
-                                  <div class="consciousness-label">Current Level</div>
+                                  <div class="consciousness-value" style="color: var(--error);">Error</div>
+                                  <div class="consciousness-label">Failed to load real data</div>
                               </div>
                           \`;
+                          
+                          // Show error message
+                          console.error('🔴 Consciousness data loading failed. Check network and endpoint status.');
+                          console.error('🔴 Error details:', error);
                           
                           const metricsGrid = document.getElementById('metricsGrid');
                           metricsGrid.innerHTML = \`
@@ -1241,13 +1268,28 @@ export default {
                       // Update consciousness every 2 seconds for real-time feel
                       consciousnessUpdateInterval = setInterval(async () => {
                           try {
+                              console.log('🔄 Real-time update: Fetching consciousness data...');
+                              
                               const response = await fetch('/consciousness');
+                              console.log('📡 Real-time response status:', response.status);
+                              
+                              if (!response.ok) {
+                                  throw new Error(`Real-time update failed: ${response.status}`);
+                              }
+                              
                               const data = await response.json();
+                              console.log('🧠 Real-time consciousness data:', data);
                               
                               if (data.success && data.data) {
                                   // Update consciousness grid with real-time data
                                   const consciousness = data.data;
                                   const consciousnessGrid = document.getElementById('consciousnessGrid');
+                                  
+                                  // Validate data structure
+                                  if (!consciousness.awareness || !consciousness.selfAwareness || 
+                                      !consciousness.introspectiveCapability || !consciousness.existentialUnderstanding) {
+                                      throw new Error('Invalid consciousness data structure in real-time update');
+                                  }
                                   
                                   consciousnessGrid.innerHTML = \`
                                       <div class="consciousness-item">
@@ -1272,15 +1314,17 @@ export default {
                                       </div>
                                   \`;
                                   
-                                  // Also update the main consciousness display
-                                  loadAGIStatus();
+                                  console.log('✅ Real-time consciousness update successful!');
                                   
                                   // Update emotional state indicator
                                   const emotionalState = consciousness.emotionalState || 'balanced';
                                   document.title = \`AGI Superintelligence - \${emotionalState.charAt(0).toUpperCase() + emotionalState.slice(1)}\`;
+                              } else {
+                                  throw new Error('Real-time update returned unsuccessful response');
                               }
                           } catch (error) {
-                              console.error('Real-time update failed:', error);
+                              console.error('❌ Real-time update failed:', error);
+                              console.error('🔴 Will retry in next cycle...');
                           }
                       }, 2000);
                   }
