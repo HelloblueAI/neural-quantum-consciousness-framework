@@ -253,6 +253,7 @@ export default {
             margin-bottom: 25px;
             color: var(--accent);
             font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
+            text-align: center;  /* Center the section title */
         }
         
         .consciousness-grid {
@@ -300,6 +301,7 @@ export default {
             margin-bottom: 25px;
             color: var(--accent);
             font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
+            text-align: center;  /* Center the section title */
         }
         
         .form-group {
@@ -420,6 +422,7 @@ export default {
             margin-bottom: 25px;
             color: var(--accent);
             font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
+            text-align: center;  /* Center the section title */
         }
         
         .metrics-grid {
@@ -537,7 +540,8 @@ export default {
         .documentation-panel h2 {
             margin-bottom: 25px;
             color: var(--accent);
-            font-size: 1.5em;  /* Reduced from 1.8em for smaller section title */
+            font-size: 1.3em;  /* Even smaller for System Documentation title */
+            text-align: center;  /* Center the section title */
         }
 
         .documentation-tabs {
