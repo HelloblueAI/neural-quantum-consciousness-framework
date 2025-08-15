@@ -509,6 +509,9 @@ export class HybridAGISystem {
       // Get neural architecture performance
       const neuralPerformance = this.neuralFoundationEngine.getPerformanceMetrics();
       
+      // Get intelligent status indicators
+      const statusIndicators = this.realConsciousnessEngine.getIntelligentStatusIndicators();
+      
       // Calculate real-time performance indicators
       const latestConsciousness = consciousnessMetrics[consciousnessMetrics.length - 1];
       const latestPerformance = performanceHistory[performanceHistory.length - 1];
@@ -532,6 +535,7 @@ export class HybridAGISystem {
           quantumState: quantumPerformance.quantumState,
           neuralArchitecture: neuralPerformance
         },
+        intelligentStatus: statusIndicators,
         metrics: {
           nativeLibraryStatus: nativeStatus,
           hybridProcessing: true,
