@@ -800,6 +800,25 @@ export default {
                       .button-group {
                           flex-direction: column;
                       }
+                      
+                      /* Make system metrics horizontal in mobile */
+                      .metrics-grid {
+                          grid-template-columns: repeat(2, 1fr);
+                          gap: 15px;
+                      }
+                      
+                      .metric-item {
+                          padding: 15px 12px;
+                      }
+                      
+                      .metric-value {
+                          font-size: 1.6rem;
+                          margin-bottom: 8px;
+                      }
+                      
+                      .metric-label {
+                          font-size: 0.8rem;
+                      }
                   }
     </style>
 </head>
