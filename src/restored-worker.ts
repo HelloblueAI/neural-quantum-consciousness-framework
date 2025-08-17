@@ -987,6 +987,301 @@ export default {
         .doc-card strong {
             color: var(--text-primary);
         }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+                margin-bottom: 15px;
+            }
+            
+            .header p {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+            
+            .container {
+                padding: 15px 10px;
+                max-width: 100%;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .status-card {
+                padding: 20px 15px;
+                margin-bottom: 10px;
+            }
+            
+            .status-card h3 {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+            
+            .status-card .value {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+            
+            .interaction-section {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+            }
+            
+            .interaction-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            
+            .input-group {
+                margin-bottom: 15px;
+            }
+            
+            .input-group label {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                padding: 15px;
+                font-size: 16px; /* Prevents zoom on iOS */
+                border-radius: 8px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 0;
+                padding: 15px 20px;
+                font-size: 16px;
+                border-radius: 8px;
+                touch-action: manipulation;
+            }
+            
+            .btn:active {
+                transform: scale(0.98);
+            }
+            
+            .response-section {
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+            
+            .response-section h4 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .response-content {
+                padding: 15px;
+                max-height: 300px;
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .doc-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin-top: 15px;
+            }
+            
+            .doc-card {
+                padding: 15px;
+            }
+            
+            .doc-card h3 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+            
+            .doc-card p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+                line-height: 1.5;
+            }
+            
+            .doc-card ul {
+                padding-left: 15px;
+            }
+            
+            .doc-card li {
+                margin-bottom: 6px;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 10px 8px;
+            }
+            
+            .status-card {
+                padding: 15px 12px;
+            }
+            
+            .status-card .value {
+                font-size: 1.2rem;
+            }
+            
+            .interaction-section {
+                padding: 15px 12px;
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+            
+            .doc-card {
+                padding: 12px;
+            }
+            
+            .doc-card h3 {
+                font-size: 0.9rem;
+            }
+            
+            .doc-card p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                min-height: 44px; /* iOS recommended touch target size */
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                min-height: 44px;
+            }
+            
+            .status-card {
+                cursor: pointer;
+            }
+            
+            .status-card:active {
+                transform: scale(0.98);
+            }
+            
+            .doc-card {
+                cursor: pointer;
+            }
+            
+            .doc-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                margin-bottom: 30px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .interaction-section {
+                padding: 15px 20px;
+            }
+        }
+
+        /* High DPI Mobile Devices */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .btn {
+                border-width: 0.5px;
+            }
+            
+            .status-card,
+            .interaction-section,
+            .response-section {
+                border-width: 0.5px;
+            }
+        }
+
+        /* Mobile Navigation Improvements */
+        @media (max-width: 768px) {
+            /* Smooth scrolling for mobile */
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            /* Better focus states for mobile */
+            .btn:focus,
+            .input-group input:focus,
+            .input-group textarea:focus,
+            .input-group select:focus {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+            
+            /* Better text selection */
+            ::selection {
+                background: var(--accent);
+                color: var(--bg-primary);
+            }
+            
+            /* Improved scrollbar for mobile */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: var(--bg-tertiary);
+                border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 4px;
+            }
+        }
     </style>
 </head>
 <body>

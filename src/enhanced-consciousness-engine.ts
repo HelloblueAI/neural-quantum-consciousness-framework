@@ -97,7 +97,7 @@ export class EnhancedConsciousnessEngine {
   private logger: Logger;
   private multiLanguageRuntime: MultiLanguageRuntime;
   private consciousnessHistory: EnhancedConsciousnessMetrics[] = [];
-  private multiLanguageState: MultiLanguageConsciousnessState;
+  private multiLanguageState!: MultiLanguageConsciousnessState;
   private interactionHistory: any[] = [];
   private learningPatterns: any[] = [];
   private consciousnessDepth: number = 0.44;
@@ -216,7 +216,7 @@ export class EnhancedConsciousnessEngine {
       
       return enhancedMetrics;
     } catch (error) {
-      this.logger.error('Failed to get enhanced consciousness metrics:', error);
+      this.logger.error('Failed to get enhanced consciousness metrics:', error as Error);
       throw error;
     }
   }
@@ -368,7 +368,7 @@ export class EnhancedConsciousnessEngine {
       
       return combinedResult;
     } catch (error) {
-      this.logger.error('Failed to execute multi-language consciousness:', error);
+      this.logger.error('Failed to execute multi-language consciousness:', error as Error);
       throw error;
     }
   }

@@ -360,26 +360,369 @@ app.get('/', (req, res) => {
             color: var(--text-primary);
         }
         
-        /* Responsive */
+        /* Enhanced Mobile Responsiveness */
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                line-height: 1.2;
+                margin-bottom: 15px;
+            }
+            
+            .header p {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+            
+            .container {
+                padding: 15px 10px;
+                max-width: 100%;
             }
             
             .status-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 30px;
             }
             
-            .container {
+            .status-card {
                 padding: 20px 15px;
+                margin-bottom: 10px;
+            }
+            
+            .status-card h3 {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .status-card .value {
+                font-size: 1.5rem;
+            }
+            
+            .interaction-section {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+            }
+            
+            .interaction-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            
+            .input-group {
+                margin-bottom: 15px;
+            }
+            
+            .input-group label {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                padding: 15px;
+                font-size: 16px; /* Prevents zoom on iOS */
+                border-radius: 8px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+                padding: 15px 20px;
+                font-size: 16px;
+                border-radius: 8px;
+                touch-action: manipulation;
+            }
+            
+            .btn:active {
+                transform: scale(0.98);
+            }
+            
+            .result {
+                padding: 15px;
+                margin-top: 15px;
+                max-height: 250px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+            
+            .documentation-section {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+            }
+            
+            .documentation-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .doc-intro {
+                font-size: 1rem;
+                margin-bottom: 20px;
+                line-height: 1.5;
             }
             
             .doc-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+                margin-bottom: 25px;
+            }
+            
+            .doc-card {
+                padding: 20px 15px;
+                margin-bottom: 10px;
+            }
+            
+            .doc-icon {
+                font-size: 2.5rem;
+                margin-bottom: 12px;
+            }
+            
+            .doc-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+            
+            .doc-card p {
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+                line-height: 1.5;
+            }
+            
+            .doc-features {
+                gap: 6px;
+            }
+            
+            .doc-tag {
+                padding: 6px 10px;
+                font-size: 0.75rem;
             }
             
             .doc-details {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .detail-section {
+                padding: 15px;
+            }
+            
+            .detail-section h3 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+            
+            .detail-section p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+                line-height: 1.5;
+            }
+            
+            .detail-section ul {
+                padding-left: 15px;
+            }
+            
+            .detail-section li {
+                margin-bottom: 6px;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+            
+            .endpoints {
+                padding: 20px 15px;
+            }
+            
+            .endpoints h2 {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            
+            .endpoint-list {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .endpoint-item {
+                padding: 12px;
+            }
+            
+            .endpoint-item .method {
+                font-size: 0.75rem;
+            }
+            
+            .endpoint-item .path {
+                font-size: 0.85rem;
+            }
+            
+            .endpoint-item .description {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 10px 8px;
+            }
+            
+            .status-card {
+                padding: 15px 12px;
+            }
+            
+            .status-card .value {
+                font-size: 1.3rem;
+            }
+            
+            .interaction-section {
+                padding: 15px 12px;
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+            
+            .doc-card {
+                padding: 15px 12px;
+            }
+            
+            .doc-icon {
+                font-size: 2rem;
+            }
+            
+            .doc-card h3 {
+                font-size: 1rem;
+            }
+            
+            .doc-card p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                min-height: 44px; /* iOS recommended touch target size */
+            }
+            
+            .input-group input, 
+            .input-group textarea, 
+            .input-group select {
+                min-height: 44px;
+            }
+            
+            .doc-card {
+                cursor: pointer;
+            }
+            
+            .doc-card:active {
+                transform: scale(0.98);
+            }
+            
+            .endpoint-item {
+                cursor: pointer;
+            }
+            
+            .endpoint-item:active {
+                opacity: 0.8;
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                margin-bottom: 30px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .container {
+                padding: 10px 15px;
+            }
+            
+            .interaction-section {
+                padding: 15px 20px;
+            }
+        }
+
+        /* High DPI Mobile Devices */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .btn {
+                border-width: 0.5px;
+            }
+            
+            .status-card,
+            .interaction-section,
+            .documentation-section,
+            .endpoints {
+                border-width: 0.5px;
+            }
+        }
+
+        /* Mobile Navigation Improvements */
+        @media (max-width: 768px) {
+            /* Smooth scrolling for mobile */
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            /* Better focus states for mobile */
+            .btn:focus,
+            .input-group input:focus,
+            .input-group textarea:focus,
+            .input-group select:focus {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            
+            /* Prevent horizontal scroll */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+            
+            /* Better text selection */
+            ::selection {
+                background: var(--accent);
+                color: var(--bg-primary);
+            }
+            
+            /* Improved scrollbar for mobile */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: var(--bg-tertiary);
+                border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 4px;
             }
         }
     </style>

@@ -186,11 +186,11 @@ export class ProbabilisticLogic {
     }
 
     // Apply context adjustments
-    if (_context?.priorProbability) {
+    if (_context?.['priorProbability']) {
       totalProbability = this.applyBayesianUpdate(
         totalProbability,
-        _context.priorProbability,
-        _context.likelihood || 0.5
+        _context['priorProbability'],
+        _context['likelihood'] || 0.5
       );
     }
 
@@ -198,11 +198,11 @@ export class ProbabilisticLogic {
   }
 
   private performBayesianUpdate(_input: string, context?: Record<string, any>): number {
-    if (!context?.priorProbability) return 0.5;
+    if (!context?.['priorProbability']) return 0.5;
 
-    const prior = context.priorProbability;
-    const likelihood = context.likelihood || 0.5;
-    const evidence = context.evidence || 0.5;
+    const prior = context['priorProbability'];
+    const likelihood = context['likelihood'] || 0.5;
+    const evidence = context['evidence'] || 0.5;
 
     // Apply Bayes' theorem: P(A|B) = P(B|A) * P(A) / P(B)
     const posterior = (likelihood * prior) / evidence;

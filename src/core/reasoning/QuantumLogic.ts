@@ -334,8 +334,8 @@ export class QuantumLogic {
     }
 
     // Add context states if provided
-    if (context?.quantumStates) {
-      for (const contextState of context.quantumStates) {
+    if (context?.['quantumStates']) {
+      for (const contextState of context['quantumStates']) {
         states.push({
           id: `context_${stateId++}`,
           name: contextState.name || 'Context State',

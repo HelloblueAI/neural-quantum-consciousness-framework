@@ -262,8 +262,8 @@ export class InferenceEngine {
     }
 
     // Add context premises if provided
-    if (context?.premises) {
-      for (const contextPremise of context.premises) {
+    if (context?.['premises']) {
+      for (const contextPremise of context['premises']) {
         premises.push({
           id: `context_${premiseId++}`,
           statement: contextPremise.statement || 'Context premise',

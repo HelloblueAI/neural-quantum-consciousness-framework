@@ -3,7 +3,7 @@ import cors from 'cors';
 import { SentientCore } from './core/SentientCore';
 
 const app: express.Application = express();
-const port = process.env.PORT || 8080;
+const port = process.env['PORT'] || 8080;
 
 // Initialize the true AGI
 const sentientCore = new SentientCore();

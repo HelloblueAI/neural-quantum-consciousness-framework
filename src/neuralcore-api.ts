@@ -5,7 +5,7 @@ import cors from 'cors';
 import { NeuralCore } from './core/NeuralCore.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001; // Different port to avoid conflicts
+const PORT = process.env['PORT'] || 3001; // Different port to avoid conflicts
 
 // Middleware
 app.use(cors());

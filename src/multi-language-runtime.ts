@@ -52,12 +52,12 @@ export interface NeuromorphicExecutor {
 
 export class MultiLanguageRuntime {
   private logger: Logger;
-  private pythonExecutor: PythonExecutor;
-  private juliaExecutor: JuliaExecutor;
-  private haskellExecutor: HaskellExecutor;
-  private quantumExecutor: QuantumExecutor;
-  private gpuExecutor: GPUExecutor;
-  private neuromorphicExecutor: NeuromorphicExecutor;
+  private pythonExecutor!: PythonExecutor;
+  private juliaExecutor!: JuliaExecutor;
+  private haskellExecutor!: HaskellExecutor;
+  private quantumExecutor!: QuantumExecutor;
+  private gpuExecutor!: GPUExecutor;
+  private neuromorphicExecutor!: NeuromorphicExecutor;
 
   constructor() {
     this.logger = new Logger('MultiLanguageRuntime');

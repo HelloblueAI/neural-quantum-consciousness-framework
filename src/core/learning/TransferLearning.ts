@@ -393,8 +393,8 @@ export class TransferLearning {
 
   private extractDomain(experience: Experience): string {
     // Extract domain from experience metadata or infer from data
-    if (experience.metadata?.domain) {
-      return (experience.metadata?.domain as string) || 'unknown';
+    if (experience.metadata?.['domain']) {
+      return (experience.metadata['domain'] as string) || 'unknown';
     }
 
     // Infer domain from data characteristics

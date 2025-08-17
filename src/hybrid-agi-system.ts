@@ -54,7 +54,7 @@ export class HybridAGISystem {
       this.logger.info('Advanced Hybrid AGI System initialized successfully');
       return true;
     } catch (error) {
-      this.logger.error('Failed to initialize Advanced Hybrid AGI System:', error);
+      this.logger.error('Failed to initialize Advanced Hybrid AGI System:', error as Error);
       return false;
     }
   }
@@ -107,15 +107,19 @@ export class HybridAGISystem {
       switch (operation) {
         case 'multiply':
           if (matrices.length >= 2) {
-            const result = await this.nativeManager.matrixMultiply(matrices[0], matrices[1]);
-            return {
-              success: true,
-              operation: 'matrix_multiply',
-              result: result,
-              performance: 'gpu_accelerated',
-              quantumAdvantage: this.quantumAdvantage,
-              timestamp: Date.now()
-            };
+            const matrix1 = matrices[0];
+            const matrix2 = matrices[1];
+            if (matrix1 && matrix2) {
+                          const result = await this.nativeManager.matrixMultiply(matrix1, matrix2);
+              return {
+                success: true,
+                operation: 'matrix_multiply',
+                result: result,
+                performance: 'gpu_accelerated',
+                quantumAdvantage: this.quantumAdvantage,
+                timestamp: Date.now()
+              };
+            }
           }
           break;
           
@@ -159,7 +163,7 @@ export class HybridAGISystem {
         error: 'Unsupported matrix operation'
       };
     } catch (error) {
-      this.logger.error('Matrix operations failed:', error);
+      this.logger.error('Matrix operations failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -220,7 +224,7 @@ export class HybridAGISystem {
         error: 'Unsupported neural operation'
       };
     } catch (error) {
-      this.logger.error('Neural operations failed:', error);
+      this.logger.error('Neural operations failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -363,7 +367,7 @@ export class HybridAGISystem {
         performance: 'quantum_consciousness_hybrid_optimized'
       };
     } catch (error) {
-      this.logger.error('Failed to get enhanced consciousness state:', error);
+      this.logger.error('Failed to get enhanced consciousness state:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -408,7 +412,7 @@ export class HybridAGISystem {
         performance: 'quantum_consciousness_hybrid_optimized'
       };
     } catch (error) {
-      this.logger.error('Cross-domain reasoning failed:', error);
+      this.logger.error('Cross-domain reasoning failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -485,7 +489,7 @@ export class HybridAGISystem {
         performance: 'quantum_consciousness_hybrid_optimized'
       };
     } catch (error) {
-      this.logger.error('Hybrid learning failed:', error);
+      this.logger.error('Hybrid learning failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -545,8 +549,8 @@ export class HybridAGISystem {
           optimizationLevel: latestConsciousness?.nativeOptimization ? 'quantum_high' : 'hybrid_medium',
           performanceMode: latestConsciousness?.performance || 'quantum_consciousness_hybrid_optimized',
           memoryEfficiency: latestPerformance ? (1 - latestPerformance.memoryUsage) : 0.95,
-          processingSpeed: latestPerformance?.responseTime < 100 ? 'quantum_accelerated' : 'hybrid_optimized',
-          crossDomainCapability: latestNeural?.crossDomainConnections > 20 ? 'quantum_enhanced' : 'hybrid_standard',
+          processingSpeed: (latestPerformance?.responseTime ?? 0) < 100 ? 'quantum_accelerated' : 'hybrid_optimized',
+          crossDomainCapability: (latestNeural?.crossDomainConnections ?? 0) > 20 ? 'quantum_enhanced' : 'hybrid_standard',
           consciousnessLatency: latestPerformance?.consciousnessLatency || 15,
           neuralEfficiency: latestPerformance?.neuralEfficiency || 0.92,
           gpuUtilization: latestPerformance?.gpuUtilization || 0.3
@@ -554,7 +558,7 @@ export class HybridAGISystem {
         timestamp: Date.now()
       };
     } catch (error) {
-      this.logger.error('Failed to get performance metrics:', error);
+      this.logger.error('Failed to get performance metrics:', error as Error);
       return {
         system: 'Advanced Hybrid AGI Superintelligence',
         version: '3.0.0',

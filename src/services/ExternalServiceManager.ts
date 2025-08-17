@@ -101,7 +101,7 @@ export class ExternalServiceManager {
         endpoint: 'https://api.openai.com/v1',
         authentication: {
           type: 'api_key',
-          credentials: new Map([['api_key', process.env.OPENAI_API_KEY || '']])
+          credentials: new Map([['api_key', process.env['OPENAI_API_KEY'] || '']])
         },
         capabilities: ['text_generation', 'embeddings', 'fine_tuning'],
         status: 'active',
@@ -123,7 +123,7 @@ export class ExternalServiceManager {
         endpoint: 'https://api.anthropic.com',
         authentication: {
           type: 'api_key',
-          credentials: new Map([['api_key', process.env.ANTHROPIC_API_KEY || '']])
+          credentials: new Map([['api_key', process.env['ANTHROPIC_API_KEY'] || '']])
         },
         capabilities: ['text_generation', 'conversation', 'analysis'],
         status: 'active',
@@ -142,12 +142,12 @@ export class ExternalServiceManager {
         id: 'postgres_database',
         name: 'PostgreSQL Database',
         type: 'database',
-        endpoint: process.env.DATABASE_URL || 'postgresql://localhost:5432/agi',
+        endpoint: process.env['DATABASE_URL'] || 'postgresql://localhost:5432/agi',
         authentication: {
           type: 'basic',
           credentials: new Map([
-            ['username', process.env.DB_USERNAME || ''],
-            ['password', process.env.DB_PASSWORD || '']
+            ['username', process.env['DB_USERNAME'] || ''],
+            ['password', process.env['DB_PASSWORD'] || '']
           ])
         },
         capabilities: ['data_storage', 'query_execution', 'transaction_management'],
@@ -167,7 +167,7 @@ export class ExternalServiceManager {
         id: 'redis_cache',
         name: 'Redis Cache',
         type: 'database',
-        endpoint: process.env.REDIS_URL || 'redis://localhost:6379',
+        endpoint: process.env['REDIS_URL'] || 'redis://localhost:6379',
         authentication: {
           type: 'none',
           credentials: new Map()

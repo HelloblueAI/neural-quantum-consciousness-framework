@@ -618,6 +618,216 @@ export default {
             color: #00ff00; 
             font-size: 0.9rem; 
         }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header h1 { 
+                font-size: 2.5rem; 
+                line-height: 1.2;
+                margin-bottom: 15px;
+            }
+            .header p { 
+                font-size: 1.1rem; 
+                line-height: 1.4;
+            }
+            .container { 
+                padding: 15px 10px; 
+                max-width: 100%;
+            }
+            .nav-tabs { 
+                flex-direction: column; 
+                gap: 5px;
+                padding: 8px;
+            }
+            .nav-tab { 
+                padding: 12px 20px; 
+                margin: 0;
+                text-align: center;
+                font-size: 0.9rem;
+            }
+            .metrics-grid { 
+                grid-template-columns: 1fr; 
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            .metric-card { 
+                padding: 20px 15px; 
+                margin-bottom: 10px;
+            }
+            .metric-card h3 { 
+                font-size: 1.2rem; 
+                margin-bottom: 12px;
+            }
+            .metric-value { 
+                font-size: 1.6rem; 
+                margin-bottom: 8px;
+            }
+            .metric-label { 
+                font-size: 0.8rem; 
+            }
+            .capabilities { 
+                grid-template-columns: 1fr; 
+                gap: 10px;
+            }
+            .capability { 
+                padding: 12px; 
+                font-size: 0.9rem;
+            }
+            .demo-section { 
+                padding: 20px 15px; 
+                margin-top: 20px;
+            }
+            .demo-section h3 { 
+                font-size: 1.2rem; 
+                margin-bottom: 15px;
+            }
+            .input-group input, 
+            .input-group textarea { 
+                padding: 15px; 
+                font-size: 16px; /* Prevents zoom on iOS */
+                border-radius: 8px;
+            }
+            .btn { 
+                width: 100%; 
+                margin-bottom: 10px;
+                padding: 15px 20px; 
+                font-size: 16px;
+                border-radius: 8px;
+                touch-action: manipulation;
+            }
+            .btn:active { 
+                transform: scale(0.98); 
+            }
+            .response { 
+                padding: 12px; 
+                margin-top: 15px;
+                max-height: 250px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+            .documentation-section { 
+                padding: 20px 15px; 
+                margin-top: 20px;
+            }
+            .doc-component { 
+                padding: 15px; 
+                margin-bottom: 20px;
+            }
+            .doc-component h4 { 
+                font-size: 1.1rem; 
+                margin-bottom: 12px;
+            }
+            .doc-feature { 
+                padding: 6px; 
+                font-size: 0.9rem;
+            }
+            .api-endpoint { 
+                padding: 12px; 
+                font-size: 0.8rem;
+            }
+            .performance-metric { 
+                padding: 8px; 
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .header h1 { 
+                font-size: 2rem; 
+            }
+            .header p { 
+                font-size: 1rem; 
+            }
+            .container { 
+                padding: 10px 8px; 
+            }
+            .metric-card { 
+                padding: 15px 12px; 
+            }
+            .metric-value { 
+                font-size: 1.4rem; 
+            }
+            .demo-section { 
+                padding: 15px 12px; 
+            }
+            .input-group input, 
+            .input-group textarea { 
+                padding: 12px; 
+                font-size: 16px;
+            }
+            .btn { 
+                padding: 12px 16px; 
+                font-size: 15px;
+            }
+            .nav-tab { 
+                padding: 10px 16px; 
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn { 
+                min-height: 44px; /* iOS recommended touch target size */
+            }
+            .input-group input, 
+            .input-group textarea { 
+                min-height: 44px;
+            }
+            .nav-tab { 
+                min-height: 44px;
+            }
+            .metric-card { 
+                cursor: pointer;
+            }
+            .metric-card:active { 
+                transform: scale(0.98);
+            }
+        }
+
+        /* Landscape Mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header { 
+                margin-bottom: 20px; 
+                padding: 20px 0;
+            }
+            .header h1 { 
+                font-size: 2rem; 
+            }
+            .metrics-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px;
+            }
+            .container { 
+                padding: 10px 15px; 
+            }
+            .nav-tabs { 
+                flex-direction: row; 
+                gap: 10px;
+            }
+        }
+
+        /* Mobile Navigation Improvements */
+        @media (max-width: 768px) {
+            html { 
+                scroll-behavior: smooth; 
+            }
+            .btn:focus,
+            .input-group input:focus,
+            .input-group textarea:focus { 
+                outline: 2px solid #ffd700; 
+                outline-offset: 2px; 
+            }
+            body { 
+                overflow-x: hidden; 
+                width: 100%; 
+            }
+            ::selection { 
+                background: #ffd700; 
+                color: #333; 
+            }
+        }
     </style>
 </head>
 <body>

@@ -349,8 +349,8 @@ export class TemporalLogic {
     }
 
     // Add context events if provided
-    if (context?.events) {
-      for (const contextEvent of context.events) {
+    if (context?.['events']) {
+      for (const contextEvent of context['events']) {
         events.push({
           id: `context_${eventId++}`,
           name: contextEvent.name || 'Context Event',

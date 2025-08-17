@@ -157,6 +157,112 @@ export default {
         button:disabled { opacity: 0.7; cursor: not-allowed; }
         .result { background: #333; padding: 20px; margin-top: 20px; border-radius: 5px; white-space: pre-wrap; }
         .loading { text-align: center; color: #00d4ff; }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body { 
+                margin: 20px; 
+                font-size: 14px;
+            }
+            .container { 
+                max-width: 100%; 
+                padding: 0 10px;
+            }
+            .header { 
+                margin-bottom: 30px; 
+            }
+            .header h1 { 
+                font-size: 1.8rem; 
+                line-height: 1.2;
+            }
+            .header p { 
+                font-size: 1rem; 
+                line-height: 1.4;
+            }
+            .form-group { 
+                margin-bottom: 15px; 
+            }
+            label { 
+                font-size: 0.9rem; 
+                margin-bottom: 6px;
+            }
+            input, select, textarea { 
+                padding: 15px; 
+                margin-bottom: 8px; 
+                font-size: 16px; /* Prevents zoom on iOS */
+                border-radius: 8px;
+            }
+            button { 
+                width: 100%; 
+                padding: 15px 20px; 
+                font-size: 16px;
+                border-radius: 8px;
+                touch-action: manipulation;
+            }
+            button:active { 
+                transform: scale(0.98); 
+            }
+            .result { 
+                padding: 15px; 
+                margin-top: 15px;
+                max-height: 250px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            body { 
+                margin: 15px; 
+                font-size: 13px;
+            }
+            .container { 
+                padding: 0 5px; 
+            }
+            .header h1 { 
+                font-size: 1.5rem; 
+            }
+            .header p { 
+                font-size: 0.9rem; 
+            }
+            input, select, textarea { 
+                padding: 12px; 
+                font-size: 16px;
+            }
+            button { 
+                padding: 12px 16px; 
+                font-size: 15px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            button { 
+                min-height: 44px; /* iOS recommended touch target size */
+            }
+            input, select, textarea { 
+                min-height: 44px;
+            }
+        }
+
+        /* Mobile Navigation Improvements */
+        @media (max-width: 768px) {
+            html { 
+                scroll-behavior: smooth; 
+            }
+            button:focus,
+            input:focus,
+            select:focus,
+            textarea:focus { 
+                outline: 2px solid #00d4ff; 
+                outline-offset: 2px; 
+            }
+            body { 
+                overflow-x: hidden; 
+                width: 100%; 
+            }
+        }
     </style>
 </head>
 <body>
