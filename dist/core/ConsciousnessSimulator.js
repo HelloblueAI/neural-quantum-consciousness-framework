@@ -371,14 +371,14 @@ export class ConsciousnessSimulator {
             this.awareness.focus = 'general';
         }
         // Update clarity based on context
-        if (context?.clarity) {
-            this.awareness.clarity = context.clarity;
+        if (context?.['clarity']) {
+            this.awareness.clarity = context['clarity'];
         }
     }
     async allocateAttention(input, context) {
         // Determine attention allocation based on input importance
         const importance = this.calculateInputImportance(input, context);
-        const urgency = context?.urgency || 0.5;
+        const urgency = context?.['urgency'] || 0.5;
         // Allocate attention resources
         this.attention.allocation.set('input_processing', importance * 0.4);
         this.attention.allocation.set('context_analysis', importance * 0.3);
@@ -529,9 +529,9 @@ export class ConsciousnessSimulator {
     }
     calculateInputImportance(input, context) {
         let importance = 0.5;
-        if (context?.priority === 'high')
+        if (context?.['priority'] === 'high')
             importance += 0.3;
-        if (context?.urgency === 'high')
+        if (context?.['urgency'] === 'high')
             importance += 0.2;
         if (this.analyzeInputComplexity(input) > 0.7)
             importance += 0.2;
@@ -553,23 +553,23 @@ export class ConsciousnessSimulator {
     }
     calculateEmotionalValence(_input, context) {
         let valence = 0.5; // Neutral baseline
-        if (context?.positive)
+        if (context?.['positive'])
             valence += 0.3;
-        if (context?.negative)
+        if (context?.['negative'])
             valence -= 0.3;
-        if (context?.success)
+        if (context?.['success'])
             valence += 0.2;
-        if (context?.error)
+        if (context?.['error'])
             valence -= 0.2;
         return Math.max(-1.0, Math.min(1.0, valence));
     }
     calculateEmotionalArousal(_input, context) {
         let arousal = 0.5; // Moderate baseline
-        if (context?.urgent)
+        if (context?.['urgent'])
             arousal += 0.3;
-        if (context?.exciting)
+        if (context?.['exciting'])
             arousal += 0.2;
-        if (context?.calm)
+        if (context?.['calm'])
             arousal -= 0.2;
         return Math.max(0.0, Math.min(1.0, arousal));
     }

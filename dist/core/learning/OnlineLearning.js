@@ -273,8 +273,8 @@ export class OnlineLearning {
     }
     determineOnlineTaskType(experience) {
         // Determine online learning task type from experience
-        if (experience.metadata?.taskType) {
-            const taskType = experience.metadata?.taskType;
+        if (experience.metadata?.['taskType']) {
+            const taskType = experience.metadata['taskType'];
             if (taskType === 'streaming_classification' || taskType === 'online_regression' || taskType === 'adaptive_clustering' || taskType === 'incremental_learning') {
                 return taskType;
             }

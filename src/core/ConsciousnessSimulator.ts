@@ -429,15 +429,15 @@ export class ConsciousnessSimulator {
     }
     
     // Update clarity based on context
-    if (context?.clarity) {
-      (this.awareness as any).clarity = context.clarity;
+    if (context?.['clarity']) {
+      (this.awareness as any).clarity = context['clarity'];
     }
   }
 
   private async allocateAttention(input: any, context?: Record<string, any>): Promise<void> {
     // Determine attention allocation based on input importance
     const importance = this.calculateInputImportance(input, context);
-    const urgency = context?.urgency || 0.5;
+    const urgency = context?.['urgency'] || 0.5;
     
     // Allocate attention resources
     this.attention.allocation.set('input_processing', importance * 0.4);
@@ -605,8 +605,8 @@ export class ConsciousnessSimulator {
   private calculateInputImportance(input: any, context?: Record<string, any>): number {
     let importance = 0.5;
     
-    if (context?.priority === 'high') importance += 0.3;
-    if (context?.urgency === 'high') importance += 0.2;
+    if (context?.['priority'] === 'high') importance += 0.3;
+    if (context?.['urgency'] === 'high') importance += 0.2;
     if (this.analyzeInputComplexity(input) > 0.7) importance += 0.2;
     if (this.analyzeInputNovelty(input) > 0.8) importance += 0.1;
     
@@ -628,10 +628,10 @@ export class ConsciousnessSimulator {
   private calculateEmotionalValence(_input: any, context?: Record<string, any>): number {
     let valence = 0.5; // Neutral baseline
     
-    if (context?.positive) valence += 0.3;
-    if (context?.negative) valence -= 0.3;
-    if (context?.success) valence += 0.2;
-    if (context?.error) valence -= 0.2;
+    if (context?.['positive']) valence += 0.3;
+    if (context?.['negative']) valence -= 0.3;
+    if (context?.['success']) valence += 0.2;
+    if (context?.['error']) valence -= 0.2;
     
     return Math.max(-1.0, Math.min(1.0, valence));
   }
@@ -639,9 +639,9 @@ export class ConsciousnessSimulator {
   private calculateEmotionalArousal(_input: any, context?: Record<string, any>): number {
     let arousal = 0.5; // Moderate baseline
     
-    if (context?.urgent) arousal += 0.3;
-    if (context?.exciting) arousal += 0.2;
-    if (context?.calm) arousal -= 0.2;
+    if (context?.['urgent']) arousal += 0.3;
+    if (context?.['exciting']) arousal += 0.2;
+    if (context?.['calm']) arousal -= 0.2;
     
     return Math.max(0.0, Math.min(1.0, arousal));
   }

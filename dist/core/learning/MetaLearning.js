@@ -285,8 +285,8 @@ export class MetaLearning {
     }
     determineTaskType(experience) {
         // Determine task type from experience
-        if (experience.metadata?.taskType) {
-            return experience.metadata?.taskType || 'classification';
+        if (experience.metadata?.['taskType']) {
+            return experience.metadata['taskType'] || 'classification';
         }
         // Infer task type from data
         if (typeof experience.data === 'string') {
@@ -324,8 +324,8 @@ export class MetaLearning {
         const hyperparameters = new Map();
         // Extract hyperparameters from experience metadata
         for (const experience of experiences) {
-            if (experience.metadata?.hyperparameters) {
-                for (const [key, value] of Object.entries(experience.metadata.hyperparameters)) {
+            if (experience.metadata?.['hyperparameters']) {
+                for (const [key, value] of Object.entries(experience.metadata['hyperparameters'])) {
                     hyperparameters.set(key, value);
                 }
             }

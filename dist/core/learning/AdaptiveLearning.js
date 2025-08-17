@@ -300,8 +300,8 @@ export class AdaptiveLearning {
     }
     determineAdaptiveTaskType(experience) {
         // Determine adaptive learning task type from experience
-        if (experience.metadata?.taskType) {
-            return experience.metadata?.taskType || 'adaptive_classification';
+        if (experience.metadata?.['taskType']) {
+            return experience.metadata['taskType'] || 'adaptive_classification';
         }
         // Infer task type from data characteristics
         if (typeof experience.data === 'string') {

@@ -110,7 +110,7 @@ export class UnifiedLearningEngine {
         performance: this.getQuantumLearningPerformance()
       };
     } catch (error) {
-      this.logger.error('Quantum-inspired learning failed:', error);
+      this.logger.error('Quantum-inspired learning failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -222,7 +222,7 @@ export class UnifiedLearningEngine {
    * Generate random configuration for annealing
    */
   private generateRandomConfiguration(input: any): any {
-    const config = {};
+    const config: Record<string, number> = {};
     if (typeof input === 'object' && input !== null) {
       Object.keys(input).forEach(key => {
         config[key] = Math.random() * 2 - 1; // -1 to 1
@@ -345,14 +345,17 @@ export class UnifiedLearningEngine {
     let cumulativeWeight = 0;
     
     for (let i = 0; i < superposition.states.length; i++) {
-      cumulativeWeight += superposition.weights[i];
-      if (random <= cumulativeWeight) {
-        return {
-          ...superposition.states[i],
-          collapsed: true,
-          collapseTime: Date.now(),
-          coherence: superposition.coherence
-        };
+      const weight = superposition.weights[i];
+      if (weight !== undefined) {
+        cumulativeWeight += weight;
+        if (random <= cumulativeWeight) {
+          return {
+            ...superposition.states[i],
+            collapsed: true,
+            collapseTime: Date.now(),
+            coherence: superposition.coherence
+          };
+        }
       }
     }
     
@@ -398,15 +401,19 @@ export class UnifiedLearningEngine {
       
       for (let i = 0; i < keys.length; i++) {
         for (let j = i + 1; j < keys.length; j++) {
-          const correlation = this.calculateCorrelation(input[keys[i]], input[keys[j]]);
+          const key1 = keys[i];
+          const key2 = keys[j];
+          if (key1 && key2) {
+            const correlation = this.calculateCorrelation(input[key1], input[key2]);
           
-          if (correlation > 0.3) {
-            patterns.push({
-              entity1: keys[i],
-              entity2: keys[j],
-              correlation,
-              type: 'input_correlation'
-            });
+            if (correlation > 0.3) {
+              patterns.push({
+                entity1: key1,
+                entity2: key2,
+                correlation,
+                type: 'input_correlation'
+              });
+            }
           }
         }
       }
@@ -555,7 +562,7 @@ export class UnifiedLearningEngine {
       'quantum_meta_optimization': 0.3
     };
     
-    return baseEfficiency + (strategyBonus[strategy] || 0);
+    return baseEfficiency + ((strategyBonus as Record<string, number>)[strategy] || 0);
   }
 
   /**

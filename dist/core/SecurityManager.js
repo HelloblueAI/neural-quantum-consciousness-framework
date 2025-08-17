@@ -65,10 +65,9 @@ export class SecurityManager extends EventEmitter {
      */
     blockIdentifier(identifier, reason = 'Rate limit exceeded') {
         const blockData = {
-            identifier,
             reason,
             blockedAt: Date.now(),
-            blockedUntil: Date.now() + this.rateLimitConfig.blockDuration
+            expiresAt: Date.now() + this.rateLimitConfig.blockDuration
         };
         this.blockedIdentifiers.set(identifier, blockData);
         this.logger.warn('Identifier blocked', blockData);
@@ -80,7 +79,7 @@ export class SecurityManager extends EventEmitter {
         const blockData = this.blockedIdentifiers.get(identifier);
         if (!blockData)
             return false;
-        if (Date.now() > blockData.blockedUntil) {
+        if (Date.now() > blockData.expiresAt) {
             // Unblock expired entries
             this.blockedIdentifiers.delete(identifier);
             return false;

@@ -355,8 +355,8 @@ export class ReasoningEngine {
             if (input.includes('?') || input.includes('uncertain'))
                 uncertainty += 0.3;
         }
-        if (context?.uncertainty) {
-            uncertainty = Math.max(0, Math.min(1, uncertainty + context.uncertainty));
+        if (context?.['uncertainty']) {
+            uncertainty = Math.max(0, Math.min(1, uncertainty + context['uncertainty']));
         }
         return uncertainty;
     }
@@ -405,7 +405,7 @@ export class ReasoningEngine {
             return input.includes('choose') || input.includes('decide') || input.includes('select') ||
                 input.includes('option') || input.includes('alternative') || input.includes('prefer');
         }
-        if (context?.decisionRequired)
+        if (context?.['decisionRequired'])
             return true;
         return false;
     }

@@ -79,7 +79,8 @@ export class KnowledgeBase extends EventEmitter {
                     end: Date.now() + 365 * 24 * 60 * 60 * 1000,
                     conditions: {}
                 },
-                facts: knowledge.facts // Preserve facts array for tests
+                // Preserve facts array for tests using type assertion
+                ...knowledge.facts && { facts: knowledge.facts }
             };
         }
         else {
@@ -113,7 +114,8 @@ export class KnowledgeBase extends EventEmitter {
                 end: Date.now() + 365 * 24 * 60 * 60 * 1000,
                 conditions: {}
             },
-            facts: facts // Add facts array
+            // Add facts array using type assertion
+            ...(facts && { facts })
         };
         await this.store(knowledge);
     }
@@ -157,7 +159,7 @@ export class KnowledgeBase extends EventEmitter {
     getKnowledgeByType(type) {
         const results = [];
         for (const [_, knowledge] of this.knowledge) {
-            if (knowledge.content?.semantics?.context?.type === type) {
+            if (knowledge.type === type) {
                 results.push(knowledge);
             }
         }
@@ -253,7 +255,7 @@ export class KnowledgeBase extends EventEmitter {
     getMetrics() {
         return {
             totalKnowledge: this.knowledge.size,
-            knowledgeByType: this.getKnowledgeByType(),
+            knowledgeByType: this.getKnowledgeByType('fact'), // Default to fact type for metrics
             indexSize: this.indexes.size,
             averageConfidence: this.getAverageConfidence()
         };

@@ -363,3 +363,4 @@ export class Logger extends EventEmitter {
         return messageCount;
     }
 }
+//# sourceMappingURL=Logger.js.map

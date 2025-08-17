@@ -191,29 +191,29 @@ export class ConfigurationManager {
       services: {
         openai: {
           enabled: false,
-          apiKey: process.env.OPENAI_API_KEY || '',
+          apiKey: process.env['OPENAI_API_KEY'] || '',
           model: 'gpt-4',
           maxTokens: 4096,
           temperature: 0.7
         },
         anthropic: {
           enabled: false,
-          apiKey: process.env.ANTHROPIC_API_KEY || '',
+          apiKey: process.env['ANTHROPIC_API_KEY'] || '',
           model: 'claude-3-sonnet',
           maxTokens: 4096
         },
         database: {
           enabled: false,
           type: 'postgres',
-          url: process.env.DATABASE_URL || 'postgresql://localhost:5432/agi',
-          username: process.env.DB_USERNAME || '',
-          password: process.env.DB_PASSWORD || '',
+          url: process.env['DATABASE_URL'] || 'postgresql://localhost:5432/agi',
+          username: process.env['DB_USERNAME'] || '',
+          password: process.env['DB_PASSWORD'] || '',
           poolSize: 10
         },
         redis: {
           enabled: false,
-          url: process.env.REDIS_URL || 'redis://localhost:6379',
-          password: process.env.REDIS_PASSWORD || '',
+          url: process.env['REDIS_URL'] || 'redis://localhost:6379',
+          password: process.env['REDIS_PASSWORD'] || '',
           db: 0
         }
       },
@@ -352,91 +352,91 @@ export class ConfigurationManager {
     const env = process.env;
     
     // System settings
-    if (env.AGI_SYSTEM_NAME) this.config.system.name = env.AGI_SYSTEM_NAME;
-    if (env.AGI_SYSTEM_VERSION) this.config.system.version = env.AGI_SYSTEM_VERSION;
-    if (env.AGI_SYSTEM_ENVIRONMENT) this.config.system.environment = env.AGI_SYSTEM_ENVIRONMENT as any;
-    if (env.AGI_SYSTEM_DEBUG) this.config.system.debug = env.AGI_SYSTEM_DEBUG === 'true';
-    if (env.AGI_SYSTEM_LOG_LEVEL) this.config.system.logLevel = env.AGI_SYSTEM_LOG_LEVEL as any;
-    if (env.AGI_SYSTEM_MAX_CONCURRENCY) this.config.system.maxConcurrency = parseInt(env.AGI_SYSTEM_MAX_CONCURRENCY);
-    if (env.AGI_SYSTEM_TIMEOUT) this.config.system.timeout = parseInt(env.AGI_SYSTEM_TIMEOUT);
+    if (env['AGI_SYSTEM_NAME']) this.config.system.name = env['AGI_SYSTEM_NAME'];
+    if (env['AGI_SYSTEM_VERSION']) this.config.system.version = env['AGI_SYSTEM_VERSION'];
+    if (env['AGI_SYSTEM_ENVIRONMENT']) this.config.system.environment = env['AGI_SYSTEM_ENVIRONMENT'] as any;
+    if (env['AGI_SYSTEM_DEBUG']) this.config.system.debug = env['AGI_SYSTEM_DEBUG'] === 'true';
+    if (env['AGI_SYSTEM_LOG_LEVEL']) this.config.system.logLevel = env['AGI_SYSTEM_LOG_LEVEL'] as any;
+    if (env['AGI_SYSTEM_MAX_CONCURRENCY']) this.config.system.maxConcurrency = parseInt(env['AGI_SYSTEM_MAX_CONCURRENCY']);
+    if (env['AGI_SYSTEM_TIMEOUT']) this.config.system.timeout = parseInt(env['AGI_SYSTEM_TIMEOUT']);
 
     // AGI settings
-    if (env.AGI_REASONING_ENABLED) this.config.agi.reasoningEnabled = env.AGI_REASONING_ENABLED === 'true';
-    if (env.AGI_LEARNING_ENABLED) this.config.agi.learningEnabled = env.AGI_LEARNING_ENABLED === 'true';
-    if (env.AGI_CREATIVITY_ENABLED) this.config.agi.creativityEnabled = env.AGI_CREATIVITY_ENABLED === 'true';
-    if (env.AGI_CONSCIOUSNESS_ENABLED) this.config.agi.consciousnessEnabled = env.AGI_CONSCIOUSNESS_ENABLED === 'true';
-    if (env.AGI_MULTI_AGENT_ENABLED) this.config.agi.multiAgentEnabled = env.AGI_MULTI_AGENT_ENABLED === 'true';
-    if (env.AGI_MAX_AGENTS) this.config.agi.maxAgents = parseInt(env.AGI_MAX_AGENTS);
-    if (env.AGI_AGENT_TIMEOUT) this.config.agi.agentTimeout = parseInt(env.AGI_AGENT_TIMEOUT);
-    if (env.AGI_REASONING_TIMEOUT) this.config.agi.reasoningTimeout = parseInt(env.AGI_REASONING_TIMEOUT);
-    if (env.AGI_LEARNING_TIMEOUT) this.config.agi.learningTimeout = parseInt(env.AGI_LEARNING_TIMEOUT);
+    if (env['AGI_REASONING_ENABLED']) this.config.agi.reasoningEnabled = env['AGI_REASONING_ENABLED'] === 'true';
+    if (env['AGI_LEARNING_ENABLED']) this.config.agi.learningEnabled = env['AGI_LEARNING_ENABLED'] === 'true';
+    if (env['AGI_CREATIVITY_ENABLED']) this.config.agi.creativityEnabled = env['AGI_CREATIVITY_ENABLED'] === 'true';
+    if (env['AGI_CONSCIOUSNESS_ENABLED']) this.config.agi.consciousnessEnabled = env['AGI_CONSCIOUSNESS_ENABLED'] === 'true';
+    if (env['AGI_MULTI_AGENT_ENABLED']) this.config.agi.multiAgentEnabled = env['AGI_MULTI_AGENT_ENABLED'] === 'true';
+    if (env['AGI_MAX_AGENTS']) this.config.agi.maxAgents = parseInt(env['AGI_MAX_AGENTS']);
+    if (env['AGI_AGENT_TIMEOUT']) this.config.agi.agentTimeout = parseInt(env['AGI_AGENT_TIMEOUT']);
+    if (env['AGI_REASONING_TIMEOUT']) this.config.agi.reasoningTimeout = parseInt(env['AGI_REASONING_TIMEOUT']);
+    if (env['AGI_LEARNING_TIMEOUT']) this.config.agi.learningTimeout = parseInt(env['AGI_LEARNING_TIMEOUT']);
 
     // Memory settings
-    if (env.AGI_MEMORY_SHORT_TERM_CAPACITY) this.config.memory.shortTermCapacity = parseInt(env.AGI_MEMORY_SHORT_TERM_CAPACITY);
-    if (env.AGI_MEMORY_LONG_TERM_CAPACITY) this.config.memory.longTermCapacity = parseInt(env.AGI_MEMORY_LONG_TERM_CAPACITY);
-    if (env.AGI_MEMORY_WORKING_CAPACITY) this.config.memory.workingMemoryCapacity = parseInt(env.AGI_MEMORY_WORKING_CAPACITY);
-    if (env.AGI_MEMORY_CONSOLIDATION_THRESHOLD) this.config.memory.consolidationThreshold = parseFloat(env.AGI_MEMORY_CONSOLIDATION_THRESHOLD);
-    if (env.AGI_MEMORY_DECAY_RATE) this.config.memory.decayRate = parseFloat(env.AGI_MEMORY_DECAY_RATE);
-    if (env.AGI_MEMORY_OPTIMIZATION_INTERVAL) this.config.memory.optimizationInterval = parseInt(env.AGI_MEMORY_OPTIMIZATION_INTERVAL);
+    if (env['AGI_MEMORY_SHORT_TERM_CAPACITY']) this.config.memory.shortTermCapacity = parseInt(env['AGI_MEMORY_SHORT_TERM_CAPACITY']);
+    if (env['AGI_MEMORY_LONG_TERM_CAPACITY']) this.config.memory.longTermCapacity = parseInt(env['AGI_MEMORY_LONG_TERM_CAPACITY']);
+    if (env['AGI_MEMORY_WORKING_CAPACITY']) this.config.memory.workingMemoryCapacity = parseInt(env['AGI_MEMORY_WORKING_CAPACITY']);
+    if (env['AGI_MEMORY_CONSOLIDATION_THRESHOLD']) this.config.memory.consolidationThreshold = parseFloat(env['AGI_MEMORY_CONSOLIDATION_THRESHOLD']);
+    if (env['AGI_MEMORY_DECAY_RATE']) this.config.memory.decayRate = parseFloat(env['AGI_MEMORY_DECAY_RATE']);
+    if (env['AGI_MEMORY_OPTIMIZATION_INTERVAL']) this.config.memory.optimizationInterval = parseInt(env['AGI_MEMORY_OPTIMIZATION_INTERVAL']);
 
     // Performance settings
-    if (env.AGI_PERFORMANCE_MAX_RESPONSE_TIME) this.config.performance.maxResponseTime = parseInt(env.AGI_PERFORMANCE_MAX_RESPONSE_TIME);
-    if (env.AGI_PERFORMANCE_MAX_THROUGHPUT) this.config.performance.maxThroughput = parseInt(env.AGI_PERFORMANCE_MAX_THROUGHPUT);
-    if (env.AGI_PERFORMANCE_RESOURCE_LIMIT) this.config.performance.resourceLimit = parseFloat(env.AGI_PERFORMANCE_RESOURCE_LIMIT);
-    if (env.AGI_PERFORMANCE_CACHE_ENABLED) this.config.performance.cacheEnabled = env.AGI_PERFORMANCE_CACHE_ENABLED === 'true';
-    if (env.AGI_PERFORMANCE_CACHE_SIZE) this.config.performance.cacheSize = parseInt(env.AGI_PERFORMANCE_CACHE_SIZE);
-    if (env.AGI_PERFORMANCE_CACHE_TTL) this.config.performance.cacheTTL = parseInt(env.AGI_PERFORMANCE_CACHE_TTL);
+    if (env['AGI_PERFORMANCE_MAX_RESPONSE_TIME']) this.config.performance.maxResponseTime = parseInt(env['AGI_PERFORMANCE_MAX_RESPONSE_TIME']);
+    if (env['AGI_PERFORMANCE_MAX_THROUGHPUT']) this.config.performance.maxThroughput = parseInt(env['AGI_PERFORMANCE_MAX_THROUGHPUT']);
+    if (env['AGI_PERFORMANCE_RESOURCE_LIMIT']) this.config.performance.resourceLimit = parseFloat(env['AGI_PERFORMANCE_RESOURCE_LIMIT']);
+    if (env['AGI_PERFORMANCE_CACHE_ENABLED']) this.config.performance.cacheEnabled = env['AGI_PERFORMANCE_CACHE_ENABLED'] === 'true';
+    if (env['AGI_PERFORMANCE_CACHE_SIZE']) this.config.performance.cacheSize = parseInt(env['AGI_PERFORMANCE_CACHE_SIZE']);
+    if (env['AGI_PERFORMANCE_CACHE_TTL']) this.config.performance.cacheTTL = parseInt(env['AGI_PERFORMANCE_CACHE_TTL']);
 
     // Security settings
-    if (env.AGI_SECURITY_AUTHENTICATION_ENABLED) this.config.security.authenticationEnabled = env.AGI_SECURITY_AUTHENTICATION_ENABLED === 'true';
-    if (env.AGI_SECURITY_AUTHORIZATION_ENABLED) this.config.security.authorizationEnabled = env.AGI_SECURITY_AUTHORIZATION_ENABLED === 'true';
-    if (env.AGI_SECURITY_ENCRYPTION_ENABLED) this.config.security.encryptionEnabled = env.AGI_SECURITY_ENCRYPTION_ENABLED === 'true';
-    if (env.AGI_SECURITY_RATE_LIMIT_ENABLED) this.config.security.rateLimitEnabled = env.AGI_SECURITY_RATE_LIMIT_ENABLED === 'true';
-    if (env.AGI_SECURITY_MAX_REQUESTS_PER_MINUTE) this.config.security.maxRequestsPerMinute = parseInt(env.AGI_SECURITY_MAX_REQUESTS_PER_MINUTE);
-    if (env.AGI_SECURITY_ALLOWED_ORIGINS) this.config.security.allowedOrigins = env.AGI_SECURITY_ALLOWED_ORIGINS.split(',');
-    if (env.AGI_SECURITY_API_KEY_REQUIRED) this.config.security.apiKeyRequired = env.AGI_SECURITY_API_KEY_REQUIRED === 'true';
+    if (env['AGI_SECURITY_AUTHENTICATION_ENABLED']) this.config.security.authenticationEnabled = env['AGI_SECURITY_AUTHENTICATION_ENABLED'] === 'true';
+    if (env['AGI_SECURITY_AUTHORIZATION_ENABLED']) this.config.security.authorizationEnabled = env['AGI_SECURITY_AUTHORIZATION_ENABLED'] === 'true';
+    if (env['AGI_SECURITY_ENCRYPTION_ENABLED']) this.config.security.encryptionEnabled = env['AGI_SECURITY_ENCRYPTION_ENABLED'] === 'true';
+    if (env['AGI_SECURITY_RATE_LIMIT_ENABLED']) this.config.security.rateLimitEnabled = env['AGI_SECURITY_RATE_LIMIT_ENABLED'] === 'true';
+    if (env['AGI_SECURITY_MAX_REQUESTS_PER_MINUTE']) this.config.security.maxRequestsPerMinute = parseInt(env['AGI_SECURITY_MAX_REQUESTS_PER_MINUTE']);
+    if (env['AGI_SECURITY_ALLOWED_ORIGINS']) this.config.security.allowedOrigins = env['AGI_SECURITY_ALLOWED_ORIGINS'].split(',');
+    if (env['AGI_SECURITY_API_KEY_REQUIRED']) this.config.security.apiKeyRequired = env['AGI_SECURITY_API_KEY_REQUIRED'] === 'true';
 
     // Services settings
-    if (env.AGI_SERVICES_OPENAI_ENABLED) this.config.services.openai.enabled = env.AGI_SERVICES_OPENAI_ENABLED === 'true';
-    if (env.AGI_SERVICES_OPENAI_API_KEY) this.config.services.openai.apiKey = env.AGI_SERVICES_OPENAI_API_KEY;
-    if (env.AGI_SERVICES_OPENAI_MODEL) this.config.services.openai.model = env.AGI_SERVICES_OPENAI_MODEL;
-    if (env.AGI_SERVICES_OPENAI_MAX_TOKENS) this.config.services.openai.maxTokens = parseInt(env.AGI_SERVICES_OPENAI_MAX_TOKENS);
-    if (env.AGI_SERVICES_OPENAI_TEMPERATURE) this.config.services.openai.temperature = parseFloat(env.AGI_SERVICES_OPENAI_TEMPERATURE);
+    if (env['AGI_SERVICES_OPENAI_ENABLED']) this.config.services.openai.enabled = env['AGI_SERVICES_OPENAI_ENABLED'] === 'true';
+    if (env['AGI_SERVICES_OPENAI_API_KEY']) this.config.services.openai.apiKey = env['AGI_SERVICES_OPENAI_API_KEY'];
+    if (env['AGI_SERVICES_OPENAI_MODEL']) this.config.services.openai.model = env['AGI_SERVICES_OPENAI_MODEL'];
+    if (env['AGI_SERVICES_OPENAI_MAX_TOKENS']) this.config.services.openai.maxTokens = parseInt(env['AGI_SERVICES_OPENAI_MAX_TOKENS']);
+    if (env['AGI_SERVICES_OPENAI_TEMPERATURE']) this.config.services.openai.temperature = parseFloat(env['AGI_SERVICES_OPENAI_TEMPERATURE']);
 
-    if (env.AGI_SERVICES_ANTHROPIC_ENABLED) this.config.services.anthropic.enabled = env.AGI_SERVICES_ANTHROPIC_ENABLED === 'true';
-    if (env.AGI_SERVICES_ANTHROPIC_API_KEY) this.config.services.anthropic.apiKey = env.AGI_SERVICES_ANTHROPIC_API_KEY;
-    if (env.AGI_SERVICES_ANTHROPIC_MODEL) this.config.services.anthropic.model = env.AGI_SERVICES_ANTHROPIC_MODEL;
-    if (env.AGI_SERVICES_ANTHROPIC_MAX_TOKENS) this.config.services.anthropic.maxTokens = parseInt(env.AGI_SERVICES_ANTHROPIC_MAX_TOKENS);
+    if (env['AGI_SERVICES_ANTHROPIC_ENABLED']) this.config.services.anthropic.enabled = env['AGI_SERVICES_ANTHROPIC_ENABLED'] === 'true';
+    if (env['AGI_SERVICES_ANTHROPIC_API_KEY']) this.config.services.anthropic.apiKey = env['AGI_SERVICES_ANTHROPIC_API_KEY'];
+    if (env['AGI_SERVICES_ANTHROPIC_MODEL']) this.config.services.anthropic.model = env['AGI_SERVICES_ANTHROPIC_MODEL'];
+    if (env['AGI_SERVICES_ANTHROPIC_MAX_TOKENS']) this.config.services.anthropic.maxTokens = parseInt(env['AGI_SERVICES_ANTHROPIC_MAX_TOKENS']);
 
-    if (env.AGI_SERVICES_DATABASE_ENABLED) this.config.services.database.enabled = env.AGI_SERVICES_DATABASE_ENABLED === 'true';
-    if (env.AGI_SERVICES_DATABASE_TYPE) this.config.services.database.type = env.AGI_SERVICES_DATABASE_TYPE as any;
-    if (env.AGI_SERVICES_DATABASE_URL) this.config.services.database.url = env.AGI_SERVICES_DATABASE_URL;
-    if (env.AGI_SERVICES_DATABASE_USERNAME) this.config.services.database.username = env.AGI_SERVICES_DATABASE_USERNAME;
-    if (env.AGI_SERVICES_DATABASE_PASSWORD) this.config.services.database.password = env.AGI_SERVICES_DATABASE_PASSWORD;
-    if (env.AGI_SERVICES_DATABASE_POOL_SIZE) this.config.services.database.poolSize = parseInt(env.AGI_SERVICES_DATABASE_POOL_SIZE);
+    if (env['AGI_SERVICES_DATABASE_ENABLED']) this.config.services.database.enabled = env['AGI_SERVICES_DATABASE_ENABLED'] === 'true';
+    if (env['AGI_SERVICES_DATABASE_TYPE']) this.config.services.database.type = env['AGI_SERVICES_DATABASE_TYPE'] as any;
+    if (env['AGI_SERVICES_DATABASE_URL']) this.config.services.database.url = env['AGI_SERVICES_DATABASE_URL'];
+    if (env['AGI_SERVICES_DATABASE_USERNAME']) this.config.services.database.username = env['AGI_SERVICES_DATABASE_USERNAME'];
+    if (env['AGI_SERVICES_DATABASE_PASSWORD']) this.config.services.database.password = env['AGI_SERVICES_DATABASE_PASSWORD'];
+    if (env['AGI_SERVICES_DATABASE_POOL_SIZE']) this.config.services.database.poolSize = parseInt(env['AGI_SERVICES_DATABASE_POOL_SIZE']);
 
-    if (env.AGI_SERVICES_REDIS_ENABLED) this.config.services.redis.enabled = env.AGI_SERVICES_REDIS_ENABLED === 'true';
-    if (env.AGI_SERVICES_REDIS_URL) this.config.services.redis.url = env.AGI_SERVICES_REDIS_URL;
-    if (env.AGI_SERVICES_REDIS_PASSWORD) this.config.services.redis.password = env.AGI_SERVICES_REDIS_PASSWORD;
-    if (env.AGI_SERVICES_REDIS_DB) this.config.services.redis.db = parseInt(env.AGI_SERVICES_REDIS_DB);
+    if (env['AGI_SERVICES_REDIS_ENABLED']) this.config.services.redis.enabled = env['AGI_SERVICES_REDIS_ENABLED'] === 'true';
+    if (env['AGI_SERVICES_REDIS_URL']) this.config.services.redis.url = env['AGI_SERVICES_REDIS_URL'];
+    if (env['AGI_SERVICES_REDIS_PASSWORD']) this.config.services.redis.password = env['AGI_SERVICES_REDIS_PASSWORD'];
+    if (env['AGI_SERVICES_REDIS_DB']) this.config.services.redis.db = parseInt(env['AGI_SERVICES_REDIS_DB']);
 
     // Features settings
-    if (env.AGI_FEATURES_ADVANCED_REASONING) this.config.features.advancedReasoning = env.AGI_FEATURES_ADVANCED_REASONING === 'true';
-    if (env.AGI_FEATURES_META_LEARNING) this.config.features.metaLearning = env.AGI_FEATURES_META_LEARNING === 'true';
-    if (env.AGI_FEATURES_CREATIVE_PROBLEM_SOLVING) this.config.features.creativeProblemSolving = env.AGI_FEATURES_CREATIVE_PROBLEM_SOLVING === 'true';
-    if (env.AGI_FEATURES_CONSCIOUSNESS_SIMULATION) this.config.features.consciousnessSimulation = env.AGI_FEATURES_CONSCIOUSNESS_SIMULATION === 'true';
-    if (env.AGI_FEATURES_MULTI_MODAL_PROCESSING) this.config.features.multiModalProcessing = env.AGI_FEATURES_MULTI_MODAL_PROCESSING === 'true';
-    if (env.AGI_FEATURES_REAL_TIME_LEARNING) this.config.features.realTimeLearning = env.AGI_FEATURES_REAL_TIME_LEARNING === 'true';
-    if (env.AGI_FEATURES_ADAPTIVE_BEHAVIOR) this.config.features.adaptiveBehavior = env.AGI_FEATURES_ADAPTIVE_BEHAVIOR === 'true';
-    if (env.AGI_FEATURES_SELF_IMPROVEMENT) this.config.features.selfImprovement = env.AGI_FEATURES_SELF_IMPROVEMENT === 'true';
+    if (env['AGI_FEATURES_ADVANCED_REASONING']) this.config.features.advancedReasoning = env['AGI_FEATURES_ADVANCED_REASONING'] === 'true';
+    if (env['AGI_FEATURES_META_LEARNING']) this.config.features.metaLearning = env['AGI_FEATURES_META_LEARNING'] === 'true';
+    if (env['AGI_FEATURES_CREATIVE_PROBLEM_SOLVING']) this.config.features.creativeProblemSolving = env['AGI_FEATURES_CREATIVE_PROBLEM_SOLVING'] === 'true';
+    if (env['AGI_FEATURES_CONSCIOUSNESS_SIMULATION']) this.config.features.consciousnessSimulation = env['AGI_FEATURES_CONSCIOUSNESS_SIMULATION'] === 'true';
+    if (env['AGI_FEATURES_MULTI_MODAL_PROCESSING']) this.config.features.multiModalProcessing = env['AGI_FEATURES_MULTI_MODAL_PROCESSING'] === 'true';
+    if (env['AGI_FEATURES_REAL_TIME_LEARNING']) this.config.features.realTimeLearning = env['AGI_FEATURES_REAL_TIME_LEARNING'] === 'true';
+    if (env['AGI_FEATURES_ADAPTIVE_BEHAVIOR']) this.config.features.adaptiveBehavior = env['AGI_FEATURES_ADAPTIVE_BEHAVIOR'] === 'true';
+    if (env['AGI_FEATURES_SELF_IMPROVEMENT']) this.config.features.selfImprovement = env['AGI_FEATURES_SELF_IMPROVEMENT'] === 'true';
 
     // Monitoring settings
-    if (env.AGI_MONITORING_ENABLED) this.config.monitoring.enabled = env.AGI_MONITORING_ENABLED === 'true';
-    if (env.AGI_MONITORING_METRICS_ENABLED) this.config.monitoring.metricsEnabled = env.AGI_MONITORING_METRICS_ENABLED === 'true';
-    if (env.AGI_MONITORING_HEALTH_CHECK_ENABLED) this.config.monitoring.healthCheckEnabled = env.AGI_MONITORING_HEALTH_CHECK_ENABLED === 'true';
-    if (env.AGI_MONITORING_ALERTING_ENABLED) this.config.monitoring.alertingEnabled = env.AGI_MONITORING_ALERTING_ENABLED === 'true';
-    if (env.AGI_MONITORING_LOG_RETENTION) this.config.monitoring.logRetention = parseInt(env.AGI_MONITORING_LOG_RETENTION);
-    if (env.AGI_MONITORING_PERFORMANCE_TRACKING) this.config.monitoring.performanceTracking = env.AGI_MONITORING_PERFORMANCE_TRACKING === 'true';
+    if (env['AGI_MONITORING_ENABLED']) this.config.monitoring.enabled = env['AGI_MONITORING_ENABLED'] === 'true';
+    if (env['AGI_MONITORING_METRICS_ENABLED']) this.config.monitoring.metricsEnabled = env['AGI_MONITORING_METRICS_ENABLED'] === 'true';
+    if (env['AGI_MONITORING_HEALTH_CHECK_ENABLED']) this.config.monitoring.healthCheckEnabled = env['AGI_MONITORING_HEALTH_CHECK_ENABLED'] === 'true';
+    if (env['AGI_MONITORING_ALERTING_ENABLED']) this.config.monitoring.alertingEnabled = env['AGI_MONITORING_ALERTING_ENABLED'] === 'true';
+    if (env['AGI_MONITORING_LOG_RETENTION']) this.config.monitoring.logRetention = parseInt(env['AGI_MONITORING_LOG_RETENTION']);
+    if (env['AGI_MONITORING_PERFORMANCE_TRACKING']) this.config.monitoring.performanceTracking = env['AGI_MONITORING_PERFORMANCE_TRACKING'] === 'true';
   }
 
   private loadFromFile(): void {

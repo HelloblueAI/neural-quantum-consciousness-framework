@@ -14,13 +14,13 @@ export class APIServer {
     // private _isRunning: boolean = false; // Used in start/stop methods
     DEFAULT_PORT = 3000;
     MAX_REQUEST_SIZE = '10mb';
-    RATE_LIMIT_WINDOW = process.env.ENABLE_RATE_LIMIT === 'true' ? 60 * 1000 : 15 * 60 * 1000; // 1 minute for testing, 15 minutes for production
-    RATE_LIMIT_MAX = process.env.ENABLE_RATE_LIMIT === 'true' ? 10 : 100; // Lower limit for testing
+    RATE_LIMIT_WINDOW = process.env['ENABLE_RATE_LIMIT'] === 'true' ? 60 * 1000 : 15 * 60 * 1000; // 1 minute for testing, 15 minutes for production
+    RATE_LIMIT_MAX = process.env['ENABLE_RATE_LIMIT'] === 'true' ? 10 : 100; // Lower limit for testing
     constructor(agiSystem, configManager) {
         this.agiSystem = agiSystem;
         this.configManager = configManager;
         this.logger = new Logger('APIServer');
-        this.port = parseInt(process.env.PORT || this.DEFAULT_PORT.toString());
+        this.port = parseInt(process.env['PORT'] || this.DEFAULT_PORT.toString());
         this.app = express();
         this.setupMiddleware();
         this.setupRoutes();
@@ -44,7 +44,7 @@ export class APIServer {
         // Dynamic rate limiting middleware
         this.app.use((req, res, next) => {
             // Check rate limiting dynamically
-            if (process.env.ENABLE_RATE_LIMIT === 'true') {
+            if (process.env['ENABLE_RATE_LIMIT'] === 'true') {
                 // Simple in-memory rate limiting for testing
                 const clientId = req.ip || 'unknown';
                 const now = Date.now();
@@ -246,7 +246,7 @@ export class APIServer {
      */
     getRateLimitingStatus() {
         return {
-            enabled: process.env.ENABLE_RATE_LIMIT === 'true',
+            enabled: process.env['ENABLE_RATE_LIMIT'] === 'true',
             requestCounts: this.requestCounts.size
         };
     }
@@ -1541,7 +1541,7 @@ export class APIServer {
     authenticateAPIKey(req, res, next) {
         const authHeader = req.headers.authorization;
         // For test environment, accept requests without auth header
-        if (process.env.NODE_ENV === 'test' && !authHeader) {
+        if (process.env['NODE_ENV'] === 'test' && !authHeader) {
             return next();
         }
         if (!authHeader || !authHeader.startsWith('Bearer ')) {

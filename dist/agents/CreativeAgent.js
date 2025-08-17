@@ -352,10 +352,10 @@ export class CreativeAgent extends Agent {
     }
     calculateCreativePriority(input, context) {
         const complexity = this.calculateCreativeComplexity(input);
-        const urgency = context?.urgency || 0.5;
-        const importance = context?.importance || 0.5;
-        const novelty = context?.novelty || 0.5;
-        const impact = context?.impact || 0.5;
+        const urgency = context?.['urgency'] || 0.5;
+        const importance = context?.['importance'] || 0.5;
+        const novelty = context?.['novelty'] || 0.5;
+        const impact = context?.['impact'] || 0.5;
         return (complexity * 0.2 +
             urgency * 0.2 +
             importance * 0.25 +
@@ -364,8 +364,8 @@ export class CreativeAgent extends Agent {
     }
     extractCreativeConstraints(input, context) {
         const constraints = new Map();
-        if (context?.constraints) {
-            Object.entries(context.constraints).forEach(([key, value]) => {
+        if (context?.['constraints']) {
+            Object.entries(context['constraints']).forEach(([key, value]) => {
                 constraints.set(key, value);
             });
         }
@@ -692,7 +692,7 @@ export class CreativeAgent extends Agent {
         const success = Math.random() > 0.2; // 80% success rate for creative actions
         const result = success ? {
             message: 'Creative action executed successfully',
-            capability: action.parameters?.capability,
+            capability: action.parameters?.['capability'],
             improvement: 0.2,
             creativityGained: true
         } : null;

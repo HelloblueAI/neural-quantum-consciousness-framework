@@ -1,5 +1,5 @@
 name = "multi-language-agi"
-main = "dist/agi-worker-hybrid-simple.js"
+main = "dist/agi-worker-enhanced-metrics.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 

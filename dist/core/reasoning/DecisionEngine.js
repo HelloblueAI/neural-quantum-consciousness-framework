@@ -196,8 +196,8 @@ export class DecisionEngine {
             }
         }
         // Add context options if provided
-        if (context?.decisionOptions) {
-            for (const contextOption of context.decisionOptions) {
+        if (context?.['decisionOptions']) {
+            for (const contextOption of context['decisionOptions']) {
                 options.push({
                     id: `context_${optionId++}`,
                     name: contextOption.name || 'Context Option',
@@ -235,8 +235,8 @@ export class DecisionEngine {
             }
         }
         // Add context criteria if provided
-        if (context?.decisionCriteria) {
-            for (const contextCriterion of context.decisionCriteria) {
+        if (context?.['decisionCriteria']) {
+            for (const contextCriterion of context['decisionCriteria']) {
                 criteria.push({
                     id: `context_${criterionId++}`,
                     name: contextCriterion.name || 'Context Criterion',

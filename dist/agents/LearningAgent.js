@@ -457,10 +457,10 @@ export class LearningAgent extends Agent {
     }
     calculateLearningPriority(input, context) {
         const complexity = this.calculateLearningComplexity(input);
-        const urgency = context?.urgency || 0.5;
-        const importance = context?.importance || 0.5;
-        const novelty = context?.novelty || 0.5;
-        const applicability = context?.applicability || 0.5;
+        const urgency = context?.['urgency'] || 0.5;
+        const importance = context?.['importance'] || 0.5;
+        const novelty = context?.['novelty'] || 0.5;
+        const applicability = context?.['applicability'] || 0.5;
         return (complexity * 0.15 +
             urgency * 0.25 +
             importance * 0.3 +
@@ -469,8 +469,8 @@ export class LearningAgent extends Agent {
     }
     extractLearningConstraints(input, context) {
         const constraints = new Map();
-        if (context?.constraints) {
-            Object.entries(context.constraints).forEach(([key, value]) => {
+        if (context?.['constraints']) {
+            Object.entries(context['constraints']).forEach(([key, value]) => {
                 constraints.set(key, value);
             });
         }
@@ -563,12 +563,12 @@ export class LearningAgent extends Agent {
     extractLearningPatterns(experiences) {
         const patterns = [];
         experiences.forEach(exp => {
-            if (exp.metadata?.learningType) {
+            if (exp.metadata?.['learningType']) {
                 patterns.push({
-                    type: exp.metadata.learningType,
+                    type: exp.metadata['learningType'],
                     confidence: exp.confidence,
-                    steps: exp.metadata.steps || 0,
-                    domain: exp.metadata.domain || 'general'
+                    steps: exp.metadata['steps'] || 0,
+                    domain: exp.metadata['domain'] || 'general'
                 });
             }
         });
@@ -578,10 +578,10 @@ export class LearningAgent extends Agent {
         const insights = [];
         experiences.forEach(exp => {
             if (exp.outcome?.value?.utility > 0.7) {
-                insights.push(`High utility learning from ${exp.metadata?.learningType || 'experience'}`);
+                insights.push(`High utility learning from ${exp.metadata?.['learningType'] || 'experience'}`);
             }
             if (exp.feedback?.strength > 0.8) {
-                insights.push(`Strong positive feedback for ${exp.metadata?.learningType || 'learning'}`);
+                insights.push(`Strong positive feedback for ${exp.metadata?.['learningType'] || 'learning'}`);
             }
             if (exp.confidence && exp.confidence > 0.9) {
                 insights.push(`High confidence learning outcome`);
@@ -593,7 +593,7 @@ export class LearningAgent extends Agent {
         const improvements = new Map();
         experiences.forEach(exp => {
             if (exp.confidence && exp.confidence > 0.7) {
-                const learningType = exp.metadata?.learningType;
+                const learningType = exp.metadata?.['learningType'];
                 if (learningType) {
                     const currentLevel = improvements.get(learningType) || 0;
                     improvements.set(learningType, currentLevel + 0.1);
@@ -622,7 +622,7 @@ export class LearningAgent extends Agent {
                     id: `knowledge_${Date.now()}`,
                     type: 'learning_outcome',
                     content: {
-                        patterns: [experience.metadata?.learningType || 'general'],
+                        patterns: [experience.metadata?.['learningType'] || 'general'],
                         insights: [`Experience stored: ${experience.id}`],
                         confidence: experience.confidence || 0.8,
                         representation: { format: 'symbolic', structure: 'structured', encoding: { format: 'json', parameters: {} } },
@@ -794,7 +794,7 @@ export class LearningAgent extends Agent {
         const success = Math.random() > 0.15; // 85% success rate for learning actions
         const result = success ? {
             message: 'Learning action executed successfully',
-            capability: action.parameters?.capability,
+            capability: action.parameters?.['capability'],
             improvement: 0.15,
             knowledgeGained: true
         } : null;

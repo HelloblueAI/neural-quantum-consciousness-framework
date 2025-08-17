@@ -310,7 +310,7 @@ export class ReinforcementLearning {
 
   private extractReward(experience: Experience): number {
     if (experience.metadata && typeof experience.metadata === 'object' && experience.metadata !== null) {
-      const reward = experience.metadata.reward;
+      const reward = experience.metadata['reward'];
       if (typeof reward === 'number') {
         return reward;
       }
@@ -323,7 +323,7 @@ export class ReinforcementLearning {
   }
 
   private isEpisodeEnd(experience: Experience): boolean {
-    return experience.metadata?.episodeEnd === true;
+    return experience.metadata?.['episodeEnd'] === true;
   }
 
   private initializePolicies(): void {

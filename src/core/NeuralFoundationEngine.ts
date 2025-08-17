@@ -232,7 +232,7 @@ export class NeuralFoundationEngine {
         performance: this.getPerformanceMetrics()
       };
     } catch (error) {
-      this.logger.error('Cross-domain analysis failed:', error);
+      this.logger.error('Cross-domain analysis failed:', error as Error);
       return {
         success: false,
         error: (error as Error).message
@@ -338,6 +338,9 @@ export class NeuralFoundationEngine {
       for (let j = i + 1; j < this.architecture.layers.length; j++) {
         const layerA = this.architecture.layers[i];
         const layerB = this.architecture.layers[j];
+        
+        // Skip if layers are undefined
+        if (!layerA || !layerB) continue;
         
         // Check if connection already exists
         const existingConnection = this.architecture.connections.find(

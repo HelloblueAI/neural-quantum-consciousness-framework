@@ -403,10 +403,10 @@ export class ReasoningAgent extends Agent {
     }
     calculateTaskPriority(input, context) {
         const complexity = this.calculateTaskComplexity(input);
-        const urgency = context?.urgency || 0.5;
-        const importance = context?.importance || 0.5;
-        const timeConstraint = context?.timeConstraint || 0.5;
-        const resourceAvailability = context?.resourceAvailability || 0.5;
+        const urgency = context?.['urgency'] || 0.5;
+        const importance = context?.['importance'] || 0.5;
+        const timeConstraint = context?.['timeConstraint'] || 0.5;
+        const resourceAvailability = context?.['resourceAvailability'] || 0.5;
         return (complexity * 0.2 +
             urgency * 0.3 +
             importance * 0.3 +
@@ -415,8 +415,8 @@ export class ReasoningAgent extends Agent {
     }
     extractConstraints(input, context) {
         const constraints = new Map();
-        if (context?.constraints) {
-            Object.entries(context.constraints).forEach(([key, value]) => {
+        if (context?.['constraints']) {
+            Object.entries(context['constraints']).forEach(([key, value]) => {
                 constraints.set(key, value);
             });
         }
@@ -591,11 +591,11 @@ export class ReasoningAgent extends Agent {
     extractReasoningPatterns(experiences) {
         const patterns = [];
         experiences.forEach(exp => {
-            if (exp.metadata?.reasoningType) {
+            if (exp.metadata?.['reasoningType']) {
                 patterns.push({
-                    type: exp.metadata.reasoningType,
+                    type: exp.metadata['reasoningType'],
                     confidence: exp.confidence,
-                    steps: exp.metadata.steps || 0
+                    steps: exp.metadata['steps'] || 0
                 });
             }
         });
@@ -605,7 +605,7 @@ export class ReasoningAgent extends Agent {
         const improvements = new Map();
         experiences.forEach(exp => {
             if (exp.confidence && exp.confidence > 0.7) {
-                const reasoningType = exp.metadata?.reasoningType;
+                const reasoningType = exp.metadata?.['reasoningType'];
                 if (reasoningType) {
                     const currentLevel = improvements.get(reasoningType) || 0;
                     improvements.set(reasoningType, currentLevel + 0.1);
@@ -630,13 +630,13 @@ export class ReasoningAgent extends Agent {
     }
     analyzeContextRequirements(context) {
         const requirements = [];
-        if (context.complexity === 'high') {
+        if (context['complexity'] === 'high') {
             requirements.push('advanced_reasoning', 'pattern_recognition', 'creative_thinking');
         }
-        if (context.domain === 'scientific') {
+        if (context['domain'] === 'scientific') {
             requirements.push('scientific_reasoning', 'hypothesis_generation', 'experimental_design');
         }
-        if (context.urgency === 'high') {
+        if (context['urgency'] === 'high') {
             requirements.push('rapid_reasoning', 'heuristic_search', 'quick_analysis');
         }
         return requirements;
@@ -662,11 +662,11 @@ export class ReasoningAgent extends Agent {
     }
     calculateContextComplexity(context) {
         let complexity = 0.5;
-        if (context.domains && Array.isArray(context.domains)) {
-            complexity += Math.min(context.domains.length / 5, 0.3);
+        if (context['domains'] && Array.isArray(context['domains'])) {
+            complexity += Math.min(context['domains'].length / 5, 0.3);
         }
-        if (context.constraints && Object.keys(context.constraints).length > 0) {
-            complexity += Math.min(Object.keys(context.constraints).length / 10, 0.2);
+        if (context['constraints'] && Object.keys(context['constraints']).length > 0) {
+            complexity += Math.min(Object.keys(context['constraints']).length / 10, 0.2);
         }
         return Math.min(1.0, complexity);
     }
@@ -719,7 +719,7 @@ export class ReasoningAgent extends Agent {
         const success = Math.random() > 0.1; // 90% success rate for reasoning actions
         const result = success ? {
             message: 'Action executed successfully',
-            capability: action.parameters?.capability,
+            capability: action.parameters?.['capability'],
             improvement: 0.1
         } : null;
         const feedback = {

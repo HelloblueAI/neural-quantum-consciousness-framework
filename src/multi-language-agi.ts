@@ -394,35 +394,41 @@ export class MultiLanguageAGI extends EventEmitter {
     private weightedSynthesis(outputs: any[], weights: number[]): any {
         if (outputs.length === 0) return null;
         
-        if (typeof outputs[0] === 'number') {
+        if (outputs[0] && typeof outputs[0] === 'number') {
             // Numeric outputs
             return outputs.reduce((sum, output, i) => sum + output * weights[i], 0);
         }
         
-        if (Array.isArray(outputs[0])) {
+        if (outputs[0] && Array.isArray(outputs[0])) {
             // Array outputs
             const result = new Array(outputs[0].length).fill(0);
             outputs.forEach((output, i) => {
-                output.forEach((val: number, j: number) => {
-                    result[j] += val * weights[i];
-                });
+                if (output && Array.isArray(output)) {
+                  output.forEach((val: number, j: number) => {
+                      result[j] += val * weights[i];
+                  });
+                }
             });
             return result;
         }
         
-        if (typeof outputs[0] === 'object') {
+        if (outputs[0] && typeof outputs[0] === 'object') {
             // Object outputs - merge with weighted values
             const result: any = {};
-            const keys = Object.keys(outputs[0]);
+            const keys = Object.keys(outputs[0] || {});
             
             keys.forEach(key => {
-                if (typeof outputs[0][key] === 'number') {
+                if (outputs[0] && typeof outputs[0][key] === 'number') {
                     result[key] = outputs.reduce((sum, output, i) => 
-                        sum + output[key] * weights[i], 0);
+                        sum + (output?.[key] || 0) * weights[i], 0);
                 } else {
                     // For non-numeric values, use the highest confidence result
-                    const maxConfidenceIndex = weights.indexOf(Math.max(...weights));
-                    result[key] = outputs[maxConfidenceIndex][key];
+                    if (weights.length > 0) {
+                      const maxConfidenceIndex = weights.indexOf(Math.max(...weights));
+                      if (maxConfidenceIndex >= 0 && outputs[maxConfidenceIndex]) {
+                        result[key] = outputs[maxConfidenceIndex][key];
+                      }
+                    }
                 }
             });
             
@@ -430,8 +436,13 @@ export class MultiLanguageAGI extends EventEmitter {
         }
         
         // Default: return highest confidence result
-        const maxConfidenceIndex = weights.indexOf(Math.max(...weights));
-        return outputs[maxConfidenceIndex];
+        if (weights.length > 0) {
+          const maxConfidenceIndex = weights.indexOf(Math.max(...weights));
+          if (maxConfidenceIndex >= 0 && outputs[maxConfidenceIndex]) {
+            return outputs[maxConfidenceIndex];
+          }
+        }
+        return null;
     }
     
     /**

@@ -844,10 +844,15 @@ export class TrueAGIEngine extends EventEmitter {
     let unusualCount = 0;
     
     for (let i = 0; i < words.length - 1; i++) {
-      const combination = `${words[i]}_${words[i + 1]}`;
-      // Check if this combination is unusual (simplified logic)
-      if (words[i].length > 6 && words[i + 1].length > 6) {
-        unusualCount++;
+      const currentWord = words[i];
+      const nextWord = words[i + 1];
+      
+      if (currentWord && nextWord) {
+        const combination = `${currentWord}_${nextWord}`;
+        // Check if this combination is unusual (simplified logic)
+        if (currentWord.length > 6 && nextWord.length > 6) {
+          unusualCount++;
+        }
       }
     }
     
