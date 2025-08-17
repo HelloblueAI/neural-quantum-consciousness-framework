@@ -591,7 +591,7 @@ export default {
                       }
                       
                       .metrics-grid {
-                          grid-template-columns: 1fr;
+                          grid-template-columns: repeat(2, 1fr);
                           gap: 15px;
                       }
                       
@@ -647,6 +647,24 @@ export default {
                           padding: 12px 16px;
                           font-size: 15px;
                       }
+                      
+                      /* Keep system metrics horizontal even on small mobile */
+                      .metrics-grid {
+                          grid-template-columns: repeat(2, 1fr);
+                          gap: 10px;
+                      }
+                      
+                      .metric-item {
+                          padding: 10px 8px;
+                      }
+                      
+                      .metric-value {
+                          font-size: 1.3rem;
+                      }
+                      
+                      .metric-label {
+                          font-size: 0.7rem;
+                      }
                   }
 
                   /* Touch Device Optimizations */
@@ -687,6 +705,24 @@ export default {
                       
                       .container {
                           padding: 10px 15px;
+                      }
+                      
+                      /* System metrics horizontal in landscape */
+                      .metrics-grid {
+                          grid-template-columns: repeat(4, 1fr);
+                          gap: 10px;
+                      }
+                      
+                      .metric-item {
+                          padding: 12px 8px;
+                      }
+                      
+                      .metric-value {
+                          font-size: 1.4rem;
+                      }
+                      
+                      .metric-label {
+                          font-size: 0.75rem;
                       }
                   }
 
@@ -948,7 +984,7 @@ export default {
                           }
                           
                           if (!response.ok) {
-                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                              throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                           }
                           
                           const data = await response.json();
