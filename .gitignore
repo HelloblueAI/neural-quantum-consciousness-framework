@@ -137,5 +137,8 @@ coverage/
 # Local development files
 .local/
 
-# Design specifications (keep local, don't show in git)
+# Design specifications and backups (keep local, don't show in git)
 WEB_INTERFACE_DESIGN_SPECIFICATION.md
+AGI_DESIGN_BACKUP.md
+PRIMARY_WORKER_DESIGN.md
+AGI_SOURCE_BACKUP_v4.0.0.ts
