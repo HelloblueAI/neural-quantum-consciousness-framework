@@ -1473,7 +1473,7 @@ export default {
             }
             
             .consciousness-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
             
@@ -1742,12 +1742,17 @@ export default {
                 padding: 15px 12px;
             }
             
+            .consciousness-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
             .consciousness-item {
-                padding: 12px;
+                padding: 10px 8px;
             }
             
             .consciousness-value {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             .form-group select,
@@ -1763,8 +1768,20 @@ export default {
             }
             
             .metrics-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .metric-item {
+                padding: 10px 8px;
+            }
+            
+            .metric-value {
+                font-size: 1.2rem;
+            }
+            
+            .metric-label {
+                font-size: 0.65rem;
             }
             
             .documentation-tabs {
@@ -1816,6 +1833,23 @@ export default {
             .dashboard {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
+            }
+            
+            .consciousness-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .consciousness-item {
+                padding: 8px 6px;
+            }
+            
+            .consciousness-value {
+                font-size: 1.2rem;
+            }
+            
+            .consciousness-label {
+                font-size: 0.7rem;
             }
             
             .container {
