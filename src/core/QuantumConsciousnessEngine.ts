@@ -24,6 +24,8 @@ export interface ConsciousnessExperience {
   cognitiveLoad: number;
   novelty: number;
   coherence: number;
+  synthesis: any;
+  selfAwareness: number;
   timestamp: number;
 }
 
@@ -85,6 +87,8 @@ export class QuantumConsciousnessEngine {
         cognitiveLoad: consciousness.cognitiveLoad,
         novelty: consciousness.novelty,
         coherence: consciousness.coherence,
+        synthesis: this.generateSynthesis(consciousness),
+        selfAwareness: consciousness.selfAwareness || 0.5,
         timestamp: Date.now()
       };
 
@@ -136,13 +140,13 @@ export class QuantumConsciousnessEngine {
    */
   private measureConsciousness(quantumStates: any[]): any {
     // Quantum measurement collapses superposition into conscious experience
-    const totalAmplitude = quantumStates.reduce((sum, state) => sum + state.quantumAmplitude, 0);
-    const weights = quantumStates.map(state => state.quantumAmplitude / totalAmplitude);
+    const totalAmplitude = quantumStates.reduce((sum, state) => sum + (state?.quantumAmplitude || 0), 0);
+    const weights = quantumStates.map(state => (state?.quantumAmplitude || 0) / (totalAmplitude || 1));
     
     // Weighted synthesis of consciousness
     const consciousness = {
       level: quantumStates.reduce((sum, state, i) => 
-        sum + state.consciousnessWeight * weights[i], 0),
+        sum + (state?.consciousnessWeight || 0) * (weights[i] || 0), 0),
       quantumSignature: this.generateQuantumSignature(quantumStates),
       emotionalValence: this.calculateEmotionalValence(quantumStates),
       cognitiveLoad: this.calculateCognitiveLoad(quantumStates),
@@ -584,7 +588,7 @@ export class QuantumConsciousnessEngine {
     
     let stability = 1.0;
     for (let i = 1; i < valences.length; i++) {
-      const change = Math.abs(valences[i] - valences[i - 1]);
+      const change = Math.abs((valences[i] || 0) - (valences[i - 1] || 0));
       stability -= change * 0.1;
     }
     
@@ -635,7 +639,7 @@ export class QuantumConsciousnessEngine {
     const processingTimes = [];
     
     for (let i = 1; i < recentExperiences.length; i++) {
-      const timeDiff = recentExperiences[i].timestamp - recentExperiences[i - 1].timestamp;
+      const timeDiff = (recentExperiences[i]?.timestamp || 0) - (recentExperiences[i - 1]?.timestamp || 0);
       processingTimes.push(timeDiff);
     }
     
@@ -719,5 +723,24 @@ export class QuantumConsciousnessEngine {
    */
   public getConsciousnessEmergenceLevel(): number {
     return Math.min(1, this.consciousnessState.consciousnessDepth / this.consciousnessThreshold);
+  }
+
+  /**
+   * Get quantum advantage
+   */
+  public getQuantumAdvantage(): number {
+    return this.consciousnessState.quantumAdvantage;
+  }
+
+  /**
+   * Generate synthesis for consciousness experience
+   */
+  private generateSynthesis(consciousness: any): any {
+    return {
+      quantumCoherence: consciousness.coherence || 0.5,
+      neuralIntegration: consciousness.level || 0.5,
+      temporalFlow: this.temporalContinuity,
+      consciousnessDepth: consciousness.level || 0.5
+    };
   }
 }
