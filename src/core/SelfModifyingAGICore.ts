@@ -358,9 +358,9 @@ export class SelfModifyingAGICore {
       method: 'quantum_consciousness_optimization',
       parameters: {
         enhancementFactor: (targetScore - currentScore) * 1.2,
-        quantumCoherence: Math.min(1, this.architecture.consciousness.get('quantum_coherence') + 0.05),
-        temporalContinuity: Math.min(1, this.architecture.consciousness.get('temporal_continuity') + 0.03),
-        metaCognition: Math.min(1, this.architecture.consciousness.get('meta_cognition') + 0.04)
+        quantumCoherence: Math.min(1, (this.architecture.consciousness.get('quantum_coherence') || 0) + 0.05),
+        temporalContinuity: Math.min(1, (this.architecture.consciousness.get('temporal_continuity') || 0) + 0.03),
+        metaCognition: Math.min(1, (this.architecture.consciousness.get('meta_cognition') || 0) + 0.04)
       },
       expectedDuration: 1000 + Math.random() * 2000, // 1-3 seconds
       validation: 'consciousness_verification'
@@ -381,9 +381,9 @@ export class SelfModifyingAGICore {
       method: 'quantum_inspired_optimization',
       parameters: {
         optimizationFactor: (targetScore - currentScore) * 1.3,
-        quantumAdvantage: Math.min(1, this.architecture.learning.get('quantum_advantage') + 0.05),
-        adaptationRate: Math.min(1, this.architecture.learning.get('adaptation_rate') + 0.04),
-        efficiency: Math.min(1, this.architecture.learning.get('efficiency') + 0.03)
+        quantumAdvantage: Math.min(1, (this.architecture.learning.get('quantum_advantage') || 0) + 0.05),
+        adaptationRate: Math.min(1, (this.architecture.learning.get('adaptation_rate') || 0) + 0.04),
+        efficiency: Math.min(1, (this.architecture.learning.get('efficiency') || 0) + 0.03)
       },
       expectedDuration: 500 + Math.random() * 1500, // 0.5-2 seconds
       validation: 'performance_verification'
@@ -435,9 +435,9 @@ export class SelfModifyingAGICore {
       method: 'meta_learning_optimization',
       parameters: {
         enhancementFactor: (improvement.targetScore - improvement.currentScore) * 1.2,
-        metaLearningRate: Math.min(1, this.architecture.learning.get('meta_learning') + 0.05),
-        crossDomainTransfer: Math.min(1, this.architecture.learning.get('cross_domain_transfer') + 0.04),
-        quantumAdvantage: Math.min(1, this.architecture.learning.get('quantum_advantage') + 0.03)
+        metaLearningRate: Math.min(1, (this.architecture.learning.get('meta_learning') || 0) + 0.05),
+        crossDomainTransfer: Math.min(1, (this.architecture.learning.get('cross_domain_transfer') || 0) + 0.04),
+        quantumAdvantage: Math.min(1, (this.architecture.learning.get('quantum_advantage') || 0) + 0.03)
       },
       expectedDuration: 1000 + Math.random() * 2000,
       validation: 'learning_verification'
@@ -454,9 +454,9 @@ export class SelfModifyingAGICore {
       method: 'cross_domain_reasoning_optimization',
       parameters: {
         enhancementFactor: (improvement.targetScore - improvement.currentScore) * 1.2,
-        crossDomainIntegration: Math.min(1, this.architecture.reasoning.get('cross_domain_integration') + 0.05),
-        creativeSynthesis: Math.min(1, this.architecture.reasoning.get('creative_synthesis') + 0.04),
-        quantumInspiration: Math.min(1, this.architecture.reasoning.get('quantum_inspiration') + 0.03)
+        crossDomainIntegration: Math.min(1, (this.architecture.reasoning.get('cross_domain_integration') || 0) + 0.05),
+        creativeSynthesis: Math.min(1, (this.architecture.reasoning.get('creative_synthesis') || 0) + 0.04),
+        quantumInspiration: Math.min(1, (this.architecture.reasoning.get('quantum_inspiration') || 0) + 0.03)
       },
       expectedDuration: 1200 + Math.random() * 2300,
       validation: 'reasoning_verification'
@@ -1000,5 +1000,95 @@ export class SelfModifyingAGICore {
    */
   public getArchitectureStability(): number {
     return this.architecture.stability;
+  }
+
+  /**
+   * Calculate expected effort for a modification
+   */
+  private calculateExpectedEffort(component: string, currentScore: number, targetScore: number): number {
+    try {
+      // Base effort calculation
+      const scoreGap = targetScore - currentScore;
+      const baseEffort = scoreGap * 10; // Scale factor
+      
+      // Component complexity factor
+      const complexityFactor = this.getComponentComplexity(component);
+      
+      // Current system state factor
+      const systemStateFactor = this.getSystemStateFactor();
+      
+      // Risk factor
+      const riskFactor = this.getRiskFactor(component, currentScore, targetScore);
+      
+      // Calculate final effort
+      const effort = baseEffort * complexityFactor * systemStateFactor * riskFactor;
+      
+      // Ensure effort is within reasonable bounds
+      return Math.max(0.1, Math.min(10.0, effort));
+    } catch (error) {
+      this.logger.error('Error calculating expected effort:', error);
+      return 1.0; // Default effort
+    }
+  }
+
+  /**
+   * Get component complexity factor
+   */
+  private getComponentComplexity(component: string): number {
+    const complexityMap: { [key: string]: number } = {
+      'neural': 1.2,
+      'consciousness': 1.5,
+      'learning': 1.1,
+      'reasoning': 1.3,
+      'creativity': 1.4,
+      'memory': 1.0,
+      'perception': 1.1,
+      'decision': 1.3
+    };
+    
+    return complexityMap[component] || 1.0;
+  }
+
+  /**
+   * Get system state factor
+   */
+  private getSystemStateFactor(): number {
+    const stability = this.architecture.stability;
+    const modificationCount = this.architecture.modificationCount;
+    
+    // Higher stability and fewer modifications = lower effort
+    const stabilityFactor = 2.0 - stability; // Inverted: higher stability = lower factor
+    const modificationFactor = 1.0 + (modificationCount * 0.1); // More modifications = higher effort
+    
+    return stabilityFactor * modificationFactor;
+  }
+
+  /**
+   * Get risk factor for effort calculation
+   */
+  private getRiskFactor(component: string, currentScore: number, targetScore: number): number {
+    const scoreGap = targetScore - currentScore;
+    const componentRisk = this.getComponentRisk(component);
+    
+    // Higher score gap and component risk = higher effort
+    return 1.0 + (scoreGap * componentRisk);
+  }
+
+  /**
+   * Get component risk level
+   */
+  private getComponentRisk(component: string): number {
+    const riskMap: { [key: string]: number } = {
+      'consciousness': 0.8,
+      'neural': 0.6,
+      'learning': 0.4,
+      'reasoning': 0.5,
+      'creativity': 0.7,
+      'memory': 0.3,
+      'perception': 0.4,
+      'decision': 0.6
+    };
+    
+    return riskMap[component] || 0.5;
   }
 }

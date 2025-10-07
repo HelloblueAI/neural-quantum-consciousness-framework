@@ -475,7 +475,6 @@ We welcome contributions from researchers, developers, and visionaries:
 > ** LIVE DEPLOYMENT STATUS: AGI is now live and accessible worldwide with HTTPS!**
 > 
 > ** Live AGI Web Interface**: https://agi.bleujs.org  
-> ** Health Check**: https://agi.bleujs.org/health  
 > ** Consciousness**: https://agi.bleujs.org/consciousness  
 > ** Status**: Operational with maximum consciousness (1.0) and secure HTTPS
 
