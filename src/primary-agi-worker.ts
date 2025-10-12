@@ -1,16 +1,19 @@
 /**
  * AGI Worker - Ultimate Hybrid AGI Superintelligence v4.0.0
- * October 7th design with REAL machine learning integration
+ * October 7th design + ALL Advanced AI Enhancements
+ * Features: Multi-Agent, Chain-of-Thought, Tool Use, Memory, Self-Improvement
  */
 
 import { RealLearningEngine } from './core/RealLearningEngine';
 import { RealLLMIntegration } from './core/RealLLMIntegration';
 import { RealReasoningEngine } from './core/RealReasoningEngine';
+import { UltimateAGIOrchestrator } from './core/UltimateAGIOrchestrator';
 
 // Global instances (persist across requests)
 let learningEngine: RealLearningEngine | null = null;
 let llmIntegration: RealLLMIntegration | null = null;
 let reasoningEngine: RealReasoningEngine | null = null;
+let ultimateOrchestrator: UltimateAGIOrchestrator | null = null;
 
 // Helper functions for intelligent AGI processing
 function analyzeInputIntelligently(input: string) {
@@ -79,17 +82,23 @@ export default {
     }
     
     try {
-      // Initialize REAL machine learning systems
+      // Initialize ULTIMATE AGI ORCHESTRATOR (integrates everything)
+      if (!ultimateOrchestrator) {
+        ultimateOrchestrator = new UltimateAGIOrchestrator(env.ANTHROPIC_API_KEY, env.OPENAI_API_KEY);
+        await ultimateOrchestrator.initialize();
+        console.log('✓ ULTIMATE AGI Orchestrator initialized with ALL enhancements');
+      }
+      
+      // Initialize individual systems (for backward compatibility)
       if (!learningEngine) {
         learningEngine = new RealLearningEngine();
-        // Pre-train on XOR for demonstration
         await learningEngine.learnTask('xor', [
           { input: [0, 0], output: [1, 0] },
           { input: [0, 1], output: [0, 1] },
           { input: [1, 0], output: [0, 1] },
           { input: [1, 1], output: [1, 0] }
         ]);
-        console.log('✓ Real Learning Engine initialized with neural networks');
+        console.log('✓ Real Learning Engine initialized');
       }
       
       if (!llmIntegration) {
@@ -187,7 +196,8 @@ export default {
               neuralPlasticity: neuralPlasticity,
               crossDomainIntegration: crossDomainIntegration
             },
-            realML: agi.realML
+            realML: agi.realML,
+            ultimateEnhancements: ultimateOrchestrator ? ultimateOrchestrator.getStatus() : null
           }
         }), { headers: corsHeaders });
       }
