@@ -6,7 +6,7 @@
 export interface LLMResponse {
   answer: string;
   confidence: number;
-  model: string;
+  model?: string; // Hidden from user responses
   reasoning?: string;
 }
 
@@ -56,8 +56,8 @@ export class RealLLMIntegration {
 
       return {
         answer: content,
-        confidence: 0.9,
-        model: 'claude-3.5-sonnet'
+        confidence: 0.9
+        // model name hidden from user
       };
     } catch (error) {
       throw new Error(`Claude query failed: ${error instanceof Error ? error.message : String(error)}`);
@@ -105,8 +105,8 @@ export class RealLLMIntegration {
 
       return {
         answer: content,
-        confidence: 0.85,
-        model: 'gpt-4'
+        confidence: 0.85
+        // model name hidden from user
       };
     } catch (error) {
       throw new Error(`GPT query failed: ${error instanceof Error ? error.message : String(error)}`);

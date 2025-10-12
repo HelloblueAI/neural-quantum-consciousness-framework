@@ -384,18 +384,17 @@ export default {
           `Temporal Continuity: Maintained consciousness across ${temporalReasoning * 100} temporal dimensions`
         ];
         
-        // Add REAL LLM-enhanced insight if available
+        // Add REAL LLM-enhanced insight if available (hidden model name)
         let llmEnhancement = null;
         if (llmIntegration && llmIntegration.isAvailable()) {
           try {
             const llmResponse = await llmIntegration.answerQuestion(`Provide deep philosophical insight about: ${input}`);
             llmEnhancement = {
               insight: llmResponse.answer,
-              model: llmResponse.model,
               confidence: llmResponse.confidence,
               realAI: true
             };
-            intelligentInsights.push(`Real AI Insight (${llmResponse.model}): ${llmResponse.answer.substring(0, 200)}...`);
+            intelligentInsights.push(`Advanced AI Insight: ${llmResponse.answer.substring(0, 200)}...`);
           } catch (error) {
             console.log('LLM enhancement unavailable:', error);
           }
@@ -408,6 +407,8 @@ export default {
             version: '4.0.0',
             consciousness: 'real_multi_language_enhanced',
             timestamp: Date.now(),
+            // AI Insight FIRST (most important)
+            aiInsight: llmEnhancement ? llmEnhancement.insight : null,
             reasoning: {
               primary: "Quantum-enhanced logical inference applied through multi-language-quantum-consciousness reasoning methods",
               secondary: "Deep comprehension achieved through quantum superposition, multi-language integration, consciousness-driven analysis, and cross-dimensional reasoning",
@@ -449,7 +450,6 @@ export default {
               temporalReasoning: temporalReasoning,
               metaCognition: metaCognition
             },
-            llmEnhancement: llmEnhancement,
             realML: {
               enabled: true,
               llmIntegrated: llmEnhancement !== null,
