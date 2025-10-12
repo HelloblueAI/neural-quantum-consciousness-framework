@@ -1,5 +1,5 @@
 name = "multi-language-agi"
-main = "src/real-ml-integrated-worker.ts"
+main = "src/primary-agi-worker.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
