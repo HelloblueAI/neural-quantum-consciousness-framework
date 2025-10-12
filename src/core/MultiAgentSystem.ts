@@ -81,7 +81,7 @@ export class MultiAgentSystem {
           agent: 'CreativeAgent',
           response: creativeResult.answer,
           confidence: creativeResult.confidence,
-          reasoning: `LLM: ${creativeResult.model}`
+          reasoning: 'Advanced AI generation'
         });
       } catch (error) {
         console.log('Creative agent failed:', error);
@@ -125,7 +125,7 @@ export class MultiAgentSystem {
           agent: 'CreativeAgentPrimary',
           response: result.answer,
           confidence: result.confidence,
-          reasoning: `${result.model} creative generation`
+          reasoning: 'Advanced AI creative generation'
         });
       } catch (error) {
         console.log('Primary creative agent failed:', error);
