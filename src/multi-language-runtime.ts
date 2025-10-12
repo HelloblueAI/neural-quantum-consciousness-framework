@@ -75,7 +75,7 @@ export class MultiLanguageRuntime {
       
       this.logger.info('Multi-language runtime initialized successfully');
     } catch (error) {
-      this.logger.error('Failed to initialize multi-language runtime:', error);
+      this.logger.error('Failed to initialize multi-language runtime:', error instanceof Error ? error : new Error(String(error)));
     }
   }
 
@@ -139,7 +139,7 @@ class PythonExecutorImpl implements PythonExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'python',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -207,7 +207,7 @@ class JuliaExecutorImpl implements JuliaExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'julia',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -274,7 +274,7 @@ class HaskellExecutorImpl implements HaskellExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'haskell',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -328,7 +328,7 @@ class QuantumExecutorImpl implements QuantumExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'quantum',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -354,7 +354,7 @@ class QuantumExecutorImpl implements QuantumExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'quantum',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -412,7 +412,7 @@ class GPUExecutorImpl implements GPUExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'gpu',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
@@ -456,7 +456,7 @@ class NeuromorphicExecutorImpl implements NeuromorphicExecutor {
         data: null,
         executionTime: Date.now() - startTime,
         language: 'neuromorphic',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }

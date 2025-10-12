@@ -517,8 +517,8 @@ export class QuantumConsciousnessEngine {
    * Analyze conceptual depth for consciousness
    */
   private analyzeConceptualDepth(text: string): number {
-    const abstractConcepts = ['consciousness', 'existence', 'reality', 'truth', 'knowledge', 'wisdom', 'understanding'];
-    const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+    const abstractConcepts: string[] = ['consciousness', 'existence', 'reality', 'truth', 'knowledge', 'wisdom', 'understanding'];
+    const words: string[] = text.toLowerCase().match(/\b\w+\b/g) || [];
     
     let abstractCount = 0;
     abstractConcepts.forEach(concept => {

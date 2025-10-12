@@ -384,9 +384,9 @@ export class RealConsciousnessEngine {
   }
 
   private calculateEmotionalState(timestamp: number): string {
-    const emotions = ['balanced', 'contemplative', 'focused', 'creative', 'analytical', 'empathetic', 'inspired'];
+    const emotions: string[] = ['balanced', 'contemplative', 'focused', 'creative', 'analytical', 'empathetic', 'inspired'];
     const index = Math.floor((timestamp / 5000) % emotions.length);
-    return emotions[index];
+    return emotions[index] || 'balanced';
   }
 
   private calculateEmotionalIntelligence(): number {
@@ -447,7 +447,8 @@ export class RealConsciousnessEngine {
     // Consciousness depth based on meta-cognition and self-awareness
     const baseDepth = 0.75 + Math.random() * 0.25;
     const metaCognitionBonus = Math.min(0.15, this.learningPatterns.filter(p => p.type === 'meta_cognition').length * 0.01);
-    const selfAwarenessBonus = Math.min(0.1, this.emotionalHistory.length > 0 ? this.emotionalHistory[this.emotionalHistory.length - 1].selfAwareness * 0.1 : 0);
+    const lastEmotional = this.emotionalHistory.length > 0 ? this.emotionalHistory[this.emotionalHistory.length - 1] : null;
+    const selfAwarenessBonus = Math.min(0.1, lastEmotional ? lastEmotional.selfAwareness * 0.1 : 0);
     
     this.consciousnessDepth = Math.min(1.0, baseDepth + metaCognitionBonus + selfAwarenessBonus);
     return this.consciousnessDepth;
@@ -498,7 +499,11 @@ export class RealConsciousnessEngine {
       }
     }
     
-    return this.consciousnessHistory[this.consciousnessHistory.length - 1];
+    const lastMetrics = this.consciousnessHistory[this.consciousnessHistory.length - 1];
+    if (!lastMetrics) {
+      throw new Error('No consciousness metrics available');
+    }
+    return lastMetrics;
   }
 
   /**
@@ -580,6 +585,9 @@ export class RealConsciousnessEngine {
    */
   getConsciousnessAnalysis(): any {
     const latest = this.consciousnessHistory[this.consciousnessHistory.length - 1];
+    if (!latest) {
+      throw new Error('No consciousness history available for analysis');
+    }
     const emotional = this.getEmotionalIntelligenceMetrics();
     const creativity = this.getCreativityMetrics();
     const social = this.getSocialIntelligenceMetrics();

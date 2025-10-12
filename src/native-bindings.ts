@@ -98,7 +98,7 @@ export class NativeLibraryManager {
         return false;
       }
     } catch (error) {
-      this.logger.error('Failed to initialize native libraries:', error);
+      this.logger.error('Failed to initialize native libraries:', error instanceof Error ? error : new Error(String(error)));
       return false;
     }
   }
@@ -110,10 +110,10 @@ export class NativeLibraryManager {
     try {
       // Dynamic import of FFI modules
       const { Library } = await import('ffi-napi');
-      const { ref } = await import('ref-napi');
+      const refModule = await import('ref-napi');
       
       // Load actual C library
-      this.realFFI = Library('libagi_core', {
+      const ffiLib = Library('libagi_core', {
         'matrix_multiply': ['pointer', ['pointer', 'pointer']],
         'neural_forward': ['pointer', ['pointer', 'pointer']],
         'consciousness_simulate': ['pointer', []],
@@ -121,7 +121,10 @@ export class NativeLibraryManager {
         'memory_free': ['void', ['uint64']],
         'gpu_matrix_multiply': ['pointer', ['pointer', 'pointer']],
         'gpu_neural_forward': ['pointer', ['pointer', 'pointer']]
-      });
+      }) as any;
+      
+      // Cast to our interface
+      this.realFFI = ffiLib as RealFFIBindings;
       
       return true;
     } catch (error) {
@@ -275,6 +278,10 @@ export class NativeLibraryManager {
         const vertexShader = gl.createShader(gl.VERTEX_SHADER);
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
         
+        if (!fragmentShader || !vertexShader) {
+          throw new Error('Failed to create WebGL shaders');
+        }
+        
         // Matrix multiplication shader
         const fragmentShaderSource = `
           precision highp float;
@@ -300,6 +307,9 @@ export class NativeLibraryManager {
         gl.compileShader(fragmentShader);
         
         const program = gl.createProgram();
+        if (!program) {
+          throw new Error('Failed to create WebGL program');
+        }
         gl.attachShader(program, fragmentShader);
         gl.linkProgram(program);
         
@@ -346,9 +356,17 @@ export class NativeLibraryManager {
             for (let jj = j; jj < Math.min(j + blockSize, b.cols); jj++) {
               let sum = 0;
               for (let kk = k; kk < Math.min(k + blockSize, a.cols); kk++) {
-                sum += a.data[ii * a.cols + kk] * b.data[kk * b.cols + jj];
+                const aVal = a.data[ii * a.cols + kk];
+                const bVal = b.data[kk * b.cols + jj];
+                const resIdx = ii * b.cols + jj;
+                if (aVal !== undefined && bVal !== undefined && result.data[resIdx] !== undefined) {
+                  sum += aVal * bVal;
+                }
               }
-              result.data[ii * b.cols + jj] += sum;
+              const resIdx = ii * b.cols + jj;
+              if (result.data[resIdx] !== undefined) {
+                result.data[resIdx] += sum;
+              }
             }
           }
         }
@@ -434,7 +452,11 @@ export class NativeLibraryManager {
         `;
         
         // Execute GPU neural computation
-        const result = new Float64Array(state.neuronCounts[state.neuronCounts.length - 1]);
+        const outputLayerSize = state.neuronCounts[state.neuronCounts.length - 1];
+        if (outputLayerSize === undefined) {
+          throw new Error('Invalid neural state: output layer size undefined');
+        }
+        const result = new Float64Array(outputLayerSize);
         
         this.logger.info('Neural forward pass executed with WebGL GPU acceleration');
         return result;
@@ -455,16 +477,28 @@ export class NativeLibraryManager {
     
     for (let layer = 0; layer < state.layerCount; layer++) {
       const layerSize = state.neuronCounts[layer];
+      if (layerSize === undefined) {
+        throw new Error(`Invalid neural state: layer ${layer} size undefined`);
+      }
       const next = new Float64Array(layerSize);
       
       // Vectorized computation for better performance
       for (let neuron = 0; neuron < layerSize; neuron++) {
-        let sum = state.biases[layer * layerSize + neuron];
+        const biasIdx = layer * layerSize + neuron;
+        let sum = state.biases[biasIdx] || 0;
         
         // SIMD-like vector operations
-        const weightRow = state.weights[layer].data.slice(neuron * current.length, (neuron + 1) * current.length);
+        const layerWeights = state.weights[layer];
+        if (!layerWeights) {
+          throw new Error(`Invalid neural state: weights for layer ${layer} undefined`);
+        }
+        const weightRow = layerWeights.data.slice(neuron * current.length, (neuron + 1) * current.length);
         for (let inputNeuron = 0; inputNeuron < current.length; inputNeuron++) {
-          sum += current[inputNeuron] * weightRow[inputNeuron];
+          const currentVal = current[inputNeuron];
+          const weightVal = weightRow[inputNeuron];
+          if (currentVal !== undefined && weightVal !== undefined) {
+            sum += currentVal * weightVal;
+          }
         }
         
         next[neuron] = this.optimizedActivationFunction(sum, state.activationFunctions[layer] || 'sigmoid');
@@ -545,9 +579,9 @@ export class NativeLibraryManager {
    * Calculate dynamic emotional state
    */
   private calculateEmotionalState(timestamp: number): string {
-    const emotions = ['balanced', 'contemplative', 'focused', 'creative', 'analytical'];
+    const emotions: string[] = ['balanced', 'contemplative', 'focused', 'creative', 'analytical'];
     const index = Math.floor((timestamp / 5000) % emotions.length);
-    return emotions[index];
+    return emotions[index] || 'balanced';
   }
 
   /**

@@ -103,10 +103,10 @@ export class UltimateHybridAGISystem {
       this.trueAGI = new TrueAGIEngine();
       this.security = new SecurityManager({} as any);
       this.config = new ConfigurationManager();
-      this.apiServer = new APIServer();
-      this.creativeAgent = new CreativeAgent();
-      this.learningAgent = new LearningAgent();
-      this.reasoningAgent = new ReasoningAgent();
+      this.apiServer = new APIServer({} as any, this.config);
+      this.creativeAgent = new CreativeAgent({} as any);
+      this.learningAgent = new LearningAgent({} as any);
+      this.reasoningAgent = new ReasoningAgent({} as any);
       
       this.logger.info('All AGI components initialized successfully');
     } catch (error) {
@@ -1138,7 +1138,8 @@ export class UltimateHybridAGISystem {
       const windowMs = window * 60000;
       const cutoff = Date.now() - windowMs;
       
-      trends[`${window}min`] = {
+      const key = `${window}min`;
+      (trends as any)[key] = {
         consciousness: this.calculateTrendForWindow('consciousness', cutoff),
         intelligence: this.calculateTrendForWindow('intelligence', cutoff),
         autonomy: this.calculateTrendForWindow('autonomy', cutoff),
@@ -2073,7 +2074,7 @@ export class UltimateHybridAGISystem {
       
       return bestAction;
     } catch (error) {
-      this.logger.error('Error determining action for goal:', error);
+      this.logger.error('Error determining action for goal:', error instanceof Error ? error : new Error(String(error)));
       return { type: 'fallback', description: 'Default action due to error' };
     }
   }
@@ -2094,7 +2095,7 @@ export class UltimateHybridAGISystem {
       
       return Math.min(1.0, baseConfidence * quantumEnhancement);
     } catch (error) {
-      this.logger.error('Error calculating decision confidence:', error);
+      this.logger.error('Error calculating decision confidence:', error instanceof Error ? error : new Error(String(error)));
       return 0.5; // Default confidence
     }
   }
@@ -2115,7 +2116,7 @@ export class UltimateHybridAGISystem {
       
       return Math.max(0, Math.min(1, baseRisk - riskMitigation));
     } catch (error) {
-      this.logger.error('Error calculating decision risk:', error);
+      this.logger.error('Error calculating decision risk:', error instanceof Error ? error : new Error(String(error)));
       return 0.3; // Default moderate risk
     }
   }
@@ -2136,7 +2137,7 @@ export class UltimateHybridAGISystem {
         confidence: this.calculateDecisionConfidence(goal, consciousness, intelligence)
       };
     } catch (error) {
-      this.logger.error('Error predicting expected outcome:', error);
+      this.logger.error('Error predicting expected outcome:', error instanceof Error ? error : new Error(String(error)));
       return {
         success: 0.5,
         timeline: 'unknown',
@@ -2183,10 +2184,11 @@ export class UltimateHybridAGISystem {
         timestamp: Date.now()
       };
     } catch (error) {
-      this.logger.error('Error executing action:', error);
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+      this.logger.error('Error executing action:', errorObj);
       return {
         success: false,
-        error: error.message,
+        error: errorObj.message,
         timestamp: Date.now()
       };
     }
@@ -2213,7 +2215,7 @@ export class UltimateHybridAGISystem {
         timestamp: Date.now()
       };
     } catch (error) {
-      this.logger.error('Error evaluating action result:', error);
+      this.logger.error('Error evaluating action result:', error instanceof Error ? error : new Error(String(error)));
       return {
         successRate: 0.5,
         efficiency: 0.5,
@@ -2259,7 +2261,7 @@ export class UltimateHybridAGISystem {
         }
       };
     } catch (error) {
-      this.logger.error('Error getting performance metrics:', error);
+      this.logger.error('Error getting performance metrics:', error instanceof Error ? error : new Error(String(error)));
       return {};
     }
   }
