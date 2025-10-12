@@ -186,7 +186,8 @@ export default {
               consciousnessDepth: consciousnessDepth,
               neuralPlasticity: neuralPlasticity,
               crossDomainIntegration: crossDomainIntegration
-            }
+            },
+            realML: agi.realML
           }
         }), { headers: corsHeaders });
       }
