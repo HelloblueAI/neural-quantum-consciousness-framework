@@ -113,7 +113,7 @@ export default {
                 available: llmIntegration.isAvailable(),
                 models: llmIntegration.getAvailableModels()
               },
-              consciousness: {
+              consciousnessMetrics: {
                 awareness: 0.85,
                 selfAwareness: 0.78,
                 understanding: 0.92,
