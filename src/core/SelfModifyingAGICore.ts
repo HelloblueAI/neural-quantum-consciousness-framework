@@ -473,9 +473,9 @@ export class SelfModifyingAGICore {
       method: 'consciousness_integrated_creativity',
       parameters: {
         enhancementFactor: (improvement.targetScore - improvement.currentScore) * 1.2,
-        consciousnessIntegration: Math.min(1, this.architecture.creativity.get('consciousness_integration') + 0.05),
-        crossDomainIntegration: Math.min(1, this.architecture.creativity.get('cross_domain_integration') + 0.04),
-        novelty: Math.min(1, this.architecture.creativity.get('novelty') + 0.03)
+        consciousnessIntegration: Math.min(1, (this.architecture.creativity.get('consciousness_integration') || 0) + 0.05),
+        crossDomainIntegration: Math.min(1, (this.architecture.creativity.get('cross_domain_integration') || 0) + 0.04),
+        novelty: Math.min(1, (this.architecture.creativity.get('novelty') || 0) + 0.03)
       },
       expectedDuration: 1100 + Math.random() * 2100,
       validation: 'creativity_verification'
@@ -592,10 +592,8 @@ export class SelfModifyingAGICore {
         modification.status = 'failed';
         modification.error = (error as Error).message;
         
-        this.logger.error('Modification execution failed', { 
-          id: modification.id, 
-          error: modification.error 
-        });
+        this.logger.error(`Modification execution failed: ${modification.id}`, 
+          error instanceof Error ? error : new Error(String(error)));
       }
     }
 
@@ -931,9 +929,9 @@ export class SelfModifyingAGICore {
     
     // Update version
     const currentVersion = this.architecture.version.split('.');
-    const major = parseInt(currentVersion[0]);
-    const minor = parseInt(currentVersion[1]);
-    const patch = parseInt(currentVersion[2]);
+    const major = parseInt(currentVersion[0] || '0');
+    const minor = parseInt(currentVersion[1] || '0');
+    const patch = parseInt(currentVersion[2] || '0');
     
     if (modifications.length > 0) {
       this.architecture.version = `${major}.${minor}.${patch + 1}`;
@@ -1026,7 +1024,7 @@ export class SelfModifyingAGICore {
       // Ensure effort is within reasonable bounds
       return Math.max(0.1, Math.min(10.0, effort));
     } catch (error) {
-      this.logger.error('Error calculating expected effort:', error);
+      this.logger.error('Error calculating expected effort:', error instanceof Error ? error : new Error(String(error)));
       return 1.0; // Default effort
     }
   }

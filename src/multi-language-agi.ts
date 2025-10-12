@@ -355,6 +355,9 @@ export class MultiLanguageAGI extends EventEmitter {
         if (engines.length === 1) {
             // Single engine result
             const engineName = engines[0];
+            if (!engineName) {
+                throw new Error('Invalid engine name');
+            }
             const result = results[engineName];
             
             return {
@@ -396,7 +399,7 @@ export class MultiLanguageAGI extends EventEmitter {
         
         if (outputs[0] && typeof outputs[0] === 'number') {
             // Numeric outputs
-            return outputs.reduce((sum, output, i) => sum + output * weights[i], 0);
+            return outputs.reduce((sum, output, i) => sum + (output as number) * (weights[i] || 0), 0);
         }
         
         if (outputs[0] && Array.isArray(outputs[0])) {
@@ -405,7 +408,7 @@ export class MultiLanguageAGI extends EventEmitter {
             outputs.forEach((output, i) => {
                 if (output && Array.isArray(output)) {
                   output.forEach((val: number, j: number) => {
-                      result[j] += val * weights[i];
+                      result[j] += val * (weights[i] || 0);
                   });
                 }
             });
@@ -420,7 +423,7 @@ export class MultiLanguageAGI extends EventEmitter {
             keys.forEach(key => {
                 if (outputs[0] && typeof outputs[0][key] === 'number') {
                     result[key] = outputs.reduce((sum, output, i) => 
-                        sum + (output?.[key] || 0) * weights[i], 0);
+                        sum + (output?.[key] || 0) * (weights[i] || 0), 0);
                 } else {
                     // For non-numeric values, use the highest confidence result
                     if (weights.length > 0) {
@@ -710,11 +713,32 @@ export class MultiLanguageAGI extends EventEmitter {
     }
 
     /**
+     * Get performance metrics from history
+     */
+    private getPerformanceMetrics(): PerformanceMetrics | null {
+        if (this.performanceHistory.length === 0) {
+            return null;
+        }
+        return this.performanceHistory[this.performanceHistory.length - 1] || null;
+    }
+
+    /**
      * Get comprehensive system metrics for website dashboard
      */
     getSystemMetrics(): any {
         const performance = this.getPerformanceMetrics();
         const capabilities = Array.from(this.capabilities.values());
+        
+        // Default performance metrics if none available
+        const defaultPerf = {
+            totalOperations: 0,
+            operationsPerSecond: 0,
+            memoryUsage: 0,
+            cacheHitRatio: 0,
+            parallelEfficiency: 0
+        };
+        
+        const perf = performance || defaultPerf;
         
         return {
             system: {
@@ -724,11 +748,11 @@ export class MultiLanguageAGI extends EventEmitter {
                 uptime: this.isInitialized ? Date.now() - (this as any).startTime : 0
             },
             performance: {
-                totalOperations: performance.totalOperations,
-                operationsPerSecond: performance.operationsPerSecond,
-                memoryUsage: performance.memoryUsage,
-                cacheHitRatio: performance.cacheHitRatio,
-                averageResponseTime: performance.averageResponseTime,
+                totalOperations: perf.totalOperations,
+                operationsPerSecond: perf.operationsPerSecond,
+                memoryUsage: perf.memoryUsage,
+                cacheHitRatio: perf.cacheHitRatio,
+                parallelEfficiency: perf.parallelEfficiency,
                 languageEngines: capabilities.length
             },
             capabilities: {
@@ -744,10 +768,10 @@ export class MultiLanguageAGI extends EventEmitter {
                 performanceOptimization: true
             },
             metrics: {
-                totalRequests: performance.totalOperations,
-                successfulRequests: performance.totalOperations,
+                totalRequests: perf.totalOperations,
+                successfulRequests: perf.totalOperations,
                 failedRequests: 0,
-                averageResponseTime: `${performance.averageResponseTime.toFixed(2)}ms`
+                averageResponseTime: `${(1000 / (perf.operationsPerSecond || 1)).toFixed(2)}ms`
             }
         };
     }
