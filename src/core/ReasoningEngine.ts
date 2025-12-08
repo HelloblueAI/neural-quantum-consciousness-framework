@@ -98,7 +98,7 @@ export class ReasoningEngine {
       ]);
 
       // Initialize tensor logic engine
-      this.tensorLogicEngine.initializeDefaultRules();
+      await this.tensorLogicEngine.initializeDefaultRules();
 
       // Set up reasoning strategies
       this.setupReasoningStrategies();

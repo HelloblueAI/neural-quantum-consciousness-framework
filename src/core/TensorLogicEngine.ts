@@ -61,12 +61,28 @@ export class TensorLogicEngine {
   private rules: Map<string, TensorLogicRule> = new Map();
   private conceptEmbeddings: Map<string, Embedding> = new Map();
   private tensorCache: Map<string, Tensor> = new Map();
+  private enhancements?: any; // TensorLogicEngineEnhancements (circular dependency, use any)
 
   constructor(embeddingDimension: number = 128) {
     this.logger = new Logger('TensorLogicEngine');
     this.embeddingDimension = embeddingDimension;
     this.initializeTensorOperations();
     this.initializeLogicalOperators();
+  }
+
+  /**
+   * Set enhancements module (to avoid circular dependency)
+   */
+  public setEnhancements(enhancements: any): void {
+    this.enhancements = enhancements;
+    this.logger.info('Tensor Logic enhancements enabled');
+  }
+
+  /**
+   * Get enhancements module
+   */
+  public getEnhancements(): any {
+    return this.enhancements;
   }
 
   /**
@@ -87,12 +103,47 @@ export class TensorLogicEngine {
   /**
    * Create an embedding for a concept
    */
-  public createEmbedding(concept: string, domain?: string): Embedding {
+  public async createEmbedding(concept: string, domain?: string): Promise<Embedding> {
     if (this.conceptEmbeddings.has(concept)) {
       return this.conceptEmbeddings.get(concept)!;
     }
 
-    // Generate embedding vector (in production, this would use a learned embedding model)
+    let embedding: Embedding;
+
+    // Use learned embeddings if enhancements are available
+    if (this.enhancements) {
+      try {
+        embedding = await this.enhancements.generateLearnedEmbedding(concept);
+        embedding.domain = domain;
+        this.conceptEmbeddings.set(concept, embedding);
+        return embedding;
+      } catch (error) {
+        this.logger.warn('Failed to use learned embedding, falling back to hash-based', error as Error);
+      }
+    }
+
+    // Fallback: Generate embedding vector (in production, this would use a learned embedding model)
+    const vector = this.generateEmbeddingVector(concept, domain);
+    
+    embedding = {
+      vector,
+      dimension: this.embeddingDimension,
+      concept,
+      domain
+    };
+
+    this.conceptEmbeddings.set(concept, embedding);
+    return embedding;
+  }
+
+  /**
+   * Synchronous version for backward compatibility
+   */
+  public createEmbeddingSync(concept: string, domain?: string): Embedding {
+    if (this.conceptEmbeddings.has(concept)) {
+      return this.conceptEmbeddings.get(concept)!;
+    }
+
     const vector = this.generateEmbeddingVector(concept, domain);
     
     const embedding: Embedding = {
@@ -319,7 +370,7 @@ export class TensorLogicEngine {
 
       // Convert input to embeddings if needed
       const embeddings = typeof input === 'string' 
-        ? this.extractConceptsFromInput(input).map(c => this.createEmbedding(c))
+        ? await Promise.all(this.extractConceptsFromInput(input).map(c => this.createEmbedding(c)))
         : input;
 
       // Create input tensor
@@ -695,15 +746,15 @@ export class TensorLogicEngine {
   /**
    * Create a rule from premise and conclusion embeddings
    */
-  public createRule(
+  public async createRule(
     id: string,
     premiseConcepts: string[],
     conclusionConcepts: string[],
     type: 'deductive' | 'inductive' | 'abductive' = 'deductive',
     weight: number = 1.0
-  ): TensorLogicRule {
-    const premiseEmbeddings = premiseConcepts.map(c => this.createEmbedding(c));
-    const conclusionEmbeddings = conclusionConcepts.map(c => this.createEmbedding(c));
+  ): Promise<TensorLogicRule> {
+    const premiseEmbeddings = await Promise.all(premiseConcepts.map(c => this.createEmbedding(c)));
+    const conclusionEmbeddings = await Promise.all(conclusionConcepts.map(c => this.createEmbedding(c)));
     
     const premise = this.createTensor(premiseEmbeddings);
     const conclusion = this.createTensor(conclusionEmbeddings);
@@ -738,9 +789,9 @@ export class TensorLogicEngine {
   /**
    * Initialize with default logical rules
    */
-  public initializeDefaultRules(): void {
+  public async initializeDefaultRules(): Promise<void> {
     // Modus Ponens: If P then Q, P, therefore Q
-    this.createRule(
+    await this.createRule(
       'modus_ponens',
       ['if', 'then', 'premise'],
       ['conclusion'],
@@ -749,7 +800,7 @@ export class TensorLogicEngine {
     );
 
     // Modus Tollens: If P then Q, not Q, therefore not P
-    this.createRule(
+    await this.createRule(
       'modus_tollens',
       ['if', 'then', 'not', 'conclusion'],
       ['not', 'premise'],
@@ -758,7 +809,7 @@ export class TensorLogicEngine {
     );
 
     // Transitivity: If P then Q, If Q then R, therefore If P then R
-    this.createRule(
+    await this.createRule(
       'transitivity',
       ['if', 'then', 'premise', 'intermediate'],
       ['if', 'then', 'premise', 'conclusion'],
@@ -767,7 +818,7 @@ export class TensorLogicEngine {
     );
 
     // Conjunction Introduction: P, Q, therefore P AND Q
-    this.createRule(
+    await this.createRule(
       'conjunction_intro',
       ['premise', 'premise'],
       ['and', 'conclusion'],
@@ -776,7 +827,7 @@ export class TensorLogicEngine {
     );
 
     // Disjunction Introduction: P, therefore P OR Q
-    this.createRule(
+    await this.createRule(
       'disjunction_intro',
       ['premise'],
       ['or', 'conclusion'],
@@ -785,7 +836,7 @@ export class TensorLogicEngine {
     );
 
     // Hypothetical Syllogism: If P then Q, If Q then R, therefore If P then R
-    this.createRule(
+    await this.createRule(
       'hypothetical_syllogism',
       ['if', 'then', 'premise', 'intermediate', 'if', 'then', 'intermediate', 'conclusion'],
       ['if', 'then', 'premise', 'conclusion'],
