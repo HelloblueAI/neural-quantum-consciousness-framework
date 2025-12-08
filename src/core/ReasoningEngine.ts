@@ -15,6 +15,7 @@ import { QuantumLogic } from './reasoning/QuantumLogic';
 import { DecisionEngine } from './reasoning/DecisionEngine';
 import { InferenceEngine } from './reasoning/InferenceEngine';
 import { ProblemSolver } from './reasoning/ProblemSolver';
+import { TensorLogicEngine } from './TensorLogicEngine';
 
 interface NeuralQuantumState {
   superposition: any[];
@@ -45,6 +46,7 @@ export class ReasoningEngine {
   private decisionEngine: DecisionEngine;
   private inferenceEngine: InferenceEngine;
   private problemSolver: ProblemSolver;
+  private tensorLogicEngine: TensorLogicEngine;
   
   private reasoningHistory: ReasoningResult[] = [];
   private reasoningStrategies: Map<string, any> = new Map();
@@ -66,6 +68,7 @@ export class ReasoningEngine {
     this.decisionEngine = new DecisionEngine();
     this.inferenceEngine = new InferenceEngine();
     this.problemSolver = new ProblemSolver();
+    this.tensorLogicEngine = new TensorLogicEngine();
     
     // Initialize neural quantum state
     this.neuralQuantumState = {
@@ -93,6 +96,9 @@ export class ReasoningEngine {
         this.inferenceEngine.initialize(),
         this.problemSolver.initialize()
       ]);
+
+      // Initialize tensor logic engine
+      this.tensorLogicEngine.initializeDefaultRules();
 
       // Set up reasoning strategies
       this.setupReasoningStrategies();
@@ -394,6 +400,7 @@ export class ReasoningEngine {
       probabilisticAspects: this.detectProbabilisticAspects(input),
       fuzzyAspects: this.detectFuzzyAspects(input),
       quantumAspects: this.detectQuantumAspects(input),
+      tensorAspects: this.detectTensorAspects(input),
       decisionRequirements: this.detectDecisionRequirements(input, context),
       inferenceRequirements: this.detectInferenceRequirements(input),
       problemSolvingRequirements: this.detectProblemSolvingRequirements(input)
@@ -475,6 +482,15 @@ export class ReasoningEngine {
     return false;
   }
 
+  private detectTensorAspects(input: any): boolean {
+    if (typeof input === 'string') {
+      return input.includes('tensor') || input.includes('embedding') || input.includes('vector') ||
+             input.includes('matrix') || input.includes('neural symbolic') || input.includes('unified') ||
+             input.includes('einstein') || input.includes('summation');
+    }
+    return false;
+  }
+
   private detectDecisionRequirements(input: any, context?: Record<string, any>): boolean {
     if (typeof input === 'string') {
       return input.includes('choose') || input.includes('decide') || input.includes('select') ||
@@ -529,6 +545,10 @@ export class ReasoningEngine {
       strategies.push({ type: 'quantum', weight: 0.2, system: this.quantumLogic });
     }
     
+    if (analysis.tensorAspects || analysis.complexity > 0.7) {
+      strategies.push({ type: 'tensor', weight: 0.4, system: this.tensorLogicEngine });
+    }
+    
     if (analysis.decisionRequirements) {
       strategies.push({ type: 'decision', weight: 0.4, system: this.decisionEngine });
     }
@@ -569,6 +589,9 @@ export class ReasoningEngine {
             break;
           case 'quantum':
             result = await this.quantumLogic.reason(input, context);
+            break;
+          case 'tensor':
+            result = await this.tensorLogicEngine.reason(input, context);
             break;
           case 'decision':
             result = await this.decisionEngine.decide(JSON.stringify([input]), context);
@@ -820,6 +843,13 @@ export class ReasoningEngine {
       description: 'Reasoning using quantum logic principles',
       systems: ['quantum'],
       confidence: 0.5
+    });
+    
+    this.reasoningStrategies.set('tensor', {
+      name: 'Tensor Logic Reasoning',
+      description: 'Unified neural-symbolic reasoning using tensor operations',
+      systems: ['tensor'],
+      confidence: 0.85
     });
   }
 
