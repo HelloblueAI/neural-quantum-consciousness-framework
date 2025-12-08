@@ -42,12 +42,24 @@
     "deploy:heroku": "bash deploy/deploy-heroku.sh",
     "deploy:docker": "bash deploy/deploy-docker.sh",
     "deploy:cloud": "tsx deploy/cloud-deployment.js",
-    "build:worker": "tsc src/worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
-    "build:enhanced-worker": "tsc src/enhanced-agi-worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
-    "build:enhanced-web-interface": "tsc src/enhanced-web-interface-worker.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop",
-    "deploy:worker": "pnpm run build:worker && wrangler deploy",
-    "deploy:enhanced-worker": "pnpm run build:enhanced-worker && wrangler deploy",
-    "deploy:worker:prod": "pnpm run build:worker && wrangler deploy --env production"
+    "worker:dev": "wrangler dev --config wrangler.toml",
+    "worker:dev:enhanced": "wrangler dev --config wrangler.enhanced-agi.toml",
+    "worker:dev:advanced": "wrangler dev --config wrangler.advanced-agi.toml",
+    "worker:dev:real": "wrangler dev --config wrangler.real-agi.toml",
+    "worker:dev:test": "wrangler dev --config wrangler.test.toml",
+    "deploy:worker": "wrangler deploy --config wrangler.toml",
+    "deploy:worker:prod": "wrangler deploy --config wrangler.toml --env production",
+    "deploy:worker:staging": "wrangler deploy --config wrangler.toml --env staging",
+    "deploy:enhanced": "wrangler deploy --config wrangler.enhanced-agi.toml",
+    "deploy:enhanced:prod": "wrangler deploy --config wrangler.enhanced-agi.toml --env production",
+    "deploy:advanced": "wrangler deploy --config wrangler.advanced-agi.toml",
+    "deploy:advanced:prod": "wrangler deploy --config wrangler.advanced-agi.toml --env production",
+    "deploy:real": "wrangler deploy --config wrangler.real-agi.toml",
+    "deploy:real:prod": "wrangler deploy --config wrangler.real-agi.toml --env production",
+    "deploy:test": "wrangler deploy --config wrangler.test.toml --env test",
+    "worker:tail": "wrangler tail --config wrangler.toml",
+    "worker:tail:enhanced": "wrangler tail --config wrangler.enhanced-agi.toml",
+    "worker:tail:advanced": "wrangler tail --config wrangler.advanced-agi.toml"
   },
   "keywords": [
     "agi",
@@ -108,7 +120,7 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^1.0.0",
-    "wrangler": "^4.42.2"
+    "wrangler": "^4.53.0"
   },
   "engines": {
     "node": ">=18.0.0"
