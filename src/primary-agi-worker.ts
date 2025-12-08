@@ -872,11 +872,19 @@ export default {
           
           const processingTime = Date.now() - startTime;
           
+          // Safely extract result properties with defaults
+          const confidence = tensorResult?.confidence ?? 0.5;
+          const reasoning = tensorResult?.reasoning ?? {};
+          const conclusions = tensorResult?.conclusions ?? [];
+          const uncertainty = tensorResult?.uncertainty ?? { type: 'unknown', confidence: 0.5 };
+          const alternatives = tensorResult?.alternatives ?? [];
+          
           // Check if result includes tensor-specific information
-          const hasTensorData = 'tensorOperations' in tensorResult || 
-                                'embeddingSpace' in tensorResult ||
-                                'unifiedRepresentation' in tensorResult ||
-                                'neuralSymbolicFusion' in tensorResult;
+          const tensorResultAny = tensorResult as any;
+          const hasTensorData = tensorResultAny?.tensorOperations || 
+                                tensorResultAny?.embeddingSpace ||
+                                tensorResultAny?.unifiedRepresentation ||
+                                tensorResultAny?.neuralSymbolicFusion !== undefined;
           
           return new Response(JSON.stringify({
             success: true,
@@ -887,24 +895,24 @@ export default {
               timestamp: Date.now(),
               processingTime: `${processingTime}ms`,
               reasoning: {
-                confidence: tensorResult.confidence,
-                logic: tensorResult.reasoning?.logic || 'tensor',
-                steps: tensorResult.reasoning?.steps || [],
-                evidence: tensorResult.reasoning?.evidence || [],
-                assumptions: tensorResult.reasoning?.assumptions || []
+                confidence: confidence,
+                logic: reasoning?.logic || 'tensor',
+                steps: reasoning?.steps || [],
+                evidence: reasoning?.evidence || [],
+                assumptions: reasoning?.assumptions || []
               },
-              conclusions: tensorResult.conclusions || [],
-              uncertainty: tensorResult.uncertainty,
-              alternatives: tensorResult.alternatives || [],
+              conclusions: conclusions,
+              uncertainty: uncertainty,
+              alternatives: alternatives,
               // Tensor-specific data if available
               ...(hasTensorData && {
-                tensorOperations: (tensorResult as any).tensorOperations?.length || 0,
-                embeddingSpace: (tensorResult as any).embeddingSpace?.length || 0,
-                unifiedRepresentation: {
-                  rank: (tensorResult as any).unifiedRepresentation?.rank || 0,
-                  shape: (tensorResult as any).unifiedRepresentation?.shape || []
-                },
-                neuralSymbolicFusion: (tensorResult as any).neuralSymbolicFusion || 0
+                tensorOperations: tensorResultAny?.tensorOperations?.length || 0,
+                embeddingSpace: tensorResultAny?.embeddingSpace?.length || 0,
+                unifiedRepresentation: tensorResultAny?.unifiedRepresentation ? {
+                  rank: tensorResultAny.unifiedRepresentation?.rank || 0,
+                  shape: tensorResultAny.unifiedRepresentation?.shape || []
+                } : null,
+                neuralSymbolicFusion: tensorResultAny?.neuralSymbolicFusion || 0
               }),
               input: input.substring(0, 200) // Truncate for response
             }
