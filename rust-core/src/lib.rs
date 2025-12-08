@@ -8,6 +8,8 @@ pub mod consciousness;
 pub mod memory_manager;
 pub mod ffi;
 pub mod wasm;
+pub mod tensor_ops;
+pub mod tensor_ffi;
 
 use std::sync::Arc;
 use tokio::sync::RwLock;
