@@ -1,15 +1,30 @@
-name = "multi-language-agi"
+name = "agi-primary"
 main = "src/primary-agi-worker.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# Route configuration for agi.bleujs.org
+# Production route configuration
+[env.production]
+name = "agi-primary"
 routes = ["agi.bleujs.org/*"]
+# zone_id will be auto-detected or get from Cloudflare dashboard: https://dash.cloudflare.com -> Select bleujs.org -> Overview -> Zone ID
 
+# Staging environment
+[env.staging]
+name = "agi-primary-staging"
+routes = []
+
+# Development environment (no routes, use dev mode)
+[env.development]
+name = "agi-primary-dev"
+routes = []
+
+# Optional: KV namespace for persistent storage
 # [[kv_namespaces]]
 # binding = "AGI_STORAGE"
 # id = "your-kv-namespace-id"
-# preview_id = "your-kv-namespace-id"
+# preview_id = "your-kv-namespace-preview-id"
 
+# Optional: Cron triggers for scheduled tasks
 # [triggers]
 # crons = ["*/5 * * * *"] 

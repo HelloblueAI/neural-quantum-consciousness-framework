@@ -12,7 +12,7 @@ export class TensorFlowEmbeddingProvider implements LearnedEmbeddingProvider {
   private logger: Logger;
   private model: tf.LayersModel | null = null;
   private dimension: number;
-  private modelUrl?: string;
+  private modelUrl: string | undefined;
 
   constructor(dimension: number = 512, modelUrl?: string) {
     this.logger = new Logger('TensorFlowEmbeddingProvider');

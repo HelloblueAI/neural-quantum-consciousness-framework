@@ -30,7 +30,7 @@ export interface GraphicalModelNode {
   variable: string;
   parents: string[];
   tensor: Tensor;
-  conditionalProbability?: Tensor;
+  conditionalProbability: Tensor | undefined;
 }
 
 export interface KernelFunction {
@@ -73,7 +73,7 @@ export class TensorLogicEngineEnhancements {
           vector,
           dimension: vector.length,
           concept: text,
-          domain: undefined
+          domain: undefined as string | undefined
         };
       } catch (error) {
         this.logger.warn('Failed to generate learned embedding, falling back to hash-based', error as Error);
@@ -94,8 +94,8 @@ export class TensorLogicEngineEnhancements {
         return vectors.map((vector, idx) => ({
           vector,
           dimension: vector.length,
-          concept: texts[idx],
-          domain: undefined
+          concept: texts[idx] ?? '',
+          domain: undefined as string | undefined
         }));
       } catch (error) {
         this.logger.warn('Failed to generate batch embeddings, falling back', error as Error);
@@ -176,11 +176,15 @@ export class TensorLogicEngineEnhancements {
     
     // Map indices to dimensions from tensor A
     indicesA.forEach((idx, pos) => {
+      const dimA = tensorA.shape[pos];
+      if (dimA === undefined) {
+        throw new Error(`Invalid shape position ${pos} for tensor A`);
+      }
       if (!shapeMap.has(idx)) {
-        shapeMap.set(idx, tensorA.shape[pos]);
+        shapeMap.set(idx, dimA);
       } else {
         // Verify consistency
-        if (shapeMap.get(idx) !== tensorA.shape[pos]) {
+        if (shapeMap.get(idx) !== dimA) {
           throw new Error(`Inconsistent dimension for index ${idx}`);
         }
       }
@@ -188,13 +192,17 @@ export class TensorLogicEngineEnhancements {
 
     // Map indices to dimensions from tensor B
     indicesB.forEach((idx, pos) => {
+      const dimB = tensorB.shape[pos];
+      if (dimB === undefined) {
+        throw new Error(`Invalid shape position ${pos} for tensor B`);
+      }
       if (shapeMap.has(idx)) {
         // Verify consistency for contracted indices
-        if (shapeMap.get(idx) !== tensorB.shape[pos]) {
+        if (shapeMap.get(idx) !== dimB) {
           throw new Error(`Inconsistent dimension for contracted index ${idx}`);
         }
       } else {
-        shapeMap.set(idx, tensorB.shape[pos]);
+        shapeMap.set(idx, dimB);
       }
     });
 
@@ -274,17 +282,24 @@ export class TensorLogicEngineEnhancements {
         const outIdx = this.computeOutputIndex(outputShape, outputIndices, currentIndices);
 
         // Perform contraction: sum over contracted indices
-        if (contractedIndices.length > 0) {
-          // This is a simplified version - full implementation would handle all contractions
-          output[outIdx] += tensorA.data[idxA] * tensorB.data[idxB];
-        } else {
-          output[outIdx] = tensorA.data[idxA] * tensorB.data[idxB];
+        const valA = tensorA.data[idxA];
+        const valB = tensorB.data[idxB];
+        if (valA !== undefined && valB !== undefined) {
+          const currentVal = output[outIdx] ?? 0;
+          if (contractedIndices.length > 0) {
+            // This is a simplified version - full implementation would handle all contractions
+            output[outIdx] = currentVal + valA * valB;
+          } else {
+            output[outIdx] = valA * valB;
+          }
         }
         return;
       }
 
       const currentIdx = allIndices[depth];
-      const ranges = indexRanges.get(currentIdx)!;
+      if (currentIdx === undefined) return;
+      const ranges = indexRanges.get(currentIdx);
+      if (!ranges) return;
       
       for (const value of ranges) {
         currentIndices.set(currentIdx, value);
@@ -306,10 +321,16 @@ export class TensorLogicEngineEnhancements {
     tensorB: Tensor
   ): number {
     const posA = indicesA.indexOf(idx);
-    if (posA >= 0) return tensorA.shape[posA];
+    if (posA >= 0) {
+      const dim = tensorA.shape[posA];
+      if (dim !== undefined) return dim;
+    }
     
     const posB = indicesB.indexOf(idx);
-    if (posB >= 0) return tensorB.shape[posB];
+    if (posB >= 0) {
+      const dim = tensorB.shape[posB];
+      if (dim !== undefined) return dim;
+    }
     
     throw new Error(`Index ${idx} not found`);
   }
@@ -327,9 +348,13 @@ export class TensorLogicEngineEnhancements {
 
     for (let i = tensor.rank - 1; i >= 0; i--) {
       const idx = indices[i];
-      const value = indexValues.get(idx)!;
+      if (idx === undefined) continue;
+      const value = indexValues.get(idx);
+      if (value === undefined) continue;
+      const shapeDim = tensor.shape[i];
+      if (shapeDim === undefined) continue;
       index += value * stride;
-      stride *= tensor.shape[i];
+      stride *= shapeDim;
     }
 
     return index;
@@ -348,9 +373,13 @@ export class TensorLogicEngineEnhancements {
 
     for (let i = outputShape.length - 1; i >= 0; i--) {
       const idx = outputIndices[i];
-      const value = indexValues.get(idx)!;
+      if (idx === undefined) continue;
+      const value = indexValues.get(idx);
+      if (value === undefined) continue;
+      const shapeDim = outputShape[i];
+      if (shapeDim === undefined) continue;
       index += value * stride;
-      stride *= outputShape[i];
+      stride *= shapeDim;
     }
 
     return index;
@@ -412,7 +441,8 @@ export class TensorLogicEngineEnhancements {
 
     // Keep only top rules
     learnedRules.sort((a, b) => b.confidence - a.confidence);
-    const topRules = learnedRules.slice(0, config.maxRules);
+    const maxRules = config.maxRules ?? 10;
+    const topRules = learnedRules.slice(0, maxRules);
 
     this.logger.info('Rule learning completed', {
       totalRules: learnedRules.length,
@@ -434,9 +464,13 @@ export class TensorLogicEngineEnhancements {
     let normB = 0;
 
     for (let i = 0; i < minLength; i++) {
-      dotProduct += tensorA.data[i] * tensorB.data[i];
-      normA += tensorA.data[i] * tensorA.data[i];
-      normB += tensorB.data[i] * tensorB.data[i];
+      const valA = tensorA.data[i];
+      const valB = tensorB.data[i];
+      if (valA !== undefined && valB !== undefined) {
+        dotProduct += valA * valB;
+        normA += valA * valA;
+        normB += valB * valB;
+      }
     }
 
     const norm = Math.sqrt(normA) * Math.sqrt(normB);
@@ -452,14 +486,22 @@ export class TensorLogicEngineEnhancements {
       const minLength = Math.min(x.data.length, y.data.length);
       let dotProduct = 0;
       for (let i = 0; i < minLength; i++) {
-        dotProduct += x.data[i] * y.data[i];
+        const valX = x.data[i];
+        const valY = y.data[i];
+        if (valX !== undefined && valY !== undefined) {
+          dotProduct += valX * valY;
+        }
       }
       return dotProduct;
     }) as KernelFunction);
 
     // Polynomial kernel: K(x, y) = (x^T * y + c)^d
     this.kernelFunctions.set('polynomial', ((x: Tensor, y: Tensor) => {
-      const linear = this.kernelFunctions.get('linear')!(x, y);
+      const linearKernel = this.kernelFunctions.get('linear');
+      if (!linearKernel) {
+        throw new Error('Linear kernel not found');
+      }
+      const linear = linearKernel(x, y);
       const c = 1;
       const d = 2;
       return Math.pow(linear + c, d);
@@ -470,8 +512,12 @@ export class TensorLogicEngineEnhancements {
       const minLength = Math.min(x.data.length, y.data.length);
       let squaredDiff = 0;
       for (let i = 0; i < minLength; i++) {
-        const diff = x.data[i] - y.data[i];
-        squaredDiff += diff * diff;
+        const valX = x.data[i];
+        const valY = y.data[i];
+        if (valX !== undefined && valY !== undefined) {
+          const diff = valX - valY;
+          squaredDiff += diff * diff;
+        }
       }
       const gamma = 1.0;
       return Math.exp(-gamma * squaredDiff);
@@ -565,7 +611,10 @@ export class TensorLogicEngineEnhancements {
    */
   private multiplyTensors(tensorA: Tensor, tensorB: Tensor): Tensor {
     const minLength = Math.min(tensorA.data.length, tensorB.data.length);
-    const data = tensorA.data.slice(0, minLength).map((val, i) => val * tensorB.data[i]);
+    const data = tensorA.data.slice(0, minLength).map((val, i) => {
+      const valB = tensorB.data[i];
+      return valB !== undefined ? val * valB : 0;
+    });
 
     return {
       shape: tensorA.shape,
