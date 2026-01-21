@@ -30,7 +30,11 @@ export class OpenAIEmbeddingProvider implements LearnedEmbeddingProvider {
         input: text,
       });
 
-      return response.data[0].embedding;
+      const firstData = response.data[0];
+      if (!firstData) {
+        throw new Error('No embedding data returned from OpenAI');
+      }
+      return firstData.embedding;
     } catch (error) {
       this.logger.error('Failed to generate OpenAI embedding', error as Error);
       throw error;

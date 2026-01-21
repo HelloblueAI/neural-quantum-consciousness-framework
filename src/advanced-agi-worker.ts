@@ -323,7 +323,7 @@ export default {
                       line-height: 1.6;
                       color: var(--text-secondary);
                       white-space: pre-wrap;
-                      max-height: 400px;
+                      max-height: 600px;
                       overflow-y: auto;
                   }
                   
@@ -588,7 +588,7 @@ export default {
                           }
                           
                           if (!response.ok) {
-                              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                              throw new Error('HTTP ' + response.status + ': ' + response.statusText);
                           }
                           
                           const data = await response.json();

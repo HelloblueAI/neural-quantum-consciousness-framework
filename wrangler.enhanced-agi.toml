@@ -1,11 +1,20 @@
-name = "enhanced-agi-api"
-main = "dist/simple-worker.js"
+name = "enhanced-agi"
+main = "src/enhanced-agi-worker.ts"
 compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Production environment
 [env.production]
-name = "enhanced-agi-api"
-route = "api.agi.bleujs.org/*"
+name = "enhanced-agi"
+routes = ["api.agi.bleujs.org/*"]
+zone_id = "your-zone-id-here"  # Replace with actual zone ID from Cloudflare dashboard
 
+# Staging environment
 [env.staging]
-name = "enhanced-agi-api-staging"
+name = "enhanced-agi-staging"
+routes = []
+
+# Development environment
+[env.development]
+name = "enhanced-agi-dev"
+routes = []

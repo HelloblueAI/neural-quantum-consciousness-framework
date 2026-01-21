@@ -28,7 +28,7 @@ export interface Embedding {
   vector: number[];
   dimension: number;
   concept: string;
-  domain?: string;
+  domain: string | undefined;
 }
 
 export interface TensorLogicRule {
@@ -199,7 +199,11 @@ export class TensorLogicEngine {
     }
 
     // Create tensor by stacking embeddings
-    const dimension = embeddings[0].dimension;
+    const firstEmbedding = embeddings[0];
+    if (!firstEmbedding) {
+      return { shape: [0], data: [], rank: 0 };
+    }
+    const dimension = firstEmbedding.dimension;
     const data: number[] = [];
     
     for (const embedding of embeddings) {
@@ -236,8 +240,12 @@ export class TensorLogicEngine {
     
     for (let i = 0; i < minLength; i++) {
       // Element-wise maximum (fuzzy OR)
-      const maxVal = Math.max(tensorA.data[i], tensorB.data[i]);
-      data.push(maxVal);
+      const valA = tensorA.data[i];
+      const valB = tensorB.data[i];
+      if (valA !== undefined && valB !== undefined) {
+        const maxVal = Math.max(valA, valB);
+        data.push(maxVal);
+      }
     }
     
     // Normalize
@@ -275,8 +283,12 @@ export class TensorLogicEngine {
     
     for (let i = 0; i < minLength; i++) {
       // Fuzzy implication: max(1 - A, B)
-      const value = Math.max(1 - tensorA.data[i], tensorB.data[i]);
-      data.push(value);
+      const valA = tensorA.data[i];
+      const valB = tensorB.data[i];
+      if (valA !== undefined && valB !== undefined) {
+        const value = Math.max(1 - valA, valB);
+        data.push(value);
+      }
     }
     
     return {
@@ -304,6 +316,10 @@ export class TensorLogicEngine {
       const [rowsA, colsA] = tensorA.shape;
       const [rowsB, colsB] = tensorB.shape;
       
+      if (rowsA === undefined || colsA === undefined || rowsB === undefined || colsB === undefined) {
+        throw new Error('Tensor shape is incomplete');
+      }
+      
       if (colsA !== rowsB) {
         throw new Error('Tensor dimensions incompatible for Einstein summation');
       }
@@ -316,7 +332,11 @@ export class TensorLogicEngine {
           for (let j = 0; j < colsA; j++) {
             const idxA = i * colsA + j;
             const idxB = j * colsB + k;
-            sum += tensorA.data[idxA] * tensorB.data[idxB];
+            const valA = tensorA.data[idxA];
+            const valB = tensorB.data[idxB];
+            if (valA !== undefined && valB !== undefined) {
+              sum += valA * valB;
+            }
           }
           data.push(sum);
         }
@@ -333,7 +353,11 @@ export class TensorLogicEngine {
     const data: number[] = [];
     
     for (let i = 0; i < minLength; i++) {
-      data.push(tensorA.data[i] * tensorB.data[i]);
+      const valA = tensorA.data[i];
+      const valB = tensorB.data[i];
+      if (valA !== undefined && valB !== undefined) {
+        data.push(valA * valB);
+      }
     }
     
     return {
@@ -353,7 +377,11 @@ export class TensorLogicEngine {
     // Simplified shape computation
     // In full implementation, this would handle arbitrary contractions
     if (tensorA.rank === 2 && tensorB.rank === 2) {
-      return [tensorA.shape[0], tensorB.shape[1]];
+      const rowA = tensorA.shape[0];
+      const colB = tensorB.shape[1];
+      if (rowA !== undefined && colB !== undefined) {
+        return [rowA, colB];
+      }
     }
     return tensorA.shape;
   }
@@ -468,9 +496,13 @@ export class TensorLogicEngine {
     let normB = 0;
 
     for (let i = 0; i < minLength; i++) {
-      dotProduct += tensorA.data[i] * tensorB.data[i];
-      normA += tensorA.data[i] * tensorA.data[i];
-      normB += tensorB.data[i] * tensorB.data[i];
+      const valA = tensorA.data[i];
+      const valB = tensorB.data[i];
+      if (valA !== undefined && valB !== undefined) {
+        dotProduct += valA * valB;
+        normA += valA * valA;
+        normB += valB * valB;
+      }
     }
 
     const norm = Math.sqrt(normA) * Math.sqrt(normB);
@@ -569,11 +601,13 @@ export class TensorLogicEngine {
     // Generate reasoning steps
     const reasoningSteps: ReasoningStep[] = operations.map((op, idx) => ({
       id: `tensor_op_${idx}`,
-      type: 'tensor_operation',
-      premise: { content: `Tensor operation: ${op.type}`, truthValue: op.confidence },
+      type: 'analogy' as const,
+      premise: { content: `Tensor operation: ${op.type}`, truthValue: op.confidence, certainty: op.confidence, evidence: [] },
       conclusion: { 
         content: `Result tensor shape: [${op.output.shape.join(', ')}]`, 
-        truthValue: op.confidence 
+        truthValue: op.confidence,
+        certainty: op.confidence,
+        evidence: []
       },
       confidence: op.confidence,
       reasoning: op.einsteinNotation || `Tensor ${op.type} operation`,
@@ -589,13 +623,13 @@ export class TensorLogicEngine {
       confidence: avgConfidence,
       reasoning: {
         steps: reasoningSteps,
-        logic: 'tensor',
+        logic: 'hybrid' as const,
         evidence: [],
         assumptions: []
       },
       conclusions,
       uncertainty: {
-        type: 'tensor',
+        type: 'probabilistic' as const,
         parameters: { 
           tensorRank: unifiedTensor.rank,
           operationsCount: operations.length 
@@ -620,12 +654,19 @@ export class TensorLogicEngine {
 
     // Average tensors (in production, use more sophisticated fusion)
     const firstTensor = tensors[0];
+    if (!firstTensor) {
+      return { shape: [0], data: [], rank: 0 };
+    }
     const data: number[] = new Array(firstTensor.data.length).fill(0);
 
     for (const tensor of tensors) {
       const minLength = Math.min(data.length, tensor.data.length);
       for (let i = 0; i < minLength; i++) {
-        data[i] += tensor.data[i];
+        const tensorVal = tensor.data[i];
+        const dataVal = data[i];
+        if (tensorVal !== undefined && dataVal !== undefined) {
+          data[i] = dataVal + tensorVal;
+        }
       }
     }
 
@@ -670,11 +711,12 @@ export class TensorLogicEngine {
       const activations = this.computeEmbeddingActivations(tensor, embeddings);
       const topActivations = activations
         .map((activation, idx) => ({ activation, embedding: embeddings[idx] }))
+        .filter((item): item is { activation: number; embedding: Embedding } => item.embedding !== undefined)
         .sort((a, b) => b.activation - a.activation)
         .slice(0, 3);
 
       for (const { activation, embedding } of topActivations) {
-        if (activation > 0.3) {
+        if (activation > 0.3 && embedding) {
           conclusions.push({
             id: `tensor_conclusion_${embedding.concept}`,
             statement: `High activation for concept: ${embedding.concept}${embedding.domain ? ` (${embedding.domain})` : ''}`,
@@ -724,7 +766,11 @@ export class TensorLogicEngine {
       const minLength = Math.min(tensor.data.length, embedding.vector.length);
       
       for (let i = 0; i < minLength; i++) {
-        activation += tensor.data[i] * embedding.vector[i];
+        const tensorVal = tensor.data[i];
+        const vectorVal = embedding.vector[i];
+        if (tensorVal !== undefined && vectorVal !== undefined) {
+          activation += tensorVal * vectorVal;
+        }
       }
       
       // Normalize
@@ -855,7 +901,7 @@ export class TensorLogicEngine {
     maxSteps: number = 5
   ): Promise<TensorReasoningResult> {
     const embeddings = typeof input === 'string' 
-      ? this.extractConceptsFromInput(input).map(c => this.createEmbedding(c))
+      ? await Promise.all(this.extractConceptsFromInput(input).map(c => this.createEmbedding(c)))
       : input;
 
     let currentTensor = this.createTensor(embeddings);
@@ -897,11 +943,11 @@ export class TensorLogicEngine {
     inferred: Tensor;
   }> {
     const sourceEmbeddings = typeof source === 'string'
-      ? this.extractConceptsFromInput(source).map(c => this.createEmbedding(c))
+      ? await Promise.all(this.extractConceptsFromInput(source).map(c => this.createEmbedding(c)))
       : source;
     
     const targetEmbeddings = typeof target === 'string'
-      ? this.extractConceptsFromInput(target).map(c => this.createEmbedding(c))
+      ? await Promise.all(this.extractConceptsFromInput(target).map(c => this.createEmbedding(c)))
       : target;
 
     const sourceTensor = this.createTensor(sourceEmbeddings);
@@ -947,9 +993,13 @@ export class TensorLogicEngine {
     let norm2 = 0;
 
     for (let i = 0; i < emb1.vector.length; i++) {
-      dotProduct += emb1.vector[i] * emb2.vector[i];
-      norm1 += emb1.vector[i] * emb1.vector[i];
-      norm2 += emb2.vector[i] * emb2.vector[i];
+      const val1 = emb1.vector[i];
+      const val2 = emb2.vector[i];
+      if (val1 !== undefined && val2 !== undefined) {
+        dotProduct += val1 * val2;
+        norm1 += val1 * val1;
+        norm2 += val2 * val2;
+      }
     }
 
     const norm = Math.sqrt(norm1) * Math.sqrt(norm2);
