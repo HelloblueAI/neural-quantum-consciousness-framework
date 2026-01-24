@@ -626,7 +626,7 @@ export default {
             line-height: 1.6;
             color: var(--text-secondary);
             white-space: pre-wrap;
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
         }
         

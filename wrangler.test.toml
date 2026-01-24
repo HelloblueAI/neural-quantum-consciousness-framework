@@ -1,4 +1,9 @@
-name = "real-agi-test"
+name = "agi-test"
 main = "src/test-worker.ts"
 compatibility_date = "2024-01-01"
-compatibility_flags = ["nodejs_compat"] 
+compatibility_flags = ["nodejs_compat"]
+
+# Test environment - no routes, use wrangler dev for local testing
+[env.test]
+name = "agi-test"
+routes = [] 

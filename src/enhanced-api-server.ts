@@ -441,7 +441,7 @@ app.get('/', (req, res) => {
                 padding: 15px;
                 border-radius: 8px;
                 border: 1px solid #e1e5e9;
-                max-height: 400px;
+                max-height: 600px;
                 overflow-y: auto;
                 font-family: 'Courier New', monospace;
                 font-size: 14px;

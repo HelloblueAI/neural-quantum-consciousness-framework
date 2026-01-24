@@ -155,7 +155,7 @@ export default {
         input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; }
         button { background: #00d4ff; color: white; border: none; padding: 12px 24px; cursor: pointer; }
         button:disabled { opacity: 0.7; cursor: not-allowed; }
-        .result { background: #333; padding: 20px; margin-top: 20px; border-radius: 5px; white-space: pre-wrap; }
+        .result { background: #333; padding: 20px; margin-top: 20px; border-radius: 5px; white-space: pre-wrap; max-height: 600px; overflow-y: auto; }
         .loading { text-align: center; color: #00d4ff; }
 
         /* Enhanced Mobile Responsiveness */
@@ -205,7 +205,7 @@ export default {
             .result { 
                 padding: 15px; 
                 margin-top: 15px;
-                max-height: 250px;
+                max-height: 500px;
                 font-size: 0.8rem;
                 border-radius: 8px;
             }

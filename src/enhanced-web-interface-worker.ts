@@ -1408,7 +1408,7 @@ export default {
             padding: 20px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            max-height: 500px;
+            max-height: 600px;
             overflow-y: auto;
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 14px;
