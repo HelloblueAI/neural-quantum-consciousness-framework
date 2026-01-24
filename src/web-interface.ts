@@ -170,7 +170,7 @@ app.get('/', (req, res) => {
             margin-top: 20px;
             white-space: pre-wrap;
             font-family: 'Monaco', 'Menlo', monospace;
-            max-height: 300px;
+            max-height: 600px;
             overflow-y: auto;
             color: var(--text-secondary);
             font-size: 0.85rem;
@@ -446,7 +446,7 @@ app.get('/', (req, res) => {
             .result {
                 padding: 15px;
                 margin-top: 15px;
-                max-height: 250px;
+                max-height: 500px;
                 font-size: 0.8rem;
                 border-radius: 8px;
             }

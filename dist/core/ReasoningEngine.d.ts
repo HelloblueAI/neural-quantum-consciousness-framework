@@ -3,7 +3,7 @@
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
  * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { ReasoningResult } from '@/types';
+import { ReasoningResult } from '../types';
 export declare class ReasoningEngine {
     private readonly logger;
     private classicalLogic;
@@ -15,6 +15,7 @@ export declare class ReasoningEngine {
     private decisionEngine;
     private inferenceEngine;
     private problemSolver;
+    private tensorLogicEngine;
     private reasoningHistory;
     private reasoningStrategies;
     private adaptiveStrategies;
@@ -43,6 +44,7 @@ export declare class ReasoningEngine {
     private detectProbabilisticAspects;
     private detectFuzzyAspects;
     private detectQuantumAspects;
+    private detectTensorAspects;
     private detectDecisionRequirements;
     private detectInferenceRequirements;
     private detectProblemSolvingRequirements;

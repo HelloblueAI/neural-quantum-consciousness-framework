@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { AGISystem } from '@/core/AGISystem';
-import { ConfigurationManager } from '@/config/ConfigurationManager';
+import { AGISystem } from '../core/AGISystem';
+import { ConfigurationManager } from '../config/ConfigurationManager';
 export interface APIEndpoint {
     path: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

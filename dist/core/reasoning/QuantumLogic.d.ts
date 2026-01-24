@@ -1,4 +1,4 @@
-import { ReasoningResult } from '@/types';
+import { ReasoningResult } from '../../types';
 export interface QuantumState {
     id: string;
     name: string;

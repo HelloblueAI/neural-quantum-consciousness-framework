@@ -1,4 +1,4 @@
-import { ConsciousState, Emotion, Thought, Qualia } from '@/types';
+import { ConsciousState, Emotion, Thought, Qualia } from '../types';
 export declare class ConsciousnessSimulator {
     private readonly logger;
     private consciousState;

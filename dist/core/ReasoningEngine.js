@@ -3,7 +3,7 @@
  * Multi-modal reasoning with classical, fuzzy, probabilistic, modal, temporal, and quantum logic
  * Enhanced with neural plasticity and adaptive reasoning strategies
  */
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 import { ClassicalLogic } from './reasoning/ClassicalLogic';
 import { FuzzyLogic } from './reasoning/FuzzyLogic';
 import { ProbabilisticLogic } from './reasoning/ProbabilisticLogic';
@@ -13,6 +13,7 @@ import { QuantumLogic } from './reasoning/QuantumLogic';
 import { DecisionEngine } from './reasoning/DecisionEngine';
 import { InferenceEngine } from './reasoning/InferenceEngine';
 import { ProblemSolver } from './reasoning/ProblemSolver';
+import { TensorLogicEngine } from './TensorLogicEngine';
 export class ReasoningEngine {
     logger;
     classicalLogic;
@@ -24,6 +25,7 @@ export class ReasoningEngine {
     decisionEngine;
     inferenceEngine;
     problemSolver;
+    tensorLogicEngine;
     reasoningHistory = [];
     reasoningStrategies = new Map();
     adaptiveStrategies = new Map();
@@ -43,6 +45,7 @@ export class ReasoningEngine {
         this.decisionEngine = new DecisionEngine();
         this.inferenceEngine = new InferenceEngine();
         this.problemSolver = new ProblemSolver();
+        this.tensorLogicEngine = new TensorLogicEngine();
         // Initialize neural quantum state
         this.neuralQuantumState = {
             superposition: [],
@@ -67,6 +70,8 @@ export class ReasoningEngine {
                 this.inferenceEngine.initialize(),
                 this.problemSolver.initialize()
             ]);
+            // Initialize tensor logic engine
+            await this.tensorLogicEngine.initializeDefaultRules();
             // Set up reasoning strategies
             this.setupReasoningStrategies();
             // Initialize adaptive strategies
@@ -325,6 +330,7 @@ export class ReasoningEngine {
             probabilisticAspects: this.detectProbabilisticAspects(input),
             fuzzyAspects: this.detectFuzzyAspects(input),
             quantumAspects: this.detectQuantumAspects(input),
+            tensorAspects: this.detectTensorAspects(input),
             decisionRequirements: this.detectDecisionRequirements(input, context),
             inferenceRequirements: this.detectInferenceRequirements(input),
             problemSolvingRequirements: this.detectProblemSolvingRequirements(input)
@@ -400,6 +406,14 @@ export class ReasoningEngine {
         }
         return false;
     }
+    detectTensorAspects(input) {
+        if (typeof input === 'string') {
+            return input.includes('tensor') || input.includes('embedding') || input.includes('vector') ||
+                input.includes('matrix') || input.includes('neural symbolic') || input.includes('unified') ||
+                input.includes('einstein') || input.includes('summation');
+        }
+        return false;
+    }
     detectDecisionRequirements(input, context) {
         if (typeof input === 'string') {
             return input.includes('choose') || input.includes('decide') || input.includes('select') ||
@@ -445,6 +459,9 @@ export class ReasoningEngine {
         if (analysis.quantumAspects) {
             strategies.push({ type: 'quantum', weight: 0.2, system: this.quantumLogic });
         }
+        if (analysis.tensorAspects || analysis.complexity > 0.7) {
+            strategies.push({ type: 'tensor', weight: 0.4, system: this.tensorLogicEngine });
+        }
         if (analysis.decisionRequirements) {
             strategies.push({ type: 'decision', weight: 0.4, system: this.decisionEngine });
         }
@@ -479,6 +496,9 @@ export class ReasoningEngine {
                         break;
                     case 'quantum':
                         result = await this.quantumLogic.reason(input, context);
+                        break;
+                    case 'tensor':
+                        result = await this.tensorLogicEngine.reason(input, context);
                         break;
                     case 'decision':
                         result = await this.decisionEngine.decide(JSON.stringify([input]), context);
@@ -696,6 +716,12 @@ export class ReasoningEngine {
             description: 'Reasoning using quantum logic principles',
             systems: ['quantum'],
             confidence: 0.5
+        });
+        this.reasoningStrategies.set('tensor', {
+            name: 'Tensor Logic Reasoning',
+            description: 'Unified neural-symbolic reasoning using tensor operations',
+            systems: ['tensor'],
+            confidence: 0.85
         });
     }
     async initializeMetaReasoning() {

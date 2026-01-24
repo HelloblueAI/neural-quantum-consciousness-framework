@@ -1059,7 +1059,7 @@ export default {
             padding: 20px;
             border-radius: 8px;
             border: 1px solid var(--border);
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
             font-family: 'Monaco', 'Menlo', monospace;
             font-size: 14px;
@@ -1546,7 +1546,7 @@ export default {
             
             .result-content {
                 padding: 15px;
-                max-height: 300px;
+                max-height: 500px;
                 font-size: 0.85rem;
                 border-radius: 8px;
             }

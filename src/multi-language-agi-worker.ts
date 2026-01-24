@@ -233,7 +233,7 @@ export default {
             border-radius: 8px; 
             white-space: pre-wrap; 
             font-family: monospace; 
-            max-height: 300px; 
+            max-height: 600px; 
             overflow-y: auto; 
         }
         .loading { 
@@ -332,7 +332,7 @@ export default {
             .response { 
                 padding: 12px; 
                 margin-top: 15px;
-                max-height: 250px;
+                max-height: 500px;
                 font-size: 0.8rem;
                 border-radius: 8px;
             }

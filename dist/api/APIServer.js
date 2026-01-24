@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export class APIServer {
     app;
     agiSystem;

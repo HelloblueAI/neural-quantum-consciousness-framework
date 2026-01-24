@@ -1,7 +1,7 @@
 import { Agent, AgentConfig } from './Agent';
-import { Action, CreativeResult, CreativeTask, CreativeSession, ActionResult, SelfImprovementResult } from '@/types';
+import { Action, CreativeResult, CreativeTask, CreativeSession, ActionResult, SelfImprovementResult } from '../types';
 import { AgentPerformance } from './Agent';
-import { CreativeEngine } from '@/types';
+import { CreativeEngine } from '../types';
 export interface CreativeAgentConfig extends AgentConfig {
     creativeEngine: CreativeEngine;
     creativeCapabilities: string[];

@@ -13,9 +13,9 @@
  * - Consciousness simulation
  * - Multi-agent coordination
  */
-import { AGISystem } from '@/core/AGISystem';
-import { ConsciousnessSimulator } from '@/core/ConsciousnessSimulator';
-import { Logger } from '@/utils/Logger';
+import { AGISystem } from '../core/AGISystem';
+import { ConsciousnessSimulator } from '../core/ConsciousnessSimulator';
+import { Logger } from '../utils/Logger';
 export class AGIDemonstration {
     logger;
     agiSystem;

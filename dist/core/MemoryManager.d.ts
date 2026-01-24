@@ -1,4 +1,4 @@
-import { MemoryState } from '@/types';
+import { MemoryState } from '../types';
 export interface MemoryEntry {
     id: string;
     type: 'short_term' | 'long_term' | 'working' | 'episodic' | 'semantic';

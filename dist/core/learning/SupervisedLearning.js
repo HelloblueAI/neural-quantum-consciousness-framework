@@ -2,8 +2,8 @@
  * Supervised Learning Algorithm
  * Implements supervised learning with pattern recognition and classification
  */
-// import { Experience, LearningResult } from '@/types';
-import { Logger } from '@/utils/Logger';
+// import { Experience, LearningResult } from '../../types';
+import { Logger } from '../../utils/Logger';
 export class SupervisedLearning {
     // private readonly config: SupervisedLearningConfig;
     logger;

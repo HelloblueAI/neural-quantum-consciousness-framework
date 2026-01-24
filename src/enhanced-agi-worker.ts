@@ -941,7 +941,7 @@ export default {
                         padding: 12px;
                         border-radius: 3px;
                         border: 1px solid #333;
-                        max-height: 300px;
+                        max-height: 600px;
                         overflow-y: auto;
                         font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
                         font-size: 12px;

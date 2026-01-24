@@ -1,7 +1,7 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, ReasoningResult, LearningResult, ReasoningSession, AdaptationResult, ActionResult, SelfImprovementResult } from '@/types';
+import { Goal, Action, Experience, ReasoningResult, LearningResult, ReasoningSession, AdaptationResult, ActionResult, SelfImprovementResult } from '../types';
 import { AgentPerformance } from './Agent';
-import { ReasoningEngine } from '@/core/ReasoningEngine';
+import { ReasoningEngine } from '../core/ReasoningEngine';
 export interface ReasoningAgentConfig extends AgentConfig {
     reasoningEngine: ReasoningEngine;
     reasoningCapabilities: string[];

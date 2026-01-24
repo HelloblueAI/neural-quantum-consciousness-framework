@@ -1,4 +1,4 @@
-import { ReasoningResult } from '@/types';
+import { ReasoningResult } from '../../types';
 export interface Problem {
     id: string;
     name: string;

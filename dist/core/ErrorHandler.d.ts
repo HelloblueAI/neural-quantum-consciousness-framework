@@ -2,7 +2,7 @@
  * Error Handler
  * Comprehensive error handling and recovery system
  */
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 export declare class ErrorHandler {
     private readonly logger;
     private errorHistory;

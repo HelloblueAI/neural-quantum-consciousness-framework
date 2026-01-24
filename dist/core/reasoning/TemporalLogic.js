@@ -1,4 +1,4 @@
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../../utils/Logger';
 export class TemporalLogic {
     operators = new Map();
     events = new Map();

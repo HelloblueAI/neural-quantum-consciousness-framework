@@ -1,9 +1,9 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, LearningResult, LearningSession, AdaptationResult, ActionResult, SelfImprovementResult } from '@/types';
+import { Goal, Action, Experience, LearningResult, LearningSession, AdaptationResult, ActionResult, SelfImprovementResult } from '../types';
 import { AgentPerformance } from './Agent';
-import { LearningEngine } from '@/core/LearningEngine';
-import { MetaLearningEngine } from '@/types';
-import { KnowledgeBase } from '@/core/KnowledgeBase';
+import { LearningEngine } from '../core/LearningEngine';
+import { MetaLearningEngine } from '../types';
+import { KnowledgeBase } from '../core/KnowledgeBase';
 export interface LearningAgentConfig extends AgentConfig {
     learningEngine: LearningEngine;
     metaLearningEngine: MetaLearningEngine;

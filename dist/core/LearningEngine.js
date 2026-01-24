@@ -4,7 +4,7 @@
  */
 import { EventEmitter } from 'events';
 import { v4 as uuidv4 } from 'uuid';
-import { Logger } from '@/utils/Logger';
+import { Logger } from '../utils/Logger';
 import { SupervisedLearning } from './learning/SupervisedLearning';
 import { UnsupervisedLearning } from './learning/UnsupervisedLearning';
 import { ReinforcementLearning } from './learning/ReinforcementLearning';
