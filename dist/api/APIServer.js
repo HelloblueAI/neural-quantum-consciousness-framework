@@ -207,7 +207,6 @@ export class APIServer {
         }
         try {
             this.server = this.app.listen(this.port, () => {
-                // this._isRunning = true;
                 this.logger.info('API server started', {
                     port: this.port,
                     environment: this.configManager.getEnvironment()
