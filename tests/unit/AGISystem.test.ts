@@ -81,6 +81,7 @@ describe('AGI System Integration Tests', () => {
     if (agiSystem.isRunning()) {
       await agiSystem.stop();
     }
+    if (apiServer?.isRunning?.()) await apiServer.stop();
   });
 
   describe('System Initialization', () => {
@@ -472,6 +473,7 @@ describe('AGI System Integration Tests', () => {
 
   describe('API Server', () => {
     it('should start and stop correctly', async () => {
+      (apiServer as any).port = 0;
       await apiServer.start();
       expect(apiServer.isRunning()).toBe(true);
       
