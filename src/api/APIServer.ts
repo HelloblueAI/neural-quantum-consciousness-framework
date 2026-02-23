@@ -1184,7 +1184,7 @@ export class APIServer {
   // Reasoning API
   private async v1ReasoningProcess(req: Request, res: Response): Promise<void> {
     try {
-      const { input, context } = req.body;
+      const { input, context, metadata } = req.body;
       
       if (!input) {
         res.status(400).json({
