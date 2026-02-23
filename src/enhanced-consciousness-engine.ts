@@ -261,7 +261,7 @@ export class EnhancedConsciousnessEngine {
   }
 
   private async getMultiLanguageEnhancements(): Promise<Partial<EnhancedConsciousnessMetrics>> {
-    const status = this.multiLanguageRuntime.getStatus();
+    const _status = this.multiLanguageRuntime.getStatus();
     
     return {
       pythonEnhancement: this.multiLanguageState.python.enhancement,

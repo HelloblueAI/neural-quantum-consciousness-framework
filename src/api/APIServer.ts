@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import rateLimit from 'express-rate-limit';
+import _rateLimit from 'express-rate-limit';
 import { AGISystem } from '@/core/AGISystem';
 import { ConfigurationManager } from '@/config/ConfigurationManager';
 import { Logger } from '@/utils/Logger';
@@ -1184,7 +1184,7 @@ export class APIServer {
   // Reasoning API
   private async v1ReasoningProcess(req: Request, res: Response): Promise<void> {
     try {
-      const { input, context, priority, metadata } = req.body;
+      const { input, context } = req.body;
       
       if (!input) {
         res.status(400).json({
@@ -1306,7 +1306,7 @@ export class APIServer {
   // Memory API
   private async v1MemoryStore(req: Request, res: Response): Promise<void> {
     try {
-      const { memory, content, type, importance } = req.body;
+      const { memory, content } = req.body;
       const memoryData = memory || content;
       
       if (!memoryData) {
@@ -1538,7 +1538,7 @@ export class APIServer {
   private async v1AgentTask(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const { task, input, priority, metadata } = req.body;
+      const { task, input } = req.body;
       const taskData = task || input;
       
       if (!taskData) {
@@ -1569,7 +1569,7 @@ export class APIServer {
   // Knowledge API
   private async v1KnowledgeAdd(req: Request, res: Response): Promise<void> {
     try {
-      const { knowledge, content, domain, facts, relationships, confidence, source } = req.body;
+      const { knowledge, content, domain, facts, relationships, confidence } = req.body;
       const knowledgeData = knowledge || content || { domain, facts, relationships, confidence };
       
       if (!knowledgeData || (!knowledgeData.domain && !knowledgeData.facts)) {

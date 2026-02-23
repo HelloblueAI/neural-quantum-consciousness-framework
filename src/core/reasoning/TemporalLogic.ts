@@ -188,7 +188,7 @@ export class TemporalLogic {
       const temporalOperators = this.extractTemporalOperators(input);
       const events = this.extractTemporalEvents(input, context);
       const relations = this.analyzeTemporalRelations(events);
-      const conclusion = this.generateTemporalConclusion(input, temporalOperators, events, relations);
+      const _conclusion = this.generateTemporalConclusion(input, temporalOperators, events, relations);
       const confidence = this.calculateTemporalConfidence(input, temporalOperators, events);
 
       const reasoningTime = Date.now() - startTime;

@@ -651,7 +651,7 @@ export class CrossDomainReasoningEngine {
     // Find common patterns from analysis
     const allPatterns = new Map<string, number>();
     
-    for (const [domain, domainAnalysis] of Object.entries(analysis)) {
+    for (const [_domain, domainAnalysis] of Object.entries(analysis)) {
       const domainData = domainAnalysis as any;
       for (const pattern of domainData.patterns || []) {
         const patternKey = JSON.stringify(pattern);
@@ -890,7 +890,7 @@ export class CrossDomainReasoningEngine {
   private calculateDomainRelevanceFromConcepts(concepts: any[], domain: string): number {
     // Calculate relevance based on concept-domain mapping
     let relevance = 0;
-    for (const concept of concepts) {
+    for (const _concept of concepts) {
       // Simplified relevance calculation since domainConceptMappings doesn't exist
       relevance += 0.1; // Base relevance for any concept
     }

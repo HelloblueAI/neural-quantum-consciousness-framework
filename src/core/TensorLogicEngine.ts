@@ -554,7 +554,7 @@ export class TensorLogicEngine {
       // Chain inference through rules
       let currentTensor = inputTensor;
       
-      for (const [ruleId, rule] of this.rules) {
+      for (const [_ruleId, rule] of this.rules) {
         const similarity = this.computeTensorSimilarity(currentTensor, rule.premise);
         
         if (similarity > 0.3) {

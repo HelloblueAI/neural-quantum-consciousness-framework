@@ -508,7 +508,7 @@ export class UnifiedLearningEngine {
    * Select quantum learning strategy
    */
   private selectQuantumLearningStrategy(state: any): string {
-    const strategies = [
+    const _strategies = [
       'quantum_annealing_optimization',
       'superposition_pattern_recognition',
       'entanglement_knowledge_synthesis',

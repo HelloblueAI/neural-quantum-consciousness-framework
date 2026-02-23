@@ -55,7 +55,7 @@ export class RealUnderstandingEngine {
    * Extract genuine understanding from input
    */
   public understand(input: string): Understanding {
-    const startTime = Date.now();
+    const _startTime = Date.now();
     
     // Extract concepts from input
     const extractedConcepts = this.extractConcepts(input);
@@ -97,7 +97,7 @@ export class RealUnderstandingEngine {
    */
   private extractConcepts(text: string): Concept[] {
     const concepts: Concept[] = [];
-    const words = text.toLowerCase().split(/\s+/);
+    const _words = text.toLowerCase().split(/\s+/);
     
     // Known concept patterns
     const conceptPatterns = [

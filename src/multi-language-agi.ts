@@ -10,10 +10,10 @@ import { EventEmitter } from 'events';
 import { Logger } from './utils/Logger';
 
 // Import the Rust core (when compiled to WebAssembly)
-declare const agi_rust_core: any;
+declare const _agi_rust_core: any;
 
 // Import the C core (when compiled to native addon)
-declare const agi_c_core: any;
+declare const _agi_c_core: any;
 
 export interface AGIInput {
     text: string;

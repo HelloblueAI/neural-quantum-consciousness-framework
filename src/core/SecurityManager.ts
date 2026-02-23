@@ -533,7 +533,7 @@ export class SecurityManager extends EventEmitter {
     
     let maxDepth = currentDepth;
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const depth = this.getObjectDepth(obj[key], currentDepth + 1);
         maxDepth = Math.max(maxDepth, depth);
       }

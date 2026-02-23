@@ -9,7 +9,7 @@
  */
 
 import { Logger } from '../utils/Logger';
-import { Tensor, Embedding, TensorLogicRule, TensorOperation } from './TensorLogicEngine';
+import { Tensor, Embedding, TensorLogicRule } from './TensorLogicEngine';
 import { TensorLogicEngine } from './TensorLogicEngine';
 
 export interface LearnedEmbeddingProvider {
@@ -131,10 +131,10 @@ export class TensorLogicEngineEnhancements {
     }
 
     // Find contracted indices (appear in both A and B)
-    const contractedIndices = indicesA.filter(idx => indicesB.includes(idx));
+    const _contractedIndices = indicesA.filter(idx => indicesB.includes(idx));
     
     // Find output indices (appear in A or B but not both)
-    const outputIndicesSet = new Set(outputIndices);
+    const _outputIndicesSet = new Set(outputIndices);
     
     // Compute output shape
     const outputShape = this.computeOutputShapeAdvanced(

@@ -220,7 +220,7 @@ export class ProblemSolver {
     ];
 
     let problemName = 'Unknown Problem';
-    let problemDescription = _input;
+    const problemDescription = _input;
     let problemType: Problem['type'] = 'optimization';
 
     for (const pattern of problemPatterns) {

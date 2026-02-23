@@ -11,7 +11,6 @@ import { MultiAgentSystem } from './MultiAgentSystem';
 import { ToolSystem } from './ToolSystem';
 import { MemorySystem } from './MemorySystem';
 import { SelfImprovementLoop } from './SelfImprovementLoop';
-import { EnsembleNeuralNetwork } from './EnhancedNeuralNetwork';
 
 export interface UltimateAGIResponse {
   answer: string;
@@ -91,7 +90,7 @@ export class UltimateAGIOrchestrator {
 
     // Step 2: Search memory for related context
     const relatedMemories = this.memory.search(query, 3);
-    const memoryContext = relatedMemories.map(m => m.content).join(' ');
+    const _memoryContext = relatedMemories.map(m => m.content).join(' ');
 
     // Step 3: Use multi-agent system for complex reasoning
     let response: UltimateAGIResponse;
@@ -134,7 +133,7 @@ export class UltimateAGIOrchestrator {
     }
 
     // Step 4: Record performance for self-improvement
-    const processingTime = Date.now() - startTime;
+    const _processingTime = Date.now() - startTime;
     this.selfImprovement.recordPerformance({
       task: query,
       strategy: response.method,

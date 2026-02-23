@@ -649,7 +649,7 @@ export class LearningEngine extends EventEmitter {
     // Determine appropriate learning strategy based on experience analysis
     const { type, complexity, novelty, value, applicability } = analysis;
     
-    let strategy = {
+    const strategy = {
       primaryAlgorithm: 'supervised',
       secondaryAlgorithms: [] as string[],
       learningDepth: 1,

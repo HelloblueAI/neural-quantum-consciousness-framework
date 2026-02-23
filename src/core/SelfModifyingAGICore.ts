@@ -691,7 +691,7 @@ export class SelfModifyingAGICore {
   private applyArchitectureModification(target: string, modification: any): void {
     if (modification.type === 'connection_creation') {
       // Create new connection
-      const [component1, component2] = target.split('_');
+      const [_component1, _component2] = target.split('_');
       const connectionData = {
         strength: modification.parameters.connectionStrength || 0.8,
         type: modification.parameters.connectionType || 'bidirectional',

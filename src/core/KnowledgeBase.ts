@@ -167,7 +167,7 @@ export class KnowledgeBase extends EventEmitter {
    */
   public getKnowledge(id: string): Knowledge | undefined {
     // First try to get by exact ID
-    let knowledge = this.knowledge.get(id);
+    const knowledge = this.knowledge.get(id);
     
     if (knowledge) {
       return knowledge;

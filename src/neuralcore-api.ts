@@ -71,7 +71,7 @@ app.post('/learn', async (req, res) => {
 // True AGI creativity endpoint
 app.post('/create', async (req, res) => {
   try {
-    const { prompt, type, constraints } = req.body;
+    const { prompt, type } = req.body;
     const result = await neuralCore.create(prompt, type);
     res.json(result);
     return;
