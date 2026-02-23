@@ -110,7 +110,7 @@ export class NativeLibraryManager {
     try {
       // Dynamic import of FFI modules
       const { Library } = await import('ffi-napi');
-      const refModule = await import('ref-napi');
+      const _refModule = await import('ref-napi');
       
       // Load actual C library
       const ffiLib = Library('libagi_core', {
@@ -430,7 +430,7 @@ export class NativeLibraryManager {
       
       if (gl) {
         // Neural network shader for forward pass
-        const fragmentShaderSource = `
+        const _fragmentShaderSource = `
           precision highp float;
           uniform sampler2D weights;
           uniform sampler2D biases;

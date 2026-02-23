@@ -808,7 +808,7 @@ export class EmergentNeuralArchitecture extends EventEmitter {
   
   private async updateNetworkWeights(patterns: any[]): Promise<void> {
     // Update weights based on patterns
-    for (const pattern of patterns) {
+    for (const _pattern of patterns) {
       // Simple weight update - can be enhanced
       for (const connection of this.network.connections.values()) {
         const weightUpdate = Math.random() * 0.1 - 0.05;

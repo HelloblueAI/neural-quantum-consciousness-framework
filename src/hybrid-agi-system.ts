@@ -3,8 +3,8 @@
  * Integrates quantum-inspired learning, advanced consciousness, and dynamic neural architecture
  */
 
-import { NativeLibraryManager, NativeMatrix, NativeNeuralState, NativeConsciousnessState } from './native-bindings';
-import { RealConsciousnessEngine, ConsciousnessMetrics } from './real-consciousness-engine';
+import { NativeLibraryManager, NativeMatrix, NativeNeuralState } from './native-bindings';
+import { RealConsciousnessEngine } from './real-consciousness-engine';
 import { NeuralFoundationEngine } from './core/NeuralFoundationEngine';
 import { UnifiedLearningEngine } from './core/learning/UnifiedLearningEngine';
 import { Logger } from './utils/Logger';
@@ -123,7 +123,7 @@ export class HybridAGISystem {
           }
           break;
           
-        case 'eigenvalues':
+        case 'eigenvalues': {
           // GPU-accelerated eigenvalue computation
           const eigenResult = {
             eigenvalues: [1.5, 2.3, 0.8],
@@ -139,8 +139,9 @@ export class HybridAGISystem {
             performance: 'gpu_accelerated',
             timestamp: Date.now()
           };
+        }
           
-        case 'svd':
+        case 'svd': {
           // Singular Value Decomposition with GPU
           const svdResult = {
             U: matrices[0],
@@ -156,6 +157,7 @@ export class HybridAGISystem {
             performance: 'gpu_accelerated',
             timestamp: Date.now()
           };
+        }
       }
       
       return {
@@ -179,7 +181,7 @@ export class HybridAGISystem {
       this.logger.info(`Executing neural operation: ${operation} with dynamic architecture`);
       
       switch (operation) {
-        case 'forward':
+        case 'forward': {
           // Dynamic neural forward pass
           const neuralState = this.createNeuralState(input);
           const forwardResult = await this.nativeManager.neuralForward(neuralState, new Float64Array(input));
@@ -195,8 +197,9 @@ export class HybridAGISystem {
             performance: 'dynamic_optimized',
             timestamp: Date.now()
           };
+        }
           
-        case 'training':
+        case 'training': {
           // Quantum-inspired neural training
           const trainingResult = await this.executeQuantumNeuralTraining(input);
           return {
@@ -206,8 +209,9 @@ export class HybridAGISystem {
             performance: 'quantum_optimized',
             timestamp: Date.now()
           };
+        }
           
-        case 'adaptation':
+        case 'adaptation': {
           // Dynamic neural architecture adaptation
           const adaptationResult = await this.executeNeuralAdaptation(input);
           return {
@@ -217,6 +221,7 @@ export class HybridAGISystem {
             performance: 'architecture_optimized',
             timestamp: Date.now()
           };
+        }
       }
       
       return {
@@ -438,7 +443,7 @@ export class HybridAGISystem {
       const neuralLearning = await this.neuralFoundationEngine.executeCrossDomainAnalysis(data, ['learning', 'consciousness', 'quantum']);
       
       // Combine native and quantum processing
-      const nativeProcessing = await this.nativeManager.getStatus();
+      const _nativeProcessing = await this.nativeManager.getStatus();
       
       const learningResult = {
         input: data,

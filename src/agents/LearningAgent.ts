@@ -1,10 +1,9 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, LearningResult, LearningTask, LearningSession, AdaptationResult, ActionResult, SelfImprovementResult, EnhancedLearningResult } from '@/types';
+import { Goal, Action, Experience, LearningResult, LearningTask, LearningSession, AdaptationResult, ActionResult, SelfImprovementResult } from '@/types';
 import { AgentPerformance } from './Agent';
 import { LearningEngine } from '@/core/LearningEngine';
 import { MetaLearningEngine } from '@/types';
 import { KnowledgeBase } from '@/core/KnowledgeBase';
-import { Logger } from '@/utils/Logger';
 
 export interface LearningAgentConfig extends AgentConfig {
   learningEngine: LearningEngine;
@@ -1164,7 +1163,7 @@ export class LearningAgent extends Agent {
     try {
       const learningType = this.determineLearningType(input);
       const steps: string[] = [];
-      let currentInput = input;
+      const currentInput = input;
       let confidence = 0.8;
       
       // Step 1: Input Analysis

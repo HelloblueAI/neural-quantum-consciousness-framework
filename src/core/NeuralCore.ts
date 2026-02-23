@@ -167,7 +167,7 @@ class NeuralCore extends EventEmitter {
   
   private async metaLearn(): Promise<void> {
     // Learn about learning itself
-    const learningInsights = this.experienceMemory.map(exp => ({
+    const _learningInsights = this.experienceMemory.map(exp => ({
       pattern: exp.pattern,
       success: exp.success,
       efficiency: exp.efficiency

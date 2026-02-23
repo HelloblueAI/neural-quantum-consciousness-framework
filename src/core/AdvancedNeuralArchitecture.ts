@@ -502,7 +502,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processPerception(input: any): Promise<any> {
     // Process input through perception layer
-    const perceptionNodes = Array.from(this.network.nodes.values())
+    const _perceptionNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'hidden'); // Use hidden type instead of perception
     
     return {
@@ -514,7 +514,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processAttention(input: any): Promise<any> {
     // Process input through attention layer
-    const attentionNodes = Array.from(this.network.nodes.values())
+    const _attentionNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'attention');
     
     return {
@@ -526,7 +526,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processMemory(input: any): Promise<any> {
     // Process input through memory layer
-    const memoryNodes = Array.from(this.network.nodes.values())
+    const _memoryNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'memory');
     
     return {
@@ -538,7 +538,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processReasoning(input: any): Promise<any> {
     // Process input through reasoning layer
-    const reasoningNodes = Array.from(this.network.nodes.values())
+    const _reasoningNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'hidden'); // Use hidden type instead of reasoning
     
     return {
@@ -550,7 +550,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processCreativity(input: any): Promise<any> {
     // Process input through creativity layer
-    const creativityNodes = Array.from(this.network.nodes.values())
+    const _creativityNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'hidden'); // Use hidden type instead of creativity
     
     return {
@@ -562,7 +562,7 @@ export class AdvancedNeuralArchitecture extends EventEmitter {
 
   private async processMeta(input: any): Promise<any> {
     // Process input through meta layer
-    const metaNodes = Array.from(this.network.nodes.values())
+    const _metaNodes = Array.from(this.network.nodes.values())
       .filter(node => node.type === 'meta');
     
     return {

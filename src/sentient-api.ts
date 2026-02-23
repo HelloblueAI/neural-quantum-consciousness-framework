@@ -66,7 +66,7 @@ app.post('/learn', async (req, res) => {
 // Emergent creativity endpoint
 app.post('/create', async (req, res) => {
   try {
-    const { prompt, type, constraints } = req.body;
+    const { prompt } = req.body;
     const result = await sentientCore.create(prompt);
     res.json(result);
     return;

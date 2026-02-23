@@ -836,7 +836,7 @@ class AutonomousLearningEngine {
     };
     
     // Apply appropriate learning patterns based on analysis
-    for (const [patternName, patternFunction] of this.learningPatterns.entries()) {
+    for (const [_patternName, patternFunction] of this.learningPatterns.entries()) {
       const patternResult = await patternFunction(data, analysis);
       
       results.newKnowledge.push(...patternResult.newKnowledge || []);
@@ -1178,7 +1178,7 @@ class AutonomousLearningEngine {
   
   private consolidateKnowledge(): void {
     // Strengthen frequently accessed knowledge
-    for (const [concept, data] of this.knowledgeGraph.entries()) {
+    for (const [_concept, data] of this.knowledgeGraph.entries()) {
       const timeSinceAccess = Date.now() - data.lastAccessed;
       const accessFrequency = data.accessCount / (timeSinceAccess / 1000);
       
@@ -2324,7 +2324,7 @@ class EmergentCreativityEngine {
     };
     
     // Apply creative patterns
-    for (const [patternName, patternFunction] of this.creativePatterns.entries()) {
+    for (const [_patternName, patternFunction] of this.creativePatterns.entries()) {
       const patternResult = await patternFunction(prompt, analysis, inspiration);
       
       results.combinations.push(...patternResult.combinations || []);

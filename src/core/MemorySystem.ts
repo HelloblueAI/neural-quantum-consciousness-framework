@@ -56,7 +56,7 @@ export class MemorySystem {
   public recall(type?: Memory['type'], limit: number = 10): Memory[] {
     const allMemories = Array.from(this.memories.values());
     
-    let filtered = type 
+    const filtered = type 
       ? allMemories.filter(m => m.type === type)
       : allMemories;
 

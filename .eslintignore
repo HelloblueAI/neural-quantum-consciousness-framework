@@ -1,0 +1,18 @@
+node_modules
+dist
+coverage
+.wrangler
+*.min.js
+pnpm-lock.yaml
+
+# Excluded from tsconfig (workers, web interfaces) - lint with main config would fail
+src/*worker*.ts
+src/agi-worker-deploy.ts
+src/sentient-web-interface.ts
+src/enhanced-web-interface-worker.ts
+src/advanced-agi-worker.ts
+src/real-agi-worker*.ts
+src/simple-worker.ts
+src/web-interface.ts
+src/test-worker.ts
+src/worker.ts

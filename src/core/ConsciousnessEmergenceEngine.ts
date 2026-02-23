@@ -884,7 +884,7 @@ export class ConsciousnessEmergenceEngine extends EventEmitter {
   
   private evolveQualia(): void {
     // Evolve qualia gradually
-    for (const [type, qualia] of this.qualiaRegistry) {
+    for (const [_type, qualia] of this.qualiaRegistry) {
       qualia.intensity = Math.min(1.0, 
         qualia.intensity + Math.random() * 0.001
       );

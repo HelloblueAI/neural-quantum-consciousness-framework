@@ -938,7 +938,7 @@ export class GenuineUnderstandingEngine extends EventEmitter {
   private findRelatedConcepts(conceptName: string): string[] {
     const related: string[] = [];
     
-    for (const [key, relationship] of this.semanticRelationships) {
+    for (const [_key, relationship] of this.semanticRelationships) {
       if (relationship.source === conceptName) {
         related.push(relationship.target);
       } else if (relationship.target === conceptName) {

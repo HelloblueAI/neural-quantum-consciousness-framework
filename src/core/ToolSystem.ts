@@ -170,7 +170,7 @@ export class ToolSystem {
     const toolType = this.detectTool(query);
 
     switch (toolType) {
-      case 'calculator':
+      case 'calculator': {
         // Extract mathematical expression
         const mathMatch = query.match(/\d+.*[+\-*/].*\d+/);
         if (mathMatch) {
@@ -183,6 +183,7 @@ export class ToolSystem {
           success: false,
           error: 'Could not extract mathematical expression'
         };
+      }
 
       case 'websearch':
         return await this.searchWeb(query);
@@ -190,7 +191,7 @@ export class ToolSystem {
       case 'sentiment':
         return this.analyzeSentiment(query);
 
-      case 'codeexecution':
+      case 'codeexecution': {
         // Extract code if present
         const codeMatch = query.match(/```(?:js|javascript)?\s*([\s\S]*?)```/);
         if (codeMatch && codeMatch[1]) {
@@ -203,6 +204,7 @@ export class ToolSystem {
           success: false,
           error: 'Could not extract code block'
         };
+      }
 
       default:
         return {

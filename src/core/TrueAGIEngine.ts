@@ -848,7 +848,7 @@ export class TrueAGIEngine extends EventEmitter {
       const nextWord = words[i + 1];
       
       if (currentWord && nextWord) {
-        const combination = `${currentWord}_${nextWord}`;
+        const _combination = `${currentWord}_${nextWord}`;
         // Check if this combination is unusual (simplified logic)
         if (currentWord.length > 6 && nextWord.length > 6) {
           unusualCount++;

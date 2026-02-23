@@ -285,7 +285,7 @@ export class SystemMonitor {
     
     // For testing purposes, be more lenient
     const totalServices = services.totalServices || 0;
-    const healthyServices = services.healthyServices || 0;
+    const _healthyServices = services.healthyServices || 0;
     const unhealthyServices = services.unhealthyServices || 0;
     
     if (unhealthyServices > totalServices * 0.8) {

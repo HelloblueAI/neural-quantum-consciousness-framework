@@ -36,7 +36,7 @@ interface ReasoningResult {
   method: string;
 }
 
-interface LearningResult {
+interface _LearningResult {
   newKnowledge: string[];
   strengthenedConcepts: string[];
   patterns: string[];
@@ -44,7 +44,7 @@ interface LearningResult {
   adaptationMetrics: any;
 }
 
-interface CreativeResult {
+interface _CreativeResult {
   ideas: string[];
   combinations: string[];
   novelty: number;
@@ -177,7 +177,7 @@ export class RealAGI {
   async learn(data: any): Promise<AGIResponse> {
     try {
       // Analyze learning data
-      const analysis = this.analyzeLearningData(data);
+      const _analysis = this.analyzeLearningData(data);
       
       // Extract new concepts and patterns
       const newConcepts = this.extractConcepts(data);

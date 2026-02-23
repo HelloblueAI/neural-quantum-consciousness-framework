@@ -1,8 +1,7 @@
 import { Agent, AgentConfig } from './Agent';
-import { Goal, Action, Experience, CreativeResult, LearningResult, CreativeTask, CreativeSession, AdaptationResult, ActionResult, SelfImprovementResult } from '@/types';
+import { Goal, Action, CreativeResult, CreativeTask, CreativeSession, ActionResult, SelfImprovementResult } from '@/types';
 import { AgentPerformance } from './Agent';
 import { CreativeEngine } from '@/types';
-import { Logger } from '@/utils/Logger';
 
 export interface CreativeAgentConfig extends AgentConfig {
   creativeEngine: CreativeEngine;
@@ -558,7 +557,7 @@ export class CreativeAgent extends Agent {
     try {
       const creativeType = this.determineCreativeType(input);
       const steps: string[] = [];
-      let currentInput = input;
+      const currentInput = input;
       let originality = 0.8;
       let usefulness = 0.8;
       

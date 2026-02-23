@@ -9,7 +9,7 @@ import { TrueAGIEngine } from '@/core/TrueAGIEngine';
 import { AGIDemonstration } from '@/demo/AGIDemonstration';
 import { Logger } from '@/utils/Logger';
 
-const logger = new Logger('AGIDemoRunner');
+const _logger = new Logger('AGIDemoRunner');
 
 async function runAGIDemonstration() {
   console.log('\n🚀 Starting Advanced AGI Demonstration\n');

@@ -4,7 +4,7 @@
  * Falls back to TypeScript implementation if Rust is unavailable
  */
 
-import { Tensor, TensorOperation } from '../TensorLogicEngine';
+import { Tensor } from '../TensorLogicEngine';
 import { Logger } from '../../utils/Logger';
 
 export interface RustTensorBackend {

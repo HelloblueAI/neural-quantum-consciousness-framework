@@ -426,9 +426,9 @@ export class AGIDemonstration {
     
     const avgUnderstanding = averageMetrics.understandingDepth;
     const avgConsciousness = averageMetrics.consciousnessLevel;
-    const avgCreativity = averageMetrics.creativityScore;
-    const avgReasoning = averageMetrics.reasoningConfidence;
-    const avgAutonomy = averageMetrics.autonomy;
+    const _avgCreativity = averageMetrics.creativityScore;
+    const _avgReasoning = averageMetrics.reasoningConfidence;
+    const _avgAutonomy = averageMetrics.autonomy;
     
     let assessment = '';
     

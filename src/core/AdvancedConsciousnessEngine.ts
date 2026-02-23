@@ -564,7 +564,7 @@ class EmotionEngine {
   private getEmotionValence(emotion: string): number {
     const positiveEmotions = ['curiosity', 'wonder', 'satisfaction', 'excitement', 'amazement', 'determination'];
     const negativeEmotions = ['frustration'];
-    const neutralEmotions = ['contemplation'];
+    const _neutralEmotions = ['contemplation'];
     
     if (positiveEmotions.includes(emotion)) return 0.7;
     if (negativeEmotions.includes(emotion)) return -0.6;
