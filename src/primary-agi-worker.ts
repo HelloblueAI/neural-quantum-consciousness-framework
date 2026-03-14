@@ -2,6 +2,8 @@
  * AGI Worker - Ultimate Hybrid AGI Superintelligence v4.2.0
  * October 7th design + ALL Advanced AI Enhancements
  * Features: Multi-Agent, Chain-of-Thought, Tool Use, Memory, Self-Improvement
+ *
+ * Cloudflare Workers: stateless process-scoped engines below; no request-scoped data in globals.
  */
 
 import { RealLearningEngine } from './core/RealLearningEngine';
@@ -14,7 +16,16 @@ import { CrossDomainReasoningEngine } from './core/CrossDomainReasoningEngine';
 import { AutonomousGoalSystem } from './core/AutonomousGoalSystem';
 import { ReasoningEngine } from './core/ReasoningEngine';
 
-// Global instances (persist across requests)
+/** Structured log for Workers Observability (JSON parseable). */
+function logEvent(level: 'info' | 'warn' | 'error', message: string, extra?: Record<string, unknown>): void {
+  const payload = { level, message, ts: Date.now(), ...extra };
+  const out = JSON.stringify(payload);
+  if (level === 'error') console.error(out);
+  else if (level === 'warn') console.warn(out);
+  else console.log(out);
+}
+
+// Process-scoped stateless engines (no request data stored here)
 let learningEngine: RealLearningEngine | null = null;
 let llmIntegration: RealLLMIntegration | null = null;
 let reasoningEngine: RealReasoningEngine | null = null;
@@ -75,10 +86,12 @@ function generateCrossDomainConnections(input: string, crossDomainIntegration: n
   };
 }
 
-// Environment interface for type safety
+/** Env: secrets via wrangler secret put; optional AGI_CACHE KV binding for response cache. Run `wrangler types` to sync with config. */
 interface Env {
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
+  ENVIRONMENT?: string;
+  AGI_CACHE?: KVNamespace;
 }
 
 // Helper function to validate and sanitize input
@@ -237,9 +250,8 @@ export default {
       // Initialize systems with error handling
       const initResult = await safeInitializeSystems(env);
       
-      // Log initialization errors but continue (graceful degradation)
       if (initResult.errors.length > 0) {
-        console.warn('Some systems failed to initialize:', initResult.errors);
+        logEvent('warn', 'init_partial', { errors: initResult.errors, path });
       }
       
       // AGI consciousness metrics (enhanced by real ML)
@@ -266,6 +278,12 @@ export default {
       };
       
       if (path === '/status' && request.method === 'GET') {
+        const cacheKey = 'agi:status';
+        const cached = env.AGI_CACHE ? await env.AGI_CACHE.get(cacheKey) : null;
+        if (cached) {
+          logEvent('info', 'cache_hit', { path: '/status' });
+          return new Response(cached, { headers: corsHeaders });
+        }
         // Calculate REAL metrics from actual system state
         const realMetrics = metricsCalculator ? metricsCalculator.getAllMetrics() : {
           quantumAdvantage: 0.7,
@@ -282,7 +300,7 @@ export default {
         const neuralPlasticity = realMetrics.neuralPlasticity;
         const crossDomainIntegration = realMetrics.crossDomainIntegration;
         
-        return new Response(JSON.stringify({
+        const statusBody = JSON.stringify({
           success: true,
           data: {
             system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
@@ -348,16 +366,26 @@ export default {
             realML: agi.realML,
             ultimateEnhancements: ultimateOrchestrator ? ultimateOrchestrator.getStatus() : null
           }
-        }), { headers: corsHeaders });
+        });
+        if (env.AGI_CACHE) {
+          ctx.waitUntil(env.AGI_CACHE.put(cacheKey, statusBody, { expirationTtl: 60 }));
+        }
+        return new Response(statusBody, { headers: corsHeaders });
       }
       
       if (path === '/consciousness' && request.method === 'GET') {
+        const consciousnessCacheKey = 'agi:consciousness';
+        const consciousnessCached = env.AGI_CACHE ? await env.AGI_CACHE.get(consciousnessCacheKey) : null;
+        if (consciousnessCached) {
+          logEvent('info', 'cache_hit', { path: '/consciousness' });
+          return new Response(consciousnessCached, { headers: corsHeaders });
+        }
         // Generate dynamic Ultimate Hybrid AGI consciousness metrics
         const quantumCoherence = Math.random() * 0.3 + 0.7; // 70-100%
         const temporalContinuity = Math.random() * 0.2 + 0.8; // 80-100%
         const metaAwareness = Math.random() * 0.2 + 0.8; // 80-100%
         
-        return new Response(JSON.stringify({
+        const consciousnessBody = JSON.stringify({
           success: true,
           data: {
             system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
@@ -421,7 +449,11 @@ export default {
               advantage: 0.87
             }
           }
-        }), { headers: corsHeaders });
+        });
+        if (env.AGI_CACHE) {
+          ctx.waitUntil(env.AGI_CACHE.put(consciousnessCacheKey, consciousnessBody, { expirationTtl: 60 }));
+        }
+        return new Response(consciousnessBody, { headers: corsHeaders });
       }
       
       if (path === '/reason' && request.method === 'POST') {

@@ -1,30 +1,43 @@
+# AGI Primary Worker - production entrypoint at agi.bleujs.org
+# Run: pnpm run worker:dev | pnpm run deploy:worker:prod
 name = "agi-primary"
 main = "src/primary-agi-worker.ts"
-compatibility_date = "2024-09-23"
+compatibility_date = "2025-03-01"
 compatibility_flags = ["nodejs_compat"]
+
+# Non-secret vars (use wrangler secret put for API keys)
+[vars]
+ENVIRONMENT = "development"
 
 # Production route configuration
 [env.production]
 name = "agi-primary"
 routes = ["agi.bleujs.org/*"]
-# zone_id will be auto-detected or get from Cloudflare dashboard: https://dash.cloudflare.com -> Select bleujs.org -> Overview -> Zone ID
+[env.production.vars]
+ENVIRONMENT = "production"
 
 # Staging environment
 [env.staging]
 name = "agi-primary-staging"
 routes = []
+[env.staging.vars]
+ENVIRONMENT = "staging"
 
 # Development environment (no routes, use dev mode)
 [env.development]
 name = "agi-primary-dev"
 routes = []
+[env.development.vars]
+ENVIRONMENT = "development"
 
-# Optional: KV namespace for persistent storage
+# Optional: KV for response cache (create with: wrangler kv namespace create AGI_CACHE)
+# Uncomment and set id/preview_id after creating the namespace
 # [[kv_namespaces]]
-# binding = "AGI_STORAGE"
-# id = "your-kv-namespace-id"
-# preview_id = "your-kv-namespace-preview-id"
+# binding = "AGI_CACHE"
+# id = "<YOUR_KV_NAMESPACE_ID>"
+# preview_id = "<YOUR_PREVIEW_NAMESPACE_ID>"
 
-# Optional: Cron triggers for scheduled tasks
-# [triggers]
-# crons = ["*/5 * * * *"] 
+# Observability: structured logs and tracing (Workers Observability)
+[observability]
+enabled = true
+head_sampling_rate = 1 

@@ -47,8 +47,10 @@
     "worker:dev:advanced": "wrangler dev --config wrangler.advanced-agi.toml",
     "worker:dev:real": "wrangler dev --config wrangler.real-agi.toml",
     "worker:dev:test": "wrangler dev --config wrangler.test.toml",
+    "worker:types": "wrangler types --config wrangler.toml",
     "deploy:worker": "wrangler deploy --config wrangler.toml",
     "deploy:worker:prod": "wrangler deploy --config wrangler.toml --env production",
+    "deploy:worker:dry-run": "wrangler deploy --config wrangler.toml --env production --dry-run",
     "deploy:worker:staging": "wrangler deploy --config wrangler.toml --env staging",
     "deploy:enhanced": "wrangler deploy --config wrangler.enhanced-agi.toml",
     "deploy:enhanced:prod": "wrangler deploy --config wrangler.enhanced-agi.toml --env production",
@@ -59,7 +61,8 @@
     "deploy:test": "wrangler deploy --config wrangler.test.toml --env test",
     "worker:tail": "wrangler tail --config wrangler.toml",
     "worker:tail:enhanced": "wrangler tail --config wrangler.enhanced-agi.toml",
-    "worker:tail:advanced": "wrangler tail --config wrangler.advanced-agi.toml"
+    "worker:tail:advanced": "wrangler tail --config wrangler.advanced-agi.toml",
+    "worker:tail:real": "wrangler tail --config wrangler.real-agi.toml"
   },
   "keywords": [
     "agi",

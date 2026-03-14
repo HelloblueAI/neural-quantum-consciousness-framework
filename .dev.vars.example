@@ -1,0 +1,9 @@
+# Local development secrets for Cloudflare Workers (wrangler dev).
+# Copy to .dev.vars and fill in real values. Never commit .dev.vars.
+#
+#   cp .dev.vars.example .dev.vars
+#
+# Production: use `wrangler secret put <NAME> --config wrangler.toml` per environment.
+
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=

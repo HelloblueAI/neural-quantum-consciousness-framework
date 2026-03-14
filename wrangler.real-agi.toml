@@ -1,20 +1,30 @@
+# Real AGI Worker - same code as advanced-agi, route real-agi.bleujs.org
 name = "real-agi"
 main = "src/advanced-agi-worker.ts"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-03-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Production environment
+[vars]
+ENVIRONMENT = "development"
+
 [env.production]
 name = "real-agi"
 routes = ["real-agi.bleujs.org/*"]
-zone_id = "your-zone-id-here"  # Replace with actual zone ID from Cloudflare dashboard
+[env.production.vars]
+ENVIRONMENT = "production"
 
-# Staging environment
 [env.staging]
 name = "real-agi-staging"
 routes = []
+[env.staging.vars]
+ENVIRONMENT = "staging"
 
-# Development environment
 [env.development]
 name = "real-agi-dev"
-routes = [] 
+routes = []
+[env.development.vars]
+ENVIRONMENT = "development"
+
+[observability]
+enabled = true
+head_sampling_rate = 1 

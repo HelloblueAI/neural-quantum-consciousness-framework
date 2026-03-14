@@ -1,19 +1,18 @@
 # Wrangler Workers - Project Status Report
 
-**Date**: 2025-01-XX  
-**Status**: ✅ **FULLY ORGANIZED AND READY FOR DEPLOYMENT**
+**Date**: 2025-03  
+**Status**: ✅ **PRODUCTION READY (with best-practice upgrades)**
 
 ## Executive Summary
 
-All Wrangler worker configurations have been audited, fixed, and standardized. The project is now production-ready with:
+Wrangler workers are standardized, observable, and deployment-ready:
 
-- ✅ 5 Wrangler configuration files (all fixed)
-- ✅ 19 worker files (documented and organized)
-- ✅ Standardized deployment scripts
-- ✅ Comprehensive documentation
-- ✅ Environment-specific configurations
-- ✅ No route conflicts
-- ✅ Proper source file references
+- ✅ 5 Wrangler configs: observability enabled, recent compatibility_date, per-env vars
+- ✅ Optional KV cache for primary worker (`AGI_CACHE`) — `/status` and `/consciousness` cached 60s when bound
+- ✅ Structured JSON logging in primary worker for Workers Observability
+- ✅ Scripts: `worker:check`, `worker:types`, `deploy:worker:dry-run`, `worker:tail:real`
+- ✅ `.dev.vars.example` and `.dev.vars` in `.gitignore` for local secrets
+- ✅ Deploy script simplified: `deploy/deploy-cloudflare-worker.sh` uses pnpm + wrangler deploy
 
 ## What Was Fixed
 
@@ -77,34 +76,43 @@ All Wrangler worker configurations have been audited, fixed, and standardized. T
 
 ### Development
 ```bash
-pnpm run worker:dev              # Primary worker
+pnpm run worker:dev              # Primary worker (loads .dev.vars if present)
 pnpm run worker:dev:enhanced     # Enhanced worker
 pnpm run worker:dev:advanced     # Advanced worker
+pnpm run worker:dev:real         # Real AGI worker
+pnpm run worker:dev:test         # Test worker
 ```
 
-### Deployment
+### Validate & Deploy
 ```bash
-pnpm run deploy:worker:prod      # Primary (production)
-pnpm run deploy:enhanced:prod    # Enhanced (production)
-pnpm run deploy:advanced:prod   # Advanced (production)
+pnpm run worker:types             # Generate Env types from wrangler.toml
+pnpm run deploy:worker:dry-run    # Validate build without deploying
+pnpm run deploy:worker:prod       # Primary (production)
+pnpm run deploy:enhanced:prod     # Enhanced (production)
+pnpm run deploy:advanced:prod     # Advanced (production)
+pnpm run deploy:real:prod         # Real AGI (production)
+# Or: bash deploy/deploy-cloudflare-worker.sh
 ```
 
 ### Monitoring
 ```bash
-pnpm run worker:tail             # View logs
+pnpm run worker:tail             # Primary logs (JSON when observability enabled)
+pnpm run worker:tail:enhanced
+pnpm run worker:tail:advanced
+pnpm run worker:tail:real
 ```
 
 ## Next Steps (Manual)
 
-1. **Get Zone ID**: From Cloudflare dashboard
-2. **Update Configs**: Replace `your-zone-id-here` in all configs
-3. **Set Secrets**: Configure API keys
+1. **Local secrets**: `cp .dev.vars.example .dev.vars` and set `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`.
+2. **Production secrets** (per worker/env):
    ```bash
-   npx wrangler secret put ANTHROPIC_API_KEY --config wrangler.toml
-   npx wrangler secret put OPENAI_API_KEY --config wrangler.toml
+   pnpm exec wrangler secret put ANTHROPIC_API_KEY --config wrangler.toml --env production
+   pnpm exec wrangler secret put OPENAI_API_KEY --config wrangler.toml --env production
    ```
-4. **Test Locally**: `pnpm run worker:dev`
-5. **Deploy**: `pnpm run deploy:worker:prod`
+3. **Optional KV cache** (primary worker): create namespace, then in `wrangler.toml` uncomment `[[kv_namespaces]]` and set `id` / `preview_id`.
+4. **Zone ID**: Only if route attach fails — set in dashboard or config for the env.
+5. **Test locally**: `pnpm run worker:dev` then hit `http://localhost:8787/health`.
 
 ## Documentation
 
