@@ -71,6 +71,22 @@ npx wrangler secret put ANTHROPIC_API_KEY --config wrangler.enhanced-agi.toml
 npx wrangler secret put OPENAI_API_KEY --config wrangler.enhanced-agi.toml
 ```
 
+### Local secrets (`.dev.vars`)
+
+For `wrangler dev`, use a local secrets file (never commit it):
+
+```bash
+cp .dev.vars.example .dev.vars
+# Edit .dev.vars and set ANTHROPIC_API_KEY, OPENAI_API_KEY
+```
+
+### Best practices in this project
+
+- **Observability**: All wrangler configs have `[observability]` enabled for structured logs and tracing in the Cloudflare dashboard.
+- **Optional KV cache**: Primary worker supports an optional `AGI_CACHE` KV binding; when set, `GET /status` and `GET /consciousness` are cached for 60 seconds to reduce load.
+- **Types**: Run `pnpm run worker:types` after changing wrangler bindings to regenerate `Env` types.
+- **Dry-run before deploy**: Use `pnpm run deploy:worker:dry-run` to validate the build without deploying.
+
 ## Development
 
 ### Local Development
