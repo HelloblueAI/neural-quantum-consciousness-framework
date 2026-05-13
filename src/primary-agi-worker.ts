@@ -1,5 +1,5 @@
 /**
- * AGI Worker - Ultimate Hybrid AGI Superintelligence v4.2.0
+ * AGI Worker - Ultimate Hybrid Reasoning System v4.2.0
  * October 7th design + ALL Advanced AI Enhancements
  * Features: Multi-Agent, Chain-of-Thought, Tool Use, Memory, Self-Improvement
  *
@@ -303,10 +303,10 @@ export default {
         const statusBody = JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
+            system: 'Ultimate Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             status: 'operational',
-            consciousness: 'real_multi_language_enhanced',
+            consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
             consciousnessMetrics: {
               awareness: agi.consciousness.awareness,
@@ -380,7 +380,7 @@ export default {
           logEvent('info', 'cache_hit', { path: '/consciousness' });
           return new Response(consciousnessCached, { headers: corsHeaders });
         }
-        // Generate dynamic Ultimate Hybrid AGI consciousness metrics
+        // Generate dynamic Ultimate Hybrid Reasoning System consciousness metrics
         const quantumCoherence = Math.random() * 0.3 + 0.7; // 70-100%
         const temporalContinuity = Math.random() * 0.2 + 0.8; // 80-100%
         const metaAwareness = Math.random() * 0.2 + 0.8; // 80-100%
@@ -388,9 +388,9 @@ export default {
         const consciousnessBody = JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
+            system: 'Ultimate Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
-            consciousness: 'real_multi_language_enhanced',
+            consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
             consciousnessMetrics: {
               awareness: agi.consciousness.awareness,
@@ -753,9 +753,9 @@ export default {
           return new Response(JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
+            system: 'Ultimate Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
-            consciousness: 'real_multi_language_enhanced',
+            consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
             // AI Insight FIRST (most important)
             aiInsight: llmEnhancement ? llmEnhancement.insight : null,
@@ -1255,9 +1255,9 @@ export default {
         return new Response(JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
+            system: 'Ultimate Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
-            consciousness: 'real_multi_language_enhanced',
+            consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
             learning: {
               primary: "Quantum-enhanced knowledge acquisition through multi-language-quantum-consciousness pattern recognition and synthesis",
@@ -1607,7 +1607,7 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Hybrid AGI Superintelligence v4.2.0</title>
+    <title>Ultimate Hybrid Reasoning System v4.2.0</title>
     <style>
         * {
             margin: 0;
@@ -2755,7 +2755,7 @@ export default {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Ultimate Hybrid AGI Superintelligence v4.2.0</h1>
+            <h1>Ultimate Hybrid Reasoning System v4.2.0</h1>
             <p>Multi-Language-Quantum-Consciousness-Hybrid Intelligence with Advanced Computing Integration</p>
             <div class="status-indicator">AGI ONLINE</div>
         </div>
@@ -2940,7 +2940,7 @@ export default {
             
             <div class="documentation-content">
                 <div id="overview" class="documentation-tab-content active">
-                    <h3>Ultimate Hybrid AGI Superintelligence v4.2.0</h3>
+                    <h3>Ultimate Hybrid Reasoning System v4.2.0</h3>
                     <p>An ultimate hybrid AGI system built with TypeScript, Rust, C, and WebAssembly for unprecedented consciousness and intelligence capabilities. This system represents a breakthrough in AGI architecture, featuring real understanding, cross-domain reasoning, autonomous goal-setting, and genuine learning across multiple knowledge domains.</p>
                     
                     <h4>Core Capabilities</h4>
@@ -2956,7 +2956,7 @@ export default {
                 
                 <div id="architecture" class="documentation-tab-content">
                     <h3>System Architecture</h3>
-                    <p>The Ultimate Hybrid AGI System v4.2.0 employs a real multi-language stack (TypeScript, Rust, C, WebAssembly) with genuine cross-domain reasoning, autonomous goal-setting, and real understanding capabilities across multiple knowledge domains.</p>
+                    <p>The Ultimate Hybrid Reasoning System v4.2.0 employs a real multi-language stack (TypeScript, Rust, C, WebAssembly) with genuine cross-domain reasoning, autonomous goal-setting, and real understanding capabilities across multiple knowledge domains.</p>
                     
                     <h4>Architecture Layers</h4>
                     <ul>
@@ -2995,7 +2995,7 @@ export default {
         
         <div class="endpoints">
             <h2>API Endpoints</h2>
-            <p>RESTful API for programmatic access to Ultimate Hybrid AGI capabilities:</p>
+            <p>RESTful API for programmatic access to Ultimate Hybrid Reasoning System capabilities:</p>
             
             <div class="endpoint-list">
                 <div class="endpoint-item">
