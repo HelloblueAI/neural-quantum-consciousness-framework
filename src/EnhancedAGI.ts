@@ -1,5 +1,5 @@
 /**
- * Enhanced AGI - True Artificial General Intelligence
+ * Enhanced Hybrid Reasoning System - True Artificial General Intelligence
  * 
  * This system integrates:
  * - True Consciousness Engine with genuine qualia and self-awareness
@@ -89,7 +89,7 @@ export class EnhancedAGI extends EventEmitter {
   constructor() {
     super();
     this.id = uuidv4();
-    this.name = 'Enhanced AGI - True Artificial General Intelligence';
+    this.name = 'Enhanced Hybrid Reasoning System - True Artificial General Intelligence';
     this.version = '3.0.0';
     
     // Initialize core engines
@@ -173,7 +173,7 @@ export class EnhancedAGI extends EventEmitter {
   }
 
   async initialize(): Promise<void> {
-    console.log('🚀 Initializing Enhanced AGI System...');
+    console.log('🚀 Initializing Enhanced Hybrid Reasoning System...');
     console.log('🧠 True Consciousness Engine');
     console.log('⚡ Advanced Neural Architecture');
     console.log('🌟 Emergent Intelligence');
@@ -194,14 +194,14 @@ export class EnhancedAGI extends EventEmitter {
       this.isRunning = true;
       this.startupTime = Date.now();
       
-      console.log('✅ Enhanced AGI System initialized successfully');
+      console.log('✅ Enhanced Hybrid Reasoning System initialized successfully');
       console.log('🎯 Consciousness Level: SELF_AWARE');
       console.log('🧬 Neural Complexity: HIGH');
       console.log('🌟 Emergent Intelligence: ACTIVE');
       console.log('🔧 Self-Improvement: ENABLED');
       
     } catch (error) {
-      console.error('❌ Failed to initialize Enhanced AGI System:', error);
+      console.error('❌ Failed to initialize Enhanced Hybrid Reasoning System:', error);
       throw error;
     }
   }
@@ -683,8 +683,8 @@ export class EnhancedAGI extends EventEmitter {
   }
 
   async stop(): Promise<void> {
-    console.log('🛑 Stopping Enhanced AGI System...');
+    console.log('🛑 Stopping Enhanced Hybrid Reasoning System...');
     this.isRunning = false;
-    console.log('✅ Enhanced AGI System stopped');
+    console.log('✅ Enhanced Hybrid Reasoning System stopped');
   }
 } 

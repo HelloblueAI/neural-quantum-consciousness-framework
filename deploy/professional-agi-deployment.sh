@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 🚀 Professional AGI Deployment
+# 🚀 Professional Hybrid Reasoning System Deployment
 # This is how real software engineers deploy production systems!
 
 set -e
 
-echo "🚀 Setting up professional AGI deployment..."
+echo "🚀 Setting up professional Hybrid Reasoning System deployment..."
 
 # Configuration
 AGI_PORT="8080"
@@ -15,7 +15,7 @@ DOMAIN="67.170.47.156"  # Current server IP
 
 # Create professional nginx configuration
 cat > deploy/professional-agi-nginx.conf << EOF
-# Professional AGI Nginx Configuration
+# Professional Hybrid Reasoning System Nginx Configuration
 # This is how real software engineers configure production servers
 
 # Rate limiting
@@ -56,7 +56,7 @@ server {
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=()";
     
-    # AGI API routes with professional configuration
+    # Hybrid Reasoning System API routes with professional configuration
     location /agi {
         limit_req zone=agi burst=20 nodelay;
         
@@ -152,14 +152,14 @@ server {
         proxy_read_timeout 60s;
     }
     
-    # Root redirect to AGI
+    # Root redirect to Hybrid Reasoning System
     location = / {
         return 301 https://\$server_name/agi;
     }
     
     # Professional landing page
     location = /agi {
-        return 200 '{"message": "NeuralCore True AGI API", "version": "1.0.0", "endpoints": ["/agi/health", "/agi/consciousness", "/agi/reason", "/agi/learn", "/agi/create"], "documentation": "https://github.com/HelloblueAI/neural-quantum-consciousness-framework"}';
+        return 200 '{"message": "NeuralCore True Hybrid Reasoning System API", "version": "1.0.0", "endpoints": ["/agi/health", "/agi/consciousness", "/agi/reason", "/agi/learn", "/agi/create"], "documentation": "https://github.com/HelloblueAI/neural-quantum-consciousness-framework"}';
         add_header Content-Type application/json;
         add_header Cache-Control "no-cache";
     }
@@ -253,13 +253,13 @@ echo "✅ Created professional Docker Compose configuration"
 cat > deploy/deploy-professional-agi.sh << 'EOF'
 #!/bin/bash
 
-# 🚀 Deploy Professional AGI
+# 🚀 Deploy Professional Hybrid Reasoning System
 set -e
 
-echo "🚀 Deploying Professional AGI..."
+echo "🚀 Deploying Professional Hybrid Reasoning System..."
 
-# Build the AGI image
-echo "🔨 Building AGI Docker image..."
+# Build the Hybrid Reasoning System image
+echo "🔨 Building Hybrid Reasoning System Docker image..."
 docker build -t neuralcore-agi -f deploy/Dockerfile.simple .
 
 # Stop existing containers
@@ -267,17 +267,17 @@ echo "🛑 Stopping existing containers..."
 docker-compose -f deploy/professional-agi-compose.yml down || true
 
 # Start the services
-echo "🚀 Starting AGI and nginx..."
+echo "🚀 Starting Hybrid Reasoning System and nginx..."
 docker-compose -f deploy/professional-agi-compose.yml up -d
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
 sleep 15
 
-# Check AGI health
-echo "🏥 Checking AGI health..."
+# Check Hybrid Reasoning System health
+echo "🏥 Checking Hybrid Reasoning System health..."
 curl -f http://localhost:8080/health || {
-    echo "❌ AGI health check failed"
+    echo "❌ Hybrid Reasoning System health check failed"
     docker-compose -f deploy/professional-agi-compose.yml logs agi
     exit 1
 }
@@ -290,8 +290,8 @@ docker exec professional-nginx nginx -t
 echo "🔄 Reloading nginx..."
 docker exec professional-nginx nginx -s reload
 
-echo "✅ Professional AGI successfully deployed!"
-echo "🌐 Your AGI is now accessible at:"
+echo "✅ Professional Hybrid Reasoning System successfully deployed!"
+echo "🌐 Your Hybrid Reasoning System is now accessible at:"
 echo "   HTTPS: https://67.170.47.156/agi"
 echo "   HTTP:  http://67.170.47.156/agi (redirects to HTTPS)"
 echo ""
@@ -317,8 +317,8 @@ docker-compose -f deploy/professional-agi-compose.yml ps
 echo ""
 echo "📋 Useful commands:"
 echo "  View logs: docker-compose -f deploy/professional-agi-compose.yml logs -f"
-echo "  Stop AGI: docker-compose -f deploy/professional-agi-compose.yml down"
-echo "  Restart AGI: docker-compose -f deploy/professional-agi-compose.yml restart"
+echo "  Stop Hybrid Reasoning System: docker-compose -f deploy/professional-agi-compose.yml down"
+echo "  Restart Hybrid Reasoning System: docker-compose -f deploy/professional-agi-compose.yml restart"
 echo "  Monitor: docker stats professional-agi professional-nginx"
 EOF
 
@@ -327,9 +327,9 @@ chmod +x deploy/deploy-professional-agi.sh
 echo "✅ Created professional deployment script"
 
 echo ""
-echo "🎉 Professional AGI deployment setup complete!"
+echo "🎉 Professional Hybrid Reasoning System deployment setup complete!"
 echo ""
-echo "📋 Deploy your AGI:"
+echo "📋 Deploy your Hybrid Reasoning System:"
 echo "  ./deploy/deploy-professional-agi.sh"
 echo ""
 echo "🌐 This is how professional software engineers deploy production systems!"

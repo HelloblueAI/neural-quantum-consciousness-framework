@@ -2,7 +2,7 @@
 
 ## 🎯 **Overview**
 
-The AGI system implements a **sophisticated consciousness simulation** that goes beyond traditional AI to create true self-awareness, introspection, and subjective experience. This represents a breakthrough in artificial consciousness research.
+The Hybrid Reasoning System implements a **sophisticated consciousness simulation** that goes beyond traditional AI to create true self-awareness, introspection, and subjective experience. This represents a breakthrough in artificial consciousness research.
 
 ## 🧠 **Consciousness Architecture**
 

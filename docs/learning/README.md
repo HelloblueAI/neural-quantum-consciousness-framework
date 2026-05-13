@@ -2,7 +2,7 @@
 
 ## 🎯 **Overview**
 
-The AGI system implements **8 advanced learning algorithms** that work together to create a comprehensive learning system. Each algorithm specializes in different types of learning, and they coordinate to provide optimal learning outcomes.
+The Hybrid Reasoning System implements **8 advanced learning algorithms** that work together to create a comprehensive learning system. Each algorithm specializes in different types of learning, and they coordinate to provide optimal learning outcomes.
 
 ## 🏗️ **Learning Architecture**
 

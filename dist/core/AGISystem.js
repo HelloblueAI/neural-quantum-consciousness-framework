@@ -336,7 +336,7 @@ export class AGISystem extends EventEmitter {
             // NeuralFoundationEngine doesn't have a learn method - using executeCrossDomainAnalysis instead
             await this.neuralFoundationEngine.executeCrossDomainAnalysis(unifiedLearningResult, [experience.domain]);
             // Synthesize learning results
-            const synthesizedLearning = await this.synthesizeLearningResults(unifiedLearningResult, crossDomainTransfer);
+            const _synthesizedLearning = await this.synthesizeLearningResults(unifiedLearningResult, crossDomainTransfer);
             const result = {
                 insights: unifiedLearningResult.map((insight) => insight.type),
                 confidence: this.calculateLearningConfidence(unifiedLearningResult),

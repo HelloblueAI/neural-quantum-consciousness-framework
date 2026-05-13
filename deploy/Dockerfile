@@ -1,4 +1,4 @@
-# Dockerfile for NeuralCore True AGI
+# Dockerfile for NeuralCore True Hybrid Reasoning System
 FROM node:20-alpine
 
 # Set working directory

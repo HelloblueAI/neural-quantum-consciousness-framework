@@ -3,7 +3,7 @@
  * Structured logging with multiple levels, performance tracking, and intelligent filtering
  */
 import { EventEmitter } from 'events';
-import { v4 as uuidv4 } from 'uuid';
+import { uuidv4 } from './uuid';
 /**
  * Advanced Logger
  *

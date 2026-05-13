@@ -1,15 +1,15 @@
 # Cloudflare Workers Deployment Guide
 
-Complete guide for deploying AGI workers to Cloudflare Workers.
+Complete guide for deploying Hybrid Reasoning System workers to Cloudflare Workers.
 
 ## Overview
 
 This project uses multiple Cloudflare Workers for different purposes:
 
-- **Primary Worker** (`primary-agi-worker.ts`) - Main production worker with full AGI capabilities
+- **Primary Worker** (`primary-agi-worker.ts`) - Main production worker with full Hybrid Reasoning System capabilities
 - **Enhanced Worker** (`enhanced-agi-worker.ts`) - Advanced consciousness and understanding
-- **Advanced Worker** (`advanced-agi-worker.ts`) - Real AGI with ML integration
-- **Real AGI Worker** (`advanced-agi-worker.ts`) - Alternative real AGI implementation
+- **Advanced Worker** (`advanced-agi-worker.ts`) - Real Hybrid Reasoning System with ML integration
+- **Real Hybrid Reasoning System Worker** (`advanced-agi-worker.ts`) - Alternative real Hybrid Reasoning System implementation
 - **Test Worker** (`test-worker.ts`) - Testing and development
 
 ## Wrangler Configuration Files
@@ -17,22 +17,22 @@ This project uses multiple Cloudflare Workers for different purposes:
 ### Primary Configuration: `wrangler.toml`
 - **Worker**: `primary-agi-worker.ts`
 - **Production Route**: `agi.bleujs.org/*`
-- **Purpose**: Main production AGI worker with UltimateAGIOrchestrator
+- **Purpose**: Main production Hybrid Reasoning System worker with UltimateAGIOrchestrator
 
 ### Enhanced Configuration: `wrangler.enhanced-agi.toml`
 - **Worker**: `enhanced-agi-worker.ts`
 - **Production Route**: `api.agi.bleujs.org/*`
-- **Purpose**: Enhanced AGI with advanced consciousness engines
+- **Purpose**: Enhanced Hybrid Reasoning System with advanced consciousness engines
 
 ### Advanced Configuration: `wrangler.advanced-agi.toml`
 - **Worker**: `advanced-agi-worker.ts`
 - **Production Route**: `advanced-agi.bleujs.org/*`
-- **Purpose**: Advanced AGI with real ML integration
+- **Purpose**: Advanced Hybrid Reasoning System with real ML integration
 
-### Real AGI Configuration: `wrangler.real-agi.toml`
+### Real Hybrid Reasoning System Configuration: `wrangler.real-agi.toml`
 - **Worker**: `advanced-agi-worker.ts`
 - **Production Route**: `real-agi.bleujs.org/*`
-- **Purpose**: Real AGI implementation
+- **Purpose**: Real Hybrid Reasoning System implementation
 
 ### Test Configuration: `wrangler.test.toml`
 - **Worker**: `test-worker.ts`
@@ -334,5 +334,5 @@ For issues or questions:
 ---
 
 **Last Updated**: 2025-01-XX  
-**Maintained by**: AGI Development Team
+**Maintained by**: Hybrid Reasoning System Development Team
 

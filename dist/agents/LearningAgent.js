@@ -988,7 +988,7 @@ export class LearningAgent extends Agent {
         try {
             const learningType = this.determineLearningType(input);
             const steps = [];
-            let currentInput = input;
+            const currentInput = input;
             let confidence = 0.8;
             // Step 1: Input Analysis
             const analysisStep = this.analyzeLearningInput(currentInput, context);

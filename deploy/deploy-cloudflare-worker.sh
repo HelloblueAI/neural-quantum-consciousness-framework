@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deploy AGI primary worker to Cloudflare (agi.bleujs.org).
+# Deploy Hybrid Reasoning System primary worker to Cloudflare (agi.bleujs.org).
 # Prereqs: pnpm install, wrangler login, secrets set (wrangler secret put ANTHROPIC_API_KEY --config wrangler.toml).
 # Optional: CLOUDFLARE_API_TOKEN + jq for first-time custom domain CNAME/route setup.
 
@@ -16,7 +16,7 @@ ENV="production"
 CUSTOM_DOMAIN="agi.bleujs.org"
 ZONE_NAME="bleujs.org"
 
-echo -e "${BLUE}📋 Deploying AGI Worker (config=$CONFIG env=$ENV)${NC}"
+echo -e "${BLUE}📋 Deploying Hybrid Reasoning System Worker (config=$CONFIG env=$ENV)${NC}"
 
 # Deploy (Wrangler compiles from source; no separate build step)
 echo -e "\n${YELLOW}🔨 Deploying...${NC}"

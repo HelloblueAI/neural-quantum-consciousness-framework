@@ -460,7 +460,7 @@ export class CreativeAgent extends Agent {
         try {
             const creativeType = this.determineCreativeType(input);
             const steps = [];
-            let currentInput = input;
+            const currentInput = input;
             let originality = 0.8;
             let usefulness = 0.8;
             // Step 1: Inspiration Gathering

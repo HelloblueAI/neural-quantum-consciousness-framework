@@ -30,12 +30,12 @@ class AGITestRunner {
   private startTime: number = Date.now();
 
   constructor() {
-    console.log('🤖 AGI System Test Runner');
+    console.log('🤖 Hybrid Reasoning System Test Runner');
     console.log('==========================\n');
   }
 
   async runAllTests(): Promise<TestReport> {
-    console.log('🚀 Starting comprehensive AGI system testing...\n');
+    console.log('🚀 Starting comprehensive Hybrid Reasoning System testing...\n');
 
     // Create reports directory
     const reportsDir = join(process.cwd(), 'reports');
@@ -310,7 +310,7 @@ class AGITestRunner {
   }
 
   private printSummary(report: TestReport): void {
-    console.log('\n📊 AGI System Test Summary');
+    console.log('\n📊 Hybrid Reasoning System Test Summary');
     console.log('==========================');
     console.log(`Total Tests: ${report.totalTests}`);
     console.log(`Passed: ${report.totalPassed} ✅`);
@@ -341,14 +341,14 @@ class AGITestRunner {
       });
     }
 
-    console.log('\n🎯 AGI System Status:');
+    console.log('\n🎯 Hybrid Reasoning System Status:');
     if (report.totalFailed === 0 && report.totalTests > 0) {
-      console.log('🚀 AGI System is FLAWLESS and ready for production!');
+      console.log('🚀 Hybrid Reasoning System is FLAWLESS and ready for production!');
       console.log('🌟 All tests passing - System is operating at peak performance');
     } else if (report.totalFailed < 5) {
-      console.log('✅ AGI System is mostly stable with minor issues to address');
+      console.log('✅ Hybrid Reasoning System is mostly stable with minor issues to address');
     } else {
-      console.log('⚠️ AGI System needs attention - multiple test failures detected');
+      console.log('⚠️ Hybrid Reasoning System needs attention - multiple test failures detected');
     }
 
     console.log('\n📄 Detailed report saved to reports/ directory');

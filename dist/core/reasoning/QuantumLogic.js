@@ -147,7 +147,7 @@ export class QuantumLogic {
             const quantumOperators = this.extractQuantumOperators(input);
             const states = this.extractQuantumStates(input, context);
             const measurements = this.performQuantumMeasurements(states, quantumOperators);
-            const conclusion = this.generateQuantumConclusion(input, quantumOperators, states, measurements);
+            const _conclusion = this.generateQuantumConclusion(input, quantumOperators, states, measurements);
             const confidence = this.calculateQuantumConfidence(input, quantumOperators, states);
             const reasoningTime = Date.now() - startTime;
             this.updatePerformanceMetrics(reasoningTime, confidence, states.length);
@@ -251,7 +251,7 @@ export class QuantumLogic {
         const states = [];
         // Extract quantum states from input using pattern matching
         const statePatterns = [
-            /\|(\w+)\⟩/g, // Bra-ket notation
+            /\|(\w+)⟩/g, // Bra-ket notation
             /(\w+)\s+superposition/g, // Superposition keywords
             /(\w+)\s+entangled/g, // Entanglement keywords
             /(\w+)\s+quantum\s+state/g // Quantum state keywords
@@ -308,8 +308,8 @@ export class QuantumLogic {
     }
     calculateMeasurementResult(state, operator) {
         // Simulate quantum measurement result
-        const amplitude = state.amplitude;
-        const operatorStrength = operator.strength;
+        const _amplitude = state.amplitude;
+        const _operatorStrength = operator.strength;
         // Apply operator matrix to state
         const result = this.applyOperator(state, operator);
         // Return measurement result (0 or 1 for computational basis)
@@ -318,7 +318,7 @@ export class QuantumLogic {
     calculateMeasurementProbability(state, operator) {
         // Calculate measurement probability using Born rule
         const amplitude = state.amplitude;
-        const operatorMatrix = operator.matrix;
+        const _operatorMatrix = operator.matrix;
         // For simplicity, use amplitude squared as probability
         return Math.pow(amplitude, 2);
     }
@@ -353,7 +353,7 @@ export class QuantumLogic {
     extractSuperposition(text) {
         const superposition = new Map();
         // Extract superposition components
-        const components = text.match(/\|(\w+)\⟩/g) || [];
+        const components = text.match(/\|(\w+)⟩/g) || [];
         const totalComponents = components.length;
         if (totalComponents > 0) {
             const weight = 1.0 / totalComponents;

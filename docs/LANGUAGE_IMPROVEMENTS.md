@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the intelligent improvements made to optimize the language distribution and enhance the AGI system's performance.
+This document describes the intelligent improvements made to optimize the language distribution and enhance the Hybrid Reasoning System's performance.
 
 ## Improvements Implemented
 

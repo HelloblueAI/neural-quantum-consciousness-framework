@@ -291,8 +291,8 @@ export class ModalLogic {
     analyzeAccessibility(_input, worlds) {
         if (worlds.length <= 1)
             return 1.0;
-        let totalAccessibility = 0;
-        let accessibilityChecks = 0;
+        const totalAccessibility = 0;
+        const accessibilityChecks = 0;
         for (const world of worlds) {
             for (const [_fromWorld, strength] of world.accessibility) {
                 if (strength > 0.5) {

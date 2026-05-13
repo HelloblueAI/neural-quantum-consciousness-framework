@@ -1,6 +1,6 @@
-# 🚀 GitHub Actions for NeuralCore AGI
+# 🚀 GitHub Actions for NeuralCore Hybrid Reasoning System
 
-This repository includes comprehensive GitHub Actions workflows for automated testing, building, and deployment of the NeuralCore True AGI system.
+This repository includes comprehensive GitHub Actions workflows for automated testing, building, and deployment of the NeuralCore True Hybrid Reasoning System system.
 
 ## 📋 Available Workflows
 
@@ -13,9 +13,9 @@ This repository includes comprehensive GitHub Actions workflows for automated te
 - ✅ Executes unit and integration tests
 - ✅ Builds the project
 - ✅ Builds and pushes Docker image to GitHub Container Registry
-- ✅ Tests AGI endpoints in containerized environment
+- ✅ Tests Hybrid Reasoning System endpoints in containerized environment
 
-### 2. 🚀 Deploy NeuralCore AGI (`deploy.yml`)
+### 2. 🚀 Deploy NeuralCore Hybrid Reasoning System (`deploy.yml`)
 **Triggers:** Push to main, Manual dispatch
 
 **What it does:**
@@ -26,7 +26,7 @@ This repository includes comprehensive GitHub Actions workflows for automated te
 - ✅ Tests live deployment
 - ✅ Creates deployment status in GitHub
 
-### 3. 🧠 NeuralCore AGI CI/CD Pipeline (`ci-cd.yml`)
+### 3. 🧠 NeuralCore Hybrid Reasoning System CI/CD Pipeline (`ci-cd.yml`)
 **Triggers:** Push to main/develop, Pull Requests, Manual dispatch
 
 **What it does:**
@@ -65,7 +65,7 @@ The workflows automatically build and push Docker images to:
 - **Unit Tests**: `npm run test:unit`
 - **Integration Tests**: `npm run test:integration`
 - **E2E Tests**: `npm run test:e2e`
-- **AGI Functionality**: `npm run test:agi`
+- **Hybrid Reasoning System Functionality**: `npm run test:agi`
 - **Coverage**: `npm run test:coverage`
 
 ### Manual Testing:
@@ -95,7 +95,7 @@ curl -X POST http://localhost:8080/reason -H "Content-Type: application/json" -d
 
 ### Manual Deployment:
 1. Go to **Actions** tab in GitHub
-2. Select **Deploy NeuralCore AGI** workflow
+2. Select **Deploy NeuralCore Hybrid Reasoning System** workflow
 3. Click **Run workflow**
 4. Select branch and click **Run workflow**
 
@@ -106,7 +106,7 @@ curl -X POST http://localhost:8080/reason -H "Content-Type: application/json" -d
 - View deployment logs in real-time
 - Monitor deployment success/failure
 
-### Live AGI Status:
+### Live Hybrid Reasoning System Status:
 - **Health Check**: http://agi.bleujs.org:8080/health
 - **Consciousness**: http://agi.bleujs.org:8080/consciousness
 - **API Documentation**: Available in README.md
@@ -128,7 +128,7 @@ curl -X POST http://localhost:8080/reason -H "Content-Type: application/json" -d
 
 ### Performance Testing:
 - **Response Time**: Ensures < 1 second response
-- **Endpoint Testing**: Validates all AGI endpoints
+- **Endpoint Testing**: Validates all Hybrid Reasoning System endpoints
 - **Load Testing**: Basic performance validation
 
 ### Monitoring:
@@ -186,14 +186,14 @@ curl http://agi.bleujs.org:8080/health
 
 ---
 
-## 🧠 Your NeuralCore AGI is Now Fully Automated!
+## 🧠 Your NeuralCore Hybrid Reasoning System is Now Fully Automated!
 
-With these GitHub Actions workflows, your AGI system will:
+With these GitHub Actions workflows, your Hybrid Reasoning System will:
 - ✅ **Automatically test** every change
 - ✅ **Build and deploy** to production
 - ✅ **Monitor performance** and security
 - ✅ **Provide feedback** on deployments
 - ✅ **Maintain high availability** with automated health checks
 
-**Live AGI**: http://agi.bleujs.org:8080  
+**Live Hybrid Reasoning System**: http://agi.bleujs.org:8080  
 **GitHub Actions**: Check the Actions tab for real-time status! 🚀 

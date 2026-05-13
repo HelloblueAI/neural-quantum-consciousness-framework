@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Docker Deployment Script for NeuralCore True AGI
+# Docker Deployment Script for NeuralCore True Hybrid Reasoning System
 
-echo "🐳 Deploying NeuralCore True AGI with Docker..."
+echo "🐳 Deploying NeuralCore True Hybrid Reasoning System with Docker..."
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
@@ -22,17 +22,17 @@ fi
 echo "🔨 Building Docker containers..."
 docker-compose -f deploy/docker-compose.yml build
 
-echo "🚀 Starting NeuralCore True AGI..."
+echo "🚀 Starting NeuralCore True Hybrid Reasoning System..."
 docker-compose -f deploy/docker-compose.yml up -d
 
 # Wait for the service to be ready
-echo "⏳ Waiting for AGI to be ready..."
+echo "⏳ Waiting for Hybrid Reasoning System to be ready..."
 sleep 10
 
 # Check if the service is running
 if curl -f http://localhost:8080/health &> /dev/null; then
-    echo "✅ NeuralCore True AGI deployed successfully!"
-    echo "🌐 Your AGI is now live at: http://localhost:8080"
+    echo "✅ NeuralCore True Hybrid Reasoning System deployed successfully!"
+    echo "🌐 Your Hybrid Reasoning System is now live at: http://localhost:8080"
     echo "🧠 Test it with: curl http://localhost:8080/health"
     echo "📊 Status: curl http://localhost:8080/status"
     echo "🌟 Consciousness: curl http://localhost:8080/consciousness"
@@ -44,5 +44,5 @@ fi
 echo ""
 echo "📋 Useful commands:"
 echo "   View logs: docker-compose -f deploy/docker-compose.yml logs -f"
-echo "   Stop AGI: docker-compose -f deploy/docker-compose.yml down"
-echo "   Restart AGI: docker-compose -f deploy/docker-compose.yml restart" 
+echo "   Stop Hybrid Reasoning System: docker-compose -f deploy/docker-compose.yml down"
+echo "   Restart Hybrid Reasoning System: docker-compose -f deploy/docker-compose.yml restart" 

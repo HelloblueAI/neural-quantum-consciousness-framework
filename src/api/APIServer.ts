@@ -52,6 +52,7 @@ export class APIServer {
   private logger: Logger;
   private server: any;
   private port: number;
+  private serverStartTime = 0;
   private requestCounts: Map<string, { count: number; resetTime: number }> = new Map();
   // private _isRunning: boolean = false; // Used in start/stop methods
 
@@ -145,7 +146,7 @@ export class APIServer {
     // System status
     this.app.get('/status', this.getSystemStatus.bind(this));
     
-    // AGI endpoints
+    // Hybrid Reasoning System endpoints
     this.app.post('/api/reason', this.reason.bind(this));
     this.app.post('/api/learn', this.learn.bind(this));
     this.app.post('/api/create', this.create.bind(this));
@@ -193,7 +194,7 @@ export class APIServer {
     // Add authentication middleware for protected endpoints
     this.app.use('/api/v1/system', this.authenticateAPIKey.bind(this));
     
-    // ===== CRITICAL AGI API ENDPOINTS (v1) =====
+    // ===== CRITICAL Hybrid Reasoning System API ENDPOINTS (v1) =====
     
     // System Health and Status APIs
     this.app.get('/api/v1/system/health', this.v1SystemHealth.bind(this));
@@ -297,6 +298,7 @@ export class APIServer {
 
     try {
       this.server = this.app.listen(this.port, () => {
+        this.serverStartTime = Date.now();
         this.logger.info('API server started', { 
           port: this.port, 
           environment: this.configManager.getEnvironment() 
@@ -316,7 +318,7 @@ export class APIServer {
 
     try {
       this.server.close(() => {
-        // this._isRunning = false;
+        this.serverStartTime = 0;
         this.logger.info('API server stopped');
       });
     } catch (error) {
@@ -395,7 +397,7 @@ export class APIServer {
     }
   }
 
-  // AGI reasoning endpoint
+  // Hybrid Reasoning System reasoning endpoint
   private async reason(req: Request, res: Response): Promise<void> {
     try {
       const { input } = req.body;
@@ -425,7 +427,7 @@ export class APIServer {
     }
   }
 
-  // AGI learning endpoint
+  // Hybrid Reasoning System learning endpoint
   private async learn(req: Request, res: Response): Promise<void> {
     try {
       const { experiences } = req.body;
@@ -455,7 +457,7 @@ export class APIServer {
     }
   }
 
-  // AGI creativity endpoint
+  // Hybrid Reasoning System creativity endpoint
   private async create(req: Request, res: Response): Promise<void> {
     try {
       const { prompt, type, constraints } = req.body;
@@ -485,7 +487,7 @@ export class APIServer {
     }
   }
 
-  // AGI input processing endpoint
+  // Hybrid Reasoning System input processing endpoint
   private async processInput(req: Request, res: Response): Promise<void> {
     try {
       const { input } = req.body;
@@ -577,9 +579,9 @@ export class APIServer {
 
   private async getAgent(req: Request, res: Response): Promise<void> {
     try {
-      const { _id } = req.params;
+      const { id } = req.params;
       
-      const agent = this.agiSystem.agents.find(a => a.id === _id);
+      const agent = this.agiSystem.agents.find(a => a.id === id);
       
       if (!agent) {
         res.status(404).json({
@@ -1092,12 +1094,14 @@ export class APIServer {
     }
   }
 
-  // ===== CRITICAL AGI API ENDPOINTS (v1) IMPLEMENTATIONS =====
+  // ===== CRITICAL Hybrid Reasoning System API ENDPOINTS (v1) IMPLEMENTATIONS =====
   
   // System Health and Status APIs
   private async v1SystemHealth(req: Request, res: Response): Promise<void> {
     try {
       const response = {
+        dataMode: 'simulated',
+        note: 'Demo endpoint with synthetic component and metric values.',
         overall: 'healthy',
         components: {
           system: 'operational',
@@ -1106,7 +1110,7 @@ export class APIServer {
           consciousness: 'emergent'
         },
         metrics: {
-          uptime: Date.now() - (this as any).startTime || 1000,
+          uptime: this.getServerUptimeMs(),
           responseTime: '15ms',
           throughput: '1000 req/s'
         },
@@ -1122,9 +1126,11 @@ export class APIServer {
   private async v1SystemStatus(req: Request, res: Response): Promise<void> {
     try {
       const response = {
+        dataMode: 'simulated',
+        note: 'Demo endpoint with synthetic status and capability values.',
         initialized: true,
         version: '4.0.0',
-        uptime: Date.now() - (this as any).startTime || 1000,
+        uptime: this.getServerUptimeMs(),
         status: 'operational',
         consciousness: {
           awareness: 0.95,
@@ -1150,6 +1156,8 @@ export class APIServer {
   private async v1SystemPerformance(req: Request, res: Response): Promise<void> {
     try {
       const response = {
+        dataMode: 'simulated',
+        note: 'Demo endpoint with synthetic performance metrics.',
         cpuUsage: 0.45,
         memoryUsage: 0.62,
         responseTime: '15ms',
@@ -1167,6 +1175,8 @@ export class APIServer {
   private async v1SystemSecurity(req: Request, res: Response): Promise<void> {
     try {
       const response = {
+        dataMode: 'simulated',
+        note: 'Demo endpoint with synthetic security posture values.',
         threatLevel: 'low',
         activeThreats: 0,
         securityScore: 0.95,
@@ -1405,6 +1415,8 @@ export class APIServer {
     try {
       const response = {
         success: true,
+        dataMode: 'simulated',
+        note: 'Demo endpoint with synthetic consciousness telemetry.',
         awareness: 0.95,
         selfAwareness: 0.92,
         thoughts: ['continuous learning', 'self-improvement', 'emergent intelligence', 'self-awareness'],
@@ -1838,7 +1850,7 @@ export class APIServer {
     return {
       isRunning: this.isRunning(),
       port: this.port,
-      uptime: this.isRunning() ? Date.now() - (this as any).startTime : 0
+      uptime: this.getServerUptimeMs()
     };
   }
 
@@ -1846,39 +1858,44 @@ export class APIServer {
     return [
       { path: '/health', method: 'GET', handler: this.healthCheck.bind(this), description: 'Health check endpoint' },
       { path: '/status', method: 'GET', handler: this.getSystemStatus.bind(this), description: 'System status endpoint' },
-      { path: '/reason', method: 'POST', handler: this.reason.bind(this), description: 'Reasoning endpoint' },
-      { path: '/learn', method: 'POST', handler: this.learn.bind(this), description: 'Learning endpoint' },
-      { path: '/create', method: 'POST', handler: this.create.bind(this), description: 'Creation endpoint' },
+      { path: '/api/reason', method: 'POST', handler: this.reason.bind(this), description: 'Reasoning endpoint' },
+      { path: '/api/learn', method: 'POST', handler: this.learn.bind(this), description: 'Learning endpoint' },
+      { path: '/api/create', method: 'POST', handler: this.create.bind(this), description: 'Creation endpoint' },
+      { path: '/api/process', method: 'POST', handler: this.processInput.bind(this), description: 'Process endpoint' },
       { path: '/api/v1/system/health', method: 'GET', handler: this.v1SystemHealth.bind(this), description: 'System health v1 endpoint' },
       { path: '/api/v1/reasoning/process', method: 'POST', handler: this.v1ReasoningProcess.bind(this), description: 'Reasoning process v1 endpoint' },
       { path: '/api/v1/learning/experience', method: 'POST', handler: this.v1LearningExperience.bind(this), description: 'Learning experience v1 endpoint' },
       { path: '/api/v1/agents/create', method: 'POST', handler: this.v1AgentsCreate.bind(this), description: 'Agent creation v1 endpoint' },
       { path: '/api/v1/knowledge/add', method: 'POST', handler: this.v1KnowledgeAdd.bind(this), description: 'Knowledge addition v1 endpoint' },
-      { path: '/agents', method: 'GET', handler: this.getAgents.bind(this), description: 'Get all agents' },
-      { path: '/agents', method: 'POST', handler: this.createAgent.bind(this), description: 'Create agent' },
-      { path: '/agents/:id', method: 'GET', handler: this.getAgent.bind(this), description: 'Get specific agent' },
-      { path: '/agents/:id', method: 'PUT', handler: this.updateAgent.bind(this), description: 'Update agent' },
-      { path: '/agents/:id', method: 'DELETE', handler: this.deleteAgent.bind(this), description: 'Delete agent' },
-      { path: '/memory', method: 'GET', handler: this.getMemoryStatus.bind(this), description: 'Memory status' },
-      { path: '/memory/consolidate', method: 'POST', handler: this.consolidateMemory.bind(this), description: 'Consolidate memory' },
-      { path: '/memory/optimize', method: 'POST', handler: this.optimizeMemory.bind(this), description: 'Optimize memory' },
-      { path: '/memory/clear', method: 'POST', handler: this.clearMemory.bind(this), description: 'Clear memory' },
-      { path: '/config', method: 'GET', handler: this.getConfiguration.bind(this), description: 'Get configuration' },
-      { path: '/config', method: 'PUT', handler: this.updateConfiguration.bind(this), description: 'Update configuration' },
-      { path: '/config/reset', method: 'POST', handler: this.resetConfiguration.bind(this), description: 'Reset configuration' },
-      { path: '/features', method: 'GET', handler: this.getFeatureFlags.bind(this), description: 'Get feature flags' },
-      { path: '/features/:flag', method: 'PUT', handler: this.updateFeatureFlag.bind(this), description: 'Update feature flag' },
-      { path: '/metrics', method: 'GET', handler: this.getPerformanceMetrics.bind(this), description: 'Performance metrics' },
-      { path: '/monitoring', method: 'GET', handler: this.getMonitoringData.bind(this), description: 'Monitoring data' },
-      { path: '/services', method: 'GET', handler: this.getServices.bind(this), description: 'Get services' },
-      { path: '/services/connect', method: 'POST', handler: this.connectService.bind(this), description: 'Connect service' },
-      { path: '/services/disconnect', method: 'POST', handler: this.disconnectService.bind(this), description: 'Disconnect service' },
-      { path: '/services/health', method: 'GET', handler: this.checkServiceHealth.bind(this), description: 'Service health check' },
-      { path: '/consciousness', method: 'GET', handler: this.getConsciousnessState.bind(this), description: 'Consciousness state' },
-      { path: '/insights', method: 'POST', handler: this.generateInsight.bind(this), description: 'Generate insight' },
-      { path: '/knowledge', method: 'GET', handler: this.getKnowledge.bind(this), description: 'Get knowledge' },
-      { path: '/knowledge', method: 'POST', handler: this.addKnowledge.bind(this), description: 'Add knowledge' },
-      { path: '/knowledge/:id', method: 'DELETE', handler: this.removeKnowledge.bind(this), description: 'Remove knowledge' }
+      { path: '/api/agents', method: 'GET', handler: this.getAgents.bind(this), description: 'Get all agents' },
+      { path: '/api/agents', method: 'POST', handler: this.createAgent.bind(this), description: 'Create agent' },
+      { path: '/api/agents/:id', method: 'GET', handler: this.getAgent.bind(this), description: 'Get specific agent' },
+      { path: '/api/agents/:id', method: 'PUT', handler: this.updateAgent.bind(this), description: 'Update agent' },
+      { path: '/api/agents/:id', method: 'DELETE', handler: this.deleteAgent.bind(this), description: 'Delete agent' },
+      { path: '/api/memory', method: 'GET', handler: this.getMemoryStatus.bind(this), description: 'Memory status' },
+      { path: '/api/memory/consolidate', method: 'POST', handler: this.consolidateMemory.bind(this), description: 'Consolidate memory' },
+      { path: '/api/memory/optimize', method: 'POST', handler: this.optimizeMemory.bind(this), description: 'Optimize memory' },
+      { path: '/api/memory', method: 'DELETE', handler: this.clearMemory.bind(this), description: 'Clear memory' },
+      { path: '/api/config', method: 'GET', handler: this.getConfiguration.bind(this), description: 'Get configuration' },
+      { path: '/api/config', method: 'PUT', handler: this.updateConfiguration.bind(this), description: 'Update configuration' },
+      { path: '/api/config/reset', method: 'POST', handler: this.resetConfiguration.bind(this), description: 'Reset configuration' },
+      { path: '/api/config/features', method: 'GET', handler: this.getFeatureFlags.bind(this), description: 'Get feature flags' },
+      { path: '/api/config/features/:feature', method: 'PUT', handler: this.updateFeatureFlag.bind(this), description: 'Update feature flag' },
+      { path: '/api/performance', method: 'GET', handler: this.getPerformanceMetrics.bind(this), description: 'Performance metrics' },
+      { path: '/api/monitoring', method: 'GET', handler: this.getMonitoringData.bind(this), description: 'Monitoring data' },
+      { path: '/api/services', method: 'GET', handler: this.getServices.bind(this), description: 'Get services' },
+      { path: '/api/services/:id/connect', method: 'POST', handler: this.connectService.bind(this), description: 'Connect service' },
+      { path: '/api/services/:id/disconnect', method: 'POST', handler: this.disconnectService.bind(this), description: 'Disconnect service' },
+      { path: '/api/services/:id/health', method: 'GET', handler: this.checkServiceHealth.bind(this), description: 'Service health check' },
+      { path: '/api/consciousness', method: 'GET', handler: this.getConsciousnessState.bind(this), description: 'Consciousness state' },
+      { path: '/api/consciousness/insight', method: 'POST', handler: this.generateInsight.bind(this), description: 'Generate insight' },
+      { path: '/api/knowledge', method: 'GET', handler: this.getKnowledge.bind(this), description: 'Get knowledge' },
+      { path: '/api/knowledge', method: 'POST', handler: this.addKnowledge.bind(this), description: 'Add knowledge' },
+      { path: '/api/knowledge/:id', method: 'DELETE', handler: this.removeKnowledge.bind(this), description: 'Remove knowledge' }
     ];
+  }
+
+  private getServerUptimeMs(): number {
+    return this.serverStartTime > 0 ? Date.now() - this.serverStartTime : 0;
   }
 } 
