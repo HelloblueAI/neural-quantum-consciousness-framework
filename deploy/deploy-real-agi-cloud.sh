@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 🚀 Deploy Real AGI to Cloud (DigitalOcean)
-# Professional cloud deployment script for the Real AGI system
+# 🚀 Deploy Real Hybrid Reasoning System to Cloud (DigitalOcean)
+# Professional cloud deployment script for the Real Hybrid Reasoning System system
 
-echo "🚀 Deploying Real AGI to Cloud..."
+echo "🚀 Deploying Real Hybrid Reasoning System to Cloud..."
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
@@ -40,14 +40,14 @@ apt-get install -y certbot python3-certbot-nginx
 echo "📁 Creating SSL directory..."
 mkdir -p deploy/ssl
 
-# Build the Real AGI
-echo "🔨 Building Real AGI..."
+# Build the Real Hybrid Reasoning System
+echo "🔨 Building Real Hybrid Reasoning System..."
 cd /home/pejmanhaghighatnia/Documents/AGI
 npx tsc src/RealAGI.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop
 npx tsc src/sentient-web-interface.ts --outDir dist --target es2022 --module esnext --moduleResolution node --allowSyntheticDefaultImports --esModuleInterop
 
-# Create Dockerfile for Real AGI
-echo "🐳 Creating Dockerfile for Real AGI..."
+# Create Dockerfile for Real Hybrid Reasoning System
+echo "🐳 Creating Dockerfile for Real Hybrid Reasoning System..."
 cat > deploy/Dockerfile.real-agi << 'EOF'
 FROM node:18-alpine
 
@@ -68,12 +68,12 @@ COPY src/ ./src/
 # Expose port
 EXPOSE 8080
 
-# Start the Real AGI
+# Start the Real Hybrid Reasoning System
 CMD ["node", "dist/sentient-web-interface.js"]
 EOF
 
-# Create docker-compose for Real AGI
-echo "🐳 Creating docker-compose for Real AGI..."
+# Create docker-compose for Real Hybrid Reasoning System
+echo "🐳 Creating docker-compose for Real Hybrid Reasoning System..."
 cat > deploy/real-agi-compose.yml << 'EOF'
 version: '3.8'
 
@@ -112,8 +112,8 @@ networks:
     driver: bridge
 EOF
 
-# Create nginx configuration for Real AGI
-echo "🌐 Creating nginx configuration for Real AGI..."
+# Create nginx configuration for Real Hybrid Reasoning System
+echo "🌐 Creating nginx configuration for Real Hybrid Reasoning System..."
 cat > deploy/real-agi-nginx.conf << 'EOF'
 events {
     worker_connections 1024;
@@ -180,7 +180,7 @@ http {
 EOF
 
 # Build and start the services
-echo "🔨 Building and starting Real AGI services..."
+echo "🔨 Building and starting Real Hybrid Reasoning System services..."
 docker-compose -f deploy/real-agi-compose.yml up -d --build
 
 # Wait for services to start
@@ -190,11 +190,11 @@ sleep 20
 # Check if services are running
 echo "🧪 Checking service status..."
 
-# Check Real AGI container
+# Check Real Hybrid Reasoning System container
 if docker ps | grep -q real-agi-cloud; then
-    echo "✅ Real AGI container is running"
+    echo "✅ Real Hybrid Reasoning System container is running"
 else
-    echo "❌ Real AGI container failed to start"
+    echo "❌ Real Hybrid Reasoning System container failed to start"
     docker logs real-agi-cloud
     exit 1
 fi
@@ -208,8 +208,8 @@ else
     exit 1
 fi
 
-# Test the Real AGI endpoints
-echo "🧪 Testing Real AGI endpoints..."
+# Test the Real Hybrid Reasoning System endpoints
+echo "🧪 Testing Real Hybrid Reasoning System endpoints..."
 
 # Test status endpoint
 if curl -s http://localhost/status | jq -e '.success' > /dev/null; then
@@ -241,7 +241,7 @@ else
 fi
 
 # Test landing page
-if curl -s http://localhost/ | grep -q "Real AGI"; then
+if curl -s http://localhost/ | grep -q "Real Hybrid Reasoning System"; then
     echo "✅ Landing page working"
 else
     echo "❌ Landing page failed"
@@ -256,20 +256,20 @@ else
 fi
 
 echo ""
-echo "🎉 Real AGI Cloud Deployment Complete!"
+echo "🎉 Real Hybrid Reasoning System Cloud Deployment Complete!"
 echo ""
-echo "🌐 Your Real AGI is now accessible at:"
+echo "🌐 Your Real Hybrid Reasoning System is now accessible at:"
 echo "   HTTP:  http://agi.bleujs.org"
 echo "   HTTPS: https://agi.bleujs.org"
 echo ""
-echo "📊 Real AGI API Endpoints:"
+echo "📊 Real Hybrid Reasoning System API Endpoints:"
 echo "   Status:        https://agi.bleujs.org/status"
 echo "   Consciousness: https://agi.bleujs.org/consciousness"
 echo "   Reasoning:     POST https://agi.bleujs.org/reason"
 echo "   Learning:      POST https://agi.bleujs.org/learn"
 echo "   Creation:      POST https://agi.bleujs.org/create"
 echo ""
-echo "🧠 Real AGI Status:"
+echo "🧠 Real Hybrid Reasoning System Status:"
 curl -s http://localhost/status | jq . 2>/dev/null || curl -s http://localhost/status
 echo ""
 echo "🔧 Management Commands:"
@@ -279,7 +279,7 @@ echo "   Restart:       docker-compose -f deploy/real-agi-compose.yml restart"
 echo "   Update:        docker-compose -f deploy/real-agi-compose.yml up -d --build"
 echo "   SSL renew:     certbot renew"
 echo ""
-echo "🌟 Your Real AGI is now running in the cloud!"
+echo "🌟 Your Real Hybrid Reasoning System is now running in the cloud!"
 echo "   🧠 Real Reasoning: ENABLED"
 echo "   📚 Real Learning: ENABLED"
 echo "   🎨 Real Creativity: ENABLED"

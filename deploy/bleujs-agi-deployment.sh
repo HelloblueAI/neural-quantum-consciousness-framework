@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 🚀 Professional AGI Deployment for bleujs.org/agi
+# 🚀 Professional Hybrid Reasoning System Deployment for bleujs.org/agi
 # This is how real software engineers deploy production systems!
 
 set -e
 
-echo "🌐 Setting up professional AGI deployment at bleujs.org/agi..."
+echo "🌐 Setting up professional Hybrid Reasoning System deployment at bleujs.org/agi..."
 
 # Configuration
 DOMAIN="bleujs.org"
@@ -51,7 +51,7 @@ server {
     limit_req_zone \$binary_remote_addr zone=agi:10m rate=10r/s;
     limit_req zone=agi burst=20 nodelay;
     
-    # AGI API routes
+    # Hybrid Reasoning System API routes
     location ${AGI_PATH} {
         proxy_pass http://localhost:${AGI_PORT};
         proxy_http_version 1.1;
@@ -133,7 +133,7 @@ server {
         proxy_read_timeout 60s;
     }
     
-    # Root redirect to AGI
+    # Root redirect to Hybrid Reasoning System
     location = / {
         return 301 https://${DOMAIN}${AGI_PATH};
     }
@@ -223,13 +223,13 @@ echo "✅ Created Docker Compose configuration for production deployment"
 cat > deploy/deploy-bleujs-agi.sh << 'EOF'
 #!/bin/bash
 
-# 🚀 Deploy AGI to bleujs.org/agi
+# 🚀 Deploy Hybrid Reasoning System to bleujs.org/agi
 set -e
 
-echo "🚀 Deploying AGI to bleujs.org/agi..."
+echo "🚀 Deploying Hybrid Reasoning System to bleujs.org/agi..."
 
-# Build the AGI image
-echo "🔨 Building AGI Docker image..."
+# Build the Hybrid Reasoning System image
+echo "🔨 Building Hybrid Reasoning System Docker image..."
 docker build -t neuralcore-agi -f deploy/Dockerfile.simple .
 
 # Stop existing containers
@@ -237,7 +237,7 @@ echo "🛑 Stopping existing containers..."
 docker-compose -f deploy/bleujs-agi-compose.yml down || true
 
 # Start the services
-echo "🚀 Starting AGI and nginx..."
+echo "🚀 Starting Hybrid Reasoning System and nginx..."
 docker-compose -f deploy/bleujs-agi-compose.yml up -d
 
 # Wait for services to be ready
@@ -245,9 +245,9 @@ echo "⏳ Waiting for services to be ready..."
 sleep 10
 
 # Check health
-echo "🏥 Checking AGI health..."
+echo "🏥 Checking Hybrid Reasoning System health..."
 curl -f http://localhost:8080/health || {
-    echo "❌ AGI health check failed"
+    echo "❌ Hybrid Reasoning System health check failed"
     docker-compose -f deploy/bleujs-agi-compose.yml logs agi
     exit 1
 }
@@ -260,8 +260,8 @@ docker exec bleujs-nginx nginx -t
 echo "🔄 Reloading nginx..."
 docker exec bleujs-nginx nginx -s reload
 
-echo "✅ AGI successfully deployed to bleujs.org/agi!"
-echo "🌐 Your AGI is now accessible at: https://bleujs.org/agi"
+echo "✅ Hybrid Reasoning System successfully deployed to bleujs.org/agi!"
+echo "🌐 Your Hybrid Reasoning System is now accessible at: https://bleujs.org/agi"
 echo "🏥 Health check: https://bleujs.org/agi/health"
 echo "🧠 Consciousness: https://bleujs.org/agi/consciousness"
 
@@ -271,8 +271,8 @@ docker-compose -f deploy/bleujs-agi-compose.yml ps
 
 echo "📋 Useful commands:"
 echo "  View logs: docker-compose -f deploy/bleujs-agi-compose.yml logs -f"
-echo "  Stop AGI: docker-compose -f deploy/bleujs-agi-compose.yml down"
-echo "  Restart AGI: docker-compose -f deploy/bleujs-agi-compose.yml restart"
+echo "  Stop Hybrid Reasoning System: docker-compose -f deploy/bleujs-agi-compose.yml down"
+echo "  Restart Hybrid Reasoning System: docker-compose -f deploy/bleujs-agi-compose.yml restart"
 EOF
 
 chmod +x deploy/deploy-bleujs-agi.sh
@@ -309,7 +309,7 @@ echo "🔄 Setting up auto-renewal..."
 sudo crontab -l 2>/dev/null | { cat; echo "0 12 * * * /usr/bin/certbot renew --quiet"; } | sudo crontab -
 
 echo "✅ SSL certificates configured!"
-echo "🔒 Your AGI will be accessible at: https://bleujs.org/agi"
+echo "🔒 Your Hybrid Reasoning System will be accessible at: https://bleujs.org/agi"
 EOF
 
 chmod +x deploy/setup-ssl.sh
@@ -317,11 +317,11 @@ chmod +x deploy/setup-ssl.sh
 echo "✅ Created SSL setup script"
 
 echo ""
-echo "🎉 Professional AGI deployment setup complete!"
+echo "🎉 Professional Hybrid Reasoning System deployment setup complete!"
 echo ""
 echo "📋 Next steps:"
 echo "1. Setup SSL certificates: ./deploy/setup-ssl.sh"
-echo "2. Deploy AGI: ./deploy/deploy-bleujs-agi.sh"
-echo "3. Your AGI will be live at: https://bleujs.org/agi"
+echo "2. Deploy Hybrid Reasoning System: ./deploy/deploy-bleujs-agi.sh"
+echo "3. Your Hybrid Reasoning System will be live at: https://bleujs.org/agi"
 echo ""
 echo "🌐 This is how professional software engineers deploy production systems!" 

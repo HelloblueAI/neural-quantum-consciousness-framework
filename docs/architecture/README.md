@@ -1,8 +1,8 @@
-# 🏗️ AGI System Architecture
+# 🏗️ Hybrid Reasoning System Architecture
 
 ## 🎯 **Architecture Overview**
 
-The AGI system is built on a **modular, event-driven architecture** that enables seamless integration of multiple intelligence components while maintaining high performance, scalability, and extensibility.
+The Hybrid Reasoning System is built on a **modular, event-driven architecture** that enables seamless integration of multiple intelligence components while maintaining high performance, scalability, and extensibility.
 
 ## 🧩 **Core Architecture Principles**
 
@@ -18,7 +18,7 @@ The AGI system is built on a **modular, event-driven architecture** that enables
 
 ### **3. Layered Architecture**
 - **Presentation Layer**: API endpoints and user interfaces
-- **Business Logic Layer**: Core AGI components and agents
+- **Business Logic Layer**: Core Hybrid Reasoning System components and agents
 - **Data Layer**: Memory management and knowledge storage
 - **Infrastructure Layer**: Logging, security, and system monitoring
 
@@ -308,4 +308,4 @@ Information → Memory Manager → Type Classification → Storage → Retrieval
 
 ---
 
-**🏗️ This architecture represents the foundation for the most advanced AGI system ever built. 🏗️** 
+**🏗️ This architecture represents the foundation for the most advanced Hybrid Reasoning System ever built. 🏗️** 

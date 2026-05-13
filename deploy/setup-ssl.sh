@@ -26,4 +26,4 @@ echo "🔄 Setting up auto-renewal..."
 sudo crontab -l 2>/dev/null | { cat; echo "0 12 * * * /usr/bin/certbot renew --quiet"; } | sudo crontab -
 
 echo "✅ SSL certificates configured!"
-echo "🔒 Your AGI will be accessible at: https://bleujs.org/agi"
+echo "🔒 Your Hybrid Reasoning System will be accessible at: https://bleujs.org/agi"

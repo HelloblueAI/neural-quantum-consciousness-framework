@@ -153,5 +153,5 @@ The implementation is ready for testing. You can test it by:
 
 ## Conclusion
 
-The Tensor Logic implementation successfully brings the concepts from the paper into our AGI system, providing a unified framework for neural-symbolic reasoning. It integrates seamlessly with existing reasoning systems and provides a foundation for future enhancements.
+The Tensor Logic implementation successfully brings the concepts from the paper into our Hybrid Reasoning System, providing a unified framework for neural-symbolic reasoning. It integrates seamlessly with existing reasoning systems and provides a foundation for future enhancements.
 

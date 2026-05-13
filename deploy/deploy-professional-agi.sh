@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# 🚀 Deploy Professional AGI
+# 🚀 Deploy Professional Hybrid Reasoning System
 set -e
 
-echo "🚀 Deploying Professional AGI..."
+echo "🚀 Deploying Professional Hybrid Reasoning System..."
 
-# Build the AGI image
-echo "🔨 Building AGI Docker image..."
+# Build the Hybrid Reasoning System image
+echo "🔨 Building Hybrid Reasoning System Docker image..."
 docker build -t neuralcore-agi -f deploy/Dockerfile.simple .
 
 # Stop existing containers
@@ -14,17 +14,17 @@ echo "🛑 Stopping existing containers..."
 docker-compose -f deploy/professional-agi-compose.yml down || true
 
 # Start the services
-echo "🚀 Starting AGI and nginx..."
+echo "🚀 Starting Hybrid Reasoning System and nginx..."
 docker-compose -f deploy/professional-agi-compose.yml up -d
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to be ready..."
 sleep 15
 
-# Check AGI health
-echo "🏥 Checking AGI health..."
+# Check Hybrid Reasoning System health
+echo "🏥 Checking Hybrid Reasoning System health..."
 curl -f http://localhost:8080/health || {
-    echo "❌ AGI health check failed"
+    echo "❌ Hybrid Reasoning System health check failed"
     docker-compose -f deploy/professional-agi-compose.yml logs agi
     exit 1
 }
@@ -37,8 +37,8 @@ docker exec professional-nginx nginx -t
 echo "🔄 Reloading nginx..."
 docker exec professional-nginx nginx -s reload
 
-echo "✅ Professional AGI successfully deployed!"
-echo "🌐 Your AGI is now accessible at:"
+echo "✅ Professional Hybrid Reasoning System successfully deployed!"
+echo "🌐 Your Hybrid Reasoning System is now accessible at:"
 echo "   HTTPS: https://67.170.47.156/agi"
 echo "   HTTP:  http://67.170.47.156/agi (redirects to HTTPS)"
 echo ""
@@ -64,6 +64,6 @@ docker-compose -f deploy/professional-agi-compose.yml ps
 echo ""
 echo "📋 Useful commands:"
 echo "  View logs: docker-compose -f deploy/professional-agi-compose.yml logs -f"
-echo "  Stop AGI: docker-compose -f deploy/professional-agi-compose.yml down"
-echo "  Restart AGI: docker-compose -f deploy/professional-agi-compose.yml restart"
+echo "  Stop Hybrid Reasoning System: docker-compose -f deploy/professional-agi-compose.yml down"
+echo "  Restart Hybrid Reasoning System: docker-compose -f deploy/professional-agi-compose.yml restart"
 echo "  Monitor: docker stats professional-agi professional-nginx"

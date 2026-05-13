@@ -1,6 +1,6 @@
 # Quick Start: Cloudflare Workers
 
-Get your AGI workers deployed in 5 minutes.
+Get your Hybrid Reasoning System workers deployed in 5 minutes.
 
 ## Prerequisites
 

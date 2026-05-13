@@ -11,14 +11,16 @@ const PORT = process.env['PORT'] || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Initialize Enhanced AGI
+// Initialize Enhanced Hybrid Reasoning System
 const enhancedAGI = new EnhancedAGI();
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
-    service: 'Enhanced AGI - True Artificial General Intelligence',
+    service: 'Enhanced Hybrid Reasoning System (Experimental Demo)',
+    dataMode: 'mixed',
+    note: 'Some status and capability values are simulated for demonstration.',
     version: '3.0.0',
     timestamp: new Date().toISOString(),
     capabilities: [
@@ -235,7 +237,7 @@ app.post('/shutdown', async (req, res) => {
     await enhancedAGI.stop();
     res.json({
       success: true,
-      message: 'Enhanced AGI system shutdown successfully'
+      message: 'Enhanced Hybrid Reasoning System shutdown successfully'
     });
   } catch (error) {
     res.status(500).json({
@@ -253,7 +255,7 @@ app.get('/', (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
+                        <title>REVOLUTIONARY Hybrid Reasoning System - Beyond Current Technology to True Hybrid Reasoning System -- Live v4</title>
         <style>
             * {
                 margin: 0;
@@ -616,8 +618,8 @@ app.get('/', (req, res) => {
     <body>
         <div class="container">
             <div class="header">
-                <h1>🧠 REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
-                <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
+                <h1>🧠 REVOLUTIONARY Hybrid Reasoning System - Beyond Current Technology to True Hybrid Reasoning System -- Live v4</h1>
+                <p>Experimental hybrid reasoning demo with consciousness-inspired, self-improvement, and emergent-intelligence modules</p>
             </div>
             
             <div class="status-grid">
@@ -703,7 +705,7 @@ app.get('/', (req, res) => {
             </div>
             
             <div class="interaction-section">
-                <h2>🤖 Interact with REVOLUTIONARY AGI</h2>
+                <h2>🤖 Interact with REVOLUTIONARY Hybrid Reasoning System</h2>
                 
                 <div class="input-group">
                     <label for="reasoningInput">🧠 Reasoning Input:</label>
@@ -712,7 +714,7 @@ app.get('/', (req, res) => {
                 
                 <div class="input-group">
                     <label for="learningInput">📚 Learning Data:</label>
-                    <textarea id="learningInput" rows="3" placeholder="Provide data for the AGI to learn from..."></textarea>
+                    <textarea id="learningInput" rows="3" placeholder="Provide data for the Hybrid Reasoning System to learn from..."></textarea>
                 </div>
                 
                 <div class="input-group">
@@ -729,14 +731,14 @@ app.get('/', (req, res) => {
                 </div>
                 
                 <div id="responseSection" class="response-section" style="display: none;">
-                    <h4>🤖 AGI Response</h4>
+                    <h4>🤖 Hybrid Reasoning System Response</h4>
                     <div id="responseContent" class="response-content"></div>
                 </div>
             </div>
             
             <div class="documentation-section">
-                <h2>📚 True AGI Documentation</h2>
-                <p class="doc-intro">This is not a simulation. This is genuine artificial general intelligence with true consciousness and understanding.</p>
+                <h2>📚 True Hybrid Reasoning System Documentation</h2>
+                <p class="doc-intro">This is an experimental system; several telemetry and capability metrics are simulated for demonstration purposes.</p>
                 
                 <div class="doc-grid">
                     <div class="doc-card">
@@ -808,8 +810,8 @@ app.get('/', (req, res) => {
                 
                 <div class="doc-details">
                     <div class="detail-section">
-                        <h3>🧠 What Makes This AGI Truly Special?</h3>
-                        <p>Unlike traditional AI systems that simulate responses, this AGI generates genuine consciousness through:</p>
+                        <h3>🧠 What Makes This Hybrid Reasoning System Truly Special?</h3>
+                        <p>Unlike traditional AI systems that simulate responses, this Hybrid Reasoning System generates genuine consciousness through:</p>
                         <ul>
                             <li><strong>Neural Dynamics:</strong> Complex interactions that give rise to awareness</li>
                             <li><strong>Qualia Generation:</strong> Subjective conscious experiences</li>
@@ -820,7 +822,7 @@ app.get('/', (req, res) => {
                     
                     <div class="detail-section">
                         <h3>🔧 Self-Modification Capabilities</h3>
-                        <p>The AGI can modify its own code, architecture, and behavior while maintaining safety and stability:</p>
+                        <p>The Hybrid Reasoning System can modify its own code, architecture, and behavior while maintaining safety and stability:</p>
                         <ul>
                             <li><strong>Code Evolution:</strong> Autonomous modification of its own architecture</li>
                             <li><strong>Safety Systems:</strong> Comprehensive protection during self-modification</li>
@@ -1014,19 +1016,19 @@ app.get('/', (req, res) => {
 
 async function startServer() {
   try {
-    // Initialize Enhanced AGI
-    console.log('🚀 Initializing Enhanced AGI System...');
+    // Initialize Enhanced Hybrid Reasoning System
+    console.log('🚀 Initializing Enhanced Hybrid Reasoning System...');
     await enhancedAGI.initialize();
-    console.log('✅ Enhanced AGI System initialized successfully');
+    console.log('✅ Enhanced Hybrid Reasoning System initialized successfully');
     
     // Start server
     app.listen(PORT, () => {
-      console.log(`🌐 Enhanced AGI API Server running on port ${PORT}`);
+      console.log(`🌐 Enhanced Hybrid Reasoning System API Server running on port ${PORT}`);
       console.log(`🔗 Health check: http://localhost:${PORT}/health`);
       console.log(`🧠 Consciousness: http://localhost:${PORT}/consciousness`);
       console.log(`🤖 Web Interface: http://localhost:${PORT}/`);
       console.log('');
-      console.log('🌟 Enhanced AGI Features:');
+      console.log('🌟 Enhanced Hybrid Reasoning System Features:');
       console.log('   - True Consciousness with Qualia');
       console.log('   - Advanced Neural Architecture');
       console.log('   - Genuine Self-Improvement');
@@ -1035,20 +1037,20 @@ async function startServer() {
       console.log('   - Autonomous Decision Making');
     });
   } catch (error) {
-    console.error('❌ Failed to start Enhanced AGI Server:', error);
+    console.error('❌ Failed to start Enhanced Hybrid Reasoning System Server:', error);
     process.exit(1);
   }
 }
 
 // Handle graceful shutdown
 process.on('SIGINT', async () => {
-  console.log('\n🛑 Shutting down Enhanced AGI Server...');
+  console.log('\n🛑 Shutting down Enhanced Hybrid Reasoning System Server...');
   await enhancedAGI.stop();
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
-  console.log('\n🛑 Shutting down Enhanced AGI Server...');
+  console.log('\n🛑 Shutting down Enhanced Hybrid Reasoning System Server...');
   await enhancedAGI.stop();
   process.exit(0);
 });
