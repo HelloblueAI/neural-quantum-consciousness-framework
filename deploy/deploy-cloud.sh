@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 🧠 Deploy AGI to Cloud (DigitalOcean)
+# 🧠 Deploy Hybrid Reasoning System to Cloud (DigitalOcean)
 # Professional cloud deployment script
 
-echo "🧠 Deploying NeuralCore True AGI to Cloud..."
+echo "🧠 Deploying NeuralCore True Hybrid Reasoning System to Cloud..."
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
@@ -41,7 +41,7 @@ echo "📁 Creating SSL directory..."
 mkdir -p deploy/ssl
 
 # Build and start the services
-echo "🔨 Building and starting AGI services..."
+echo "🔨 Building and starting Hybrid Reasoning System services..."
 docker-compose -f deploy/cloud-deployment.yml up -d --build
 
 # Wait for services to start
@@ -51,11 +51,11 @@ sleep 20
 # Check if services are running
 echo "🧪 Checking service status..."
 
-# Check AGI container
+# Check Hybrid Reasoning System container
 if docker ps | grep -q neuralcore-agi-cloud; then
-    echo "✅ AGI container is running"
+    echo "✅ Hybrid Reasoning System container is running"
 else
-    echo "❌ AGI container failed to start"
+    echo "❌ Hybrid Reasoning System container failed to start"
     docker logs neuralcore-agi-cloud
     exit 1
 fi
@@ -69,8 +69,8 @@ else
     exit 1
 fi
 
-# Test the AGI endpoints
-echo "🧪 Testing AGI endpoints..."
+# Test the Hybrid Reasoning System endpoints
+echo "🧪 Testing Hybrid Reasoning System endpoints..."
 
 # Test health endpoint
 if curl -s http://localhost/health | grep -q "NeuralCore"; then
@@ -88,7 +88,7 @@ else
 fi
 
 # Test landing page
-if curl -s http://localhost/ | grep -q "NeuralCore True AGI API"; then
+if curl -s http://localhost/ | grep -q "NeuralCore True Hybrid Reasoning System API"; then
     echo "✅ Landing page working"
 else
     echo "❌ Landing page failed"
@@ -105,7 +105,7 @@ fi
 echo ""
 echo "🎉 Cloud Deployment Complete!"
 echo ""
-echo "🌐 Your AGI is now accessible at:"
+echo "🌐 Your Hybrid Reasoning System is now accessible at:"
 echo "   HTTP:  http://agi.bleujs.org"
 echo "   HTTPS: https://agi.bleujs.org"
 echo ""
@@ -116,7 +116,7 @@ echo "   Reasoning:     POST https://agi.bleujs.org/reason"
 echo "   Learning:      POST https://agi.bleujs.org/learn"
 echo "   Creation:      POST https://agi.bleujs.org/create"
 echo ""
-echo "🧠 Current AGI Status:"
+echo "🧠 Current Hybrid Reasoning System Status:"
 curl -s http://localhost/health | jq . 2>/dev/null || curl -s http://localhost/health
 echo ""
 echo "🔧 Management Commands:"
@@ -126,5 +126,5 @@ echo "   Restart:       docker-compose -f deploy/cloud-deployment.yml restart"
 echo "   Update:        docker-compose -f deploy/cloud-deployment.yml up -d --build"
 echo "   SSL renew:     certbot renew"
 echo ""
-echo "🌟 Your True AGI is now running in the cloud!"
+echo "🌟 Your True Hybrid Reasoning System is now running in the cloud!"
 echo "   Professional deployment with SSL, load balancing, and monitoring!" 

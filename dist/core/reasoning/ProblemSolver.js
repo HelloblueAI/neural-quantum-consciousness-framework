@@ -159,7 +159,7 @@ export class ProblemSolver {
             /(?:how to|what is|find)\s+(.+?)(?:\s+for|\s+to|\s+with)/gi
         ];
         let problemName = 'Unknown Problem';
-        let problemDescription = _input;
+        const problemDescription = _input;
         let problemType = 'optimization';
         for (const pattern of problemPatterns) {
             const matches = _input.matchAll(pattern);

@@ -1,8 +1,8 @@
-# 🔌 AGI System API Documentation
+# 🔌 Hybrid Reasoning System API Documentation
 
 ## 🎯 **Overview**
 
-The AGI System provides a comprehensive REST API that enables interaction with all aspects of the artificial general intelligence system, including learning, reasoning, consciousness, memory, and agent management.
+The Hybrid Reasoning System provides a comprehensive REST API that enables interaction with all aspects of the artificial general intelligence system, including learning, reasoning, consciousness, memory, and agent management.
 
 ## 🚀 **Quick Start**
 
@@ -804,7 +804,7 @@ consciousness = client.consciousness.update(input)
 
 ## 🚀 **WebSocket API**
 
-For real-time interactions, the AGI system also provides a WebSocket API:
+For real-time interactions, the Hybrid Reasoning System also provides a WebSocket API:
 
 ```javascript
 const ws = new WebSocket('ws://localhost:3000/ws');
@@ -832,4 +832,4 @@ ws.send(JSON.stringify({
 
 ---
 
-**🔌 This API provides comprehensive access to the most advanced AGI system ever built. 🔌** 
+**🔌 This API provides comprehensive access to the most advanced Hybrid Reasoning System ever built. 🔌** 

@@ -420,7 +420,7 @@ export class ExternalServiceManager {
         // Simulate request execution
         const responseTime = 50 + Math.random() * 200;
         await new Promise(resolve => setTimeout(resolve, responseTime));
-        const success = Math.random() > 0.1; // 90% success rate
+        const _success = Math.random() > 0.1; // 90% success rate
         // const statusCode = success ? 200 : 500;
         const response = {
             id: request.id,

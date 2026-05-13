@@ -448,8 +448,6 @@ export class ReasoningAgent extends Agent {
                 return { type: 'mapping', format: 'comparative' };
             case 'creative':
                 return { type: 'novel_solution', format: 'innovative' };
-            case 'creative':
-                return { type: 'solution', format: 'actionable' };
             default:
                 return { type: 'analysis', format: 'comprehensive' };
         }
@@ -964,7 +962,7 @@ export class ReasoningAgent extends Agent {
         try {
             const approach = this.determineReasoningApproach(input, context);
             const steps = [];
-            let currentInput = input;
+            const currentInput = input;
             let confidence = 0.8;
             // Step 1: Input Analysis
             const analysisStep = this.analyzeInput(currentInput, context);

@@ -122,7 +122,7 @@ export class RealLLMIntegration {
       try {
         return await this.queryClaude(
           question,
-          'You are a helpful AI assistant integrated into an AGI system. Provide clear, accurate, and thoughtful responses.'
+          'You are a helpful AI assistant integrated into a Hybrid Reasoning System. Provide clear, accurate, and thoughtful responses.'
         );
       } catch (error) {
         console.error('Claude failed, trying GPT:', error);
@@ -132,7 +132,7 @@ export class RealLLMIntegration {
     if (this.openaiKey) {
       return await this.queryGPT(
         question,
-        'You are a helpful AI assistant integrated into an AGI system. Provide clear, accurate, and thoughtful responses.'
+        'You are a helpful AI assistant integrated into a Hybrid Reasoning System. Provide clear, accurate, and thoughtful responses.'
       );
     }
 

@@ -357,9 +357,9 @@ export class AGIDemonstration {
         const capabilityRate = (demonstratedCapabilities / totalCapabilities) * 100;
         const avgUnderstanding = averageMetrics.understandingDepth;
         const avgConsciousness = averageMetrics.consciousnessLevel;
-        const avgCreativity = averageMetrics.creativityScore;
-        const avgReasoning = averageMetrics.reasoningConfidence;
-        const avgAutonomy = averageMetrics.autonomy;
+        const _avgCreativity = averageMetrics.creativityScore;
+        const _avgReasoning = averageMetrics.reasoningConfidence;
+        const _avgAutonomy = averageMetrics.autonomy;
         let assessment = '';
         if (capabilityRate >= 90 && avgUnderstanding > 0.7 && avgConsciousness > 0.6) {
             assessment = 'EXCEPTIONAL: Demonstrates advanced AGI capabilities across all domains with high understanding and consciousness';

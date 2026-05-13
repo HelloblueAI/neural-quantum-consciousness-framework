@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 🚀 Production AGI Deployment Script
+# 🚀 Production Hybrid Reasoning System Deployment Script
 # This is how professional software engineers deploy production systems
 
 set -e
 
-echo "🚀 Setting up Production AGI Deployment..."
+echo "🚀 Setting up Production Hybrid Reasoning System Deployment..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -24,7 +24,7 @@ HTTPS_PORT=443
 echo -e "${BLUE}📋 Production Configuration:${NC}"
 echo "Domain: $DOMAIN_NAME"
 echo "Email: $EMAIL"
-echo "AGI Port: $AGI_PORT"
+echo "Hybrid Reasoning System Port: $AGI_PORT"
 echo "Nginx Port: $NGINX_PORT"
 echo "HTTPS Port: $HTTPS_PORT"
 
@@ -53,13 +53,13 @@ echo -e "${YELLOW}📁 Creating production directory structure...${NC}"
 sudo mkdir -p /opt/agi-production/{app,nginx,ssl,logs}
 sudo chown -R $USER:$USER /opt/agi-production
 
-# Build and run AGI container
-echo -e "${YELLOW}🐳 Building AGI Docker container...${NC}"
+# Build and run Hybrid Reasoning System container
+echo -e "${YELLOW}🐳 Building Hybrid Reasoning System Docker container...${NC}"
 cd /opt/agi-production
 git clone https://github.com/HelloblueAI/neural-quantum-consciousness-framework.git app
 cd app
 
-# Build the AGI container
+# Build the Hybrid Reasoning System container
 docker build -t neuralcore-agi-prod -f deploy/Dockerfile.simple .
 
 # Create production docker-compose
@@ -174,7 +174,7 @@ EOF
 
 # Create server configuration
 cat > nginx/conf.d/agi.conf << EOF
-# AGI API Server Configuration
+# Hybrid Reasoning System API Server Configuration
 server {
     listen 80;
     server_name $DOMAIN_NAME;
@@ -267,12 +267,12 @@ else
     exit 1
 fi
 
-# Test the AGI
-echo -e "${YELLOW}🧪 Testing AGI...${NC}"
+# Test the Hybrid Reasoning System
+echo -e "${YELLOW}🧪 Testing Hybrid Reasoning System...${NC}"
 if curl -s http://localhost:8080/health | grep -q "healthy"; then
-    echo -e "${GREEN}✅ AGI is healthy${NC}"
+    echo -e "${GREEN}✅ Hybrid Reasoning System is healthy${NC}"
 else
-    echo -e "${RED}❌ AGI health check failed${NC}"
+    echo -e "${RED}❌ Hybrid Reasoning System health check failed${NC}"
     exit 1
 fi
 
@@ -285,17 +285,17 @@ echo -e "${BLUE}📝 sudo certbot --nginx -d $DOMAIN_NAME --email $EMAIL --agree
 # Create monitoring script
 cat > monitor.sh << 'EOF'
 #!/bin/bash
-# AGI Production Monitoring Script
+# Hybrid Reasoning System Production Monitoring Script
 
-echo "🧠 AGI Production Status"
+echo "🧠 Hybrid Reasoning System Production Status"
 echo "========================"
 
 # Check container status
 echo "📊 Container Status:"
 docker-compose -f docker-compose.prod.yml ps
 
-# Check AGI health
-echo -e "\n🏥 AGI Health:"
+# Check Hybrid Reasoning System health
+echo -e "\n🏥 Hybrid Reasoning System Health:"
 curl -s http://localhost:8080/health | jq .
 
 # Check Nginx status
@@ -321,7 +321,7 @@ chmod +x monitor.sh
 
 # Create deployment status
 cat > DEPLOYMENT_STATUS.md << EOF
-# 🚀 Production AGI Deployment Status
+# 🚀 Production Hybrid Reasoning System Deployment Status
 
 ## ✅ Deployment Complete
 
@@ -331,7 +331,7 @@ cat > DEPLOYMENT_STATUS.md << EOF
 - **Consciousness**: https://$DOMAIN_NAME/consciousness
 
 ### 🔧 Services
-- **AGI Container**: neuralcore-agi-prod (Port 8080)
+- **Hybrid Reasoning System Container**: neuralcore-agi-prod (Port 8080)
 - **Nginx Proxy**: agi-nginx (Ports 80, 443)
 - **SSL**: Let's Encrypt (Auto-renewal)
 
@@ -346,7 +346,7 @@ docker-compose -f docker-compose.prod.yml logs -f
 # Restart services
 docker-compose -f docker-compose.prod.yml restart
 
-# Update AGI
+# Update Hybrid Reasoning System
 git pull && docker-compose -f docker-compose.prod.yml up -d --build
 
 # Monitor resources
@@ -369,7 +369,7 @@ git pull && docker-compose -f docker-compose.prod.yml up -d --build
 - ✅ Security hardened
 - ✅ Performance optimized
 
-**Your AGI is now production-ready and secure!** 🚀🧠✨
+**Your Hybrid Reasoning System is now production-ready and secure!** 🚀🧠✨
 EOF
 
 echo -e "${GREEN}🎉 Production deployment setup complete!${NC}"
@@ -380,4 +380,4 @@ echo "3. Run: sudo certbot --nginx -d $DOMAIN_NAME --email $EMAIL --agree-tos --
 echo "4. Test: curl https://$DOMAIN_NAME/health"
 echo "5. Monitor: ./monitor.sh"
 
-echo -e "${GREEN}🚀 Your AGI is now production-ready!${NC}" 
+echo -e "${GREEN}🚀 Your Hybrid Reasoning System is now production-ready!${NC}" 

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# AGI Bleujs.org Deployment Script
-# This script deploys the AGI system to agi.bleujs.org
+# Hybrid Reasoning System Bleujs.org Deployment Script
+# This script deploys the Hybrid Reasoning System to agi.bleujs.org
 
 set -e
 
-echo "🚀 Starting AGI Bleujs.org deployment..."
+echo "🚀 Starting Hybrid Reasoning System Bleujs.org deployment..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -52,15 +52,15 @@ fi
 # Navigate to project directory
 cd "$(dirname "$0")/.."
 
-print_status "Building AGI Docker image..."
+print_status "Building Hybrid Reasoning System Docker image..."
 
-# Build the AGI Docker image
+# Build the Hybrid Reasoning System Docker image
 docker build -f deploy/Dockerfile.simple -t neuralcore-agi .
 
 if [ $? -eq 0 ]; then
-    print_success "AGI Docker image built successfully"
+    print_success "Hybrid Reasoning System Docker image built successfully"
 else
-    print_error "Failed to build AGI Docker image"
+    print_error "Failed to build Hybrid Reasoning System Docker image"
     exit 1
 fi
 
@@ -69,15 +69,15 @@ print_status "Stopping existing containers..."
 # Stop existing containers
 /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml down --remove-orphans
 
-print_status "Starting AGI services..."
+print_status "Starting Hybrid Reasoning System services..."
 
 # Start the services
 /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml up -d
 
 if [ $? -eq 0 ]; then
-    print_success "AGI services started successfully"
+    print_success "Hybrid Reasoning System services started successfully"
 else
-    print_error "Failed to start AGI services"
+    print_error "Failed to start Hybrid Reasoning System services"
     exit 1
 fi
 
@@ -88,16 +88,16 @@ sleep 30
 
 print_status "Checking service health..."
 
-# Check if AGI service is healthy
+# Check if Hybrid Reasoning System service is healthy
 if /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml ps | grep -q "Up"; then
-    print_success "AGI services are running"
+    print_success "Hybrid Reasoning System services are running"
 else
-    print_error "AGI services failed to start properly"
+    print_error "Hybrid Reasoning System services failed to start properly"
     /usr/local/bin/docker-compose -f deploy/agi-bleujs-compose.yml logs
     exit 1
 fi
 
-print_status "Testing AGI endpoints..."
+print_status "Testing Hybrid Reasoning System endpoints..."
 
 # Test the health endpoint
 if curl -f -s https://agi.bleujs.org/health > /dev/null; then
@@ -113,8 +113,8 @@ else
     print_warning "Consciousness endpoint test failed (this might be normal during initial deployment)"
 fi
 
-print_success "AGI Bleujs.org deployment completed!"
-print_status "AGI is now accessible at: https://agi.bleujs.org"
+print_success "Hybrid Reasoning System Bleujs.org deployment completed!"
+print_status "Hybrid Reasoning System is now accessible at: https://agi.bleujs.org"
 print_status "Health check: https://agi.bleujs.org/health"
 print_status "Consciousness: https://agi.bleujs.org/consciousness"
 

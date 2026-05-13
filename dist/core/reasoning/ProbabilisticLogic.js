@@ -136,7 +136,7 @@ export class ProbabilisticLogic {
     calculateProbability(_input, _context) {
         // Apply probabilistic rules to calculate probability
         let totalProbability = 0.5; // Default neutral probability
-        let ruleCount = 0;
+        const ruleCount = 0;
         // This part of the logic was removed as per the new_code,
         // but the method signature and return type remain.
         // The original code had a 'rules' array and 'matchesRule' method.

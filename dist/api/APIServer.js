@@ -999,7 +999,7 @@ export class APIServer {
     // Reasoning API
     async v1ReasoningProcess(req, res) {
         try {
-            const { input, context, priority, metadata } = req.body;
+            const { input, context, metadata } = req.body;
             if (!input) {
                 res.status(400).json({
                     error: 'Input is required',
@@ -1110,7 +1110,7 @@ export class APIServer {
     // Memory API
     async v1MemoryStore(req, res) {
         try {
-            const { memory, content, type, importance } = req.body;
+            const { memory, content } = req.body;
             const memoryData = memory || content;
             if (!memoryData) {
                 res.status(400).json({
@@ -1325,7 +1325,7 @@ export class APIServer {
     async v1AgentTask(req, res) {
         try {
             const { id } = req.params;
-            const { task, input, priority, metadata } = req.body;
+            const { task, input } = req.body;
             const taskData = task || input;
             if (!taskData) {
                 res.status(400).json({
@@ -1353,7 +1353,7 @@ export class APIServer {
     // Knowledge API
     async v1KnowledgeAdd(req, res) {
         try {
-            const { knowledge, content, domain, facts, relationships, confidence, source } = req.body;
+            const { knowledge, content, domain, facts, relationships, confidence } = req.body;
             const knowledgeData = knowledge || content || { domain, facts, relationships, confidence };
             if (!knowledgeData || (!knowledgeData.domain && !knowledgeData.facts)) {
                 res.status(400).json({

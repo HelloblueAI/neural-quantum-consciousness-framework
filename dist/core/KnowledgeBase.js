@@ -140,7 +140,7 @@ export class KnowledgeBase extends EventEmitter {
      */
     getKnowledge(id) {
         // First try to get by exact ID
-        let knowledge = this.knowledge.get(id);
+        const knowledge = this.knowledge.get(id);
         if (knowledge) {
             return knowledge;
         }
