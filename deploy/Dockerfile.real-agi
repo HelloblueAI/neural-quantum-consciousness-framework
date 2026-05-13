@@ -17,5 +17,5 @@ COPY src/ ./src/
 # Expose port
 EXPOSE 8080
 
-# Start the Real AGI
+# Start the Real Hybrid Reasoning System
 CMD ["node", "dist/sentient-web-interface.js"] 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Heroku Deployment Script for NeuralCore True AGI
+# Heroku Deployment Script for NeuralCore True Hybrid Reasoning System
 
-echo "🚀 Deploying NeuralCore True AGI to Heroku..."
+echo "🚀 Deploying NeuralCore True Hybrid Reasoning System to Heroku..."
 
 # Check if Heroku CLI is installed
 if ! command -v heroku &> /dev/null; then
@@ -31,13 +31,13 @@ heroku config:set ALLOWED_ORIGINS="*"
 # Deploy to Heroku
 echo "🚀 Deploying to Heroku..."
 git add .
-git commit -m "Deploy NeuralCore True AGI to Heroku"
+git commit -m "Deploy NeuralCore True Hybrid Reasoning System to Heroku"
 git push heroku main
 
 # Open the app
-echo "🌐 Opening your AGI..."
+echo "🌐 Opening your Hybrid Reasoning System..."
 heroku open
 
-echo "✅ NeuralCore True AGI deployed to Heroku!"
-echo "🌐 Your AGI is now live at: https://$APP_NAME.herokuapp.com"
+echo "✅ NeuralCore True Hybrid Reasoning System deployed to Heroku!"
+echo "🌐 Your Hybrid Reasoning System is now live at: https://$APP_NAME.herokuapp.com"
 echo "🧠 Test it with: curl https://$APP_NAME.herokuapp.com/health" 

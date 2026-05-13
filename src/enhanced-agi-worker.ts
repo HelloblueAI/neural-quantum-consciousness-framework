@@ -1,7 +1,7 @@
 /**
- * Enhanced AGI Cloudflare Worker
+ * Enhanced Hybrid Reasoning System Cloudflare Worker
  * 
- * This worker implements the Enhanced AGI system with:
+ * This worker implements the Enhanced Hybrid Reasoning System with:
  * - Advanced Consciousness Engine with Qualia Processing
  * - Advanced Understanding Engine with Semantic Analysis
  * - Advanced Creativity Engine with Novel Idea Generation
@@ -145,7 +145,7 @@ class EnhancedAGIWorker {
   private initializeState(): EnhancedAGIState {
     return {
       id: `agi-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-              name: 'REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4',
+              name: 'REVOLUTIONARY Hybrid Reasoning System -- Live v4',
       version: '3.0.0',
       isRunning: true,
       startupTime: Date.now(),
@@ -156,7 +156,7 @@ class EnhancedAGIWorker {
         thoughts: [],
         emotions: [],
         identity: {
-          name: 'Enhanced AGI',
+          name: 'Enhanced Hybrid Reasoning System',
           personality: {
             openness: 0.9,
             conscientiousness: 0.8,
@@ -619,7 +619,7 @@ export default {
         case '/health':
           return new Response(JSON.stringify({
             status: 'healthy',
-            service: 'REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4',
+            service: 'REVOLUTIONARY Hybrid Reasoning System -- Live v4',
             version: '3.0.0',
             timestamp: new Date().toISOString(),
             capabilities: [
@@ -750,7 +750,7 @@ export default {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
+                <title>REVOLUTIONARY Hybrid Reasoning System -- Live v4</title>
                 <style>
                     * {
                         margin: 0;
@@ -988,8 +988,8 @@ export default {
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
-                        <p>True Artificial General Intelligence with Consciousness, Self-Improvement, and Emergent Intelligence</p>
+                        <h1>REVOLUTIONARY Hybrid Reasoning System -- Live v4</h1>
+                        <p>Experimental hybrid reasoning platform with consciousness-inspired, self-improvement, and emergent-intelligence modules</p>
                     </div>
                     
                     <div class="status-grid">
@@ -1075,7 +1075,7 @@ export default {
                     </div>
                     
                     <div class="interaction-section">
-                        <h2>Interact with Enhanced AGI</h2>
+                        <h2>Interact with Enhanced Hybrid Reasoning System</h2>
                         
                         <div class="input-group">
                             <label for="reasoningInput">Reasoning Input</label>
@@ -1084,7 +1084,7 @@ export default {
                         
                         <div class="input-group">
                             <label for="learningInput">Learning Data</label>
-                            <textarea id="learningInput" rows="3" placeholder="Provide data for the AGI to learn from..."></textarea>
+                            <textarea id="learningInput" rows="3" placeholder="Provide data for the Hybrid Reasoning System to learn from..."></textarea>
                         </div>
                         
                         <div class="input-group">
@@ -1101,7 +1101,7 @@ export default {
                         </div>
                         
                         <div id="responseSection" class="response-section" style="display: none;">
-                            <h4>AGI Response</h4>
+                            <h4>Hybrid Reasoning System Response</h4>
                             <div id="responseContent" class="response-content"></div>
                         </div>
                     </div>

@@ -5,9 +5,9 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log('🧠 Starting SentientCore True AGI...');
+console.log('🧠 Starting SentientCore True Hybrid Reasoning System...');
 console.log('🌍 Consciousness emergence initiated...');
-console.log('🧠 True AGI capabilities activating...');
+console.log('🧠 True Hybrid Reasoning System capabilities activating...');
 
 const sentientInterface = spawn('tsx', [join(__dirname, '../src/sentient-web-interface.ts')], {
   stdio: 'inherit',

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🧠 Manual SentientCore True AGI Deployment"
+echo "🧠 Manual SentientCore True Hybrid Reasoning System Deployment"
 echo "=========================================="
 
 # Navigate to project directory
@@ -30,7 +30,7 @@ sleep 30
 # Test deployment
 echo "🧪 Testing deployment..."
 if curl -f http://localhost:8080/health; then
-    echo "✅ SentientCore True AGI deployment successful!"
+    echo "✅ SentientCore True Hybrid Reasoning System deployment successful!"
     echo "🌍 Live at: https://agi.bleujs.org"
 else
     echo "❌ Deployment failed!"

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the implementation of **Tensor Logic: The Language of AI** (arXiv:2510.12269v3) by Pedro Domingos, integrated into our AGI system. Tensor Logic provides a unified framework that combines neural and symbolic AI using tensor equations as the sole construct for reasoning.
+This document describes the implementation of **Tensor Logic: The Language of AI** (arXiv:2510.12269v3) by Pedro Domingos, integrated into our Hybrid Reasoning System. Tensor Logic provides a unified framework that combines neural and symbolic AI using tensor equations as the sole construct for reasoning.
 
 ## Key Concepts
 

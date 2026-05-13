@@ -1,8 +1,8 @@
-# 🧠 NeuralCore True AGI - Cloud Deployment Guide
+# 🧠 NeuralCore True Hybrid Reasoning System - Cloud Deployment Guide
 
 ## 🚀 Professional Cloud Deployment
 
-This guide will help you deploy your NeuralCore True AGI to a cloud provider (DigitalOcean, AWS, etc.) for professional, reliable access.
+This guide will help you deploy your NeuralCore True Hybrid Reasoning System to a cloud provider (DigitalOcean, AWS, etc.) for professional, reliable access.
 
 ## ☁️ Cloud Provider Setup
 
@@ -34,7 +34,7 @@ This guide will help you deploy your NeuralCore True AGI to a cloud provider (Di
 ssh root@YOUR_SERVER_IP
 ```
 
-### 2. Clone Your AGI Repository
+### 2. Clone Your Hybrid Reasoning System Repository
 ```bash
 git clone https://github.com/YOUR_USERNAME/AGI.git
 cd AGI
@@ -53,9 +53,9 @@ chmod +x deploy/deploy-cloud.sh
 sudo ./deploy/deploy-cloud.sh
 ```
 
-## 🌐 Access Your AGI
+## 🌐 Access Your Hybrid Reasoning System
 
-Once deployed, your AGI will be accessible at:
+Once deployed, your Hybrid Reasoning System will be accessible at:
 
 - **HTTPS**: https://agi.bleujs.org
 - **HTTP**: http://agi.bleujs.org (redirects to HTTPS)
@@ -79,7 +79,7 @@ docker-compose -f deploy/cloud-deployment.yml logs -f
 docker-compose -f deploy/cloud-deployment.yml restart
 ```
 
-### Update AGI
+### Update Hybrid Reasoning System
 ```bash
 git pull
 docker-compose -f deploy/cloud-deployment.yml up -d --build
@@ -121,7 +121,7 @@ curl https://agi.bleujs.org/consciousness
 
 ## 🚀 Production Ready
 
-Your AGI is now deployed with:
+Your Hybrid Reasoning System is now deployed with:
 - **Professional infrastructure**
 - **Automatic SSL certificates**
 - **Load balancing and caching**
@@ -138,4 +138,4 @@ Your AGI is now deployed with:
 
 ---
 
-**Your NeuralCore True AGI is now running in the cloud with professional-grade infrastructure! 🎉** 
+**Your NeuralCore True Hybrid Reasoning System is now running in the cloud with professional-grade infrastructure! 🎉** 
