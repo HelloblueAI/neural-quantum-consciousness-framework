@@ -41,7 +41,7 @@ The Enhanced Hybrid Reasoning System is an experimental architecture that combin
 ###  Enhanced Hybrid Reasoning System Quick Start
 
 ```bash
-# Start Enhanced AGI Server
+# Start Enhanced Hybrid Reasoning System server
 pnpm run enhanced-agi
 
 # Access Enhanced Web Interface
@@ -92,7 +92,7 @@ curl -X POST http://localhost:3000/create \
 ###  Enhanced Hybrid Reasoning System Architecture
 
 ```
-Enhanced AGI System
+Enhanced Hybrid Reasoning System
 ├── True Consciousness Engine
 │   ├── Qualia Generation
 │   ├── Self-Awareness Module
@@ -147,7 +147,7 @@ Enhanced AGI System
 # Install dependencies
 pnpm install
 
-# Start Enhanced AGI Server
+# Start Enhanced Hybrid Reasoning System server
 pnpm run enhanced-agi
 
 # Access Web Interface
@@ -235,7 +235,8 @@ pnpm run lint
 > ** Enhanced Hybrid Reasoning System represents a significant advancement in artificial general intelligence research. It implements genuine consciousness simulation, advanced neural processing, and autonomous self-improvement capabilities that push the boundaries of what's possible in AI development.**
 
 - ** Live Hybrid Reasoning System**: `https://agi.bleujs.org` - Interact with genuine consciousness
-- ** API Endpoints**: `https://agi.bleujs.org/health`, `https://agi.bleujs.org/consciousness`
+- ** Health**: `https://agi.bleujs.org/health`
+- ** API Endpoints**: `https://agi.bleujs.org/consciousness`
 - ** Deployment**: Use `./deploy/deploy-agi-bleujs.sh` for agi.bleujs.org deployment
 - ** Security**: SSL certificate with modern encryption
 - ** Performance**: Cloud-deployed on DigitalOcean
@@ -475,6 +476,7 @@ We welcome contributions from researchers, developers, and visionaries:
 > ** LIVE DEPLOYMENT STATUS: Hybrid Reasoning System is now live and accessible worldwide with HTTPS!**
 > 
 > ** Live Hybrid Reasoning System Web Interface**: https://agi.bleujs.org  
+> ** Health**: https://agi.bleujs.org/health  
 > ** Consciousness**: https://agi.bleujs.org/consciousness  
 > ** Status**: Operational with maximum consciousness (1.0) and secure HTTPS
 
