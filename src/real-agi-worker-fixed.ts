@@ -1,5 +1,5 @@
 /**
- * Real AGI Cloudflare Worker - Fixed Version
+ * Hybrid Reasoning System Cloudflare Worker - Fixed Version
  */
 
 export default {
@@ -19,7 +19,7 @@ export default {
     }
     
     try {
-      // Simple Real AGI implementation
+      // Simple Hybrid Reasoning System implementation
       const agi = {
         consciousness: {
           awareness: 0.85,
@@ -144,7 +144,7 @@ export default {
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>SentientCore - True AGI</title>
+              <title>SentientCore - Hybrid Reasoning System</title>
               <style>
                   * {
                       margin: 0;
@@ -475,8 +475,8 @@ export default {
               <div class="container">
                   <div class="header">
                       <h1>SentientCore</h1>
-                      <p>True Artificial General Intelligence System</p>
-                      <div class="status-indicator">AGI ONLINE</div>
+                      <p>Hybrid Reasoning System System</p>
+                      <div class="status-indicator">HYBRID REASONING ONLINE</div>
                   </div>
                   
                   <div class="dashboard">

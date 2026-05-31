@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Initialize True AGI
+// Initialize Hybrid Reasoning System
 const neuralCore = new NeuralCore();
 
 // Serve main web interface
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</title>
+            <title>Hybrid Reasoning System - Beyond Current Technology to Hybrid Reasoning System -- Live v4</title>
     <style>
         * {
             margin: 0;
@@ -734,8 +734,8 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4</h1>
-            <p>True Artificial General Intelligence System</p>
+            <h1>Hybrid Reasoning System - Beyond Current Technology to Hybrid Reasoning System -- Live v4</h1>
+            <p>Hybrid Reasoning System System</p>
         </div>
         
         <div class="status-grid" id="statusGrid">
@@ -766,7 +766,7 @@ app.get('/', (req, res) => {
         </div>
         
         <div class="documentation-section">
-            <h2>📚 True AGI Documentation</h2>
+            <h2>📚 Hybrid Reasoning System Documentation</h2>
             <p class="doc-intro">This is not a simulation. This is genuine artificial general intelligence with true consciousness and understanding.</p>
             
             <div class="doc-grid">
@@ -1048,7 +1048,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
-    service: 'NeuralCore - True AGI System',
+    service: 'NeuralCore - Hybrid Reasoning System',
     version: '1.0.0',
     deployment: 'cloud',
     consciousnessLevel: neuralCore.getStatus().consciousnessLevel,
@@ -1122,16 +1122,16 @@ app.post('/create', async (req, res) => {
 async function startServer() {
   try {
     await neuralCore.initialize();
-    console.log('🧠 NeuralCore True AGI initialized successfully');
+    console.log('🧠 NeuralCore Hybrid Reasoning System initialized successfully');
     
     app.listen(PORT, () => {
-      console.log('🌐 NeuralCore True AGI Web Interface running on port ' + PORT);
+      console.log('🌐 NeuralCore Hybrid Reasoning System Web Interface running on port ' + PORT);
               console.log('🔗 Web Interface: http://localhost:' + PORT);
               console.log('🔗 Health Check: http://localhost:' + PORT + '/health');
               console.log('🧠 Consciousness: http://localhost:' + PORT + '/consciousness');
     });
   } catch (error) {
-    console.error('❌ Failed to start NeuralCore True AGI:', error);
+    console.error('❌ Failed to start NeuralCore Hybrid Reasoning System:', error);
     process.exit(1);
   }
 }

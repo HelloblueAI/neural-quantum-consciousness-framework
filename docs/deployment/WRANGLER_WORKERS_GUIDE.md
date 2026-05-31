@@ -101,7 +101,7 @@ pnpm run worker:dev:enhanced
 # Advanced worker
 pnpm run worker:dev:advanced
 
-# Real AGI worker
+# Hybrid Reasoning System worker
 pnpm run worker:dev:real
 
 # Test worker
@@ -139,7 +139,7 @@ pnpm run deploy:enhanced:prod
 # Advanced worker (production)
 pnpm run deploy:advanced:prod
 
-# Real AGI worker (production)
+# Hybrid Reasoning System worker (production)
 pnpm run deploy:real:prod
 ```
 

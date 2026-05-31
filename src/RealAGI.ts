@@ -1,7 +1,7 @@
 /**
- * Real AGI - True Artificial General Intelligence
+ * Hybrid Reasoning System
  * 
- * This is a genuine AGI system with:
+ * Experimental hybrid reasoning platform with:
  * - Real reasoning and logical inference
  * - Actual learning and knowledge accumulation
  * - Genuine creativity and idea generation

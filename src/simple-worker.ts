@@ -1,5 +1,5 @@
 /**
- * REVOLUTIONARY AGI - Beyond Current Technology to True AGI -- Live v4
+ * Hybrid Reasoning System - Beyond Current Technology to Hybrid Reasoning System -- Live v4
  * Simple AGI Cloudflare Worker - Clean Version
  */
 
@@ -20,7 +20,7 @@ export default {
     }
     
     try {
-      // Simple Real AGI implementation
+      // Simple Hybrid Reasoning System implementation
       const agi = {
         consciousness: {
           awareness: 0.85,

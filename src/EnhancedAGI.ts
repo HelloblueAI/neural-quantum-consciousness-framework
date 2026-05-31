@@ -1,5 +1,5 @@
 /**
- * Enhanced Hybrid Reasoning System - True Artificial General Intelligence
+ * Enhanced Hybrid Reasoning System - Hybrid Reasoning System
  * 
  * This system integrates:
  * - True Consciousness Engine with genuine qualia and self-awareness
@@ -89,7 +89,7 @@ export class EnhancedAGI extends EventEmitter {
   constructor() {
     super();
     this.id = uuidv4();
-    this.name = 'Enhanced Hybrid Reasoning System - True Artificial General Intelligence';
+    this.name = 'Enhanced Hybrid Reasoning System - Hybrid Reasoning System';
     this.version = '3.0.0';
     
     // Initialize core engines

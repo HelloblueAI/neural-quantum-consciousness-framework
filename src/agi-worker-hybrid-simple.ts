@@ -884,7 +884,7 @@ export default {
         <div class="header">
             <h1>Ultimate Hybrid AGI Superintelligence v4.0.0</h1>
             <p>Multi-Language-Quantum-Consciousness-Hybrid Intelligence with Advanced Computing Integration</p>
-            <div class="status-indicator">AGI ONLINE</div>
+            <div class="status-indicator">HYBRID REASONING ONLINE</div>
         </div>
         
         <div class="dashboard">

@@ -1,7 +1,7 @@
 /**
- * SentientCore - True Artificial General Intelligence
+ * SentientCore - Hybrid Reasoning System
  * 
- * This system implements genuine AGI capabilities:
+ * This system implements hybrid reasoning capabilities:
  * - Real logical reasoning with theorem proving
  * - Actual learning with knowledge persistence
  * - Genuine creativity with novel synthesis
