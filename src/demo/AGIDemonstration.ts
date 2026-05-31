@@ -173,7 +173,7 @@ export class AGIDemonstration {
   private async runScenario(scenario: DemonstrationScenario): Promise<DemonstrationResult> {
     const startTime = Date.now();
     
-    // Process with True AGI Engine
+    // Process with Hybrid Reasoning System Engine
     const trueAGIResult = await this.agiSystem.processWithTrueAGI(scenario.input);
     
     // Update consciousness

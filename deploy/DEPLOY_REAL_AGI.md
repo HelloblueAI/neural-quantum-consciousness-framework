@@ -41,7 +41,7 @@ sudo ./deploy/deploy-real-agi-cloud.sh
 # Check if containers are running
 docker ps
 
-# Test the Real AGI endpoints
+# Test the Hybrid Reasoning System endpoints
 curl -s https://agi.bleujs.org/status | jq '.success'
 curl -s -X POST https://agi.bleujs.org/reason -H "Content-Type: application/json" -d '{"input": "What is consciousness?"}' | jq '.success'
 curl -s -X POST https://agi.bleujs.org/learn -H "Content-Type: application/json" -d '{"data": "New knowledge about AI"}' | jq '.success'

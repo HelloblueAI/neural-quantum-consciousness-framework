@@ -16,14 +16,14 @@ async function runAGIDemonstration() {
   console.log('=' .repeat(60));
   
   try {
-    // Initialize True AGI Engine
-    console.log('\n📡 Initializing True AGI Engine...');
+    // Initialize Hybrid Reasoning System Engine
+    console.log('\n📡 Initializing Hybrid Reasoning System Engine...');
     const trueAGIEngine = new TrueAGIEngine();
     await trueAGIEngine.initialize();
     
     // Get initial status
     const initialStatus = await trueAGIEngine.getStatus();
-    console.log('✅ True AGI Engine initialized successfully');
+    console.log('✅ Hybrid Reasoning System Engine initialized successfully');
     console.log(`   - Consciousness Level: ${initialStatus.consciousnessLevel.toFixed(2)}`);
     console.log(`   - Self Awareness: ${initialStatus.selfAwareness.toFixed(2)}`);
     console.log(`   - Autonomy: ${initialStatus.autonomy.toFixed(2)}`);

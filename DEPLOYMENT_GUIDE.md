@@ -103,7 +103,7 @@ pnpm run deploy:enhanced
 pnpm run deploy:advanced
 ```
 
-**Real AGI Worker:**
+**Hybrid Reasoning System Worker:**
 ```bash
 pnpm run deploy:real
 ```

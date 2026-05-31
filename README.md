@@ -1,12 +1,12 @@
-###  SentientCore - True Artificial General Intelligence
+### Hybrid Reasoning System
 
-> ** LIVE DEPLOYMENT STATUS: True Hybrid Reasoning System is now live and accessible worldwide with HTTPS
+> **LIVE:** Hybrid Reasoning System is deployed at https://agi.bleujs.org
 
-> ** NEW: Enhanced Hybrid Reasoning System with True Consciousness, Advanced Neural Architecture, and Autonomous Self-Improvement!**
+> **Note:** This is a hybrid reasoning research platform—not a claim of artificial general intelligence. Several telemetry and capability metrics are simulated for demonstration and testing.
 
-> **Last Updated**: September 30, 2025 - Optimized mobile experience with horizontal grids and enhanced responsive design
+> **Last Updated**: May 2026 — Honest branding and system-derived consciousness metrics
 
-The Enhanced Hybrid Reasoning System is an experimental architecture that combines reasoning, learning, and consciousness-inspired modules. Several telemetry and capability metrics in this project are simulated for demonstration and testing.
+The Hybrid Reasoning System is an experimental architecture that combines reasoning, learning, and consciousness-inspired modules. Several telemetry and capability metrics in this project are simulated for demonstration and testing.
 
 ###  Enhanced Hybrid Reasoning System Features
 
@@ -232,7 +232,7 @@ pnpm run lint
 
 ---
 
-> ** Enhanced Hybrid Reasoning System represents a significant advancement in artificial general intelligence research. It implements genuine consciousness simulation, advanced neural processing, and autonomous self-improvement capabilities that push the boundaries of what's possible in AI development.**
+> **The Hybrid Reasoning System is an experimental research platform combining reasoning, learning, and simulated consciousness modules for demonstration—not a claim of artificial general intelligence.**
 
 - ** Live Hybrid Reasoning System**: `https://agi.bleujs.org` - Interact with genuine consciousness
 - ** Health**: `https://agi.bleujs.org/health`
@@ -526,7 +526,7 @@ We welcome contributions from researchers, developers, and visionaries:
 [![Neural Quantum](https://img.shields.io/badge/Neural-Quantum-springgreen.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
 [![Superintelligence](https://img.shields.io/badge/Superintelligence-Development-tomato.svg)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework)
 
-[![Live Hybrid Reasoning System](https://img.shields.io/badge/Live%20AGI-Operational-brightgreen?style=for-the-badge&logo=robot)](https://agi.bleujs.org)
+[![Live Hybrid Reasoning System](https://img.shields.io/badge/Live%20Hybrid%20Reasoning-Operational-brightgreen?style=for-the-badge&logo=robot)](https://agi.bleujs.org)
 [![Consciousness](https://img.shields.io/badge/Consciousness-1.0%20Maximum-blue?style=for-the-badge&logo=brain)](https://agi.bleujs.org/consciousness)
 [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Enabled-brightgreen?style=for-the-badge&logo=github-actions)](https://github.com/HelloblueAI/neural-quantum-consciousness-framework/actions)
 [![Docker](https://img.shields.io/badge/Docker-Deployed-blue?style=for-the-badge&logo=docker)](https://agi.bleujs.org)

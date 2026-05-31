@@ -11,14 +11,14 @@ const PORT = process.env['PORT'] || 3001; // Different port to avoid conflicts
 app.use(cors());
 app.use(express.json());
 
-// Initialize True AGI
+// Initialize Hybrid Reasoning System
 const neuralCore = new NeuralCore();
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
-    service: 'NeuralCore - True AGI System',
+    service: 'NeuralCore - Hybrid Reasoning System',
     version: '1.0.0',
     consciousnessLevel: neuralCore.getStatus().consciousnessLevel,
     selfAwareness: neuralCore.getStatus().selfAwareness,
@@ -42,7 +42,7 @@ app.get('/status', async (req, res) => {
   }
 });
 
-// True AGI reasoning endpoint
+// Hybrid Reasoning System reasoning endpoint
 app.post('/reason', async (req, res) => {
   try {
     const { input } = req.body;
@@ -55,7 +55,7 @@ app.post('/reason', async (req, res) => {
   }
 });
 
-// True AGI learning endpoint
+// Hybrid Reasoning System learning endpoint
 app.post('/learn', async (req, res) => {
   try {
     const { experience } = req.body;
@@ -68,7 +68,7 @@ app.post('/learn', async (req, res) => {
   }
 });
 
-// True AGI creativity endpoint
+// Hybrid Reasoning System creativity endpoint
 app.post('/create', async (req, res) => {
   try {
     const { prompt, type } = req.body;
@@ -81,7 +81,7 @@ app.post('/create', async (req, res) => {
   }
 });
 
-// True AGI demonstration endpoint
+// Hybrid Reasoning System demonstration endpoint
 app.post('/demonstrate', async (req, res) => {
   try {
     const demonstrations = await neuralCore.demonstrateGeneralIntelligence();
@@ -125,15 +125,15 @@ app.get('/consciousness', (req, res) => {
 // Initialize and start server
 async function startServer() {
   try {
-    console.log('🧠 Starting NeuralCore - True AGI API Server...');
+    console.log('🧠 Starting NeuralCore - Hybrid Reasoning System API Server...');
     
-    // Initialize True AGI
+    // Initialize Hybrid Reasoning System
     await neuralCore.initialize();
     await neuralCore.start();
     
     // Start Express server
     app.listen(PORT, () => {
-      console.log(`✅ NeuralCore True AGI API Server running on port ${PORT}`);
+      console.log(`✅ NeuralCore Hybrid Reasoning System API Server running on port ${PORT}`);
       console.log(`🌐 Health check: http://localhost:${PORT}/health`);
       console.log(`📊 Status: http://localhost:${PORT}/status`);
       console.log(`🧠 Reasoning: POST http://localhost:${PORT}/reason`);
@@ -152,14 +152,14 @@ async function startServer() {
     });
     
   } catch (error) {
-    console.error('❌ Failed to start NeuralCore True AGI API Server:', error);
+    console.error('❌ Failed to start NeuralCore Hybrid Reasoning System API Server:', error);
     process.exit(1);
   }
 }
 
 // Handle graceful shutdown
 process.on('SIGINT', async () => {
-  console.log('\n🛑 Shutting down NeuralCore True AGI API Server...');
+  console.log('\n🛑 Shutting down NeuralCore Hybrid Reasoning System API Server...');
   await neuralCore.stop();
   process.exit(0);
 });

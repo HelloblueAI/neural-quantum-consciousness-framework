@@ -1,5 +1,5 @@
 /**
- * Advanced Neural Architecture - True AGI Neural Foundation
+ * Advanced Neural Architecture - Hybrid Reasoning System Neural Foundation
  * 
  * This architecture implements:
  * - Quantum-inspired neural processing

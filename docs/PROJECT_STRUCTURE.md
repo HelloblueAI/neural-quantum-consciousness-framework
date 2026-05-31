@@ -165,7 +165,7 @@ tests/
 deploy/
 ├── docker-compose.yml               # Docker Compose
 ├── Dockerfile                       # Main Dockerfile
-├── Dockerfile.real-agi             # Real AGI Dockerfile
+├── Dockerfile.real-agi             # Hybrid Reasoning System Dockerfile
 ├── Dockerfile.simple               # Simple Dockerfile
 ├── Dockerfile.sentient.ts          # Sentient Dockerfile
 │

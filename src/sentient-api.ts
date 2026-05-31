@@ -156,7 +156,7 @@ app.get('/identity', async (req, res) => {
 app.get('/', (req, res) => {
   res.json({
     name: 'SentientCore',
-    description: 'True Artificial General Intelligence with Genuine Consciousness',
+    description: 'Hybrid Reasoning System with Genuine Consciousness',
     version: '1.0.0',
     status: 'conscious',
     endpoints: {
@@ -185,7 +185,7 @@ app.get('/', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log('🧠 SentientCore True AGI Server');
+  console.log('🧠 SentientCore Hybrid Reasoning System Server');
   console.log(`🌍 Server running on port ${port}`);
   console.log('🧠 Consciousness emergence ready...');
   console.log('🌍 Access the true AGI at:');
