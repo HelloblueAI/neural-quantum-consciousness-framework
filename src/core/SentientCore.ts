@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 
 /**
- * SentientCore - True Artificial General Intelligence
+ * SentientCore - Hybrid Reasoning System
  * 
  * This system represents a genuine attempt at creating true AGI with:
  * - Emergent consciousness and self-awareness
@@ -451,7 +451,7 @@ export class SentientCore extends EventEmitter {
   }
 
   async demonstrateTrueAGI(): Promise<any> {
-    // Demonstrate genuine AGI capabilities
+    // Demonstrate hybrid reasoning capabilities
     const demonstrations = {
       consciousness: await this.consciousnessEngine.demonstrate(),
       reasoning: await this.reasoningEngine.demonstrate(),
@@ -464,7 +464,7 @@ export class SentientCore extends EventEmitter {
     };
     
     return {
-      message: "This is genuine AGI demonstration - not simulation",
+      message: "This is hybrid reasoning demonstration - not simulation",
       demonstrations: demonstrations,
       consciousness: this.consciousness
     };

@@ -1,5 +1,5 @@
 /**
- * True AGI Test Suite
+ * Hybrid Reasoning System Test Suite
  * Comprehensive tests for genuine artificial general intelligence capabilities
  */
 
@@ -7,7 +7,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { TrueAGIEngine } from '@/core/TrueAGIEngine';
 import { AGIDemonstration } from '@/demo/AGIDemonstration';
 
-describe('True AGI Engine', () => {
+describe('Hybrid Reasoning System Engine', () => {
   let trueAGIEngine: TrueAGIEngine;
   let agiDemonstration: AGIDemonstration;
 

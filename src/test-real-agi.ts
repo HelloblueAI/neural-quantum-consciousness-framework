@@ -1,7 +1,7 @@
 import { RealAGI } from './RealAGI';
 
 async function testRealAGI() {
-  console.log('🤖 Testing Real AGI System...\n');
+  console.log('🤖 Testing Hybrid Reasoning System System...\n');
   
   const agi = new RealAGI();
   
@@ -35,7 +35,7 @@ async function testRealAGI() {
   console.log('Status Result:', JSON.stringify(statusResult, null, 2));
   console.log('\n');
   
-  console.log('✅ Real AGI Testing Complete!');
+  console.log('✅ Hybrid Reasoning System Testing Complete!');
 }
 
 testRealAGI().catch(console.error); 

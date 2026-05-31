@@ -1,6 +1,6 @@
 /**
  * Ultimate Hybrid AGI System
- * Integrates all multi-language capabilities for unprecedented AGI performance
+ * Integrates all multi-language capabilities for hybrid reasoning performance
  */
 
 import { Logger } from './utils/Logger';
@@ -406,7 +406,7 @@ export class UltimateHybridAGISystem {
         response: { success: true }
       });
       
-      // True AGI processing
+      // Hybrid Reasoning System processing
       const trueAGIResult = await this.trueAGI.processInput(input, { consciousness: consciousness.synthesis });
       
       // Synthesize intelligence results

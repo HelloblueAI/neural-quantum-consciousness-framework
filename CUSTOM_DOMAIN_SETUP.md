@@ -155,7 +155,7 @@ npx wrangler deployments list --config wrangler.toml --env production
 4. **Set up subdomains** for other workers if needed:
    - `api.agi.bleujs.org` - Enhanced worker
    - `advanced.agi.bleujs.org` - Advanced worker
-   - `real.agi.bleujs.org` - Real AGI worker
+   - `real.agi.bleujs.org` - Hybrid Reasoning System worker
 
 ---
 
