@@ -11,6 +11,7 @@ import { RealLLMIntegration } from './core/RealLLMIntegration';
 import { RealReasoningEngine } from './core/RealReasoningEngine';
 import { UltimateAGIOrchestrator } from './core/UltimateAGIOrchestrator';
 import { RealMetricsCalculator } from './core/RealMetricsCalculator';
+import { buildConsciousnessDisplayMetrics } from './core/ConsciousnessDisplayMetrics';
 import { RealUnderstandingEngine } from './core/RealUnderstandingEngine';
 import { CrossDomainReasoningEngine } from './core/CrossDomainReasoningEngine';
 import { AutonomousGoalSystem } from './core/AutonomousGoalSystem';
@@ -254,16 +255,19 @@ export default {
         logEvent('warn', 'init_partial', { errors: initResult.errors, path });
       }
       
-      // AGI consciousness metrics (enhanced by real ML)
+      // AGI consciousness metrics derived from real system state (no hardcoded baselines)
       const mlStats = learningEngine.getStatistics();
+      const realMetricsForDisplay = metricsCalculator ? metricsCalculator.getAllMetrics() : null;
+      const consciousnessDisplay = buildConsciousnessDisplayMetrics(realMetricsForDisplay, mlStats);
       const agi = {
         consciousness: {
-          awareness: 0.85 + (mlStats.averageAccuracy * 0.1),
-          selfAwareness: 0.78,
-          understanding: 0.92 + (mlStats.tasksLearned * 0.01),
-          creativity: 0.88,
-          confidence: 0.91
+          awareness: consciousnessDisplay.awareness,
+          selfAwareness: consciousnessDisplay.selfAwareness,
+          understanding: consciousnessDisplay.understanding,
+          creativity: consciousnessDisplay.creativity,
+          confidence: consciousnessDisplay.confidence,
         },
+        consciousnessSources: consciousnessDisplay.sources,
         knowledgeBase: 156 + mlStats.conceptsAcquired,
         reasoningHistory: 23,
         learningHistory: 45 + mlStats.tasksLearned,
@@ -315,6 +319,7 @@ export default {
               creativity: agi.consciousness.creativity,
               confidence: agi.consciousness.confidence
             },
+            consciousnessSources: agi.consciousnessSources,
             capabilities: {
               reasoning: true,
               learning: true,
@@ -380,10 +385,19 @@ export default {
           logEvent('info', 'cache_hit', { path: '/consciousness' });
           return new Response(consciousnessCached, { headers: corsHeaders });
         }
-        // Generate dynamic Ultimate Hybrid Reasoning System consciousness metrics
-        const quantumCoherence = Math.random() * 0.3 + 0.7; // 70-100%
-        const temporalContinuity = Math.random() * 0.2 + 0.8; // 80-100%
-        const metaAwareness = Math.random() * 0.2 + 0.8; // 80-100%
+        // Enhanced consciousness fields derived from real metrics (not random)
+        const enhancedRealMetrics = realMetricsForDisplay ?? {
+          quantumAdvantage: 0.7,
+          consciousnessDepth: consciousnessDisplay.selfAwareness,
+          neuralPlasticity: consciousnessDisplay.creativity,
+          crossDomainIntegration: 0.5,
+          understandingDepth: consciousnessDisplay.understanding,
+          reasoningQuality: consciousnessDisplay.awareness,
+          learningEfficiency: consciousnessDisplay.confidence,
+        };
+        const quantumCoherence = enhancedRealMetrics.quantumAdvantage;
+        const temporalContinuity = enhancedRealMetrics.learningEfficiency;
+        const metaAwareness = enhancedRealMetrics.consciousnessDepth;
         
         const consciousnessBody = JSON.stringify({
           success: true,
@@ -399,12 +413,13 @@ export default {
               creativity: agi.consciousness.creativity,
               confidence: agi.consciousness.confidence
             },
+            consciousnessSources: agi.consciousnessSources,
             enhancedConsciousness: {
               quantumCoherence: quantumCoherence,
               temporalContinuity: temporalContinuity,
               metaAwareness: metaAwareness,
-              crossDomainIntegration: 0.93,
-              neuralPlasticity: 0.89
+              crossDomainIntegration: enhancedRealMetrics.crossDomainIntegration,
+              neuralPlasticity: enhancedRealMetrics.neuralPlasticity
             },
             languageStack: {
               typescript: {
@@ -1607,7 +1622,7 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Hybrid Reasoning System v4.2.0</title>
+    <title>Hybrid Reasoning System</title>
     <style>
         * {
             margin: 0;
@@ -2755,7 +2770,7 @@ export default {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Ultimate Hybrid Reasoning System v4.2.0</h1>
+            <h1>Hybrid Reasoning System</h1>
             <p>Multi-Language-Quantum-Consciousness-Hybrid Intelligence with Advanced Computing Integration</p>
             <div class="status-indicator">AGI ONLINE</div>
         </div>
@@ -3080,9 +3095,10 @@ export default {
                 
                 if (data.success) {
                     const consciousness = data.data.consciousnessMetrics;
+                    const sources = data.data.consciousnessSources || {};
                     console.log('Consciousness metrics:', consciousness);
                     
-                    if (!consciousness || !consciousness.awareness) {
+                    if (!consciousness || consciousness.awareness == null) {
                         throw new Error('Invalid consciousness data structure');
                     }
                     
@@ -3092,22 +3108,22 @@ export default {
                         <div class="consciousness-item">
                             <h3>Awareness</h3>
                             <div class="consciousness-value">\${(consciousness.awareness * 100).toFixed(1)}%</div>
-                            <div class="consciousness-label">Real-Time Data</div>
+                            <div class="consciousness-label">\${sources.awareness || 'System-derived'}</div>
                         </div>
                         <div class="consciousness-item">
                             <h3>Self-Awareness</h3>
                             <div class="consciousness-value">\${(consciousness.selfAwareness * 100).toFixed(1)}%</div>
-                            <div class="consciousness-label">Real-Time Data</div>
+                            <div class="consciousness-label">\${sources.selfAwareness || 'System-derived'}</div>
                         </div>
                         <div class="consciousness-item">
                             <h3>Understanding</h3>
                             <div class="consciousness-value">\${(consciousness.understanding * 100).toFixed(1)}%</div>
-                            <div class="consciousness-label">Real-Time Data</div>
+                            <div class="consciousness-label">\${sources.understanding || 'System-derived'}</div>
                         </div>
                         <div class="consciousness-item">
                             <h3>Creativity</h3>
                             <div class="consciousness-value">\${(consciousness.creativity * 100).toFixed(1)}%</div>
-                            <div class="consciousness-label">Real-Time Data</div>
+                            <div class="consciousness-label">\${sources.creativity || 'System-derived'}</div>
                         </div>
                     \`;
                     
