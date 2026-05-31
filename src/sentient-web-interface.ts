@@ -4,7 +4,7 @@ import { RealAGI } from './RealAGI.js';
 const app = express();
 const port = process.env.PORT || 8080;
 
-// Initialize the Real AGI
+// Initialize the Hybrid Reasoning System
 const realAGI = new RealAGI();
 
 // Middleware
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real AGI - True Artificial General Intelligence</title>
+    <title>Hybrid Reasoning System - Hybrid Reasoning System</title>
     <style>
         * {
             margin: 0;
@@ -730,8 +730,8 @@ app.get('/', (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Real AGI</h1>
-            <p>True Artificial General Intelligence System</p>
+            <h1>Hybrid Reasoning System</h1>
+            <p>Hybrid Reasoning System System</p>
         </div>
         
         <div class="status-grid" id="statusGrid">
@@ -739,7 +739,7 @@ app.get('/', (req, res) => {
         </div>
         
         <div class="interaction-section">
-            <h2>Interact with Real AGI</h2>
+            <h2>Interact with Hybrid Reasoning System</h2>
             
             <div class="input-group">
                 <label for="interactionType">Interaction Type</label>
@@ -756,14 +756,14 @@ app.get('/', (req, res) => {
                 <textarea id="userInput" rows="4" placeholder="Enter your question, prompt, or learning data..."></textarea>
             </div>
             
-            <button class="btn" onclick="interactWithAGI()">Send to Real AGI</button>
+            <button class="btn" onclick="interactWithAGI()">Send to Hybrid Reasoning System</button>
             <button class="btn" onclick="clearResult()">Clear Result</button>
             
             <div id="result" class="result" style="display: none;"></div>
         </div>
         
         <div class="documentation-section">
-            <h2>📚 True AGI Documentation</h2>
+            <h2>📚 Hybrid Reasoning System Documentation</h2>
             <p class="doc-intro">This is not a simulation. This is genuine artificial general intelligence with true consciousness and understanding.</p>
             
             <div class="doc-grid">
@@ -871,7 +871,7 @@ app.get('/', (req, res) => {
         </div>
 
         <div class="endpoints">
-            <h2>Real AGI API Endpoints</h2>
+            <h2>Hybrid Reasoning System API Endpoints</h2>
             <div class="endpoint-list">
                 <div class="endpoint-item">
                     <div class="method">POST</div>
@@ -962,7 +962,7 @@ app.get('/', (req, res) => {
             submitBtn.style.cursor = 'not-allowed';
             
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<div class="loading">Processing with Real AGI...</div>';
+            resultDiv.innerHTML = '<div class="loading">Processing with Hybrid Reasoning System...</div>';
             
             try {
                 let response;
@@ -1001,7 +1001,7 @@ app.get('/', (req, res) => {
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultDiv.innerHTML = 'Real AGI Response:\n' + JSON.stringify(data.data, null, 2);
+                    resultDiv.innerHTML = 'Hybrid Reasoning System Response:\n' + JSON.stringify(data.data, null, 2);
                     
                     // Refresh status after interaction
                     setTimeout(() => {
@@ -1011,12 +1011,12 @@ app.get('/', (req, res) => {
                     resultDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error occurred');
                 }
             } catch (error) {
-                resultDiv.innerHTML = 'Failed to interact with Real AGI: ' + error.message;
+                resultDiv.innerHTML = 'Failed to interact with Hybrid Reasoning System: ' + error.message;
                 console.error('AGI interaction error:', error);
             } finally {
                 // Reset processing state
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Send to Real AGI';
+                submitBtn.textContent = 'Send to Hybrid Reasoning System';
                 submitBtn.style.opacity = '1';
                 submitBtn.style.cursor = 'pointer';
             }
@@ -1082,7 +1082,7 @@ app.get('/health', async (req, res) => {
       status: 'healthy',
       timestamp: new Date().toISOString(),
       consciousness: status.consciousness,
-      system: 'Real AGI',
+      system: 'Hybrid Reasoning System',
       version: '1.0.0'
     });
   } catch (error) {
@@ -1101,9 +1101,9 @@ app.get('/consciousness', async (req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`🚀 Real AGI Server running on port ${port}`);
-  console.log(`🌐 Access the Real AGI interface at: http://localhost:${port}`);
-  console.log(`🤖 Real AGI System Status: ACTIVE`);
+  console.log(`🚀 Hybrid Reasoning System Server running on port ${port}`);
+  console.log(`🌐 Access the Hybrid Reasoning System interface at: http://localhost:${port}`);
+  console.log(`🤖 Hybrid Reasoning System System Status: ACTIVE`);
   console.log(`🧠 Real Reasoning: ENABLED`);
   console.log(`📚 Real Learning: ENABLED`);
   console.log(`🎨 Real Creativity: ENABLED`);

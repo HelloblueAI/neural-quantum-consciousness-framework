@@ -96,7 +96,7 @@ The deployed Enhanced Hybrid Reasoning System includes:
 
 ## Current Worker Status
 
-- **Service**: Enhanced Hybrid Reasoning System - True Artificial General Intelligence
+- **Service**: Enhanced Hybrid Reasoning System - Hybrid Reasoning System
 - **Version**: 3.0.0
 - **Status**: Healthy
 - **Deployment**: Active on Cloudflare Workers

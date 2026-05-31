@@ -1,7 +1,7 @@
 /**
- * Real AGI Cloudflare Worker - Simplified Version
+ * Hybrid Reasoning System Cloudflare Worker - Simplified Version
  * 
- * This is a genuine AGI system running on Cloudflare Workers with:
+ * This is a hybrid reasoning system running on Cloudflare Workers with:
  * - Real reasoning and logical inference
  * - Actual learning and knowledge accumulation
  * - Genuine creativity and idea generation
@@ -627,7 +627,7 @@ export default {
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Real AGI - True Artificial General Intelligence</title>
+              <title>Hybrid Reasoning System - Hybrid Reasoning System</title>
               <style>
                   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
                   .container { max-width: 1200px; margin: 0 auto; }
@@ -653,8 +653,8 @@ export default {
           <body>
               <div class="container">
                   <div class="header">
-                      <h1>Real AGI</h1>
-                      <p>True Artificial General Intelligence System</p>
+                      <h1>Hybrid Reasoning System</h1>
+                      <p>Hybrid Reasoning System System</p>
                   </div>
                   
                   <div class="status-grid" id="statusGrid">
@@ -677,7 +677,7 @@ export default {
                   </div>
                   
                   <div class="interaction">
-                      <h2>Interact with Real AGI</h2>
+                      <h2>Interact with Hybrid Reasoning System</h2>
                       <div class="form-group">
                           <label for="agiEndpoint">Function:</label>
                           <select id="agiEndpoint">
@@ -691,7 +691,7 @@ export default {
                           <label for="agiInput">Input:</label>
                           <textarea id="agiInput" rows="4" placeholder="Enter your question, data to learn, or creative prompt..."></textarea>
                       </div>
-                      <button onclick="interactWithAGI()">Process with Real AGI</button>
+                      <button onclick="interactWithAGI()">Process with Hybrid Reasoning System</button>
                       <button class="clear-btn" onclick="clearResult()">Clear</button>
                       <div class="result" id="agiResult"></div>
                   </div>
@@ -751,7 +751,7 @@ export default {
                       submitBtn.style.cursor = 'not-allowed';
                       
                       resultDiv.style.display = 'block';
-                      resultDiv.innerHTML = 'Processing with Real AGI...';
+                      resultDiv.innerHTML = 'Processing with Hybrid Reasoning System...';
                       
                       try {
                           let response;
@@ -789,18 +789,18 @@ export default {
                           const data = await response.json();
                           
                           if (data.success) {
-                              resultDiv.innerHTML = 'Real AGI Response:\n' + JSON.stringify(data.data, null, 2);
+                              resultDiv.innerHTML = 'Hybrid Reasoning System Response:\n' + JSON.stringify(data.data, null, 2);
                               loadAGIStatus(); // Refresh status after interaction
                           } else {
-                              resultDiv.innerHTML = 'Real AGI Error: ' + (data.error || 'Unknown error occurred');
+                              resultDiv.innerHTML = 'Hybrid Reasoning System Error: ' + (data.error || 'Unknown error occurred');
                           }
                       } catch (error) {
-                          resultDiv.innerHTML = 'Failed to interact with Real AGI: ' + error.message;
+                          resultDiv.innerHTML = 'Failed to interact with Hybrid Reasoning System: ' + error.message;
                           console.error('AGI interaction error:', error);
                       } finally {
                           // Reset processing state
                           submitBtn.disabled = false;
-                          submitBtn.textContent = 'Process with Real AGI';
+                          submitBtn.textContent = 'Process with Hybrid Reasoning System';
                           submitBtn.style.opacity = '1';
                           submitBtn.style.cursor = 'pointer';
                       }

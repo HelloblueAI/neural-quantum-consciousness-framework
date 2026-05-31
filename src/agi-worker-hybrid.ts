@@ -826,8 +826,8 @@ export default {
             <div class="container">
                   <div class="header">
                       <h1>Hybrid AGI Superintelligence v2.0.0</h1>
-                      <p>True Artificial General Intelligence System with Native C/Rust Integration</p>
-                      <div class="status-indicator">AGI ONLINE</div>
+                      <p>Hybrid Reasoning System System with Native C/Rust Integration</p>
+                      <div class="status-indicator">HYBRID REASONING ONLINE</div>
                   </div>
                   
                   <div class="dashboard">

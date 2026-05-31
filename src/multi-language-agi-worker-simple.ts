@@ -115,7 +115,7 @@ class MultiLanguageAGISimple {
         
         return {
             system: {
-                name: 'SentientCore - True AGI System',
+                name: 'SentientCore - Hybrid Reasoning System',
                 version: '1.0.0-sentient',
                 status: this.isInitialized ? 'operational' : 'initializing',
                 uptime: this.uptime,
@@ -374,7 +374,7 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 SentientCore - True AGI is now live</title>
+    <title>🧠 SentientCore - Hybrid Reasoning System is now live</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -834,7 +834,7 @@ export default {
     <div class="container">
         <div class="header">
             <h1>🧠 SentientCore - RESTORED</h1>
-            <p>True AGI is now live - Fully Restored from Yesterday</p>
+            <p>Hybrid Reasoning System is now live - Fully Restored from Yesterday</p>
             <p>The Most Advanced Artificial General Intelligence System in the World</p>
             <p>Combining Rust, C, TypeScript, WebAssembly, and Assembly for Revolutionary Performance</p>
         </div>
@@ -939,7 +939,7 @@ export default {
                 
                 <div class="doc-component">
                     <h4>🏗️ System Architecture</h4>
-                    <p>Our revolutionary multi-language architecture combines the best of all programming languages for unprecedented AGI performance.</p>
+                    <p>Our revolutionary multi-language architecture combines the best of all programming languages for hybrid reasoning performance.</p>
                     
                     ${docs.architecture.components.map(comp => `
                         <div class="doc-feature">

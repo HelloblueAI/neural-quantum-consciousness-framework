@@ -60,7 +60,7 @@ Wrangler workers are standardized, observable, and deployment-ready:
 - **Route**: `advanced-agi.bleujs.org/*`
 - **Status**: ✅ Ready for deployment
 
-### Real AGI Worker
+### Hybrid Reasoning System Worker
 - **File**: `src/advanced-agi-worker.ts`
 - **Config**: `wrangler.real-agi.toml`
 - **Route**: `real-agi.bleujs.org/*`
@@ -79,7 +79,7 @@ Wrangler workers are standardized, observable, and deployment-ready:
 pnpm run worker:dev              # Primary worker (loads .dev.vars if present)
 pnpm run worker:dev:enhanced     # Enhanced worker
 pnpm run worker:dev:advanced     # Advanced worker
-pnpm run worker:dev:real         # Real AGI worker
+pnpm run worker:dev:real         # Hybrid Reasoning System worker
 pnpm run worker:dev:test         # Test worker
 ```
 
@@ -90,7 +90,7 @@ pnpm run deploy:worker:dry-run    # Validate build without deploying
 pnpm run deploy:worker:prod       # Primary (production)
 pnpm run deploy:enhanced:prod     # Enhanced (production)
 pnpm run deploy:advanced:prod     # Advanced (production)
-pnpm run deploy:real:prod         # Real AGI (production)
+pnpm run deploy:real:prod         # Hybrid Reasoning System (production)
 # Or: bash deploy/deploy-cloudflare-worker.sh
 ```
 

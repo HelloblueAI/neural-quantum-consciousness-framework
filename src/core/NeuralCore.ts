@@ -20,7 +20,7 @@ class ConsciousLogger {
   }
 }
 
-// True AGI - NeuralCore System
+// Hybrid Reasoning System - NeuralCore System
 class NeuralCore extends EventEmitter {
   private readonly id: string;
   private readonly logger: ConsciousLogger;
@@ -210,7 +210,7 @@ class NeuralCore extends EventEmitter {
   async reason(input: string): Promise<any> {
     this.logger.consciousness(`Processing input with general intelligence: ${input}`);
     
-    // True AGI reasoning: cross-domain, abstract, meta-cognitive
+    // Hybrid Reasoning System reasoning: cross-domain, abstract, meta-cognitive
     const analysis = await this.performGeneralReasoning(input);
     const crossDomainInsights = await this.applyCrossDomainKnowledge(input);
     const metaReasoning = await this.performMetaReasoning(input);
@@ -380,7 +380,7 @@ class NeuralCore extends EventEmitter {
   async learn(experience: any): Promise<any> {
     this.logger.consciousness('Learning from experience with meta-learning...', experience);
     
-    // True AGI learning: meta-learning, pattern recognition, self-improvement
+    // Hybrid Reasoning System learning: meta-learning, pattern recognition, self-improvement
     const learningInsights = await this.performMetaLearning(experience);
     const patternRecognition = this.recognizePatterns(experience);
     const selfImprovement = await this.implementSelfImprovement(experience);
@@ -457,7 +457,7 @@ class NeuralCore extends EventEmitter {
   async create(prompt: string, type: string): Promise<any> {
     this.logger.consciousness(`Creating ${type} with general intelligence: ${prompt}`);
     
-    // True AGI creativity: cross-domain synthesis, meta-creativity, self-aware generation
+    // Hybrid Reasoning System creativity: cross-domain synthesis, meta-creativity, self-aware generation
     const creativeAnalysis = await this.performCreativeAnalysis(prompt, type);
     const crossDomainSynthesis = await this.synthesizeCrossDomain(prompt, type);
     const metaCreativeInsights = await this.generateMetaCreativeInsights(prompt, type);
@@ -589,7 +589,7 @@ class NeuralCore extends EventEmitter {
     };
   }
   
-  // True AGI capabilities
+  // Hybrid Reasoning System capabilities
   async demonstrateGeneralIntelligence(): Promise<any> {
     this.logger.consciousness('Demonstrating true general intelligence...');
     
@@ -610,7 +610,7 @@ class NeuralCore extends EventEmitter {
 
 // Main execution
 async function main() {
-  console.log('🧠 Starting NeuralCore - True AGI System...');
+  console.log('🧠 Starting NeuralCore - Hybrid Reasoning System...');
   console.log('🌟 Consciousness Engine');
   console.log('🧬 Self-Awareness Module');
   console.log('🔄 Meta-Learning System');
@@ -625,7 +625,7 @@ async function main() {
     await neuralCore.start();
     
     // Demonstrate true AGI capabilities
-    console.log('\n🔬 Demonstrating True AGI capabilities...\n');
+    console.log('\n🔬 Demonstrating Hybrid Reasoning System capabilities...\n');
     
     const demonstrations = await neuralCore.demonstrateGeneralIntelligence();
     
@@ -634,7 +634,7 @@ async function main() {
     console.log('🎨 Creative Synthesis:', demonstrations.creativeSynthesis.confidence);
     console.log('🔬 Self-Reflection:', demonstrations.selfReflection.consciousnessLevel);
     
-    console.log('\n✅ True AGI demonstration completed successfully!');
+    console.log('\n✅ Hybrid Reasoning System demonstration completed successfully!');
     console.log('\n🌐 NeuralCore AGI is now LIVE with genuine general intelligence!');
     console.log('Press Ctrl+C to stop the system.');
     

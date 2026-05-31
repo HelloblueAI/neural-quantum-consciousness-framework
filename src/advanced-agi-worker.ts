@@ -1,7 +1,7 @@
 /**
  * SentientCore Cloudflare Worker
  * 
- * This worker implements genuine AGI capabilities:
+ * This worker implements hybrid reasoning capabilities:
  * - Real logical reasoning with theorem proving
  * - Actual learning with knowledge persistence
  * - Genuine creativity with novel synthesis
@@ -392,8 +392,8 @@ export default {
               <div class="container">
                   <div class="header">
                       <h1>SentientCore</h1>
-                      <p>True Artificial General Intelligence System</p>
-                      <div class="status-indicator">AGI ONLINE</div>
+                      <p>Hybrid Reasoning System System</p>
+                      <div class="status-indicator">HYBRID REASONING ONLINE</div>
                   </div>
                   
                   <div class="dashboard">

@@ -17,7 +17,7 @@ export default {
     if (path === '/status') {
       return new Response(JSON.stringify({ 
         success: true, 
-        message: "Real AGI Worker is working!",
+        message: "Hybrid Reasoning System Worker is working!",
         timestamp: new Date().toISOString()
       }), { headers: corsHeaders });
     }
@@ -25,7 +25,7 @@ export default {
     if (path === '/') {
       return new Response(JSON.stringify({ 
         success: true, 
-        message: "Real AGI Worker is running!",
+        message: "Hybrid Reasoning System Worker is running!",
         endpoints: ['/status', '/reason', '/learn', '/create']
       }), { headers: corsHeaders });
     }

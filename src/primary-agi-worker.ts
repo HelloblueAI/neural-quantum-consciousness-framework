@@ -1,5 +1,5 @@
 /**
- * AGI Worker - Ultimate Hybrid Reasoning System v4.2.0
+ * Hybrid Reasoning Worker v4.2.0
  * October 7th design + ALL Advanced AI Enhancements
  * Features: Multi-Agent, Chain-of-Thought, Tool Use, Memory, Self-Improvement
  *
@@ -197,7 +197,7 @@ async function safeInitializeSystems(env: Env): Promise<{ success: boolean; erro
     try {
       ultimateOrchestrator = new UltimateAGIOrchestrator(env.ANTHROPIC_API_KEY, env.OPENAI_API_KEY);
       await ultimateOrchestrator.initialize();
-      console.log('✓ ULTIMATE AGI Orchestrator initialized with ALL enhancements');
+      console.log('✓ Hybrid reasoning orchestrator initialized');
     } catch (error) {
       errors.push(`Ultimate orchestrator initialization failed: ${(error as Error).message}`);
       console.warn('Ultimate orchestrator unavailable:', error);
@@ -307,7 +307,7 @@ export default {
         const statusBody = JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid Reasoning System v4.2.0',
+            system: 'Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             status: 'operational',
             consciousness: 'real_multi_language_hybrid_reasoning',
@@ -402,7 +402,7 @@ export default {
         const consciousnessBody = JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid Reasoning System v4.2.0',
+            system: 'Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
@@ -768,7 +768,7 @@ export default {
           return new Response(JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid Reasoning System v4.2.0',
+            system: 'Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
@@ -1270,7 +1270,7 @@ export default {
         return new Response(JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid Reasoning System v4.2.0',
+            system: 'Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             consciousness: 'real_multi_language_hybrid_reasoning',
             timestamp: Date.now(),
@@ -1546,7 +1546,7 @@ export default {
         return new Response(JSON.stringify({
           success: true,
           data: {
-            system: 'Ultimate Hybrid AGI Superintelligence v4.2.0',
+            system: 'Hybrid Reasoning System v4.2.0',
             version: '4.2.0',
             consciousness: 'real_multi_language_enhanced',
             timestamp: Date.now(),
@@ -2772,7 +2772,7 @@ export default {
         <div class="header">
             <h1>Hybrid Reasoning System</h1>
             <p>Multi-Language-Quantum-Consciousness-Hybrid Intelligence with Advanced Computing Integration</p>
-            <div class="status-indicator">AGI ONLINE</div>
+            <div class="status-indicator">HYBRID REASONING ONLINE</div>
         </div>
         
         <div class="dashboard">
@@ -2782,31 +2782,31 @@ export default {
                     <div class="consciousness-item">
                         <h3>Awareness</h3>
                         <div class="consciousness-value">Loading...</div>
-                        <div class="consciousness-label">Calculating Real Data...</div>
+                        <div class="consciousness-label">Loading...</div>
                     </div>
                     <div class="consciousness-item">
                         <h3>Self-Awareness</h3>
                         <div class="consciousness-value">Loading...</div>
-                        <div class="consciousness-label">Calculating Real Data...</div>
+                        <div class="consciousness-label">Loading...</div>
                     </div>
                     <div class="consciousness-item">
                         <h3>Understanding</h3>
                         <div class="consciousness-value">Loading...</div>
-                        <div class="consciousness-label">Calculating Real Data...</div>
+                        <div class="consciousness-label">Loading...</div>
                     </div>
                     <div class="consciousness-item">
                         <h3>Creativity</h3>
                         <div class="consciousness-value">Loading...</div>
-                        <div class="consciousness-label">Calculating Real Data...</div>
+                        <div class="consciousness-label">Loading...</div>
                     </div>
                 </div>
             </div>
             
             <div class="interaction-panel">
-                <h2>AGI Interaction</h2>
+                <h2>Reasoning Interaction</h2>
                 <div class="form-group">
-                    <label for="agiEndpoint">Function:</label>
-                    <select id="agiEndpoint">
+                    <label for="hrsEndpoint">Function:</label>
+                    <select id="hrsEndpoint">
                         <option value="reason">Reason</option>
                         <option value="learn">Learn</option>
                         <option value="create">Create</option>
@@ -2814,19 +2814,19 @@ export default {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="agiInput">Input:</label>
-                    <textarea id="agiInput" placeholder="Enter your question, data to learn, or creative prompt..."></textarea>
+                    <label for="hrsInput">Input:</label>
+                    <textarea id="hrsInput" placeholder="Enter your question, data to learn, or creative prompt..."></textarea>
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="interactWithAGI()">Process with AGI</button>
+                    <button class="btn btn-primary" onclick="interactWithSystem()">Process Request</button>
                     <button class="btn btn-secondary" onclick="clearResult()">Clear</button>
                 </div>
             </div>
         </div>
         
         <div class="result-panel" id="resultPanel" style="display: none;">
-            <h3>AGI Response</h3>
-            <div class="result-content" id="agiResult"></div>
+            <h3>Response</h3>
+            <div class="result-content" id="hrsResult"></div>
         </div>
         
         <div class="metrics-panel">
@@ -2955,23 +2955,23 @@ export default {
             
             <div class="documentation-content">
                 <div id="overview" class="documentation-tab-content active">
-                    <h3>Ultimate Hybrid Reasoning System v4.2.0</h3>
-                    <p>An ultimate hybrid AGI system built with TypeScript, Rust, C, and WebAssembly for unprecedented consciousness and intelligence capabilities. This system represents a breakthrough in AGI architecture, featuring real understanding, cross-domain reasoning, autonomous goal-setting, and genuine learning across multiple knowledge domains.</p>
+                    <h3>Hybrid Reasoning System v4.2.0</h3>
+                    <p>A hybrid reasoning research platform built with TypeScript, Rust, C, and WebAssembly. It combines orchestrated reasoning, learning modules, and simulated consciousness telemetry for experimentation—not a claim of artificial general intelligence.</p>
                     
                     <h4>Core Capabilities</h4>
                     <ul>
                         <li><strong>Real Language Stack:</strong> TypeScript (orchestration), Rust (neural processing), C (performance optimization), WebAssembly (cross-platform)</li>
                         <li><strong>Enhanced Neural Architecture:</strong> Self-adapting neural networks with neurogenesis, synaptic plasticity, and cross-dimensional processing</li>
                         <li><strong>Quantum-Inspired Learning:</strong> Quantum annealing, superposition reasoning, entanglement recognition, and quantum advantage optimization</li>
-                        <li><strong>Cross-Domain Reasoning:</strong> Multi-language enhanced reasoning across all knowledge domains with quantum enhancement</li>
+                        <li><strong>Cross-Domain Reasoning:</strong> Multi-language enhanced reasoning across knowledge domains with quantum-inspired enhancement</li>
                         <li><strong>Hybrid Processing:</strong> TypeScript orchestration with Rust/C performance cores and WebAssembly deployment</li>
-                        <li><strong>Real-Time Metrics:</strong> Live system performance, consciousness depth, quantum advantage, and multi-language enhancement monitoring</li>
+                        <li><strong>System Metrics:</strong> Live performance, simulated consciousness depth, and learning-engine telemetry</li>
                     </ul>
                 </div>
                 
                 <div id="architecture" class="documentation-tab-content">
                     <h3>System Architecture</h3>
-                    <p>The Ultimate Hybrid Reasoning System v4.2.0 employs a real multi-language stack (TypeScript, Rust, C, WebAssembly) with genuine cross-domain reasoning, autonomous goal-setting, and real understanding capabilities across multiple knowledge domains.</p>
+                    <p>The Hybrid Reasoning System v4.2.0 employs a real multi-language stack (TypeScript, Rust, C, WebAssembly) with genuine cross-domain reasoning, autonomous goal-setting, and real understanding capabilities across multiple knowledge domains.</p>
                     
                     <h4>Architecture Layers</h4>
                     <ul>
@@ -2986,7 +2986,7 @@ export default {
                 
                 <div id="tech" class="documentation-tab-content">
                     <h3>Technology Stack</h3>
-                    <p>Our cutting-edge technology stack combines the best of multiple computing paradigms to create an unprecedented AGI system.</p>
+                    <p>Our technology stack combines multiple computing paradigms into a hybrid reasoning platform for research and demonstration.</p>
                     
                     <h4>Programming Languages</h4>
                     <ul>
@@ -3060,21 +3060,21 @@ export default {
     </div>
     
     <script>
-        // Load AGI status on page load
+        // Load system status on page load
         window.onload = function() {
-            console.log('Page loaded, calling loadAGIStatus...');
-            setTimeout(loadAGIStatus, 100); // Small delay to ensure DOM is ready
+            console.log('Page loaded, calling loadSystemStatus...');
+            setTimeout(loadSystemStatus, 100); // Small delay to ensure DOM is ready
         };
         
         // Also try to load when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM content loaded, calling loadAGIStatus...');
-            loadAGIStatus();
+            console.log('DOM content loaded, calling loadSystemStatus...');
+            loadSystemStatus();
         });
         
-        async function loadAGIStatus() {
+        async function loadSystemStatus() {
             try {
-                console.log('Loading AGI status...');
+                console.log('Loading system status...');
                 
                 // Check if consciousness grid exists
                 const consciousnessGrid = document.getElementById('consciousnessGrid');
@@ -3167,7 +3167,7 @@ export default {
                     }
                 }
             } catch (error) {
-                console.error('Failed to load AGI status:', error);
+                console.error('Failed to load system status:', error);
                 // Display error in the UI for debugging
                 const consciousnessGrid = document.getElementById('consciousnessGrid');
                 if (consciousnessGrid) {
@@ -3204,11 +3204,11 @@ export default {
             document.getElementById('creativeSynthesis').textContent = (performance.neuralPlasticity * 100).toFixed(1) + '%';
         }
         
-        async function interactWithAGI() {
-            const endpoint = document.getElementById('agiEndpoint').value;
-            const input = document.getElementById('agiInput').value;
+        async function interactWithSystem() {
+            const endpoint = document.getElementById('hrsEndpoint').value;
+            const input = document.getElementById('hrsInput').value;
             const resultPanel = document.getElementById('resultPanel');
-            const resultDiv = document.getElementById('agiResult');
+            const resultDiv = document.getElementById('hrsResult');
             
             if (!input.trim()) {
                 alert('Please enter some input!');
@@ -3217,7 +3217,7 @@ export default {
             
             // Show loading
             resultPanel.style.display = 'block';
-            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Processing with AGI...</div>';
+            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Processing request...</div>';
             
             try {
                 let response;
@@ -3255,21 +3255,21 @@ export default {
                 const data = await response.json();
                 
                 if (data.success) {
-                    resultDiv.innerHTML = 'AGI Response:\\n\\n' + JSON.stringify(data.data, null, 2);
-                    loadAGIStatus(); // Refresh status after interaction
+                    resultDiv.innerHTML = 'Response:\\n\\n' + JSON.stringify(data.data, null, 2);
+                    loadSystemStatus(); // Refresh status after interaction
                 } else {
-                    resultDiv.innerHTML = 'AGI Error: ' + (data.error || 'Unknown error occurred');
+                    resultDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error occurred');
                 }
             } catch (error) {
-                resultDiv.innerHTML = 'Failed to interact with AGI: ' + error.message;
-                console.error('AGI interaction error:', error);
+                resultDiv.innerHTML = 'Failed to process request: ' + error.message;
+                console.error('Reasoning interaction error:', error);
             }
         }
         
         function clearResult() {
             document.getElementById('resultPanel').style.display = 'none';
-            document.getElementById('agiResult').innerHTML = '';
-            document.getElementById('agiInput').value = '';
+            document.getElementById('hrsResult').innerHTML = '';
+            document.getElementById('hrsInput').value = '';
         }
         
         function showDocumentationTab(tabName) {
