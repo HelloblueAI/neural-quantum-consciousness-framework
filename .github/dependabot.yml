@@ -1,0 +1,100 @@
+# .github/dependabot.yml
+# Paste this file, commit to main, then enable "Dependabot version updates" in repo settings.
+
+version: 2
+
+updates:
+  # ── Node / pnpm (reads package.json + pnpm-lock.yaml) ─────────────────────
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 5
+    versioning-strategy: increase-if-necessary
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      npm-prod-minor-patch:
+        dependency-type: production
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+      npm-dev-minor-patch:
+        dependency-type: development
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    # Majors not in any group → one PR per dependency (review carefully)
+    ignore:
+      # Optional: uncomment if major bumps repeatedly break native builds
+      # - dependency-name: "@tensorflow/tfjs-node"
+      #   update-types: ["version-update:semver-major"]
+      # - dependency-name: "onnxruntime-node"
+      #   update-types: ["version-update:semver-major"]
+      # - dependency-name: "ffi-napi"
+      #   update-types: ["version-update:semver-major"]
+      # - dependency-name: "ref-napi"
+      #   update-types: ["version-update:semver-major"]
+
+  # ── Rust (rust-core/Cargo.toml + Cargo.lock) ───────────────────────────────
+  - package-ecosystem: cargo
+    directory: /rust-core
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:30"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      cargo-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # ── GitHub Actions (ci-cd.yml, etc.) ───────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "10:00"
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+
+  # ── Docker base images (deploy/Dockerfile*) ────────────────────────────────
+  - package-ecosystem: docker
+    directory: /deploy
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      docker-images:
+        patterns:
+          - "*"
