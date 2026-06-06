@@ -123,7 +123,7 @@
     "tsc-alias": "^1.8.17",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vitest": "^1.6.1",
+    "vitest": "^4.1.0",
     "wrangler": "^4.90.1"
   },
   "engines": {
