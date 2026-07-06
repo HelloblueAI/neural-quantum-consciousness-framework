@@ -109,8 +109,10 @@ Legacy `enhanced-agi`, `neuralcore`, `sentientcore`, and multi-worker deploy scr
 We welcome PRs for eval tasks, honest API improvements, docs, and lab features aligned with [docs/AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md).
 
 1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and pick a task from [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md)
-2. Run `pnpm run test:eval` and `pnpm run test:unit` before opening a PR
+2. Run `pnpm run test:eval`, `pnpm run test:unit`, and `pnpm run type-check` before opening a PR
 3. CI runs the same checks on every pull request ([`.github/workflows/lab-ci.yml`](.github/workflows/lab-ci.yml))
+
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). Report security issues per [SECURITY.md](SECURITY.md) — do not file public issues for vulnerabilities.
 
 Production deploy is maintainer-only; you do not need Cloudflare access to contribute.
 

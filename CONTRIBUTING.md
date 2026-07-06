@@ -41,22 +41,43 @@ pnpm install
 ```bash
 pnpm run test:eval    # eval harness (required for PRs)
 pnpm run test:unit    # unit tests
+pnpm run type-check   # TypeScript (archive paths excluded)
 pnpm run eval         # CLI eval suite
 pnpm run worker:dev   # local worker (Wrangler)
 ```
 
-Optional: `pnpm run type-check` (may report errors in archived paths—focus on files you change).
+`pnpm run type-check` excludes `src/archive/`; focus on the primary worker path
+when fixing type errors.
 
 ### LLM features locally
 
-Reasoning with Claude requires API keys. For local Wrangler dev:
+Production uses **BleuJS** as the primary LLM (`ALLOW_LLM_FALLBACK=false`). To
+exercise `/reason` and the dashboard locally:
 
 ```bash
-npx wrangler secret put ANTHROPIC_API_KEY --env production   # deploy secrets
-# or use .dev.vars for local dev (do not commit)
+cp .dev.vars.example .dev.vars
+# Edit .dev.vars — set BLEUJS_API_KEY (required for live reasoning)
 ```
 
-Eval tests run **offline** without keys.
+Optional in `.dev.vars`:
+
+- `BLEUJS_CHAT_URL` — defaults to `https://bleujs-org.vercel.app/api/v1/chat` in
+  production (avoids Worker-to-Worker timeouts). Use the same URL locally if
+  `api.bleujs.org` is unreachable from Wrangler.
+- `ALLOW_LLM_FALLBACK=true` — only if you also set `ANTHROPIC_API_KEY` or
+  `OPENAI_API_KEY` and want fallback when BleuJS fails.
+
+```bash
+pnpm run worker:dev   # http://localhost:8787
+```
+
+Eval tests (`pnpm run test:eval`) run **offline** without API keys.
+
+For production secret management:
+
+```bash
+npx wrangler secret put BLEUJS_API_KEY --config wrangler.toml --env production
+```
 
 ---
 
@@ -104,6 +125,7 @@ Pull requests run [.github/workflows/lab-ci.yml](.github/workflows/lab-ci.yml):
 
 - `pnpm run test:eval`
 - `pnpm run test:unit`
+- `pnpm run type-check`
 
 Fix failing checks before requesting review.
 
@@ -123,7 +145,11 @@ Contributors do not need Cloudflare access to submit PRs. Describe manual test s
 
 ## Code of conduct
 
-Be respectful and constructive. Critique code and ideas, not people. We are building a credible lab others can trust.
+This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Be
+respectful and constructive. Critique code and ideas, not people. We are
+building a credible lab others can trust.
+
+Report conduct issues to **info@helloblue.ai**.
 
 ---
 

@@ -135,7 +135,7 @@ export class RealUnderstandingEngine {
     });
     
     const placeMatch = text.match(/\bwhere\s+(?:is|are)\s+(?:the\s+)?([a-z][a-z\s'-]{1,40}?)\??\s*$/i);
-    if (placeMatch) {
+    if (placeMatch?.[1]) {
       const place = placeMatch[1].trim();
       if (!foundConcepts.has(place.toLowerCase())) {
         foundConcepts.add(place.toLowerCase());
