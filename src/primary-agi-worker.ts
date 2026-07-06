@@ -2646,6 +2646,17 @@ export default {
             return '<pre>' + escapeHtml(JSON.stringify(payload, null, 2)) + '</pre>';
         }
 
+        function isRetryableLlmError(llmError) {
+            if (!llmError) return false;
+            const text = String(llmError).trim();
+            const prefix = 'BleuJS API error: ';
+            if (!text.startsWith(prefix)) return false;
+            const after = text.slice(prefix.length);
+            const end = after.indexOf(' ');
+            const code = Number(end === -1 ? after : after.slice(0, end));
+            return code === 522 || code === 523 || code === 524 || code === 503 || code === 504 || code === 429;
+        }
+
         async function interactWithSystem() {
             const endpoint = document.getElementById('hrsEndpoint').value;
             const input = document.getElementById('hrsInput').value;
@@ -2662,15 +2673,42 @@ export default {
             resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Processing request...</div>';
             
             try {
-                let response;
-                switch (endpoint) {
-                    case 'reason':
-                        response = await fetch('/reason', {
+                if (endpoint === 'reason') {
+                    const maxClientAttempts = 3;
+                    for (let clientAttempt = 0; clientAttempt < maxClientAttempts; clientAttempt++) {
+                        if (clientAttempt > 0) {
+                            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>BleuJS API timed out — retrying (' +
+                                (clientAttempt + 1) + '/' + maxClientAttempts + ')...</div>';
+                            await new Promise(function(resolve) { setTimeout(resolve, 1500 * clientAttempt); });
+                        }
+                        const response = await fetch('/reason', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ input })
                         });
-                        break;
+                        if (!response.ok) {
+                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                        }
+                        const data = await response.json();
+                        if (data.success && data.data && data.data.answer) {
+                            resultDiv.innerHTML = formatLabResponse(endpoint, data.data);
+                            refreshLiveMetrics();
+                            return;
+                        }
+                        const retryable = data.success && data.data && isRetryableLlmError(data.data.llmError);
+                        if (!retryable || clientAttempt === maxClientAttempts - 1) {
+                            resultDiv.innerHTML = data.success
+                                ? formatLabResponse(endpoint, data.data)
+                                : ('Error: ' + (data.error || 'Unknown error occurred'));
+                            if (data.success) refreshLiveMetrics();
+                            return;
+                        }
+                    }
+                    return;
+                }
+
+                let response;
+                switch (endpoint) {
                     case 'learn':
                         response = await fetch('/learn', {
                             method: 'POST',
