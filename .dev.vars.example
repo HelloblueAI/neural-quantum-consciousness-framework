@@ -6,6 +6,8 @@
 # Production: use `wrangler secret put <NAME> --config wrangler.toml --env production`
 
 BLEUJS_API_KEY=
+# Optional override when api.bleujs.org returns 522 — use direct Vercel/backend URL from BleuJS team.
+BLEUJS_CHAT_URL=
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=
 # Set to "true" to allow Anthropic/OpenAI when BleuJS fails or returns a non-answer.
