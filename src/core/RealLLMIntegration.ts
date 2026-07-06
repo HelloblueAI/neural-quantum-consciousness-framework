@@ -62,51 +62,34 @@ export class RealLLMIntegration {
     }
     messages.push({ role: 'user', content: prompt });
 
-    let lastError: Error | undefined;
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const response = await fetch(this.bleujsChatUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.bleujsKey}`,
-          },
-          body: JSON.stringify({
-            model: 'bleujs-chat',
-            messages,
-            max_tokens: maxTokens,
-          }),
-        });
+    const response = await fetch(this.bleujsChatUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.bleujsKey}`,
+      },
+      body: JSON.stringify({
+        model: 'bleujs-chat',
+        messages,
+        max_tokens: maxTokens,
+      }),
+    });
 
-        if (!response.ok) {
-          const error = await response.text();
-          const apiError = new Error(`BleuJS API error: ${response.status} - ${error}`);
-          if (attempt === 0 && (response.status >= 500 || response.status === 429)) {
-            lastError = apiError;
-            continue;
-          }
-          throw apiError;
-        }
-
-        const data = (await response.json()) as {
-          choices?: Array<{ message?: { content?: string } }>;
-        };
-        const content = data.choices?.[0]?.message?.content || 'No response';
-
-        return {
-          answer: content,
-          confidence: 0.9,
-          provider: 'bleujs',
-        };
-      } catch (error) {
-        lastError = error instanceof Error ? error : new Error(String(error));
-        if (attempt === 0) {
-          continue;
-        }
-      }
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`BleuJS API error: ${response.status} - ${error}`);
     }
 
-    throw lastError ?? new Error('BleuJS request failed');
+    const data = (await response.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
+    const content = data.choices?.[0]?.message?.content || 'No response';
+
+    return {
+      answer: content,
+      confidence: 0.9,
+      provider: 'bleujs',
+    };
   }
 
   /**
