@@ -6,3 +6,6 @@ contact_links:
   - name: Good first issues (doc)
     url: https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/GOOD_FIRST_ISSUES.md
     about: Suggested starter tasks
+  - name: Security policy
+    url: https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/SECURITY.md
+    about: Report vulnerabilities privately — do not open public issues

@@ -24,7 +24,12 @@ export function buildLlmRoutingPayload(counts: LlmRoutingCounts, scope: 'global'
   };
 }
 
-export async function readLlmRoutingFromKv(kv: KVNamespace): Promise<LlmRoutingCounts> {
+export type LlmRoutingKv = {
+  get<T>(key: string, type: 'json'): Promise<T | null>;
+  put(key: string, value: string): Promise<void>;
+};
+
+export async function readLlmRoutingFromKv(kv: LlmRoutingKv): Promise<LlmRoutingCounts> {
   const stored = await kv.get<LlmRoutingCounts>(KV_LLM_ROUTING_KEY, 'json');
   if (!stored) {
     return emptyLlmRoutingCounts();
@@ -40,7 +45,7 @@ export async function readLlmRoutingFromKv(kv: KVNamespace): Promise<LlmRoutingC
 }
 
 export async function recordLlmRoutingInKv(
-  kv: KVNamespace,
+  kv: LlmRoutingKv,
   provider: ReasonProvider
 ): Promise<void> {
   const counts = await readLlmRoutingFromKv(kv);

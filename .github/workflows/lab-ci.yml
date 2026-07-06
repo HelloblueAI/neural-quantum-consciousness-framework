@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    name: Eval + unit tests
+    name: Eval + unit + type-check
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -35,3 +35,6 @@ jobs:
 
       - name: Run unit tests
         run: pnpm run test:unit -- --run
+
+      - name: Type-check
+        run: pnpm run type-check
