@@ -8,3 +8,5 @@
 BLEUJS_API_KEY=
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=
+# Set to "true" to allow Anthropic/OpenAI when BleuJS fails or returns a non-answer.
+ALLOW_LLM_FALLBACK=false

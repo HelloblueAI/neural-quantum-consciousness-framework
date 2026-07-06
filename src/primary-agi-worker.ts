@@ -72,6 +72,7 @@ interface Env {
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
   ENVIRONMENT?: string;
+  ALLOW_LLM_FALLBACK?: string;
   AGI_CACHE?: KVNamespace;
 }
 
@@ -177,9 +178,15 @@ async function safeInitializeSystems(env: Env): Promise<{ success: boolean; erro
         env.OPENAI_API_KEY,
         undefined,
         undefined,
-        env.BLEUJS_API_KEY
+        env.BLEUJS_API_KEY,
+        undefined,
+        env.ALLOW_LLM_FALLBACK === 'true'
       );
-      console.log('✓ Real LLM Integration initialized (BleuJS + fallback)');
+      console.log(
+        '✓ Real LLM Integration initialized (BleuJS' +
+          (env.ALLOW_LLM_FALLBACK === 'true' ? ' + fallback' : ' only') +
+          ')'
+      );
     } catch (error) {
       errors.push(`LLM integration initialization failed: ${(error as Error).message}`);
       console.warn('LLM integration unavailable:', error);

@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { RealLLMIntegration } from '../../src/core/RealLLMIntegration';
 
+function requestHostname(url: string): string {
+  return new URL(url).hostname;
+}
+
 describe('RealLLMIntegration BleuJS', () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -34,5 +38,54 @@ describe('RealLLMIntegration BleuJS', () => {
     const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
     expect(llm.isAvailable()).toBe(true);
     expect(llm.getAvailableModels()).toContain('bleujs-chat');
+  });
+
+  it('does not fall back to Anthropic when fallback is disabled', async () => {
+    const fetchMock = vi.fn(async (url: string) => {
+      if (requestHostname(url) === 'api.anthropic.com') {
+        return Response.json({ content: [{ text: 'Claude answer' }] });
+      }
+      return Response.json({ error: 'service unavailable' }, { status: 503 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = new RealLLMIntegration(
+      'anthropic_sk_test',
+      undefined,
+      undefined,
+      undefined,
+      'bleujs_sk_test',
+      undefined,
+      false
+    );
+
+    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('api.bleujs.org');
+  });
+
+  it('falls back to Anthropic when fallback is enabled', async () => {
+    const fetchMock = vi.fn(async (url: string) => {
+      if (requestHostname(url) === 'api.anthropic.com') {
+        return Response.json({ content: [{ text: 'Claude answer' }] });
+      }
+      return Response.json({ error: 'service unavailable' }, { status: 503 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = new RealLLMIntegration(
+      'anthropic_sk_test',
+      undefined,
+      undefined,
+      undefined,
+      'bleujs_sk_test',
+      undefined,
+      true
+    );
+
+    const result = await llm.answerQuestion('hi');
+    expect(result.provider).toBe('anthropic');
+    expect(result.answer).toBe('Claude answer');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });
