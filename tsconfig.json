@@ -48,6 +48,7 @@
     "node_modules",
     "dist",
     "tests",
+    "src/archive",
     "src/*worker*.ts",
     "src/sentient-web-interface.ts",
     "src/enhanced-web-interface-worker.ts",
