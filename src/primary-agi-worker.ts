@@ -112,11 +112,20 @@ function validateInput(input: string, maxLength: number = 10000): { valid: boole
   return { valid: true, sanitized };
 }
 
+function hashForFingerprint(value: string): string {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16);
+}
+
 function llmEnvFingerprint(env: Env): string {
   return [
-    env.BLEUJS_API_KEY ? 'b' : '',
-    env.ANTHROPIC_API_KEY ? 'a' : '',
-    env.OPENAI_API_KEY ? 'o' : '',
+    hashForFingerprint(env.BLEUJS_API_KEY ?? ''),
+    hashForFingerprint(env.ANTHROPIC_API_KEY ?? ''),
+    hashForFingerprint(env.OPENAI_API_KEY ?? ''),
     env.ALLOW_LLM_FALLBACK ?? '',
   ].join('|');
 }

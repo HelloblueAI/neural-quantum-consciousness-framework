@@ -64,8 +64,9 @@ export class RealLLMIntegration {
 
     let lastError: Error | undefined;
     for (let attempt = 0; attempt < 2; attempt++) {
+      let response: Response;
       try {
-        const response = await fetch(this.bleujsChatUrl, {
+        response = await fetch(this.bleujsChatUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -77,33 +78,34 @@ export class RealLLMIntegration {
             max_tokens: maxTokens,
           }),
         });
-
-        if (!response.ok) {
-          const error = await response.text();
-          const apiError = new Error(`BleuJS API error: ${response.status} - ${error}`);
-          if (attempt === 0 && (response.status >= 500 || response.status === 429)) {
-            lastError = apiError;
-            continue;
-          }
-          throw apiError;
-        }
-
-        const data = (await response.json()) as {
-          choices?: Array<{ message?: { content?: string } }>;
-        };
-        const content = data.choices?.[0]?.message?.content || 'No response';
-
-        return {
-          answer: content,
-          confidence: 0.9,
-          provider: 'bleujs',
-        };
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         if (attempt === 0) {
           continue;
         }
+        throw lastError;
       }
+
+      if (!response.ok) {
+        const error = await response.text();
+        const apiError = new Error(`BleuJS API error: ${response.status} - ${error}`);
+        if (attempt === 0 && (response.status >= 500 || response.status === 429)) {
+          lastError = apiError;
+          continue;
+        }
+        throw apiError;
+      }
+
+      const data = (await response.json()) as {
+        choices?: Array<{ message?: { content?: string } }>;
+      };
+      const content = data.choices?.[0]?.message?.content || 'No response';
+
+      return {
+        answer: content,
+        confidence: 0.9,
+        provider: 'bleujs',
+      };
     }
 
     throw lastError ?? new Error('BleuJS request failed');
