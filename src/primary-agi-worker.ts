@@ -70,6 +70,7 @@ let tensorReasoningEngine: ReasoningEngine | null = null;
 /** Env: secrets via wrangler secret put; optional AGI_CACHE KV binding for response cache. Run `wrangler types` to sync with config. */
 interface Env {
   BLEUJS_API_KEY?: string;
+  /** Override BleuJS chat endpoint (server-to-server: use Vercel origin to avoid api.bleujs.org 522). */
   BLEUJS_CHAT_URL?: string;
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
@@ -142,13 +143,14 @@ function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
 
   const fingerprint = llmEnvFingerprint(env);
   if (!llmIntegration || llmConfigFingerprint !== fingerprint) {
+    const bleujsChatUrl = env.BLEUJS_CHAT_URL?.trim() || undefined;
     llmIntegration = new RealLLMIntegration(
       env.ANTHROPIC_API_KEY,
       env.OPENAI_API_KEY,
       undefined,
       undefined,
       env.BLEUJS_API_KEY,
-      env.BLEUJS_CHAT_URL?.trim() || undefined,
+      bleujsChatUrl,
       env.ALLOW_LLM_FALLBACK === 'true'
     );
     llmConfigFingerprint = fingerprint;
