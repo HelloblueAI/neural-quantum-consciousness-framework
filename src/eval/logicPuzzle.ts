@@ -108,21 +108,21 @@ function explainSolution(assignment: Record<string, string>): string[] {
   steps.push('Clue 2 fixes Beta on Reasoning (only valid module for Beta).');
 
   const remainingForGamma = MODULES.filter(
-    (mod) => mod !== assignment.Beta && mod !== 'Orchestration'
+    (mod) => mod !== assignment['Beta'] && mod !== 'Orchestration'
   );
   steps.push(
     `Clue 3 rules out Orchestration for Gamma; Reasoning is taken → Gamma must handle ${remainingForGamma[0]}.`
   );
 
   const alphaModule = MODULES.find(
-    (mod) => mod !== assignment.Beta && mod !== assignment.Gamma
+    (mod) => mod !== assignment['Beta'] && mod !== assignment['Gamma']
   );
   steps.push(`Only ${alphaModule} remains for Alpha.`);
 
-  if (assignment.Alpha !== 'Understanding') {
+  if (assignment['Alpha'] !== 'Understanding') {
     steps.push('Clue 1 satisfied: Alpha is not on Understanding.');
   }
-  if (assignment.Beta !== 'Orchestration') {
+  if (assignment['Beta'] !== 'Orchestration') {
     steps.push('Clue 4 satisfied: Orchestration is not assigned to Beta.');
   }
 
