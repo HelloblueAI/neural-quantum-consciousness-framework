@@ -2646,6 +2646,10 @@ export default {
             return '<pre>' + escapeHtml(JSON.stringify(payload, null, 2)) + '</pre>';
         }
 
+        function isRetryableHttpStatus(status) {
+            return status >= 500 || status === 429;
+        }
+
         function isRetryableLlmError(llmError) {
             if (!llmError) return false;
             const text = String(llmError).trim();
@@ -2681,15 +2685,29 @@ export default {
                                 (clientAttempt + 1) + '/' + maxClientAttempts + ')...</div>';
                             await new Promise(function(resolve) { setTimeout(resolve, 1500 * clientAttempt); });
                         }
-                        const response = await fetch('/reason', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ input })
-                        });
-                        if (!response.ok) {
-                            throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                        let data;
+                        try {
+                            const response = await fetch('/reason', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ input })
+                            });
+                            if (!response.ok) {
+                                if (clientAttempt < maxClientAttempts - 1 && isRetryableHttpStatus(response.status)) {
+                                    continue;
+                                }
+                                resultDiv.innerHTML = 'Failed to process request: HTTP ' + response.status + ': ' + response.statusText;
+                                return;
+                            }
+                            data = await response.json();
+                        } catch (fetchError) {
+                            if (clientAttempt < maxClientAttempts - 1) {
+                                continue;
+                            }
+                            resultDiv.innerHTML = 'Failed to process request: ' + fetchError.message;
+                            console.error('Reasoning interaction error:', fetchError);
+                            return;
                         }
-                        const data = await response.json();
                         if (data.success && data.data && data.data.answer) {
                             resultDiv.innerHTML = formatLabResponse(endpoint, data.data);
                             refreshLiveMetrics();
