@@ -62,6 +62,8 @@ Example response (BleuJS primary path):
 
 Set `BLEUJS_API_KEY` via `npx wrangler secret put BLEUJS_API_KEY --env production` for live reasoning. BleuJS is the primary LLM; Anthropic and OpenAI are optional fallbacks when BleuJS is unavailable or returns a non-answer.
 
+Production sets `BLEUJS_CHAT_URL` to `https://bleujs-org.vercel.app/api/v1/chat` so this Cloudflare Worker calls Vercel directly (avoids intermittent **522** on `api.bleujs.org` Worker-to-Worker hops). Public SDK clients should still use `https://api.bleujs.org`.
+
 ---
 
 ## What this is

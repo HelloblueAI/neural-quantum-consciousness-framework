@@ -17,6 +17,8 @@ workers_dev = true
 [env.production.vars]
 ENVIRONMENT = "production"
 ALLOW_LLM_FALLBACK = "false"
+# Server-to-server: bypass api.bleujs.org edge (avoids intermittent CF Worker → Worker 522).
+BLEUJS_CHAT_URL = "https://bleujs-org.vercel.app/api/v1/chat"
 
 # Staging environment
 [env.staging]

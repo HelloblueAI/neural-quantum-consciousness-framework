@@ -34,6 +34,27 @@ describe('RealLLMIntegration BleuJS', () => {
     });
   });
 
+  it('uses a custom BleuJS chat URL when provided', async () => {
+    const fetchMock = vi.fn(async () =>
+      Response.json({
+        choices: [{ message: { content: 'ok' } }],
+      })
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = new RealLLMIntegration(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      'bleujs_sk_test',
+      'https://bleujs-org.vercel.app/api/v1/chat'
+    );
+    await llm.answerQuestion('hi');
+
+    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('bleujs-org.vercel.app');
+  });
+
   it('is available when only BleuJS key is configured', () => {
     const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
     expect(llm.isAvailable()).toBe(true);
