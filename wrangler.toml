@@ -16,6 +16,7 @@ routes = ["agi.bleujs.org/*"]
 workers_dev = true
 [env.production.vars]
 ENVIRONMENT = "production"
+ALLOW_LLM_FALLBACK = "false"
 
 # Staging environment
 [env.staging]
