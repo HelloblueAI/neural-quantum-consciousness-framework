@@ -27,6 +27,7 @@ export class RealLLMIntegration {
   private claudeModel: string;
   private openaiModel: string;
   private bleujsChatUrl: string;
+  private allowFallback: boolean;
 
   constructor(
     anthropicKey?: string,
@@ -34,7 +35,8 @@ export class RealLLMIntegration {
     claudeModel = DEFAULT_CLAUDE_MODEL,
     openaiModel = DEFAULT_OPENAI_MODEL,
     bleujsKey?: string,
-    bleujsChatUrl = DEFAULT_BLEUJS_CHAT_URL
+    bleujsChatUrl = DEFAULT_BLEUJS_CHAT_URL,
+    allowFallback = false
   ) {
     this.anthropicKey = anthropicKey;
     this.openaiKey = openaiKey;
@@ -42,6 +44,7 @@ export class RealLLMIntegration {
     this.openaiModel = openaiModel;
     this.bleujsKey = bleujsKey;
     this.bleujsChatUrl = bleujsChatUrl;
+    this.allowFallback = allowFallback;
   }
 
   private async queryBleuJS(
@@ -201,10 +204,17 @@ export class RealLLMIntegration {
         if (!qualityCheckInput || !isClarificationOnlyResponse(result.answer, qualityCheckInput)) {
           return result;
         }
+        if (!this.allowFallback) {
+          return result;
+        }
         console.warn('BleuJS returned clarification-only response, trying fallback');
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
         console.error('BleuJS failed:', lastError.message);
+      }
+
+      if (!this.allowFallback) {
+        throw lastError ?? new Error('BleuJS request failed and LLM fallback is disabled');
       }
     }
 
