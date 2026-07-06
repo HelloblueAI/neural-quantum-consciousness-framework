@@ -58,7 +58,6 @@ function logEvent(level: 'info' | 'warn' | 'error', message: string, extra?: Rec
 // Process-scoped stateless engines (no request data stored here)
 let learningEngine: RealLearningEngine | null = null;
 let llmIntegration: RealLLMIntegration | null = null;
-let llmConfigFingerprint: string | null = null;
 let reasoningEngine: RealReasoningEngine | null = null;
 let ultimateOrchestrator: UltimateAGIOrchestrator | null = null;
 let metricsCalculator: RealMetricsCalculator | null = null;
@@ -110,45 +109,6 @@ function validateInput(input: string, maxLength: number = 10000): { valid: boole
   const sanitized = input.trim().slice(0, maxLength);
   
   return { valid: true, sanitized };
-}
-
-function llmEnvFingerprint(env: Env): string {
-  return [
-    env.BLEUJS_API_KEY ? 'b' : '',
-    env.ANTHROPIC_API_KEY ? 'a' : '',
-    env.OPENAI_API_KEY ? 'o' : '',
-    env.ALLOW_LLM_FALLBACK ?? '',
-  ].join('|');
-}
-
-function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
-  const hasLlmKey = !!(env.BLEUJS_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
-  if (!hasLlmKey) {
-    llmIntegration = null;
-    llmConfigFingerprint = null;
-    return null;
-  }
-
-  const fingerprint = llmEnvFingerprint(env);
-  if (!llmIntegration || llmConfigFingerprint !== fingerprint) {
-    llmIntegration = new RealLLMIntegration(
-      env.ANTHROPIC_API_KEY,
-      env.OPENAI_API_KEY,
-      undefined,
-      undefined,
-      env.BLEUJS_API_KEY,
-      undefined,
-      env.ALLOW_LLM_FALLBACK === 'true'
-    );
-    llmConfigFingerprint = fingerprint;
-    console.log(
-      '✓ Real LLM Integration initialized (BleuJS' +
-        (env.ALLOW_LLM_FALLBACK === 'true' ? ' + fallback' : ' only') +
-        ')'
-    );
-  }
-
-  return llmIntegration;
 }
 
 // Helper function to safely initialize systems with error handling
@@ -210,14 +170,28 @@ async function safeInitializeSystems(env: Env): Promise<{ success: boolean; erro
   
   const hasLlmKey = !!(env.BLEUJS_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
 
-  try {
-    ensureLlmIntegration(env);
-  } catch (error) {
-    errors.push(`LLM integration initialization failed: ${(error as Error).message}`);
-    console.warn('LLM integration unavailable:', error);
-  }
-
-  if (!hasLlmKey) {
+  // Initialize LLM integration (BleuJS primary, Anthropic/OpenAI fallback)
+  if (!llmIntegration && hasLlmKey) {
+    try {
+      llmIntegration = new RealLLMIntegration(
+        env.ANTHROPIC_API_KEY,
+        env.OPENAI_API_KEY,
+        undefined,
+        undefined,
+        env.BLEUJS_API_KEY,
+        undefined,
+        env.ALLOW_LLM_FALLBACK === 'true'
+      );
+      console.log(
+        '✓ Real LLM Integration initialized (BleuJS' +
+          (env.ALLOW_LLM_FALLBACK === 'true' ? ' + fallback' : ' only') +
+          ')'
+      );
+    } catch (error) {
+      errors.push(`LLM integration initialization failed: ${(error as Error).message}`);
+      console.warn('LLM integration unavailable:', error);
+    }
+  } else if (!hasLlmKey) {
     console.warn('⚠ LLM integration disabled: API keys not configured');
   }
   
@@ -513,32 +487,25 @@ export default {
           confidence: number;
           provider?: 'bleujs' | 'anthropic' | 'openai';
         } | null = null;
-        let llmError: string | null = null;
         if (localArithmetic) {
           llmEnhancement = {
             insight: localArithmetic.answer,
             confidence: localArithmetic.confidence,
           };
-        } else {
-          const llm = ensureLlmIntegration(env);
-          if (llm && llm.isAvailable()) {
-            try {
-              const simpleFactual = isSimpleFactualQuestion(input);
-              const llmResponse = await llm.answerQuestion(input, {
-                systemPrompt: getReasonSystemPrompt(simpleFactual),
-                maxTokens: getReasonMaxTokens(simpleFactual),
-              });
-              llmEnhancement = {
-                insight: stripMarkdownEmphasis(llmResponse.answer),
-                confidence: llmResponse.confidence,
-                provider: llmResponse.provider,
-              };
-            } catch (error) {
-              llmError = error instanceof Error ? error.message : String(error);
-              console.error('LLM enhancement unavailable:', error);
-            }
-          } else {
-            llmError = 'LLM integration is not configured. Set BLEUJS_API_KEY in production secrets.';
+        } else if (llmIntegration && llmIntegration.isAvailable()) {
+          try {
+            const simpleFactual = isSimpleFactualQuestion(input);
+            const llmResponse = await llmIntegration.answerQuestion(input, {
+              systemPrompt: getReasonSystemPrompt(simpleFactual),
+              maxTokens: getReasonMaxTokens(simpleFactual),
+            });
+            llmEnhancement = {
+              insight: stripMarkdownEmphasis(llmResponse.answer),
+              confidence: llmResponse.confidence,
+              provider: llmResponse.provider,
+            };
+          } catch (error) {
+            console.error('LLM enhancement unavailable:', error);
           }
         }
 
@@ -569,7 +536,6 @@ export default {
           confidence: llmEnhancement?.confidence ?? realMetrics.reasoningQuality,
           llmUsed: !localArithmetic && llmEnhancement !== null,
           llmProvider: localArithmetic ? null : (llmEnhancement?.provider ?? null),
-          llmError,
           processingTimeMs,
           understanding: understanding
             ? {
@@ -2604,10 +2570,7 @@ export default {
             }
             if (endpoint === 'reason' && !answer) {
                 document.getElementById('resultPanelTitle').textContent = 'Response';
-                const errorText = payload.llmError
-                    ? 'BleuJS request failed: ' + payload.llmError
-                    : 'No LLM answer — BLEUJS_API_KEY may be missing or the BleuJS API is unavailable.';
-                return '<div class="lab-meta">' + escapeHtml(errorText) + '</div><pre>' +
+                return '<div class="lab-meta">No LLM answer — check API keys.</div><pre>' +
                     escapeHtml(JSON.stringify(payload, null, 2)) + '</pre>';
             }
             document.getElementById('resultPanelTitle').textContent = 'Response';
