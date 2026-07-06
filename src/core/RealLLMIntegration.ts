@@ -19,6 +19,19 @@ export interface LLMResponse {
 const DEFAULT_CLAUDE_MODEL = 'claude-sonnet-4-6';
 const DEFAULT_OPENAI_MODEL = 'gpt-4o';
 const DEFAULT_BLEUJS_CHAT_URL = 'https://api.bleujs.org/api/v1/chat';
+const BLEUJS_MAX_ATTEMPTS = 3;
+
+function isRetryableBleuJsStatus(status: number): boolean {
+  return status >= 500 || status === 429;
+}
+
+function bleuJsRetryDelayMs(attempt: number): number {
+  return 250 * (attempt + 1);
+}
+
+async function sleep(ms: number): Promise<void> {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export class RealLLMIntegration {
   private bleujsKey: string | undefined;
@@ -63,7 +76,7 @@ export class RealLLMIntegration {
     messages.push({ role: 'user', content: prompt });
 
     let lastError: Error | undefined;
-    for (let attempt = 0; attempt < 2; attempt++) {
+    for (let attempt = 0; attempt < BLEUJS_MAX_ATTEMPTS; attempt++) {
       let response: Response;
       try {
         response = await fetch(this.bleujsChatUrl, {
@@ -80,7 +93,8 @@ export class RealLLMIntegration {
         });
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
-        if (attempt === 0) {
+        if (attempt < BLEUJS_MAX_ATTEMPTS - 1) {
+          await sleep(bleuJsRetryDelayMs(attempt));
           continue;
         }
         throw lastError;
@@ -89,8 +103,9 @@ export class RealLLMIntegration {
       if (!response.ok) {
         const error = await response.text();
         const apiError = new Error(`BleuJS API error: ${response.status} - ${error}`);
-        if (attempt === 0 && (response.status >= 500 || response.status === 429)) {
+        if (attempt < BLEUJS_MAX_ATTEMPTS - 1 && isRetryableBleuJsStatus(response.status)) {
           lastError = apiError;
+          await sleep(bleuJsRetryDelayMs(attempt));
           continue;
         }
         throw apiError;
