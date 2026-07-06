@@ -60,7 +60,7 @@ describe('RealLLMIntegration BleuJS', () => {
     );
 
     await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
-    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('api.bleujs.org');
   });
 
@@ -86,6 +86,18 @@ describe('RealLLMIntegration BleuJS', () => {
     const result = await llm.answerQuestion('hi');
     expect(result.provider).toBe('anthropic');
     expect(result.answer).toBe('Claude answer');
-    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  it('does not retry BleuJS on non-retryable HTTP errors', async () => {
+    const fetchMock = vi.fn(async () =>
+      Response.json({ error: 'invalid key' }, { status: 401 })
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
+
+    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 401/);
+    expect(fetchMock).toHaveBeenCalledOnce();
   });
 });

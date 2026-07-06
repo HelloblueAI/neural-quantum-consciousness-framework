@@ -14,6 +14,7 @@ export type HonestReasonResponse = {
   confidence: number;
   llmUsed: boolean;
   llmProvider?: LLMProvider | null;
+  llmError?: string | null;
   processingTimeMs: number;
   understanding: {
     conceptCount: number;
@@ -29,6 +30,7 @@ export function buildHonestReasonResponse(params: {
   confidence: number;
   llmUsed: boolean;
   llmProvider?: LLMProvider | null;
+  llmError?: string | null;
   processingTimeMs: number;
   understanding: {
     concepts: { name: string }[];
@@ -46,6 +48,7 @@ export function buildHonestReasonResponse(params: {
     confidence: params.confidence,
     llmUsed: params.llmUsed,
     llmProvider: params.llmProvider ?? null,
+    llmError: params.llmError ?? null,
     processingTimeMs: params.processingTimeMs,
     understanding: params.understanding
       ? {
