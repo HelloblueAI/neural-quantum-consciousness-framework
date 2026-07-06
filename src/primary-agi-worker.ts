@@ -2591,8 +2591,16 @@ export default {
             if (!llmError) {
                 return 'No LLM answer — BLEUJS_API_KEY may be missing or the BleuJS API is unavailable.';
             }
-            const statusMatch = String(llmError).match(/^BleuJS API error: (\d{3})\b/);
-            const status = statusMatch ? Number(statusMatch[1]) : null;
+            const text = String(llmError).trim();
+            const prefix = 'BleuJS API error: ';
+            let status = null;
+            if (text.startsWith(prefix)) {
+                const after = text.slice(prefix.length);
+                const end = after.indexOf(' ');
+                const codeStr = end === -1 ? after : after.slice(0, end);
+                const code = Number(codeStr);
+                if (Number.isFinite(code)) status = code;
+            }
             if (status === 522 || status === 523 || status === 524) {
                 return 'BleuJS API timed out (Cloudflare ' + status + '). The api.bleujs.org origin did not respond — please retry in a few seconds.';
             }
