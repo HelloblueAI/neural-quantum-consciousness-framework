@@ -2591,11 +2591,13 @@ export default {
             if (!llmError) {
                 return 'No LLM answer — BLEUJS_API_KEY may be missing or the BleuJS API is unavailable.';
             }
-            if (/522|523|524/.test(llmError)) {
-                return 'BleuJS API timed out (Cloudflare 522). The api.bleujs.org origin did not respond — please retry in a few seconds.';
+            const statusMatch = String(llmError).match(/^BleuJS API error: (\d{3})\b/);
+            const status = statusMatch ? Number(statusMatch[1]) : null;
+            if (status === 522 || status === 523 || status === 524) {
+                return 'BleuJS API timed out (Cloudflare ' + status + '). The api.bleujs.org origin did not respond — please retry in a few seconds.';
             }
-            if (/503|504|429/.test(llmError)) {
-                return 'BleuJS API is temporarily overloaded. Please retry in a few seconds.';
+            if (status === 503 || status === 504 || status === 429) {
+                return 'BleuJS API is temporarily overloaded (' + status + '). Please retry in a few seconds.';
             }
             return 'BleuJS request failed: ' + llmError;
         }
