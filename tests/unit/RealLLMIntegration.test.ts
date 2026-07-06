@@ -1,6 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { RealLLMIntegration } from '../../src/core/RealLLMIntegration';
 
+function requestHostname(url: string): string {
+  return new URL(url).hostname;
+}
+
 describe('RealLLMIntegration BleuJS', () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -38,7 +42,7 @@ describe('RealLLMIntegration BleuJS', () => {
 
   it('does not fall back to Anthropic when fallback is disabled', async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (url.includes('anthropic.com')) {
+      if (requestHostname(url) === 'api.anthropic.com') {
         return Response.json({ content: [{ text: 'Claude answer' }] });
       }
       return Response.json({ error: 'service unavailable' }, { status: 503 });
@@ -57,12 +61,12 @@ describe('RealLLMIntegration BleuJS', () => {
 
     await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
     expect(fetchMock).toHaveBeenCalledOnce();
-    expect((fetchMock.mock.calls[0] as [string])[0]).toContain('bleujs.org');
+    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('api.bleujs.org');
   });
 
   it('falls back to Anthropic when fallback is enabled', async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (url.includes('anthropic.com')) {
+      if (requestHostname(url) === 'api.anthropic.com') {
         return Response.json({ content: [{ text: 'Claude answer' }] });
       }
       return Response.json({ error: 'service unavailable' }, { status: 503 });
