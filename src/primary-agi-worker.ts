@@ -70,6 +70,7 @@ let tensorReasoningEngine: ReasoningEngine | null = null;
 /** Env: secrets via wrangler secret put; optional AGI_CACHE KV binding for response cache. Run `wrangler types` to sync with config. */
 interface Env {
   BLEUJS_API_KEY?: string;
+  BLEUJS_CHAT_URL?: string;
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
   ENVIRONMENT?: string;
@@ -124,6 +125,7 @@ function hashForFingerprint(value: string): string {
 function llmEnvFingerprint(env: Env): string {
   return [
     hashForFingerprint(env.BLEUJS_API_KEY ?? ''),
+    hashForFingerprint(env.BLEUJS_CHAT_URL ?? ''),
     hashForFingerprint(env.ANTHROPIC_API_KEY ?? ''),
     hashForFingerprint(env.OPENAI_API_KEY ?? ''),
     env.ALLOW_LLM_FALLBACK ?? '',
@@ -146,7 +148,7 @@ function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
       undefined,
       undefined,
       env.BLEUJS_API_KEY,
-      undefined,
+      env.BLEUJS_CHAT_URL,
       env.ALLOW_LLM_FALLBACK === 'true'
     );
     llmConfigFingerprint = fingerprint;

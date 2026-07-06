@@ -19,14 +19,14 @@ export interface LLMResponse {
 const DEFAULT_CLAUDE_MODEL = 'claude-sonnet-4-6';
 const DEFAULT_OPENAI_MODEL = 'gpt-4o';
 const DEFAULT_BLEUJS_CHAT_URL = 'https://api.bleujs.org/api/v1/chat';
-const BLEUJS_MAX_ATTEMPTS = 3;
+const BLEUJS_MAX_ATTEMPTS = 5;
 
 function isRetryableBleuJsStatus(status: number): boolean {
-  return status >= 500 || status === 429;
+  return status >= 500 || status === 429 || status === 522 || status === 523 || status === 524;
 }
 
 function bleuJsRetryDelayMs(attempt: number): number {
-  return 250 * (attempt + 1);
+  return 400 * (attempt + 1);
 }
 
 async function sleep(ms: number): Promise<void> {
