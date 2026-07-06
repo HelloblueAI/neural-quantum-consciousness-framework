@@ -56,7 +56,7 @@ export class RealLLMIntegration {
     this.claudeModel = claudeModel;
     this.openaiModel = openaiModel;
     this.bleujsKey = bleujsKey;
-    this.bleujsChatUrl = bleujsChatUrl;
+    this.bleujsChatUrl = bleujsChatUrl?.trim() || DEFAULT_BLEUJS_CHAT_URL;
     this.allowFallback = allowFallback;
   }
 

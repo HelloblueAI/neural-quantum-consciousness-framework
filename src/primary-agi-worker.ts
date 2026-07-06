@@ -125,7 +125,7 @@ function hashForFingerprint(value: string): string {
 function llmEnvFingerprint(env: Env): string {
   return [
     hashForFingerprint(env.BLEUJS_API_KEY ?? ''),
-    hashForFingerprint(env.BLEUJS_CHAT_URL ?? ''),
+    hashForFingerprint(env.BLEUJS_CHAT_URL?.trim() ?? ''),
     hashForFingerprint(env.ANTHROPIC_API_KEY ?? ''),
     hashForFingerprint(env.OPENAI_API_KEY ?? ''),
     env.ALLOW_LLM_FALLBACK ?? '',
@@ -148,7 +148,7 @@ function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
       undefined,
       undefined,
       env.BLEUJS_API_KEY,
-      env.BLEUJS_CHAT_URL,
+      env.BLEUJS_CHAT_URL?.trim() || undefined,
       env.ALLOW_LLM_FALLBACK === 'true'
     );
     llmConfigFingerprint = fingerprint;
