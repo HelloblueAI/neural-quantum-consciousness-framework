@@ -2227,7 +2227,6 @@ export default {
             </div>
             <h1>BleuJS Reasoning Lab</h1>
             <p class="hero-tagline">A measured reasoning API with evals, LLM routing, and transparent capability metrics.</p>
-            <p class="hero-disclaimer">Not AGI. Not consciousness. Just measurable progress.</p>
             <div class="status-indicator">Online · v${LAB_VERSION}</div>
         </div>
 
@@ -2238,16 +2237,16 @@ export default {
                 <div class="live-detail" id="evalDetail">Benchmark tasks run on demand</div>
                 <div class="live-endpoint">GET /eval</div>
             </div>
-            <div class="live-card">
+            <div class="live-card" id="activityCard">
                 <h3>Request Activity</h3>
-                <div class="live-value">${totalRequests}</div>
-                <div class="live-detail">${history.reasoningHistorySize} reason · ${history.learningHistorySize} learn · ${history.creativeHistorySize} create</div>
+                <div class="live-value" id="activityValue">${totalRequests}</div>
+                <div class="live-detail" id="activityDetail">${history.reasoningHistorySize} reason · ${history.learningHistorySize} learn · ${history.creativeHistorySize} create</div>
                 <div class="live-endpoint">GET /metrics</div>
             </div>
-            <div class="live-card">
+            <div class="live-card" id="capabilitiesCard">
                 <h3>Capabilities</h3>
-                <div class="live-value">${capAvgPct}%</div>
-                <div class="live-detail">Reasoning ${capReasoningPct}% · Understanding ${capUnderstandingPct}%</div>
+                <div class="live-value" id="capabilitiesValue">${capAvgPct}%</div>
+                <div class="live-detail" id="capabilitiesDetail">Reasoning ${capReasoningPct}% · Understanding ${capUnderstandingPct}%</div>
                 <div class="live-endpoint">GET /capabilities</div>
             </div>
         </div>
@@ -2291,7 +2290,7 @@ export default {
             <div class="documentation-content">
                 <div id="overview" class="documentation-tab-content active">
                     <h3>BleuJS Reasoning Lab v${LAB_VERSION}</h3>
-                    <p>A measured reasoning API on Cloudflare Workers — multi-agent orchestration, optional LLM integration, and an eval harness. Not a claim of AGI or consciousness.</p>
+                    <p>A measured reasoning API on Cloudflare Workers — multi-agent orchestration, optional LLM integration, and an eval harness.</p>
                     
                     <h4>What it does</h4>
                     <ul>
@@ -2392,7 +2391,57 @@ export default {
     </div>
     
     <script>
-        document.addEventListener('DOMContentLoaded', loadEvalCard);
+        document.addEventListener('DOMContentLoaded', loadSystemStatus);
+
+        async function loadSystemStatus() {
+            await loadEvalCard();
+
+            try {
+                const response = await fetch('/metrics');
+                if (!response.ok) return;
+                const json = await response.json();
+                if (!json.success || !json.data) return;
+
+                const history = json.data.history;
+                if (history) {
+                    const total =
+                        history.reasoningHistorySize +
+                        history.learningHistorySize +
+                        history.creativeHistorySize;
+                    const valueEl = document.getElementById('activityValue');
+                    const detailEl = document.getElementById('activityDetail');
+                    if (valueEl) valueEl.textContent = String(total);
+                    if (detailEl) {
+                        detailEl.textContent =
+                            history.reasoningHistorySize + ' reason · ' +
+                            history.learningHistorySize + ' learn · ' +
+                            history.creativeHistorySize + ' create';
+                    }
+                }
+
+                const caps = json.data.capabilities;
+                if (caps) {
+                    const avg = (
+                        (caps.reasoningQuality +
+                            caps.systemDepth +
+                            caps.understandingDepth +
+                            caps.adaptability) /
+                        4 *
+                        100
+                    ).toFixed(1);
+                    const valueEl = document.getElementById('capabilitiesValue');
+                    const detailEl = document.getElementById('capabilitiesDetail');
+                    if (valueEl) valueEl.textContent = avg + '%';
+                    if (detailEl) {
+                        detailEl.textContent =
+                            'Reasoning ' + (caps.reasoningQuality * 100).toFixed(1) + '% · Understanding ' +
+                            (caps.understandingDepth * 100).toFixed(1) + '%';
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to refresh live metrics:', error);
+            }
+        }
 
         async function loadEvalCard() {
             const card = document.getElementById('evalCard');
