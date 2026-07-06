@@ -2587,6 +2587,21 @@ export default {
             return out.join('');
         }
 
+        function formatLlmErrorMessage(llmError) {
+            if (!llmError) {
+                return 'No LLM answer — BLEUJS_API_KEY may be missing or the BleuJS API is unavailable.';
+            }
+            const statusMatch = String(llmError).match(/^BleuJS API error: (\d{3})\b/);
+            const status = statusMatch ? Number(statusMatch[1]) : null;
+            if (status === 522 || status === 523 || status === 524) {
+                return 'BleuJS API timed out (Cloudflare ' + status + '). The api.bleujs.org origin did not respond — please retry in a few seconds.';
+            }
+            if (status === 503 || status === 504 || status === 429) {
+                return 'BleuJS API is temporarily overloaded (' + status + '). Please retry in a few seconds.';
+            }
+            return 'BleuJS request failed: ' + llmError;
+        }
+
         function formatLabResponse(endpoint, payload) {
             const answer = payload.answer ?? payload.aiInsight ?? null;
             if (endpoint === 'reason' && answer != null) {
@@ -2613,9 +2628,7 @@ export default {
             }
             if (endpoint === 'reason' && !answer) {
                 document.getElementById('resultPanelTitle').textContent = 'Response';
-                const errorText = payload.llmError
-                    ? 'BleuJS request failed: ' + payload.llmError
-                    : 'No LLM answer — BLEUJS_API_KEY may be missing or the BleuJS API is unavailable.';
+                const errorText = formatLlmErrorMessage(payload.llmError);
                 return '<div class="lab-meta">' + escapeHtml(errorText) + '</div><pre>' +
                     escapeHtml(JSON.stringify(payload, null, 2)) + '</pre>';
             }
