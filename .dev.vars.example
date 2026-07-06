@@ -6,6 +6,8 @@
 # Production: use `wrangler secret put <NAME> --config wrangler.toml --env production`
 
 BLEUJS_API_KEY=
+# Optional. Production uses bleujs-org.vercel.app for CF Worker → BleuJS (see README).
+# BLEUJS_CHAT_URL=https://bleujs-org.vercel.app/api/v1/chat
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=
 # Set to "true" to allow Anthropic/OpenAI when BleuJS fails or returns a non-answer.
