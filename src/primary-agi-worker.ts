@@ -2394,8 +2394,10 @@ export default {
         document.addEventListener('DOMContentLoaded', loadSystemStatus);
 
         async function loadSystemStatus() {
-            await loadEvalCard();
+            await Promise.all([loadEvalCard(), refreshLiveMetrics()]);
+        }
 
+        async function refreshLiveMetrics() {
             try {
                 const response = await fetch('/metrics');
                 if (!response.ok) return;
@@ -2620,7 +2622,7 @@ export default {
                 
                 if (data.success) {
                     resultDiv.innerHTML = formatLabResponse(endpoint, data.data);
-                    loadSystemStatus();
+                    refreshLiveMetrics();
                 } else {
                     resultDiv.innerHTML = 'Error: ' + (data.error || 'Unknown error occurred');
                 }
