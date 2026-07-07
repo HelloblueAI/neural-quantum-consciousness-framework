@@ -2436,7 +2436,7 @@ export default {
                 <h3>API Notes</h3>
                 <ul>
                     <li><strong>Measured metrics:</strong> No random or simulated telemetry on live endpoints</li>
-                    <li><strong>LLM:</strong> <code>BLEUJS_API_KEY</code> (primary, <code>api.bleujs.org</code>); <code>ANTHROPIC_API_KEY</code> / <code>OPENAI_API_KEY</code> optional fallback. Check <code>llmProvider</code> in <code>/reason</code> responses.</li>
+                    <li><strong>LLM:</strong> <code>BLEUJS_API_KEY</code> (primary, <code>api.bleujs.org</code>). Check <code>llmProvider</code> in <code>/reason</code> responses.</li>
                     <li><strong>/consciousness:</strong> Deprecated alias of /capabilities for older clients</li>
                     <li><strong>CORS:</strong> Open for GET and POST from any origin</li>
                 </ul>
