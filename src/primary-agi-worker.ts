@@ -2362,7 +2362,7 @@ export default {
                     
                     <h4>Components</h4>
                     <ul>
-                        <li><strong>RealLLMIntegration:</strong> BleuJS API (<code>bleujs-chat</code>) primary; Anthropic/OpenAI fallback</li>
+                        <li><strong>RealLLMIntegration:</strong> BleuJS API (<code>bleujs-chat</code>) as the primary LLM</li>
                         <li><strong>RealLearningEngine:</strong> Backpropagation on small tasks (XOR baseline)</li>
                         <li><strong>RealUnderstandingEngine:</strong> Concept and domain extraction from input</li>
                         <li><strong>AutonomousGoalSystem:</strong> Goal tracking (execution loop planned)</li>
