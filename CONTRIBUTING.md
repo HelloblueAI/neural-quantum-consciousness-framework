@@ -143,6 +143,12 @@ Contributors do not need Cloudflare access to submit PRs. Describe manual test s
 
 ---
 
+## Support
+
+Questions, bugs, and security reporting channels are listed in [SUPPORT.md](SUPPORT.md).
+
+---
+
 ## Code of conduct
 
 This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Be

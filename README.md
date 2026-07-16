@@ -112,7 +112,7 @@ We welcome PRs for eval tasks, honest API improvements, docs, and lab features a
 2. Run `pnpm run test:eval`, `pnpm run test:unit`, and `pnpm run type-check` before opening a PR
 3. CI runs the same checks on every pull request ([`.github/workflows/lab-ci.yml`](.github/workflows/lab-ci.yml))
 
-Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). Report security issues per [SECURITY.md](SECURITY.md) — do not file public issues for vulnerabilities.
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). For help channels see [SUPPORT.md](SUPPORT.md). Report security issues per [SECURITY.md](SECURITY.md) — do not file public issues for vulnerabilities.
 
 Production deploy is maintainer-only; you do not need Cloudflare access to contribute.
 
