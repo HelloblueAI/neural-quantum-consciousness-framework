@@ -101,21 +101,26 @@
     "typescript": "^5.9.3",
     "vite": "^6.4.3",
     "vitest": "^4.1.0",
-    "wrangler": "^4.90.1"
+    "wrangler": "^4.118.0"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "pnpm": {
     "overrides": {
-      "tar": ">=7.5.16",
+      "tar": ">=7.5.21",
       "minimatch": ">=9.0.7",
+      "brace-expansion": ">=5.0.8",
+      "adm-zip": ">=0.6.0",
+      "body-parser": "^1.20.6",
+      "postcss": ">=8.5.18",
+      "sharp": ">=0.35.0",
       "vite": "^6.4.3",
       "undici": ">=7.28.0",
       "qs": ">=6.15.2",
       "esbuild": ">=0.28.1",
       "ws": ">=8.21.0",
-      "js-yaml": ">=4.2.0",
+      "js-yaml": "^4.3.0",
       "form-data": ">=4.0.6",
       "@babel/core": ">=7.29.6"
     }
