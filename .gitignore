@@ -42,6 +42,9 @@ c-core/**/CMakeFiles/
 .env.production.local
 .dev.vars
 
+# Wrangler local state (never commit; may contain cached secrets)
+.wrangler/
+
 # IDE and editor files
 .vscode/
 .cursor/

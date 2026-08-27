@@ -11,6 +11,7 @@ export type ReasonProvider = LLMProvider | 'local' | 'none';
 
 const llmProviderCounts: Record<ReasonProvider, number> = {
   bleujs: 0,
+  nvidia: 0,
   anthropic: 0,
   openai: 0,
   local: 0,
@@ -38,8 +39,8 @@ export function getRequestCounters(): { reasoning: number; learning: number; cre
 }
 
 export function getLlmProviderCounters() {
-  const { bleujs, anthropic, openai, local, none } = llmProviderCounts;
-  return buildLlmRoutingPayload({ bleujs, anthropic, openai, local, none }, 'isolate');
+  const { bleujs, nvidia, anthropic, openai, local, none } = llmProviderCounts;
+  return buildLlmRoutingPayload({ bleujs, nvidia, anthropic, openai, local, none }, 'isolate');
 }
 
 /** @internal Test helper */

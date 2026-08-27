@@ -10,6 +10,7 @@ import { MemorySystem } from '@/core/MemorySystem';
 import { ToolSystem } from '@/core/ToolSystem';
 import { solveBleuLabPuzzle } from './logicPuzzle';
 import { EVAL_TASKS, type EvalTask } from './tasks';
+import { rankTextsByOverlap, SEMANTIC_RETRIEVAL_EVAL } from '@/lab/semanticRetrieval';
 
 export interface EvalTaskResult {
   id: string;
@@ -188,6 +189,26 @@ async function runTask(
             : 'Requires LLM keys',
           durationMs: Date.now() - start,
           skipped: !llmAvailable,
+        };
+      }
+
+      case 'semantic-retrieval': {
+        const ranked = rankTextsByOverlap(
+          SEMANTIC_RETRIEVAL_EVAL.query,
+          SEMANTIC_RETRIEVAL_EVAL.passages
+        );
+        const top = ranked[0];
+        const passed = top?.text === SEMANTIC_RETRIEVAL_EVAL.expectedTop && (top?.score ?? 0) > 0;
+        return {
+          id: task.id,
+          name: task.name,
+          category: task.category,
+          passed,
+          score: passed ? 1 : 0,
+          message: passed
+            ? `Top passage: "${top.text}" (score ${top.score.toFixed(2)})`
+            : `Expected Tehran passage first, got "${top?.text ?? 'none'}"`,
+          durationMs: Date.now() - start,
         };
       }
 

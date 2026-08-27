@@ -9,12 +9,12 @@ export const KV_LLM_ROUTING_KEY = 'metrics:llmRouting';
 export type LlmRoutingCounts = Record<ReasonProvider, number>;
 
 export function emptyLlmRoutingCounts(): LlmRoutingCounts {
-  return { bleujs: 0, anthropic: 0, openai: 0, local: 0, none: 0 };
+  return { bleujs: 0, nvidia: 0, anthropic: 0, openai: 0, local: 0, none: 0 };
 }
 
 export function buildLlmRoutingPayload(counts: LlmRoutingCounts, scope: 'global' | 'isolate') {
-  const llmTotal = counts.bleujs + counts.anthropic + counts.openai;
-  const fallbackTotal = counts.anthropic + counts.openai;
+  const llmTotal = counts.bleujs + counts.nvidia + counts.anthropic + counts.openai;
+  const fallbackTotal = counts.nvidia + counts.anthropic + counts.openai;
 
   return {
     ...counts,
@@ -37,6 +37,7 @@ export async function readLlmRoutingFromKv(kv: LlmRoutingKv): Promise<LlmRouting
 
   return {
     bleujs: stored.bleujs ?? 0,
+    nvidia: stored.nvidia ?? 0,
     anthropic: stored.anthropic ?? 0,
     openai: stored.openai ?? 0,
     local: stored.local ?? 0,

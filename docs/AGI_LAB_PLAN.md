@@ -20,7 +20,7 @@ AGI is the long-term goal. The 90-day deliverable is a **credible research lab**
 - [x] Legacy workers archived to `src/archive/workers/`
 - [x] Honest metrics module (`src/lab/honestMetrics.ts`)
 - [x] Request counters for real history sizes
-- [x] Eval harness (`src/eval/`) — 8 tasks, offline-capable
+- [x] Eval harness (`src/eval/`) — offline-capable tasks including semantic retrieval
 - [x] New API: `GET /metrics`, `GET /eval`, `GET /goals`
 - [x] Removed `Math.random()` from live worker responses and dashboard
 

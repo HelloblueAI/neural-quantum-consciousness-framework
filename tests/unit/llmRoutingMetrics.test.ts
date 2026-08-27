@@ -24,13 +24,13 @@ function createMockKv(initial?: Record<string, string>) {
 describe('llmRoutingMetrics', () => {
   it('builds fallbackRate from counts', () => {
     const payload = buildLlmRoutingPayload(
-      { bleujs: 3, anthropic: 1, openai: 0, local: 2, none: 0 },
+      { bleujs: 3, nvidia: 1, anthropic: 1, openai: 0, local: 2, none: 0 },
       'global'
     );
 
     expect(payload).toMatchObject({
-      llmTotal: 4,
-      fallbackRate: 0.25,
+      llmTotal: 5,
+      fallbackRate: 0.4,
       scope: 'global',
     });
   });
@@ -38,13 +38,31 @@ describe('llmRoutingMetrics', () => {
   it('persists provider counts in KV', async () => {
     const kv = createMockKv();
     await recordLlmRoutingInKv(kv, 'bleujs');
+    await recordLlmRoutingInKv(kv, 'nvidia');
     await recordLlmRoutingInKv(kv, 'anthropic');
 
     const counts = await readLlmRoutingFromKv(kv);
     expect(counts).toEqual({
       ...emptyLlmRoutingCounts(),
       bleujs: 1,
+      nvidia: 1,
       anthropic: 1,
     });
+  });
+
+  it('defaults missing nvidia counts from older KV payloads', async () => {
+    const kv = createMockKv({
+      'metrics:llmRouting': JSON.stringify({
+        bleujs: 2,
+        anthropic: 1,
+        openai: 0,
+        local: 0,
+        none: 0,
+      }),
+    });
+
+    const counts = await readLlmRoutingFromKv(kv);
+    expect(counts.nvidia).toBe(0);
+    expect(counts.bleujs).toBe(2);
   });
 });

@@ -75,4 +75,11 @@ export const EVAL_TASKS: EvalTask[] = [
     description:
       'Solve the Bleu Lab wing assignment (agents → pipeline modules) from clues',
   },
+  {
+    id: 'semantic-retrieval',
+    name: 'Semantic retrieval',
+    category: 'understanding',
+    description:
+      'Rank passages for a factual query (bag-of-words cosine; NVIDIA embed when configured)',
+  },
 ];

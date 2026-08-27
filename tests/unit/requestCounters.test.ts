@@ -17,6 +17,7 @@ describe('requestCounters llmRouting', () => {
 
     expect(getLlmProviderCounters()).toMatchObject({
       bleujs: 2,
+      nvidia: 0,
       anthropic: 1,
       openai: 0,
       local: 0,
@@ -27,10 +28,11 @@ describe('requestCounters llmRouting', () => {
 
   it('computes fallbackRate as non-bleujs share of llm calls', () => {
     recordReasonProvider('bleujs');
+    recordReasonProvider('nvidia');
     recordReasonProvider('anthropic');
     recordReasonProvider('openai');
 
-    expect(getLlmProviderCounters().fallbackRate).toBeCloseTo(2 / 3);
+    expect(getLlmProviderCounters().fallbackRate).toBeCloseTo(3 / 4);
   });
 
   it('returns zero fallbackRate when no llm calls recorded', () => {

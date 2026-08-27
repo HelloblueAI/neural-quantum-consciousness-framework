@@ -16,7 +16,7 @@ routes = ["agi.bleujs.org/*"]
 workers_dev = true
 [env.production.vars]
 ENVIRONMENT = "production"
-ALLOW_LLM_FALLBACK = "false"
+ALLOW_LLM_FALLBACK = "true"
 # Server-to-server: bypass api.bleujs.org edge (avoids intermittent CF Worker → Worker 522).
 BLEUJS_CHAT_URL = "https://bleujs-org.vercel.app/api/v1/chat"
 

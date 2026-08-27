@@ -10,5 +10,9 @@ BLEUJS_API_KEY=
 # BLEUJS_CHAT_URL=https://bleujs-org.vercel.app/api/v1/chat
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=
-# Set to "true" to allow Anthropic/OpenAI when BleuJS fails or returns a non-answer.
+# NVIDIA Inception / NIM (Nemotron Lightning fallback + Nemotron embed).
+NVIDIA_API_KEY=
+# NVIDIA_CHAT_URL=https://integrate.api.nvidia.com/v1/chat/completions
+# NVIDIA_CHAT_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
+# Set to "true" to allow NVIDIA/Anthropic/OpenAI when BleuJS fails or returns a non-answer.
 ALLOW_LLM_FALLBACK=false

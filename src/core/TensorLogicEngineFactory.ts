@@ -7,14 +7,18 @@ import { TensorLogicEngine } from './TensorLogicEngine';
 import { TensorLogicEngineEnhancements } from './TensorLogicEngineEnhancements';
 import { OpenAIEmbeddingProvider } from './embedding/OpenAIEmbeddingProvider';
 import { TensorFlowEmbeddingProvider } from './embedding/TensorFlowEmbeddingProvider';
+import { NVIDIAEmbeddingProvider } from './embedding/NVIDIAEmbeddingProvider';
 import { LearnedEmbeddingProvider } from './TensorLogicEngineEnhancements';
 
 export interface TensorLogicConfig {
   embeddingDimension?: number;
   useLearnedEmbeddings?: boolean;
-  embeddingProvider?: 'openai' | 'tensorflow' | 'none';
+  embeddingProvider?: 'openai' | 'tensorflow' | 'nvidia' | 'none';
   openaiApiKey?: string;
   openaiModel?: string;
+  nvidiaApiKey?: string;
+  nvidiaEmbedModel?: string;
+  nvidiaEmbedUrl?: string;
   tensorflowModelUrl?: string;
   enableRuleLearning?: boolean;
   enableGraphicalModels?: boolean;
@@ -40,7 +44,14 @@ export class TensorLogicEngineFactory {
     if (config.useLearnedEmbeddings && config.embeddingProvider !== 'none') {
       let provider: LearnedEmbeddingProvider | undefined;
 
-      if (config.embeddingProvider === 'openai' && config.openaiApiKey) {
+      if (config.embeddingProvider === 'nvidia' && config.nvidiaApiKey) {
+        provider = new NVIDIAEmbeddingProvider(
+          config.nvidiaApiKey,
+          config.nvidiaEmbedModel,
+          config.nvidiaEmbedUrl
+        );
+        enhancements.setEmbeddingProvider(provider);
+      } else if (config.embeddingProvider === 'openai' && config.openaiApiKey) {
         provider = new OpenAIEmbeddingProvider(
           config.openaiApiKey,
           config.openaiModel || 'text-embedding-3-small'

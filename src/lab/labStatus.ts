@@ -42,6 +42,7 @@ export function buildLabMetricsPayload(
   goals: { active: number; completed: number; topPriorities: Goal[] } | null,
   llmRouting?: {
     bleujs: number;
+    nvidia: number;
     anthropic: number;
     openai: number;
     local: number;
@@ -91,7 +92,7 @@ export function buildLabMetricsPayload(
     },
     history: buildHonestHistoryMetrics(mlStats, counters),
     llmRouting: llmRouting ?? buildLlmRoutingPayload(
-      { bleujs: 0, anthropic: 0, openai: 0, local: 0, none: 0 },
+      { bleujs: 0, nvidia: 0, anthropic: 0, openai: 0, local: 0, none: 0 },
       'isolate'
     ),
     goals,

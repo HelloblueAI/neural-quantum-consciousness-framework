@@ -31,6 +31,7 @@ import {
 import { buildHonestReasonResponse } from './lab/reasonResponse';
 import { stripMarkdownEmphasis, tryArithmeticReason } from './lab/arithmeticReason';
 import { getReasonMaxTokens, getReasonSystemPrompt, isSimpleFactualQuestion } from './lab/reasonPrompt';
+import { rankTextsByOverlap } from './lab/semanticRetrieval';
 import {
   buildLlmRoutingPayload,
   readLlmRoutingFromKv,
@@ -74,6 +75,10 @@ interface Env {
   BLEUJS_CHAT_URL?: string;
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
+  NVIDIA_API_KEY?: string;
+  /** Override NVIDIA NIM chat endpoint (defaults to integrate.api.nvidia.com). */
+  NVIDIA_CHAT_URL?: string;
+  NVIDIA_CHAT_MODEL?: string;
   ENVIRONMENT?: string;
   ALLOW_LLM_FALLBACK?: string;
   AGI_CACHE?: KVNamespace;
@@ -129,13 +134,19 @@ function llmEnvFingerprint(env: Env): string {
     hashForFingerprint(env.BLEUJS_CHAT_URL?.trim() ?? ''),
     hashForFingerprint(env.ANTHROPIC_API_KEY ?? ''),
     hashForFingerprint(env.OPENAI_API_KEY ?? ''),
+    hashForFingerprint(env.NVIDIA_API_KEY ?? ''),
+    hashForFingerprint(env.NVIDIA_CHAT_URL?.trim() ?? ''),
+    hashForFingerprint(env.NVIDIA_CHAT_MODEL?.trim() ?? ''),
     env.ALLOW_LLM_FALLBACK ?? '',
   ].join('|');
 }
 
+function hasAnyLlmKey(env: Env): boolean {
+  return !!(env.BLEUJS_API_KEY || env.NVIDIA_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
+}
+
 function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
-  const hasLlmKey = !!(env.BLEUJS_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
-  if (!hasLlmKey) {
+  if (!hasAnyLlmKey(env)) {
     llmIntegration = null;
     llmConfigFingerprint = null;
     return null;
@@ -143,19 +154,20 @@ function ensureLlmIntegration(env: Env): RealLLMIntegration | null {
 
   const fingerprint = llmEnvFingerprint(env);
   if (!llmIntegration || llmConfigFingerprint !== fingerprint) {
-    const bleujsChatUrl = env.BLEUJS_CHAT_URL?.trim() || undefined;
-    llmIntegration = new RealLLMIntegration(
-      env.ANTHROPIC_API_KEY,
-      env.OPENAI_API_KEY,
-      undefined,
-      undefined,
-      env.BLEUJS_API_KEY,
-      bleujsChatUrl,
-      env.ALLOW_LLM_FALLBACK === 'true'
-    );
+    llmIntegration = RealLLMIntegration.create({
+      anthropicKey: env.ANTHROPIC_API_KEY,
+      openaiKey: env.OPENAI_API_KEY,
+      bleujsKey: env.BLEUJS_API_KEY,
+      bleujsChatUrl: env.BLEUJS_CHAT_URL?.trim() || undefined,
+      allowFallback: env.ALLOW_LLM_FALLBACK === 'true',
+      nvidiaKey: env.NVIDIA_API_KEY,
+      nvidiaChatUrl: env.NVIDIA_CHAT_URL?.trim() || undefined,
+      nvidiaModel: env.NVIDIA_CHAT_MODEL?.trim() || undefined,
+    });
     llmConfigFingerprint = fingerprint;
     console.log(
       '✓ Real LLM Integration initialized (BleuJS' +
+        (env.NVIDIA_API_KEY ? ' + NVIDIA' : '') +
         (env.ALLOW_LLM_FALLBACK === 'true' ? ' + fallback' : ' only') +
         ')'
     );
@@ -221,7 +233,7 @@ async function safeInitializeSystems(env: Env): Promise<{ success: boolean; erro
     console.error('Learning engine initialization error:', error);
   }
   
-  const hasLlmKey = !!(env.BLEUJS_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
+  const hasLlmKey = hasAnyLlmKey(env);
 
   try {
     ensureLlmIntegration(env);
@@ -484,6 +496,11 @@ export default {
         let understanding = null;
         try {
           understanding = understandingEngine ? understandingEngine.understand(input) : null;
+          if (understanding?.insights && understanding.insights.length > 1) {
+            understanding.insights = rankTextsByOverlap(input, understanding.insights).map(
+              (item) => item.text
+            );
+          }
         } catch (e) {
           console.error('Understanding engine error:', e);
         }
@@ -524,7 +541,7 @@ export default {
         let llmEnhancement: {
           insight: string;
           confidence: number;
-          provider?: 'bleujs' | 'anthropic' | 'openai';
+          provider?: 'bleujs' | 'nvidia' | 'anthropic' | 'openai';
         } | null = null;
         let llmError: string | null = null;
         if (localArithmetic) {
@@ -568,6 +585,8 @@ export default {
           recordReasonProviderForMetrics(env, ctx, 'local');
         } else if (llmEnhancement?.provider === 'bleujs') {
           recordReasonProviderForMetrics(env, ctx, 'bleujs');
+        } else if (llmEnhancement?.provider === 'nvidia') {
+          recordReasonProviderForMetrics(env, ctx, 'nvidia');
         } else if (llmEnhancement?.provider === 'anthropic') {
           recordReasonProviderForMetrics(env, ctx, 'anthropic');
         } else if (llmEnhancement?.provider === 'openai') {
@@ -2362,7 +2381,7 @@ export default {
                     
                     <h4>Components</h4>
                     <ul>
-                        <li><strong>RealLLMIntegration:</strong> BleuJS API (<code>bleujs-chat</code>) as the primary LLM</li>
+                        <li><strong>RealLLMIntegration:</strong> BleuJS API (<code>bleujs-chat</code>) primary; NVIDIA Nemotron Lightning as Inception fallback</li>
                         <li><strong>RealLearningEngine:</strong> Backpropagation on small tasks (XOR baseline)</li>
                         <li><strong>RealUnderstandingEngine:</strong> Concept and domain extraction from input</li>
                         <li><strong>AutonomousGoalSystem:</strong> Goal tracking (execution loop planned)</li>
@@ -2416,7 +2435,7 @@ export default {
                 <div class="endpoint-item">
                     <div class="method">POST</div>
                     <div class="path">/reason</div>
-                    <div class="description">Reasoning via BleuJS API when configured; response includes <code>llmProvider</code> (<code>bleujs</code>, <code>anthropic</code>, or <code>openai</code>)</div>
+                    <div class="description">Reasoning via BleuJS API when configured; response includes <code>llmProvider</code> (<code>bleujs</code>, <code>nvidia</code>, <code>anthropic</code>, or <code>openai</code>)</div>
                 </div>
                 
                 <div class="endpoint-item">
@@ -2436,7 +2455,7 @@ export default {
                 <h3>API Notes</h3>
                 <ul>
                     <li><strong>Measured metrics:</strong> No random or simulated telemetry on live endpoints</li>
-                    <li><strong>LLM:</strong> <code>BLEUJS_API_KEY</code> (primary, <code>api.bleujs.org</code>). Check <code>llmProvider</code> in <code>/reason</code> responses.</li>
+                    <li><strong>LLM:</strong> <code>BLEUJS_API_KEY</code> primary. Optional <code>NVIDIA_API_KEY</code> (Nemotron Lightning fallback) plus Anthropic/OpenAI. Check <code>llmProvider</code> in <code>/reason</code> responses.</li>
                     <li><strong>/consciousness:</strong> Deprecated alias of /capabilities for older clients</li>
                     <li><strong>CORS:</strong> Open for GET and POST from any origin</li>
                 </ul>
@@ -2622,6 +2641,7 @@ export default {
                     !payload.llmUsed
                         ? (payload.confidence === 1 ? 'Local math' : 'Local reasoning')
                         : (payload.llmProvider === 'bleujs' ? 'BleuJS API'
+                            : payload.llmProvider === 'nvidia' ? 'NVIDIA Nemotron'
                             : payload.llmProvider === 'anthropic' ? 'Anthropic'
                             : payload.llmProvider === 'openai' ? 'OpenAI'
                             : 'LLM'),

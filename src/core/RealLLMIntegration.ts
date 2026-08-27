@@ -1,11 +1,11 @@
 /**
  * Real LLM Integration for Cloudflare Workers
- * BleuJS API first, then Anthropic/OpenAI fallback.
+ * BleuJS API first, then NVIDIA Nemotron Lightning, then paid Anthropic/OpenAI.
  */
 
 import { isClarificationOnlyResponse } from '../lab/reasonPrompt';
 
-export type LLMProvider = 'bleujs' | 'anthropic' | 'openai';
+export type LLMProvider = 'bleujs' | 'nvidia' | 'anthropic' | 'openai';
 
 export interface LLMResponse {
   answer: string;
@@ -15,10 +15,31 @@ export interface LLMResponse {
   reasoning?: string;
 }
 
+export type NvidiaLLMOptions = {
+  apiKey?: string;
+  chatUrl?: string;
+  model?: string;
+};
+
+export type RealLLMIntegrationOptions = {
+  anthropicKey?: string;
+  openaiKey?: string;
+  claudeModel?: string;
+  openaiModel?: string;
+  bleujsKey?: string;
+  bleujsChatUrl?: string;
+  allowFallback?: boolean;
+  nvidiaKey?: string;
+  nvidiaChatUrl?: string;
+  nvidiaModel?: string;
+};
+
 /** Default Claude model — pinned snapshot ID per Anthropic docs */
 const DEFAULT_CLAUDE_MODEL = 'claude-sonnet-4-6';
 const DEFAULT_OPENAI_MODEL = 'gpt-4o';
 const DEFAULT_BLEUJS_CHAT_URL = 'https://api.bleujs.org/api/v1/chat';
+export const DEFAULT_NVIDIA_CHAT_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
+export const DEFAULT_NVIDIA_CHAT_MODEL = 'nvidia/nemotron-3.5-lightning-30b-a3b';
 const BLEUJS_MAX_ATTEMPTS = 5;
 
 function isRetryableBleuJsStatus(status: number): boolean {
@@ -37,10 +58,31 @@ export class RealLLMIntegration {
   private bleujsKey: string | undefined;
   private anthropicKey: string | undefined;
   private openaiKey: string | undefined;
+  private nvidiaKey: string | undefined;
   private claudeModel: string;
   private openaiModel: string;
+  private nvidiaModel: string;
   private bleujsChatUrl: string;
+  private nvidiaChatUrl: string;
   private allowFallback: boolean;
+
+  static create(options: RealLLMIntegrationOptions): RealLLMIntegration {
+    const nvidia: NvidiaLLMOptions = {};
+    if (options.nvidiaKey) nvidia.apiKey = options.nvidiaKey;
+    if (options.nvidiaChatUrl) nvidia.chatUrl = options.nvidiaChatUrl;
+    if (options.nvidiaModel) nvidia.model = options.nvidiaModel;
+
+    return new RealLLMIntegration(
+      options.anthropicKey,
+      options.openaiKey,
+      options.claudeModel,
+      options.openaiModel,
+      options.bleujsKey,
+      options.bleujsChatUrl,
+      options.allowFallback ?? false,
+      nvidia
+    );
+  }
 
   constructor(
     anthropicKey?: string,
@@ -49,15 +91,19 @@ export class RealLLMIntegration {
     openaiModel = DEFAULT_OPENAI_MODEL,
     bleujsKey?: string,
     bleujsChatUrl = DEFAULT_BLEUJS_CHAT_URL,
-    allowFallback = false
+    allowFallback = false,
+    nvidia?: NvidiaLLMOptions
   ) {
     this.anthropicKey = anthropicKey;
     this.openaiKey = openaiKey;
-    this.claudeModel = claudeModel;
-    this.openaiModel = openaiModel;
+    this.claudeModel = claudeModel ?? DEFAULT_CLAUDE_MODEL;
+    this.openaiModel = openaiModel ?? DEFAULT_OPENAI_MODEL;
     this.bleujsKey = bleujsKey;
     this.bleujsChatUrl = bleujsChatUrl?.trim() || DEFAULT_BLEUJS_CHAT_URL;
     this.allowFallback = allowFallback;
+    this.nvidiaKey = nvidia?.apiKey;
+    this.nvidiaChatUrl = nvidia?.chatUrl?.trim() || DEFAULT_NVIDIA_CHAT_URL;
+    this.nvidiaModel = nvidia?.model?.trim() || DEFAULT_NVIDIA_CHAT_MODEL;
   }
 
   private async queryBleuJS(
@@ -218,9 +264,67 @@ export class RealLLMIntegration {
         answer: content,
         confidence: 0.85,
         provider: 'openai',
+        model: this.openaiModel,
       };
     } catch (error) {
       throw new Error(`GPT query failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  /**
+   * NVIDIA NIM chat — Nemotron 3.5 Lightning (Inception free endpoint).
+   * Thinking is off so fallback stays latency-cheap for /reason.
+   */
+  private async queryNvidia(prompt: string, systemPrompt?: string, maxTokens = 1024): Promise<LLMResponse> {
+    if (!this.nvidiaKey) {
+      throw new Error('NVIDIA API key not configured');
+    }
+
+    const messages: Array<{ role: string; content: string }> = [];
+    if (systemPrompt) {
+      messages.push({ role: 'system', content: systemPrompt });
+    }
+    messages.push({ role: 'user', content: prompt });
+
+    try {
+      const response = await fetch(this.nvidiaChatUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.nvidiaKey}`,
+        },
+        body: JSON.stringify({
+          model: this.nvidiaModel,
+          messages,
+          max_tokens: maxTokens,
+          temperature: 0.6,
+          top_p: 0.95,
+          stream: false,
+          chat_template_kwargs: { enable_thinking: false },
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`NVIDIA API error: ${response.status} - ${error}`);
+      }
+
+      const data = (await response.json()) as {
+        choices?: Array<{
+          message?: { content?: string; reasoning_content?: string };
+        }>;
+      };
+      const message = data.choices?.[0]?.message;
+      const content = message?.content?.trim() || message?.reasoning_content?.trim() || 'No response';
+
+      return {
+        answer: content,
+        confidence: 0.88,
+        provider: 'nvidia',
+        model: this.nvidiaModel,
+      };
+    } catch (error) {
+      throw new Error(`NVIDIA query failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -249,6 +353,15 @@ export class RealLLMIntegration {
 
       if (!this.allowFallback) {
         throw lastError ?? new Error('BleuJS request failed and LLM fallback is disabled');
+      }
+    }
+
+    if (this.nvidiaKey) {
+      try {
+        return await this.queryNvidia(prompt, systemPrompt, maxTokens);
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error(String(error));
+        console.error('NVIDIA failed:', lastError.message);
       }
     }
 
@@ -315,7 +428,7 @@ export class RealLLMIntegration {
    * Check if LLM is available
    */
   public isAvailable(): boolean {
-    return !!(this.bleujsKey || this.anthropicKey || this.openaiKey);
+    return !!(this.bleujsKey || this.nvidiaKey || this.anthropicKey || this.openaiKey);
   }
 
   /**
@@ -324,6 +437,7 @@ export class RealLLMIntegration {
   public getAvailableModels(): string[] {
     const models: string[] = [];
     if (this.bleujsKey) models.push('bleujs-chat');
+    if (this.nvidiaKey) models.push(this.nvidiaModel);
     if (this.anthropicKey) models.push(this.claudeModel);
     if (this.openaiKey) models.push(this.openaiModel);
     return models;

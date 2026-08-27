@@ -121,4 +121,64 @@ describe('RealLLMIntegration BleuJS', () => {
     await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 401/);
     expect(fetchMock).toHaveBeenCalledOnce();
   });
+
+  it('is available when only NVIDIA key is configured', () => {
+    const llm = RealLLMIntegration.create({ nvidiaKey: 'nvapi_test' });
+    expect(llm.isAvailable()).toBe(true);
+    expect(llm.getAvailableModels()).toContain('nvidia/nemotron-3.5-lightning-30b-a3b');
+  });
+
+  it('falls back to NVIDIA Lightning before Anthropic when fallback is enabled', async () => {
+    const fetchMock = vi.fn(async (url: string) => {
+      if (url.includes('integrate.api.nvidia.com')) {
+        return Response.json({
+          choices: [{ message: { content: 'Nemotron answer' } }],
+        });
+      }
+      if (requestHostname(url) === 'api.anthropic.com') {
+        return Response.json({ content: [{ text: 'Claude answer' }] });
+      }
+      return Response.json({ error: 'service unavailable' }, { status: 503 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = RealLLMIntegration.create({
+      bleujsKey: 'bleujs_sk_test',
+      nvidiaKey: 'nvapi_test',
+      anthropicKey: 'anthropic_sk_test',
+      allowFallback: true,
+    });
+
+    const result = await llm.answerQuestion('hi');
+    expect(result.provider).toBe('nvidia');
+    expect(result.answer).toBe('Nemotron answer');
+    expect(result.model).toBe('nvidia/nemotron-3.5-lightning-30b-a3b');
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('integrate.api.nvidia.com'))).toBe(
+      true
+    );
+    expect(fetchMock.mock.calls.some(([url]) => requestHostname(String(url)) === 'api.anthropic.com')).toBe(
+      false
+    );
+  });
+
+  it('does not call NVIDIA when BleuJS fails and fallback is disabled', async () => {
+    const fetchMock = vi.fn(async (url: string) => {
+      if (String(url).includes('integrate.api.nvidia.com')) {
+        return Response.json({ choices: [{ message: { content: 'Nemotron answer' } }] });
+      }
+      return Response.json({ error: 'service unavailable' }, { status: 503 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const llm = RealLLMIntegration.create({
+      bleujsKey: 'bleujs_sk_test',
+      nvidiaKey: 'nvapi_test',
+      allowFallback: false,
+    });
+
+    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('integrate.api.nvidia.com'))).toBe(
+      false
+    );
+  });
 });

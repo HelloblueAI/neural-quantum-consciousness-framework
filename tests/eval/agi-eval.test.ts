@@ -21,6 +21,7 @@ describe('Autonomous Reasoning Lab eval suite', () => {
     expect(EVAL_TASKS.length).toBeGreaterThanOrEqual(6);
     expect(EVAL_TASKS.some((t) => t.id === 'xor-learning')).toBe(true);
     expect(EVAL_TASKS.some((t) => t.id === 'logic-puzzle')).toBe(true);
+    expect(EVAL_TASKS.some((t) => t.id === 'semantic-retrieval')).toBe(true);
   });
 
   it('runs offline eval tasks without LLM', async () => {
@@ -46,5 +47,9 @@ describe('Autonomous Reasoning Lab eval suite', () => {
     expect(puzzle?.passed).toBe(true);
     expect(puzzle?.skipped).toBeFalsy();
     expect(puzzle?.message).toContain('Beta→Reasoning');
+
+    const retrieval = result.results.find((r) => r.id === 'semantic-retrieval');
+    expect(retrieval?.passed).toBe(true);
+    expect(retrieval?.message).toContain('Tehran');
   }, 30_000);
 });

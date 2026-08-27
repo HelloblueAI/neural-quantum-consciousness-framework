@@ -64,8 +64,10 @@ Optional in `.dev.vars`:
 - `BLEUJS_CHAT_URL` — defaults to `https://bleujs-org.vercel.app/api/v1/chat` in
   production (avoids Worker-to-Worker timeouts). Use the same URL locally if
   `api.bleujs.org` is unreachable from Wrangler.
-- `ALLOW_LLM_FALLBACK=true` — only if you also set `ANTHROPIC_API_KEY` or
-  `OPENAI_API_KEY` and want fallback when BleuJS fails.
+- `ALLOW_LLM_FALLBACK=true` — only if you also set `NVIDIA_API_KEY`,
+  `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` and want fallback when BleuJS fails.
+- `NVIDIA_API_KEY` — Inception/NIM key. Chat fallback is Nemotron 3.5 Lightning;
+  embeddings use `nvidia/nemotron-3-embed-1b` via `NVIDIAEmbeddingProvider`.
 
 ```bash
 pnpm run worker:dev   # http://localhost:8787
@@ -77,6 +79,8 @@ For production secret management:
 
 ```bash
 npx wrangler secret put BLEUJS_API_KEY --config wrangler.toml --env production
+npx wrangler secret put NVIDIA_API_KEY --config wrangler.toml --env production
+# Then set ALLOW_LLM_FALLBACK=true in wrangler.toml [env.production.vars] to use Nemotron Lightning when BleuJS fails.
 ```
 
 ---
