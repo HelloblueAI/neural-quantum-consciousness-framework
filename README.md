@@ -1,9 +1,16 @@
 # BleuJS Reasoning Lab
 
+[![CI](https://github.com/HelloblueAI/bleujs-reasoning-lab/actions/workflows/lab-ci.yml/badge.svg)](https://github.com/HelloblueAI/bleujs-reasoning-lab/actions/workflows/lab-ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange.svg)](https://workers.cloudflare.com/)
+
 > **What it is:** an open-source TypeScript laboratory for evaluating LLM reasoning, provider routing, retrieval, tool selection, and agent orchestration.
 > **Live:** https://agi.bleujs.org · **Repo:** https://github.com/HelloblueAI/bleujs-reasoning-lab · **Worker API:** https://agi-primary.morning-star-e026.workers.dev
 
 This is an emerging, measurable reasoning lab — **not** a mature AGI framework and not a claim of machine consciousness. Every capability number the API returns is derived from measured learning-engine state, never simulated telemetry.
+
+> **Note on naming:** the project is the *reasoning lab*. The live infrastructure still uses legacy `agi.*` identifiers (custom domain `agi.bleujs.org`, Worker `agi-primary`, KV `AGI_CACHE`) that are intentionally left unchanged so production does not break. They are deployment names, not a product claim.
 
 ---
 
@@ -51,6 +58,12 @@ See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for details.
 | `POST /reason` | Answer-first reasoning via BleuJS API, with NVIDIA Nemotron Lightning → Anthropic → OpenAI fallback; simple arithmetic is answered locally |
 
 ```bash
+# Capability scores derived from the learning engine (no API key required)
+curl http://localhost:8787/capabilities
+# → {"success":true,"data":{"measured":true,"capabilities":{
+#      "reasoningQuality":0.7,"understandingDepth":0.6,"adaptability":0.65,...}}}
+
+# Answer-first reasoning; simple arithmetic is answered locally, no LLM call
 curl -X POST http://localhost:8787/reason \
   -H "Content-Type: application/json" \
   -d '{"input": "144 / 12"}'
@@ -106,8 +119,5 @@ Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). For help see [SUPPORT.m
 <div align="center">
 
 [![Live](https://img.shields.io/badge/Live-BleuJS%20Reasoning-brightgreen?style=for-the-badge)](https://agi.bleujs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange.svg)](https://workers.cloudflare.com/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 </div>
