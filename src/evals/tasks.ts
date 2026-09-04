@@ -8,11 +8,7 @@
  */
 
 export type EvalCategory =
-  | "learning"
-  | "understanding"
-  | "reasoning"
-  | "goals"
-  | "orchestration";
+  "learning" | "understanding" | "reasoning" | "goals" | "orchestration";
 
 export interface EvalTask {
   id: string;
