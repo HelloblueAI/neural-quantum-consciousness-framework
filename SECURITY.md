@@ -42,7 +42,7 @@ with you before any public fix.
 
 In scope:
 
-- The production worker (`src/primary-agi-worker.ts`) and its public API
+- The production worker (`src/worker/index.ts`) and its public API
 - Authentication, authorization, and secret handling in the lab stack
 - Dependency vulnerabilities affecting production deploys
 

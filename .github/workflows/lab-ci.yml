@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    name: Eval + unit + type-check
+  check:
+    name: Format + lint + type-check + tests + evals
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -24,17 +24,26 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run eval harness
-        run: pnpm run test:eval
+      - name: Format check
+        run: pnpm run format:check
 
-      - name: Run unit tests
-        run: pnpm run test:unit -- --run
+      - name: Lint
+        run: pnpm run lint
 
       - name: Type-check
         run: pnpm run type-check
+
+      - name: Unit tests
+        run: pnpm run test:unit -- --run
+
+      - name: Eval harness + benchmarks
+        run: pnpm run test:eval
+
+      - name: Worker bundle (dry run)
+        run: pnpm exec wrangler deploy --config wrangler.toml --dry-run --outdir dist-worker

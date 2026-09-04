@@ -1,39 +1,46 @@
 # Good first issues
 
-Starter tasks for new contributors. Pick one, comment on the issue (or open a PR referencing it), and ask questions if stuck.
-
-Create GitHub issues from these titles if they do not exist yet.
-
----
-
-## Easy (docs & tests)
-
-1. **Fix stale docs** — Search `docs/` for “consciousness 1.0”, quantum hype, or `:8080` URLs; update or mark archived.
-2. **Add eval task** — Add one logic puzzle to `src/eval/tasks.ts` with expected pass criteria in `tests/eval/`.
-3. **README API examples** — Add `GET /capabilities` curl example to README.
-4. **WAF access doc** — Expand [deployment/API_ACCESS.md](deployment/API_ACCESS.md) with screenshots or step-by-step for Cloudflare skip rules.
+Tightly scoped tasks that produce a measurable improvement. Pick one, comment on
+the issue (or open a PR referencing it), and ask questions if stuck. Run
+`pnpm run check` before opening a PR.
 
 ---
 
-## Medium (lab features)
+## Benchmarks (measurable, no API keys)
 
-5. **Phase 2: POST /goals/execute** — Wire `AutonomousGoalSystem` to run one goal via orchestrator (see [AGI_LAB_PLAN.md](AGI_LAB_PLAN.md)).
-6. **Eval baseline file** — Script to write `eval-baseline.json` from `pnpm run eval` for trend tracking.
-7. **Dashboard: eval pass rate** — Show latest `GET /eval` result on the embedded dashboard (small fetch + display).
-8. **ToolSystem: Brave Search** — Optional real web search when `BRAVE_SEARCH_API_KEY` is set (keep honest failure when missing).
+1. **Add a held-out logic puzzle with exact scoring.** Add a second constraint
+   puzzle to `src/evals/benchmarks/` with a known unique solution and exact
+   assignment checks. Acceptance: `pnpm run eval` shows the new item at 100%.
+2. **Add a retrieval query to the fixed corpus.** Extend `RETRIEVAL_QUERIES` in
+   `src/evals/benchmarks/datasets.ts` with one query, three passages, and the
+   exact expected top-1 passage. Acceptance: top-1 accuracy stays at 100%.
+3. **Record a routing fixture for a new fallback case.** Add a fixture to
+   `ROUTING_FIXTURES` and update `ROUTING_EXPECTED`. Acceptance: routing rates
+   still match exactly.
+4. **Expand the arithmetic benchmark by N items.** Add exact-answer cases
+   (decimals, negatives, large numbers) to `ARITHMETIC_ITEMS`. Acceptance: exact
+   match stays at 100%.
 
----
+## Product surface
 
-## Hard (core reasoning)
+5. **Dashboard: show last benchmark pass rate.** Read the benchmark pass rate
+   (from `src/evals/results/latest.json` or a new `GET /benchmarks` route) and
+   render it on the embedded dashboard next to the smoke `GET /eval` rate.
+6. **Optional live-LLM benchmark (skipped in CI).** Add a benchmark that calls a
+   configured provider and writes `model`, latency, and `costUsd` into the
+   result schema. It must be skipped when no API key is present.
 
-9. **Logic-first routing** — For factual queries, try `RealReasoningEngine` before LLM in `UltimateAGIOrchestrator`.
-10. **KV goal persistence** — Persist goals across requests with `AGI_STATE` binding in `wrangler.toml`.
-11. **Expand eval suite** — 5+ ARC-style or syllogism tasks that pass without LLM keys.
+## Docs & hygiene
+
+7. **API examples.** Keep the `curl` examples in `README.md` and
+   `docs/api/README.md` in sync with the actual `POST /reason` response shape.
+8. **Deployment access notes.** Expand `docs/deployment/API_ACCESS.md` with
+   step-by-step Cloudflare skip-rule instructions for the custom domain.
 
 ---
 
 ## Before you start
 
-- Read [CONTRIBUTING.md](../CONTRIBUTING.md)
-- Run `pnpm run test:eval && pnpm run test:unit`
-- Do **not** modify `src/archive/` unless fixing import paths for reference builds
+- Read [CONTRIBUTING.md](../CONTRIBUTING.md).
+- Run `pnpm run check` locally; CI enforces the same gate.
+- Keep claims measurable — describe what a change proves, not what it "feels" like.

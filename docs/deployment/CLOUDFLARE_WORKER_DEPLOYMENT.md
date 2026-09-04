@@ -1,158 +1,54 @@
-# 🚀 Hybrid Reasoning System Cloudflare Worker Deployment Guide
+# Cloudflare Worker deployment
 
-## ✅ **WORKER SUCCESSFULLY DEPLOYED**
+The lab is a single Cloudflare Worker (`agi-primary`) defined by
+[`wrangler.toml`](../../wrangler.toml) with entry point `src/worker/index.ts`.
 
-Your Hybrid Reasoning System has been successfully deployed to Cloudflare Workers!
-
-**Current Status:**
-- ✅ Worker deployed and operational
-- ✅ All endpoints working correctly
-- 🔄 Custom domain configuration pending
-
----
-
-## 🌐 **Current Access**
-
-Your Hybrid Reasoning System is currently accessible at:
-**https://agi-bleujs.morning-star-e026.workers.dev**
-
-### Tested Endpoints:
-- ✅ **Health**: `GET https://agi-bleujs.morning-star-e026.workers.dev/health`
-- ✅ **Status**: `GET https://agi-bleujs.morning-star-e026.workers.dev/status`
-- ✅ **Consciousness**: `GET https://agi-bleujs.morning-star-e026.workers.dev/consciousness`
-- ✅ **Reasoning**: `POST https://agi-bleujs.morning-star-e026.workers.dev/reason`
-- ✅ **Learning**: `POST https://agi-bleujs.morning-star-e026.workers.dev/learn`
-- ✅ **Creation**: `POST https://agi-bleujs.morning-star-e026.workers.dev/create`
-
----
-
-## 🔧 **Configure Custom Domain (agi.bleujs.org)**
-
-To complete the deployment with your custom domain, follow these steps:
-
-### Option 1: Cloudflare Dashboard (Recommended)
-
-1. **Login to Cloudflare Dashboard**
-   - Go to [dash.cloudflare.com](https://dash.cloudflare.com)
-   - Login with your account (info@helloblue.ai)
-
-2. **Navigate to bleujs.org Zone**
-   - Select the `bleujs.org` domain from your dashboard
-   - Go to the **DNS** tab
-
-3. **Add CNAME Record**
-   - Click **Add record**
-   - **Type**: CNAME
-   - **Name**: `agi`
-   - **Target**: `agi-bleujs.morning-star-e026.workers.dev`
-   - **Proxy status**: Proxied (orange cloud)
-   - Click **Save**
-
-4. **Configure Worker Routes**
-   - Go to the **Workers & Pages** tab
-   - Click **Add route**
-   - **Route**: `agi.bleujs.org/*`
-   - **Worker**: `agi-bleujs`
-   - Click **Save**
-
-### Option 2: Command Line (If you have API token)
-
-If you have a Cloudflare API token with zone permissions:
+## Deploy
 
 ```bash
-# Set your API token
-export CLOUDFLARE_API_TOKEN="your-api-token-here"
-
-# Run the deployment script
-./deploy/deploy-cloudflare-worker.sh
+pnpm install
+pnpm run check                 # optional: run the full gate first
+pnpm run deploy:worker:prod    # wrangler deploy --env production
 ```
 
----
-
-## 🧪 **Test Your Deployment**
-
-Once the custom domain is configured, test it with:
+Staging and dry-run variants:
 
 ```bash
-# Health check
-curl https://agi.bleujs.org/health
-
-# Reasoning test
-curl -X POST https://agi.bleujs.org/reason \
-  -H "Content-Type: application/json" \
-  -d '{"input": "What is the meaning of life?"}'
-
-# Consciousness check
-curl https://agi.bleujs.org/consciousness
+pnpm run deploy:worker:staging
+pnpm run deploy:worker:dry-run
 ```
 
----
+## Secrets
 
-## 📊 **Current System Status**
+Set provider keys as Wrangler secrets (never commit them):
 
-### ✅ **Deployed Components**
-- **Worker**: `agi-bleujs` (Version: 330fb09c-a830-4037-bf7c-080fdb7edd7e)
-- **Runtime**: Cloudflare Workers
-- **Language**: TypeScript
-- **Framework**: Custom Hybrid Reasoning System Engine
-
-### ✅ **Working Features**
-- **Reasoning Engine**: Basic logical analysis and pattern recognition
-- **Learning Engine**: Experience processing and pattern identification
-- **Creativity Engine**: Solution generation and innovation
-- **Consciousness Simulation**: Self-awareness and meta-cognition
-- **Health Monitoring**: System status and component health
-- **API Interface**: RESTful endpoints with CORS support
-
-### 🔄 **Pending Configuration**
-- **Custom Domain**: `agi.bleujs.org` (DNS and route configuration)
-- **SSL Certificate**: Automatic with Cloudflare
-- **CDN**: Global edge network
-
----
-
-## 🎯 **Next Steps**
-
-1. **Complete Custom Domain Setup** (Manual via dashboard)
-2. **Test All Endpoints** with custom domain
-3. **Monitor Performance** and logs
-4. **Scale as Needed** (Cloudflare Workers auto-scale)
-
----
-
-## 🚀 **Deployment Commands**
-
-### Update Worker
 ```bash
-npm run build:worker
-npx wrangler deploy
+npx wrangler secret put BLEUJS_API_KEY --env production
+# optional fallbacks (require ALLOW_LLM_FALLBACK=true in wrangler.toml vars)
+npx wrangler secret put NVIDIA_API_KEY --env production
+npx wrangler secret put ANTHROPIC_API_KEY --env production
+npx wrangler secret put OPENAI_API_KEY --env production
 ```
 
-### View Logs
+## Verify endpoints
+
 ```bash
-npx wrangler tail agi-bleujs
+BASE=https://agi-primary.morning-star-e026.workers.dev
+curl $BASE/health
+curl $BASE/metrics
+curl $BASE/capabilities
+curl $BASE/eval
+curl -X POST $BASE/reason -H "Content-Type: application/json" -d '{"input":"2 + 2"}'
 ```
 
-### Check Status
+The custom domain `agi.bleujs.org` serves the same Worker (see
+[CLOUDFLARE_DOMAIN_SETUP.md](CLOUDFLARE_DOMAIN_SETUP.md)). If `curl` against the
+custom domain returns a bot challenge, apply the WAF skip rule in
+[API_ACCESS.md](API_ACCESS.md).
+
+## Logs
+
 ```bash
-npx wrangler deployments list
+pnpm run worker:tail            # wrangler tail
+npx wrangler deployments list --env production
 ```
-
----
-
-## 🎉 **Success!**
-
-Your Hybrid Reasoning System is now running on Cloudflare Workers with:
-- ✅ **Global Edge Network**: Fast response times worldwide
-- ✅ **Auto-scaling**: Handles traffic spikes automatically
-- ✅ **DDoS Protection**: Built-in security
-- ✅ **SSL/TLS**: Automatic HTTPS
-- ✅ **Zero Downtime**: Seamless deployments
-
-**Your Hybrid Reasoning System is ready to serve the world! 🌍**
-
----
-
-*Deployment completed by: World-Class Software Engineer*
-*Status: ✅ WORKER DEPLOYED - CUSTOM DOMAIN PENDING*
-*Hybrid Reasoning System: 🟢 OPERATIONAL* 
