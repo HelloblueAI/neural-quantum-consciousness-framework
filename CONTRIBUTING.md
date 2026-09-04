@@ -1,6 +1,8 @@
 # Contributing to BleuJS Reasoning Lab
 
-Thank you for helping improve this project. BleuJS Reasoning Lab is an **MIT-licensed research lab** for measurable reasoning—not a claim of AGI or machine consciousness.
+Thank you for helping improve this project. BleuJS Reasoning Lab is an
+**MIT-licensed lab** for measurable LLM reasoning, routing, retrieval, tool
+selection, and agent orchestration — not a claim of AGI or machine consciousness.
 
 **Repository:** https://github.com/HelloblueAI/bleujs-reasoning-lab
 
@@ -10,159 +12,92 @@ Thank you for helping improve this project. BleuJS Reasoning Lab is an **MIT-lic
 
 | I want to… | Start here |
 |------------|------------|
-| Understand the roadmap | [docs/AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md) |
-| Run the live worker locally | [README.md](README.md#quick-start) |
+| Understand the roadmap | [docs/LAB_PLAN.md](docs/LAB_PLAN.md) |
+| Run the Worker locally | [README.md](README.md#quick-start) |
 | Find starter tasks | [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md) |
-| See what not to touch | [src/archive/README.md](src/archive/README.md) |
+| Learn the layout | [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) |
 
-**Production code path (edit here):**
+**Where the code lives:**
 
-- `src/primary-agi-worker.ts` — Cloudflare Worker + dashboard
-- `src/lab/` — honest metrics, API payloads
-- `src/eval/` — benchmark tasks and runner
-- `src/core/RealLLMIntegration.ts`, `UltimateAGIOrchestrator.ts` — reasoning pipeline
-
-**Do not deploy or extend** without good reason: `src/archive/` (legacy workers and consciousness engines).
+- `src/worker/index.ts` — Cloudflare Worker (HTTP API + dashboard)
+- `src/reasoning/` — `ReasoningOrchestrator` and the engines it coordinates
+- `src/routing/` — LLM provider integration, prompt shaping, routing metrics
+- `src/retrieval/` — embedding providers + semantic ranking
+- `src/metrics/` — capability/request metrics and API payloads
+- `src/evals/` — smoke evaluations and reproducible benchmarks
 
 ---
 
 ## Development setup
 
-**Requirements:** Node.js 20+, [pnpm](https://pnpm.io/) 8+
+**Requirements:** Node.js 20+, [pnpm](https://pnpm.io/) 10+
 
 ```bash
 git clone https://github.com/HelloblueAI/bleujs-reasoning-lab.git
 cd bleujs-reasoning-lab
 pnpm install
+pnpm run check   # format + lint + type-check + unit tests + eval harness
 ```
 
-### Verify your environment
-
-```bash
-pnpm run test:eval    # eval harness (required for PRs)
-pnpm run test:unit    # unit tests
-pnpm run type-check   # TypeScript (archive paths excluded)
-pnpm run eval         # CLI eval suite
-pnpm run worker:dev   # local worker (Wrangler)
-```
-
-`pnpm run type-check` excludes `src/archive/`; focus on the primary worker path
-when fixing type errors.
+`pnpm run check` is the single gate CI enforces. Run it before opening a PR.
 
 ### LLM features locally
 
-Production uses **BleuJS** as the primary LLM (`ALLOW_LLM_FALLBACK=false`). To
-exercise `/reason` and the dashboard locally:
+Evaluations and benchmarks run **offline** without API keys. To exercise
+`/reason` and the dashboard against a live provider:
 
 ```bash
 cp .dev.vars.example .dev.vars
-# Edit .dev.vars — set BLEUJS_API_KEY (required for live reasoning)
-```
-
-Optional in `.dev.vars`:
-
-- `BLEUJS_CHAT_URL` — defaults to `https://bleujs-org.vercel.app/api/v1/chat` in
-  production (avoids Worker-to-Worker timeouts). Use the same URL locally if
-  `api.bleujs.org` is unreachable from Wrangler.
-- `ALLOW_LLM_FALLBACK=true` — only if you also set `NVIDIA_API_KEY`,
-  `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` and want fallback when BleuJS fails.
-- `NVIDIA_API_KEY` — Inception/NIM key. Chat fallback is Nemotron 3.5 Lightning;
-  embeddings use `nvidia/nemotron-3-embed-1b` via `NVIDIAEmbeddingProvider`.
-
-```bash
+# set BLEUJS_API_KEY (primary). Optional fallbacks require ALLOW_LLM_FALLBACK=true
 pnpm run worker:dev   # http://localhost:8787
-```
-
-Eval tests (`pnpm run test:eval`) run **offline** without API keys.
-
-For production secret management:
-
-```bash
-npx wrangler secret put BLEUJS_API_KEY --config wrangler.toml --env production
-npx wrangler secret put NVIDIA_API_KEY --config wrangler.toml --env production
-# Then set ALLOW_LLM_FALLBACK=true in wrangler.toml [env.production.vars] to use Nemotron Lightning when BleuJS fails.
 ```
 
 ---
 
 ## Making changes
 
-1. **Fork** the repo and create a branch from `main`:
-   - `feat/short-description` — new behavior
-   - `fix/short-description` — bug fixes
-   - `docs/short-description` — documentation only
-   - `chore/short-description` — tooling, deps, CI
-
-2. **Keep scope focused** — one logical change per PR. Avoid reviving archived consciousness/quantum modules.
-
+1. **Fork** and branch from `main` (`feat/…`, `fix/…`, `docs/…`, `chore/…`).
+2. **Keep scope focused** — one logical change per PR.
 3. **Add or update tests** when behavior changes:
-   - Eval tasks: `src/eval/tasks.ts`, `tests/eval/`
-   - Lab logic: `tests/unit/`
-   - Prefer measurable assertions over vanity metrics.
-
-4. **Match existing style** — TypeScript strict mode, minimal comments, no simulated API telemetry.
-
-5. **Open a pull request** against `main` and fill out the PR template.
-
----
+   - Smoke evaluations: `src/evals/tasks.ts`, `src/evals/runner.ts`
+   - Benchmarks: `src/evals/benchmarks/`, `tests/eval/`
+   - Unit logic: `tests/unit/`
+   - Prefer exact, measurable assertions.
+4. **Match existing style** — TypeScript strict mode, no simulated telemetry.
+5. **Open a pull request** against `main` and fill out the template.
 
 ## What we welcome
 
-- Eval tasks and pass-rate improvements
+- New benchmark items with fixed datasets and exact scoring
 - Honest metrics and API clarity (`/capabilities`, `/metrics`, `/reason`)
-- Autonomous goal loop (Phase 2 in [AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md))
-- Documentation, deployment guides, contributor experience
-- Bug fixes in the **primary worker path**
+- The autonomous goal execution loop (see [docs/LAB_PLAN.md](docs/LAB_PLAN.md))
+- Documentation and contributor-experience improvements
 
 ## What we will likely decline
 
-- New “consciousness”, “quantum”, or fake AGI marketing in live APIs
-- New worker variants without clearing the consolidation plan
+- "Consciousness", "quantum", or AGI marketing in code, APIs, or docs
 - `Math.random()` or hardcoded capability scores in production responses
-- Large refactors unrelated to an open issue or plan phase
+- Large refactors unrelated to an open issue or roadmap phase
 
 ---
 
 ## CI
 
-Pull requests run [.github/workflows/lab-ci.yml](.github/workflows/lab-ci.yml):
-
-- `pnpm run test:eval`
-- `pnpm run test:unit`
-- `pnpm run type-check`
-
-Fix failing checks before requesting review.
-
----
+Pull requests run [.github/workflows/lab-ci.yml](.github/workflows/lab-ci.yml),
+which executes `format:check`, `lint`, `type-check`, unit tests, the eval/benchmark
+harness, and a Worker bundle dry-run. Fix failing checks before requesting review.
 
 ## Deployment
 
-**Only maintainers** deploy to production:
-
-```bash
-pnpm run deploy:worker:prod
-```
-
-Contributors do not need Cloudflare access to submit PRs. Describe manual test steps in the PR if you exercised `worker:dev`.
-
----
-
-## Support
-
-Questions, bugs, and security reporting channels are listed in [SUPPORT.md](SUPPORT.md).
-
----
+**Only maintainers** deploy to production (`pnpm run deploy:worker:prod`).
+Contributors do not need Cloudflare access to submit PRs.
 
 ## Code of conduct
 
-This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Be
-respectful and constructive. Critique code and ideas, not people. We are
-building a credible lab others can trust.
-
-Report conduct issues to **info@helloblue.ai**.
-
----
+This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report
+conduct issues to **info@helloblue.ai**.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+By contributing, you agree that your contributions will be licensed under the
+[MIT License](LICENSE).

@@ -1,19 +1,19 @@
-import { describe, expect, it, beforeEach } from 'vitest';
+import { describe, expect, it, beforeEach } from "vitest";
 import {
   getLlmProviderCounters,
   recordReasonProvider,
   resetRequestCountersForTests,
-} from '@/lab/requestCounters';
+} from "@/metrics/requestCounters";
 
-describe('requestCounters llmRouting', () => {
+describe("requestCounters llmRouting", () => {
   beforeEach(() => {
     resetRequestCountersForTests();
   });
 
-  it('tracks provider hits', () => {
-    recordReasonProvider('bleujs');
-    recordReasonProvider('bleujs');
-    recordReasonProvider('anthropic');
+  it("tracks provider hits", () => {
+    recordReasonProvider("bleujs");
+    recordReasonProvider("bleujs");
+    recordReasonProvider("anthropic");
 
     expect(getLlmProviderCounters()).toMatchObject({
       bleujs: 2,
@@ -26,17 +26,17 @@ describe('requestCounters llmRouting', () => {
     });
   });
 
-  it('computes fallbackRate as non-bleujs share of llm calls', () => {
-    recordReasonProvider('bleujs');
-    recordReasonProvider('nvidia');
-    recordReasonProvider('anthropic');
-    recordReasonProvider('openai');
+  it("computes fallbackRate as non-bleujs share of llm calls", () => {
+    recordReasonProvider("bleujs");
+    recordReasonProvider("nvidia");
+    recordReasonProvider("anthropic");
+    recordReasonProvider("openai");
 
     expect(getLlmProviderCounters().fallbackRate).toBeCloseTo(3 / 4);
   });
 
-  it('returns zero fallbackRate when no llm calls recorded', () => {
-    recordReasonProvider('local');
+  it("returns zero fallbackRate when no llm calls recorded", () => {
+    recordReasonProvider("local");
     expect(getLlmProviderCounters().fallbackRate).toBe(0);
   });
 });

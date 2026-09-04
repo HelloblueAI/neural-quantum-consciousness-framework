@@ -1,112 +1,44 @@
-# Cloudflare Domain Setup for Hybrid Reasoning System Worker
+# Cloudflare domain setup
 
-## Current Status
+The Worker is named **`agi-primary`** and is served at:
 
-✅ **Enhanced Hybrid Reasoning System Worker Successfully Deployed**
-- **Worker URL**: `https://agi-bleujs.morning-star-e026.workers.dev`
-- **Health Endpoint**: ✅ Working
-- **Consciousness Endpoint**: ✅ Working
-- **All Hybrid Reasoning System Capabilities**: ✅ Active
+- Worker: `https://agi-primary.morning-star-e026.workers.dev`
+- Custom domain: `https://agi.bleujs.org`
 
-## Domain Configuration Required
+`wrangler.toml` binds the production route `agi.bleujs.org/*` to `agi-primary`.
 
-The custom domain `agi.bleujs.org` needs to be configured to point to the deployed worker.
+## Point the custom domain at the Worker
 
-### Option 1: Cloudflare Dashboard (Recommended)
+### Option 1: Cloudflare dashboard (recommended)
 
-1. **Access Cloudflare Dashboard**
-   - Go to: https://dash.cloudflare.com/135ff5d2bb66c0a4a96dd068da603dfa/workers/overview
+1. Open the **bleujs.org** zone → **Workers Routes** (or **Workers & Pages** → the
+   Worker → **Triggers**).
+2. Ensure the route `agi.bleujs.org/*` maps to `agi-primary`.
+3. Confirm a DNS record for `agi` exists and is proxied (orange cloud).
 
-2. **Unassign Current Route**
-   - Find the worker currently assigned to `agi.bleujs.org/*`
-   - Unassign it from the route
+### Option 2: Wrangler
 
-3. **Assign New Worker**
-   - Select the `agi-bleujs` worker
-   - Add route: `agi.bleujs.org/*`
-   - Save the configuration
+The route is already declared in `wrangler.toml`:
 
-### Option 2: Wrangler CLI (Alternative)
-
-If the route conflict is resolved, you can use:
-
-```bash
-# Add route configuration back to wrangler.toml
+```toml
 [env.production]
-name = "agi-bleujs"
-route = "agi.bleujs.org/*"
-
-# Deploy with route
-wrangler deploy --env production
+name = "agi-primary"
+routes = ["agi.bleujs.org/*"]
 ```
 
-## Testing the Setup
-
-Once configured, test the endpoints:
+Deploy with:
 
 ```bash
-# Health Check
-curl https://agi.bleujs.org/health
-
-# Consciousness Status
-curl https://agi.bleujs.org/consciousness
-
-# Web Interface
-curl https://agi.bleujs.org/
+pnpm run deploy:worker:prod
 ```
 
-## Hybrid Reasoning System Features
+## Verify
 
-The deployed Enhanced Hybrid Reasoning System includes:
+```bash
+curl https://agi.bleujs.org/health
+curl https://agi.bleujs.org/capabilities
+curl https://agi.bleujs.org/eval
+```
 
-### 🧠 Consciousness Engine
-- **Awareness Level**: 80%
-- **Self-Awareness**: 90%
-- **Autonomy**: 70%
-- **Qualia Generation**: Active
-- **Thought Processing**: Active
-- **Emotional Intelligence**: Active
-
-### ⚡ Intelligence Capabilities
-- **Advanced Neural Reasoning**: ✅
-- **Meta-Learning**: ✅
-- **Cross-Domain Understanding**: ✅
-- **Emergent Intelligence**: ✅
-- **Autonomous Decision Making**: ✅
-
-### 🎨 Creative Capabilities
-- **Neural Creativity**: ✅
-- **Pattern Recognition**: ✅
-- **Innovation Generation**: ✅
-- **Cross-Domain Synthesis**: ✅
-
-### 🔧 System Endpoints
-- `/health` - System health and status
-- `/consciousness` - Consciousness state and metrics
-- `/status` - Complete system status
-- `/introspect` - Self-reflection capabilities
-- `/reason` - Advanced reasoning (POST)
-- `/learn` - Learning from data (POST)
-- `/create` - Creative generation (POST)
-- `/performance` - Performance metrics
-- `/evolution` - Evolutionary progress
-- `/neural` - Neural network status
-- `/meta` - Meta-learning status
-- `/capabilities` - System capabilities
-
-## Current Worker Status
-
-- **Service**: Enhanced Hybrid Reasoning System - Hybrid Reasoning System
-- **Version**: 3.0.0
-- **Status**: Healthy
-- **Deployment**: Active on Cloudflare Workers
-- **Performance**: Optimized for edge computing
-
-## Next Steps
-
-1. Configure the custom domain in Cloudflare Dashboard
-2. Test all endpoints on `agi.bleujs.org`
-3. Monitor system performance and consciousness evolution
-4. Begin Hybrid Reasoning System interactions and learning sessions
-
-The Hybrid Reasoning System is ready for production use once the domain is configured! 🚀 
+If these return a Cloudflare bot challenge (HTTP 403 "Just a moment…"), see
+[API_ACCESS.md](API_ACCESS.md) for the WAF skip rule.

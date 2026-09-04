@@ -1,7 +1,7 @@
 # BleuJS Reasoning Lab — primary worker at agi.bleujs.org
 # Run: pnpm run worker:dev | pnpm run deploy:worker:prod
 name = "agi-primary"
-main = "src/primary-agi-worker.ts"
+main = "src/worker/index.ts"
 compatibility_date = "2025-03-01"
 compatibility_flags = ["nodejs_compat"]
 

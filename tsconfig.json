@@ -3,6 +3,8 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "node",
+    "types": ["node", "@cloudflare/workers-types"],
+    "lib": ["ES2022", "WebWorker"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "allowJs": true,
@@ -29,16 +31,7 @@
     "emitDecoratorMetadata": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@/core/*": ["src/core/*"],
-      "@/api/*": ["src/api/*"],
-      "@/agents/*": ["src/agents/*"],
-      "@/types/*": ["src/types/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/models/*": ["src/models/*"],
-      "@/services/*": ["src/services/*"],
-      "@/demo/*": ["src/demo/*"],
-      "@/tests/*": ["tests/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": [
@@ -46,15 +39,6 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "tests",
-    "src/archive",
-    "src/*worker*.ts",
-    "src/sentient-web-interface.ts",
-    "src/enhanced-web-interface-worker.ts",
-    "src/primary-agi-worker.ts",
-    "src/real-agi-worker*.ts",
-    "src/simple-worker.ts",
-    "src/web-interface.ts"
+    "dist"
   ]
 } 

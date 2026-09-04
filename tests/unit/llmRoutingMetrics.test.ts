@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from "vitest";
 import {
   buildLlmRoutingPayload,
   emptyLlmRoutingCounts,
   readLlmRoutingFromKv,
   recordLlmRoutingInKv,
-} from '@/lab/llmRoutingMetrics';
+} from "@/routing/llmRoutingMetrics";
 
 function createMockKv(initial?: Record<string, string>) {
   const store = new Map(Object.entries(initial ?? {}));
@@ -13,7 +13,7 @@ function createMockKv(initial?: Record<string, string>) {
     get: async (key: string, type?: string) => {
       const value = store.get(key);
       if (!value) return null;
-      return type === 'json' ? JSON.parse(value) : value;
+      return type === "json" ? JSON.parse(value) : value;
     },
     put: async (key: string, value: string) => {
       store.set(key, value);
@@ -21,25 +21,25 @@ function createMockKv(initial?: Record<string, string>) {
   } as unknown as KVNamespace;
 }
 
-describe('llmRoutingMetrics', () => {
-  it('builds fallbackRate from counts', () => {
+describe("llmRoutingMetrics", () => {
+  it("builds fallbackRate from counts", () => {
     const payload = buildLlmRoutingPayload(
       { bleujs: 3, nvidia: 1, anthropic: 1, openai: 0, local: 2, none: 0 },
-      'global'
+      "global",
     );
 
     expect(payload).toMatchObject({
       llmTotal: 5,
       fallbackRate: 0.4,
-      scope: 'global',
+      scope: "global",
     });
   });
 
-  it('persists provider counts in KV', async () => {
+  it("persists provider counts in KV", async () => {
     const kv = createMockKv();
-    await recordLlmRoutingInKv(kv, 'bleujs');
-    await recordLlmRoutingInKv(kv, 'nvidia');
-    await recordLlmRoutingInKv(kv, 'anthropic');
+    await recordLlmRoutingInKv(kv, "bleujs");
+    await recordLlmRoutingInKv(kv, "nvidia");
+    await recordLlmRoutingInKv(kv, "anthropic");
 
     const counts = await readLlmRoutingFromKv(kv);
     expect(counts).toEqual({
@@ -50,9 +50,9 @@ describe('llmRoutingMetrics', () => {
     });
   });
 
-  it('defaults missing nvidia counts from older KV payloads', async () => {
+  it("defaults missing nvidia counts from older KV payloads", async () => {
     const kv = createMockKv({
-      'metrics:llmRouting': JSON.stringify({
+      "metrics:llmRouting": JSON.stringify({
         bleujs: 2,
         anthropic: 1,
         openai: 0,

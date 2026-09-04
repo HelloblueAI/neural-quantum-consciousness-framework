@@ -1,184 +1,222 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { RealLLMIntegration } from '../../src/core/RealLLMIntegration';
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { RealLLMIntegration } from "@/routing/RealLLMIntegration";
 
 function requestHostname(url: string): string {
   return new URL(url).hostname;
 }
 
-describe('RealLLMIntegration BleuJS', () => {
+describe("RealLLMIntegration BleuJS", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
   });
 
-  it('calls BleuJS chat API first when key is set', async () => {
+  it("calls BleuJS chat API first when key is set", async () => {
     const fetchMock = vi.fn(async () =>
       Response.json({
-        choices: [{ message: { content: 'Tehran is in Iran.' } }],
-      })
+        choices: [{ message: { content: "Tehran is in Iran." } }],
+      }),
     );
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
-    const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
-    const result = await llm.answerQuestion('where is tehran', {
-      systemPrompt: 'Be concise.',
+    const llm = new RealLLMIntegration(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "bleujs_sk_test",
+    );
+    const result = await llm.answerQuestion("where is tehran", {
+      systemPrompt: "Be concise.",
       maxTokens: 256,
     });
 
-    expect(result.answer).toBe('Tehran is in Iran.');
-    expect(result.provider).toBe('bleujs');
+    expect(result.answer).toBe("Tehran is in Iran.");
+    expect(result.provider).toBe("bleujs");
     expect(fetchMock).toHaveBeenCalledOnce();
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe('https://api.bleujs.org/api/v1/chat');
+    expect(url).toBe("https://api.bleujs.org/api/v1/chat");
     expect(init.headers).toMatchObject({
-      Authorization: 'Bearer bleujs_sk_test',
+      Authorization: "Bearer bleujs_sk_test",
     });
   });
 
-  it('uses a custom BleuJS chat URL when provided', async () => {
+  it("uses a custom BleuJS chat URL when provided", async () => {
     const fetchMock = vi.fn(async () =>
       Response.json({
-        choices: [{ message: { content: 'ok' } }],
-      })
+        choices: [{ message: { content: "ok" } }],
+      }),
     );
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
     const llm = new RealLLMIntegration(
       undefined,
       undefined,
       undefined,
       undefined,
-      'bleujs_sk_test',
-      'https://bleujs-org.vercel.app/api/v1/chat'
+      "bleujs_sk_test",
+      "https://bleujs-org.vercel.app/api/v1/chat",
     );
-    await llm.answerQuestion('hi');
+    await llm.answerQuestion("hi");
 
-    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('bleujs-org.vercel.app');
+    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe(
+      "bleujs-org.vercel.app",
+    );
   });
 
-  it('is available when only BleuJS key is configured', () => {
-    const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
+  it("is available when only BleuJS key is configured", () => {
+    const llm = new RealLLMIntegration(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "bleujs_sk_test",
+    );
     expect(llm.isAvailable()).toBe(true);
-    expect(llm.getAvailableModels()).toContain('bleujs-chat');
+    expect(llm.getAvailableModels()).toContain("bleujs-chat");
   });
 
-  it('does not fall back to Anthropic when fallback is disabled', async () => {
+  it("does not fall back to Anthropic when fallback is disabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (requestHostname(url) === 'api.anthropic.com') {
-        return Response.json({ content: [{ text: 'Claude answer' }] });
+      if (requestHostname(url) === "api.anthropic.com") {
+        return Response.json({ content: [{ text: "Claude answer" }] });
       }
-      return Response.json({ error: 'service unavailable' }, { status: 503 });
+      return Response.json({ error: "service unavailable" }, { status: 503 });
     });
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
     const llm = new RealLLMIntegration(
-      'anthropic_sk_test',
+      "anthropic_sk_test",
       undefined,
       undefined,
       undefined,
-      'bleujs_sk_test',
+      "bleujs_sk_test",
       undefined,
-      false
+      false,
     );
 
-    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
+    await expect(llm.answerQuestion("hi")).rejects.toThrow(
+      /BleuJS API error: 503/,
+    );
     expect(fetchMock).toHaveBeenCalledTimes(5);
-    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe('api.bleujs.org');
+    expect(requestHostname((fetchMock.mock.calls[0] as [string])[0])).toBe(
+      "api.bleujs.org",
+    );
   });
 
-  it('falls back to Anthropic when fallback is enabled', async () => {
+  it("falls back to Anthropic when fallback is enabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (requestHostname(url) === 'api.anthropic.com') {
-        return Response.json({ content: [{ text: 'Claude answer' }] });
+      if (requestHostname(url) === "api.anthropic.com") {
+        return Response.json({ content: [{ text: "Claude answer" }] });
       }
-      return Response.json({ error: 'service unavailable' }, { status: 503 });
+      return Response.json({ error: "service unavailable" }, { status: 503 });
     });
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
     const llm = new RealLLMIntegration(
-      'anthropic_sk_test',
+      "anthropic_sk_test",
       undefined,
       undefined,
       undefined,
-      'bleujs_sk_test',
+      "bleujs_sk_test",
       undefined,
-      true
+      true,
     );
 
-    const result = await llm.answerQuestion('hi');
-    expect(result.provider).toBe('anthropic');
-    expect(result.answer).toBe('Claude answer');
+    const result = await llm.answerQuestion("hi");
+    expect(result.provider).toBe("anthropic");
+    expect(result.answer).toBe("Claude answer");
     expect(fetchMock).toHaveBeenCalledTimes(6);
   });
 
-  it('does not retry BleuJS on non-retryable HTTP errors', async () => {
+  it("does not retry BleuJS on non-retryable HTTP errors", async () => {
     const fetchMock = vi.fn(async () =>
-      Response.json({ error: 'invalid key' }, { status: 401 })
+      Response.json({ error: "invalid key" }, { status: 401 }),
     );
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
-    const llm = new RealLLMIntegration(undefined, undefined, undefined, undefined, 'bleujs_sk_test');
+    const llm = new RealLLMIntegration(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "bleujs_sk_test",
+    );
 
-    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 401/);
+    await expect(llm.answerQuestion("hi")).rejects.toThrow(
+      /BleuJS API error: 401/,
+    );
     expect(fetchMock).toHaveBeenCalledOnce();
   });
 
-  it('is available when only NVIDIA key is configured', () => {
-    const llm = RealLLMIntegration.create({ nvidiaKey: 'nvapi_test' });
+  it("is available when only NVIDIA key is configured", () => {
+    const llm = RealLLMIntegration.create({ nvidiaKey: "nvapi_test" });
     expect(llm.isAvailable()).toBe(true);
-    expect(llm.getAvailableModels()).toContain('nvidia/nemotron-3.5-lightning-30b-a3b');
+    expect(llm.getAvailableModels()).toContain(
+      "nvidia/nemotron-3.5-lightning-30b-a3b",
+    );
   });
 
-  it('falls back to NVIDIA Lightning before Anthropic when fallback is enabled', async () => {
+  it("falls back to NVIDIA Lightning before Anthropic when fallback is enabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (url.includes('integrate.api.nvidia.com')) {
+      if (url.includes("integrate.api.nvidia.com")) {
         return Response.json({
-          choices: [{ message: { content: 'Nemotron answer' } }],
+          choices: [{ message: { content: "Nemotron answer" } }],
         });
       }
-      if (requestHostname(url) === 'api.anthropic.com') {
-        return Response.json({ content: [{ text: 'Claude answer' }] });
+      if (requestHostname(url) === "api.anthropic.com") {
+        return Response.json({ content: [{ text: "Claude answer" }] });
       }
-      return Response.json({ error: 'service unavailable' }, { status: 503 });
+      return Response.json({ error: "service unavailable" }, { status: 503 });
     });
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
     const llm = RealLLMIntegration.create({
-      bleujsKey: 'bleujs_sk_test',
-      nvidiaKey: 'nvapi_test',
-      anthropicKey: 'anthropic_sk_test',
+      bleujsKey: "bleujs_sk_test",
+      nvidiaKey: "nvapi_test",
+      anthropicKey: "anthropic_sk_test",
       allowFallback: true,
     });
 
-    const result = await llm.answerQuestion('hi');
-    expect(result.provider).toBe('nvidia');
-    expect(result.answer).toBe('Nemotron answer');
-    expect(result.model).toBe('nvidia/nemotron-3.5-lightning-30b-a3b');
-    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('integrate.api.nvidia.com'))).toBe(
-      true
-    );
-    expect(fetchMock.mock.calls.some(([url]) => requestHostname(String(url)) === 'api.anthropic.com')).toBe(
-      false
-    );
+    const result = await llm.answerQuestion("hi");
+    expect(result.provider).toBe("nvidia");
+    expect(result.answer).toBe("Nemotron answer");
+    expect(result.model).toBe("nvidia/nemotron-3.5-lightning-30b-a3b");
+    expect(
+      fetchMock.mock.calls.some(([url]) =>
+        String(url).includes("integrate.api.nvidia.com"),
+      ),
+    ).toBe(true);
+    expect(
+      fetchMock.mock.calls.some(
+        ([url]) => requestHostname(String(url)) === "api.anthropic.com",
+      ),
+    ).toBe(false);
   });
 
-  it('does not call NVIDIA when BleuJS fails and fallback is disabled', async () => {
+  it("does not call NVIDIA when BleuJS fails and fallback is disabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (String(url).includes('integrate.api.nvidia.com')) {
-        return Response.json({ choices: [{ message: { content: 'Nemotron answer' } }] });
+      if (String(url).includes("integrate.api.nvidia.com")) {
+        return Response.json({
+          choices: [{ message: { content: "Nemotron answer" } }],
+        });
       }
-      return Response.json({ error: 'service unavailable' }, { status: 503 });
+      return Response.json({ error: "service unavailable" }, { status: 503 });
     });
-    vi.stubGlobal('fetch', fetchMock);
+    vi.stubGlobal("fetch", fetchMock);
 
     const llm = RealLLMIntegration.create({
-      bleujsKey: 'bleujs_sk_test',
-      nvidiaKey: 'nvapi_test',
+      bleujsKey: "bleujs_sk_test",
+      nvidiaKey: "nvapi_test",
       allowFallback: false,
     });
 
-    await expect(llm.answerQuestion('hi')).rejects.toThrow(/BleuJS API error: 503/);
-    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('integrate.api.nvidia.com'))).toBe(
-      false
+    await expect(llm.answerQuestion("hi")).rejects.toThrow(
+      /BleuJS API error: 503/,
     );
+    expect(
+      fetchMock.mock.calls.some(([url]) =>
+        String(url).includes("integrate.api.nvidia.com"),
+      ),
+    ).toBe(false);
   });
 });

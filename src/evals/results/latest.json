@@ -1,0 +1,310 @@
+{
+  "labVersion": "5.1.0",
+  "gitSha": "90e0e28",
+  "generatedAt": "2026-09-04T10:19:57.616Z",
+  "smoke": {
+    "suite": "smoke",
+    "labVersion": "5.1.0",
+    "timestamp": 1788517197609,
+    "total": 10,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 1,
+    "passRate": 1
+  },
+  "benchmark": {
+    "suite": "benchmark",
+    "labVersion": "5.1.0",
+    "gitSha": "90e0e28",
+    "timestamp": 1788517197616,
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "passRate": 1,
+    "durationMs": 7,
+    "benchmarks": [
+      {
+        "id": "arithmetic",
+        "name": "Arithmetic (exact)",
+        "metric": "exact match",
+        "total": 10,
+        "correct": 10,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 7,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "add-1",
+            "passed": true,
+            "got": "124",
+            "expected": "124"
+          },
+          {
+            "id": "add-2",
+            "passed": true,
+            "got": "10000",
+            "expected": "10000"
+          },
+          {
+            "id": "sub-1",
+            "passed": true,
+            "got": "345",
+            "expected": "345"
+          },
+          {
+            "id": "sub-2",
+            "passed": true,
+            "got": "57",
+            "expected": "57"
+          },
+          {
+            "id": "mul-1",
+            "passed": true,
+            "got": "437",
+            "expected": "437"
+          },
+          {
+            "id": "mul-2",
+            "passed": true,
+            "got": "1728",
+            "expected": "1728"
+          },
+          {
+            "id": "div-1",
+            "passed": true,
+            "got": "256",
+            "expected": "256"
+          },
+          {
+            "id": "div-2",
+            "passed": true,
+            "got": "125",
+            "expected": "125"
+          },
+          {
+            "id": "dec-1",
+            "passed": true,
+            "got": "10",
+            "expected": "10"
+          },
+          {
+            "id": "neg-1",
+            "passed": true,
+            "got": "25",
+            "expected": "25"
+          }
+        ]
+      },
+      {
+        "id": "logic-puzzle",
+        "name": "Logic puzzle (constraint solve)",
+        "metric": "exact assignment",
+        "total": 3,
+        "correct": 3,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 0,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "assign-Alpha",
+            "passed": true,
+            "got": "Orchestration",
+            "expected": "Orchestration"
+          },
+          {
+            "id": "assign-Beta",
+            "passed": true,
+            "got": "Reasoning",
+            "expected": "Reasoning"
+          },
+          {
+            "id": "assign-Gamma",
+            "passed": true,
+            "got": "Understanding",
+            "expected": "Understanding"
+          }
+        ]
+      },
+      {
+        "id": "retrieval",
+        "name": "Retrieval (top-1)",
+        "metric": "top-1 accuracy",
+        "total": 3,
+        "correct": 3,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 0,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "capital-iran",
+            "passed": true,
+            "got": "Tehran is the capital city of Iran.",
+            "expected": "Tehran is the capital city of Iran."
+          },
+          {
+            "id": "photosynthesis",
+            "passed": true,
+            "got": "Photosynthesis lets plants convert sunlight into chemical energy.",
+            "expected": "Photosynthesis lets plants convert sunlight into chemical energy."
+          },
+          {
+            "id": "http-status",
+            "passed": true,
+            "got": "HTTP status code 404 means the requested resource was not found.",
+            "expected": "HTTP status code 404 means the requested resource was not found."
+          }
+        ]
+      },
+      {
+        "id": "tool-selection",
+        "name": "Tool selection",
+        "metric": "exact label accuracy",
+        "total": 8,
+        "correct": 8,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 0,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "calc-1",
+            "passed": true,
+            "got": "calculator",
+            "expected": "calculator"
+          },
+          {
+            "id": "calc-2",
+            "passed": true,
+            "got": "calculator",
+            "expected": "calculator"
+          },
+          {
+            "id": "search-1",
+            "passed": true,
+            "got": "websearch",
+            "expected": "websearch"
+          },
+          {
+            "id": "search-2",
+            "passed": true,
+            "got": "websearch",
+            "expected": "websearch"
+          },
+          {
+            "id": "code-1",
+            "passed": true,
+            "got": "codeexecution",
+            "expected": "codeexecution"
+          },
+          {
+            "id": "sentiment-1",
+            "passed": true,
+            "got": "sentiment",
+            "expected": "sentiment"
+          },
+          {
+            "id": "none-1",
+            "passed": true,
+            "got": "none",
+            "expected": "none"
+          },
+          {
+            "id": "none-2",
+            "passed": true,
+            "got": "none",
+            "expected": "none"
+          }
+        ]
+      },
+      {
+        "id": "routing",
+        "name": "Routing success/fallback",
+        "metric": "exact rate match",
+        "total": 2,
+        "correct": 2,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 0,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "success-rate",
+            "passed": true,
+            "got": "0.80",
+            "expected": "0.80"
+          },
+          {
+            "id": "fallback-rate",
+            "passed": true,
+            "got": "0.40",
+            "expected": "0.40"
+          }
+        ]
+      },
+      {
+        "id": "abstention",
+        "name": "Abstention (no fabricated math)",
+        "metric": "abstention rate",
+        "total": 5,
+        "correct": 5,
+        "score": 1,
+        "passed": true,
+        "runs": 1,
+        "deterministic": true,
+        "durationMs": 0,
+        "model": null,
+        "costUsd": null,
+        "items": [
+          {
+            "id": "open-1",
+            "passed": true,
+            "got": "abstained",
+            "expected": "abstained"
+          },
+          {
+            "id": "open-2",
+            "passed": true,
+            "got": "abstained",
+            "expected": "abstained"
+          },
+          {
+            "id": "open-3",
+            "passed": true,
+            "got": "abstained",
+            "expected": "abstained"
+          },
+          {
+            "id": "open-4",
+            "passed": true,
+            "got": "abstained",
+            "expected": "abstained"
+          },
+          {
+            "id": "open-5",
+            "passed": true,
+            "got": "abstained",
+            "expected": "abstained"
+          }
+        ]
+      }
+    ]
+  }
+}

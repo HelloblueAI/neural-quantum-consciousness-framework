@@ -1,21 +1,9 @@
-### BleuJS Reasoning Lab
+# BleuJS Reasoning Lab
 
-> **Product:** BleuJS Reasoning Lab — live at https://agi.bleujs.org  
-> **Repository:** https://github.com/HelloblueAI/bleujs-reasoning-lab  
-> **API (workers.dev):** https://agi-primary.morning-star-e026.workers.dev  
-> **Mission:** Measurable reasoning—not simulated AGI theater.
+> **What it is:** an open-source TypeScript laboratory for evaluating LLM reasoning, provider routing, retrieval, tool selection, and agent orchestration.
+> **Live:** https://agi.bleujs.org · **Repo:** https://github.com/HelloblueAI/bleujs-reasoning-lab · **Worker API:** https://agi-primary.morning-star-e026.workers.dev
 
-> **v5.1** (June 2026) — Removed simulated consciousness/quantum API payloads; honest `/capabilities` endpoint.
-
-| Endpoint | Purpose |
-|----------|---------|
-| `GET /metrics` | Measured system state (no random telemetry); includes `llmRouting` provider counts |
-| `GET /capabilities` | Capability scores from learning engine (replaces `/consciousness`) |
-| `GET /eval` | Run evaluation suite, return pass rate |
-| `GET /goals` | Active autonomous goals |
-| `POST /reason` | Reasoning via BleuJS API (`bleujs-chat`); NVIDIA Nemotron Lightning, then Anthropic/OpenAI fallback |
-
-See [docs/AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md) for the 90-day roadmap and [docs/deployment/API_ACCESS.md](docs/deployment/API_ACCESS.md) if the custom domain returns a bot challenge.
+This is an emerging, measurable reasoning lab — **not** a mature AGI framework and not a claim of machine consciousness. Every capability number the API returns is derived from measured learning-engine state, never simulated telemetry.
 
 ---
 
@@ -23,70 +11,68 @@ See [docs/AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md) for the 90-day roadmap and [doc
 
 ```bash
 pnpm install
-pnpm run worker:dev          # local Cloudflare worker
-pnpm run eval                # benchmark suite (CLI)
-pnpm run test:eval           # vitest eval harness
-pnpm run deploy:worker:prod  # deploy primary worker
+pnpm run worker:dev   # local Cloudflare Worker at http://localhost:8787
+pnpm run eval         # component/smoke evaluations + reproducible benchmarks
+pnpm run check        # format + lint + type-check + unit tests + eval harness
 ```
 
-### Example API calls
+`pnpm run check` is the single gate CI enforces on every pull request.
+
+---
+
+## Repository layout
+
+One application path, organized by responsibility:
+
+```
+src/
+├── worker/      # Cloudflare Worker entry point (HTTP API + dashboard)
+├── reasoning/   # ReasoningOrchestrator + learning/understanding/goal/tool/memory engines
+├── routing/     # LLM provider integration, prompt shaping, arithmetic, routing metrics
+├── retrieval/   # embedding providers + semantic ranking
+├── metrics/     # capability + request metrics, status/endpoint payloads
+├── evals/       # smoke evaluations, reproducible benchmarks, saved results
+└── utils/       # logger, id helpers
+```
+
+See [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) for details.
+
+---
+
+## API
+
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /health` | Liveness probe |
+| `GET /metrics` | Measured system state (no random telemetry); includes `llmRouting` provider counts |
+| `GET /capabilities` | Capability scores derived from the learning engine |
+| `GET /eval` | Run the smoke evaluation suite, return pass rate |
+| `GET /goals` | Active self-generated goals |
+| `POST /reason` | Answer-first reasoning via BleuJS API, with NVIDIA Nemotron Lightning → Anthropic → OpenAI fallback; simple arithmetic is answered locally |
 
 ```bash
-# Health & metrics
-curl https://agi-primary.morning-star-e026.workers.dev/health
-curl https://agi-primary.morning-star-e026.workers.dev/metrics
-# data.llmRouting: bleujs / nvidia / anthropic / openai / local / none counts + fallbackRate (global when AGI_CACHE KV is bound)
-
-# Capabilities & reasoning
-curl https://agi-primary.morning-star-e026.workers.dev/capabilities
-curl -X POST https://agi-primary.morning-star-e026.workers.dev/reason \
+curl -X POST http://localhost:8787/reason \
   -H "Content-Type: application/json" \
-  -d '{"input": "where is tehran"}'
+  -d '{"input": "144 / 12"}'
+# → {"data":{"answer":"144 ÷ 12 = 12","llmUsed":false,...}}
 ```
 
-Example response (BleuJS primary path):
-
-```json
-{
-  "success": true,
-  "data": {
-    "system": "BleuJS Reasoning Lab",
-    "answer": "Tehran is the capital city of Iran...",
-    "llmUsed": true,
-    "llmProvider": "bleujs"
-  }
-}
-```
-
-`llmProvider` identifies which backend answered: `bleujs` (BleuJS API / `api.bleujs.org`), `nvidia` (Nemotron 3.5 Lightning), `anthropic`, or `openai`. Simple arithmetic may use local math instead (`llmUsed: false`).
-
-Set `BLEUJS_API_KEY` via `npx wrangler secret put BLEUJS_API_KEY --env production` for live reasoning. BleuJS is the primary LLM. Optional fallbacks (when `ALLOW_LLM_FALLBACK=true`): NVIDIA Inception (`NVIDIA_API_KEY`, Nemotron Lightning), then Anthropic, then OpenAI. `nemotron-3-embed-1b` is available as a learned embedding provider for retrieval.
-
-Production sets `BLEUJS_CHAT_URL` to `https://bleujs-org.vercel.app/api/v1/chat` so this Cloudflare Worker calls Vercel directly (avoids intermittent **522** on `api.bleujs.org` Worker-to-Worker hops). Public SDK clients should still use `https://api.bleujs.org`.
+`llmProvider` identifies which backend answered: `bleujs`, `nvidia`, `anthropic`, or `openai`. Set `BLEUJS_API_KEY` via `wrangler secret put BLEUJS_API_KEY --env production` for live reasoning; fallbacks activate when `ALLOW_LLM_FALLBACK=true`. See [docs/deployment/API_ACCESS.md](docs/deployment/API_ACCESS.md) if the custom domain returns a bot challenge.
 
 ---
 
-## What this is
+## Evaluations: smoke vs. benchmarks
 
-A **research lab** for orchestrated reasoning: multi-agent pipelines, BleuJS API as the primary LLM (`bleujs-chat` via `api.bleujs.org`), NVIDIA/Anthropic/OpenAI fallback, learning-engine state, and an eval harness with honest pass rates. It is **not** a claim of artificial general intelligence or machine consciousness.
+The lab separates two very different things:
 
-**Active production path:** `primary-agi-worker.ts` → `UltimateAGIOrchestrator`, `RealLLMIntegration`, `CapabilityDisplayMetrics` (honest capability scores from the learning engine).
+- **Component / smoke evaluations** ([`src/evals/`](src/evals/), served by `GET /eval`) confirm that each component executes and returns sane output. They are execution checks, **not** evidence of intelligence.
+- **Reproducible benchmarks** ([`src/evals/benchmarks/`](src/evals/benchmarks/)) score the system against **fixed datasets** with **exact scoring**: arithmetic, a constraint logic puzzle, retrieval top-1, tool selection, provider routing rates, and abstention. They run offline (no API keys) and results are written to [`src/evals/results/latest.json`](src/evals/results/latest.json).
 
-**Archived (reference only):** legacy workers, quantum/consciousness engines, and pre-v5 entry points live under [`src/archive/`](src/archive/README.md). Do not deploy from there.
-
----
-
-## Architecture (v5.0)
-
+```bash
+pnpm run eval   # prints both suites and refreshes results/latest.json
 ```
-primary-agi-worker.ts
-├── UltimateAGIOrchestrator   # reasoning / learning / creative agents
-├── RealLLMIntegration        # BleuJS API primary; NVIDIA Lightning then Anthropic/OpenAI fallback
-├── AutonomousGoalSystem      # goals API (execution loop: planned)
-├── lab/honestMetrics         # measured counters, no Math.random()
-├── lab/reasonResponse        # slim /reason payload
-└── eval/                     # tasks, runner, CLI
-```
+
+Neither suite is presented as evidence of general intelligence.
 
 ---
 
@@ -94,38 +80,34 @@ primary-agi-worker.ts
 
 | Script | Purpose |
 |--------|---------|
-| `pnpm run worker:dev` | Wrangler dev for primary worker |
-| `pnpm run eval` | Run eval tasks locally |
-| `pnpm run test:eval` | Vitest eval tests |
-| `pnpm run test:unit` | Unit tests |
-| `pnpm run type-check` | TypeScript check |
+| `pnpm run worker:dev` | Wrangler dev server for the Worker |
+| `pnpm run eval` | Smoke evaluations + benchmarks (CLI) |
+| `pnpm run test:unit` | Unit tests (Vitest) |
+| `pnpm run test:eval` | Eval + benchmark tests (Vitest) |
+| `pnpm run lint` / `format` | ESLint / Prettier |
+| `pnpm run type-check` | TypeScript, no emit |
+| `pnpm run check` | All of the above in one command |
+| `pnpm run deploy:worker:prod` | Deploy the Worker (maintainer-only) |
 
-Legacy `enhanced-agi`, `neuralcore`, `sentientcore`, and multi-worker deploy scripts were removed in v5.2 — use `worker:dev` and `deploy:worker:prod` only. Archived workers live under `src/archive/`.
+See [docs/LAB_PLAN.md](docs/LAB_PLAN.md) for the measurable roadmap.
 
 ---
 
 ## Contributing
 
-We welcome PRs for eval tasks, honest API improvements, docs, and lab features aligned with [docs/AGI_LAB_PLAN.md](docs/AGI_LAB_PLAN.md).
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and pick a task from [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md).
+2. Run `pnpm run check` before opening a PR.
+3. CI runs the same checks on every pull request ([`.github/workflows/lab-ci.yml`](.github/workflows/lab-ci.yml)).
 
-1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and pick a task from [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md)
-2. Run `pnpm run test:eval`, `pnpm run test:unit`, and `pnpm run type-check` before opening a PR
-3. CI runs the same checks on every pull request ([`.github/workflows/lab-ci.yml`](.github/workflows/lab-ci.yml))
-
-Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). For help channels see [SUPPORT.md](SUPPORT.md). Report security issues per [SECURITY.md](SECURITY.md) — do not file public issues for vulnerabilities.
-
-Production deploy is maintainer-only; you do not need Cloudflare access to contribute.
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md). For help see [SUPPORT.md](SUPPORT.md); report vulnerabilities per [SECURITY.md](SECURITY.md) rather than public issues. Production deploy is maintainer-only — you do not need Cloudflare access to contribute.
 
 ---
 
 <div align="center">
 
 [![Live](https://img.shields.io/badge/Live-BleuJS%20Reasoning-brightgreen?style=for-the-badge)](https://agi.bleujs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange.svg)](https://workers.cloudflare.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-[![Contributors](https://img.shields.io/github/contributors/HelloblueAI/bleujs-reasoning-lab?style=flat-square)](https://github.com/HelloblueAI/bleujs-reasoning-lab/graphs/contributors)
-[![Issues](https://img.shields.io/github/issues/HelloblueAI/bleujs-reasoning-lab?style=flat-square)](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues)
 
 </div>

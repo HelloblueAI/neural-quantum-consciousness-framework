@@ -14,16 +14,15 @@
 
 <!-- Commands run and results -->
 
-- [ ] `pnpm run test:eval`
-- [ ] `pnpm run test:unit`
+- [ ] `pnpm run check`
 - [ ] Other (describe):
 
 ## Scope check
 
-- [ ] Changes target the **primary worker path** (`primary-agi-worker.ts`, `src/lab/`, `src/eval/`, active `src/core/`) — not archived legacy unless explicitly fixing reference imports
+- [ ] Changes target the lab layout (`src/worker/`, `src/routing/`, `src/retrieval/`, `src/reasoning/`, `src/metrics/`, `src/evals/`)
 - [ ] No simulated consciousness/quantum metrics added to live API responses
 - [ ] Tests added or updated for behavior changes
 
 ## Related
 
-<!-- Fixes #123, part of AGI_LAB_PLAN Phase 2, etc. -->
+<!-- Fixes #123, part of docs/LAB_PLAN.md Phase 2, etc. -->
