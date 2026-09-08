@@ -1,11 +1,11 @@
 {
   "labVersion": "5.1.0",
-  "gitSha": "1b8d30e",
-  "generatedAt": "2026-09-04T14:52:58.940Z",
+  "gitSha": "50c4745a",
+  "generatedAt": "2026-09-08T19:52:33.109Z",
   "smoke": {
     "suite": "smoke",
     "labVersion": "5.1.0",
-    "timestamp": 1788533578901,
+    "timestamp": 1788897153102,
     "total": 10,
     "passed": 9,
     "failed": 0,
@@ -15,25 +15,25 @@
   "benchmark": {
     "suite": "benchmark",
     "labVersion": "5.1.0",
-    "gitSha": "1b8d30e",
-    "timestamp": 1788533578940,
+    "gitSha": "50c4745a",
+    "timestamp": 1788897153109,
     "total": 6,
     "passed": 6,
     "failed": 0,
     "passRate": 1,
-    "durationMs": 39,
+    "durationMs": 7,
     "benchmarks": [
       {
         "id": "arithmetic",
         "name": "Arithmetic (exact)",
         "metric": "exact match",
-        "total": 18,
-        "correct": 18,
+        "total": 19,
+        "correct": 19,
         "score": 1,
         "passed": true,
         "runs": 1,
         "deterministic": true,
-        "durationMs": 38,
+        "durationMs": 7,
         "model": null,
         "costUsd": null,
         "items": [
@@ -76,8 +76,8 @@
           {
             "id": "mul-3",
             "passed": true,
-            "got": "4968312888",
-            "expected": "4968312888"
+            "got": "49696562936559",
+            "expected": "49696562936559"
           },
           {
             "id": "div-1",
@@ -118,8 +118,14 @@
           {
             "id": "dec-5",
             "passed": true,
-            "got": "6.3",
-            "expected": "6.3"
+            "got": "90.0000081",
+            "expected": "90.0000081"
+          },
+          {
+            "id": "dec-6",
+            "passed": true,
+            "got": "864197.532",
+            "expected": "864197.532"
           },
           {
             "id": "neg-1",
@@ -157,7 +163,7 @@
         "passed": true,
         "runs": 1,
         "deterministic": true,
-        "durationMs": 1,
+        "durationMs": 0,
         "model": null,
         "costUsd": null,
         "items": [

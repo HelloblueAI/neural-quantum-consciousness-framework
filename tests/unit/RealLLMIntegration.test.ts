@@ -158,7 +158,7 @@ describe("RealLLMIntegration BleuJS", () => {
 
   it("falls back to NVIDIA Lightning before Anthropic when fallback is enabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (url.includes("integrate.api.nvidia.com")) {
+      if (requestHostname(url) === "integrate.api.nvidia.com") {
         return Response.json({
           choices: [{ message: { content: "Nemotron answer" } }],
         });
@@ -182,8 +182,8 @@ describe("RealLLMIntegration BleuJS", () => {
     expect(result.answer).toBe("Nemotron answer");
     expect(result.model).toBe("nvidia/nemotron-3.5-lightning-30b-a3b");
     expect(
-      fetchMock.mock.calls.some(([url]) =>
-        String(url).includes("integrate.api.nvidia.com"),
+      fetchMock.mock.calls.some(
+        ([url]) => requestHostname(String(url)) === "integrate.api.nvidia.com",
       ),
     ).toBe(true);
     expect(
@@ -195,7 +195,7 @@ describe("RealLLMIntegration BleuJS", () => {
 
   it("does not call NVIDIA when BleuJS fails and fallback is disabled", async () => {
     const fetchMock = vi.fn(async (url: string) => {
-      if (String(url).includes("integrate.api.nvidia.com")) {
+      if (requestHostname(url) === "integrate.api.nvidia.com") {
         return Response.json({
           choices: [{ message: { content: "Nemotron answer" } }],
         });
@@ -214,8 +214,8 @@ describe("RealLLMIntegration BleuJS", () => {
       /BleuJS API error: 503/,
     );
     expect(
-      fetchMock.mock.calls.some(([url]) =>
-        String(url).includes("integrate.api.nvidia.com"),
+      fetchMock.mock.calls.some(
+        ([url]) => requestHostname(String(url)) === "integrate.api.nvidia.com",
       ),
     ).toBe(false);
   });
