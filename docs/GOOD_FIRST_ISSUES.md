@@ -1,46 +1,68 @@
 # Good first issues
 
-Tightly scoped tasks that produce a measurable improvement. Pick one, comment on
-the issue (or open a PR referencing it), and ask questions if stuck. Run
-`pnpm run check` before opening a PR.
+Pick an **open labeled issue**, comment that you are taking it, then open a PR
+that references the number (`Closes #N`). This page is an index. The GitHub
+issue is the source of truth.
+
+**Open good first issues:**
+https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+
+Ask questions on the issue if you are stuck. Run `pnpm run check` before you
+open a PR. You do not need API keys or Cloudflare access for the benchmark and
+docs tasks.
 
 ---
 
-## Benchmarks (measurable, no API keys)
+## How to claim
 
-1. **Add a held-out logic puzzle with exact scoring.** Add a second constraint
-   puzzle to `src/evals/benchmarks/` with a known unique solution and exact
-   assignment checks. Acceptance: `pnpm run eval` shows the new item at 100%.
-2. **Add a retrieval query to the fixed corpus.** Extend `RETRIEVAL_QUERIES` in
-   `src/evals/benchmarks/datasets.ts` with one query, three passages, and the
-   exact expected top-1 passage. Acceptance: top-1 accuracy stays at 100%.
-3. **Record a routing fixture for a new fallback case.** Add a fixture to
-   `ROUTING_FIXTURES` and update `ROUTING_EXPECTED`. Acceptance: routing rates
-   still match exactly.
-4. **Expand the arithmetic benchmark by N items.** Add exact-answer cases
-   (decimals, negatives, large numbers) to `ARITHMETIC_ITEMS`. Acceptance: exact
-   match stays at 100%.
+1. Comment on the issue (`I'll take this`) so two people do not start the same
+   task.
+2. Fork and branch from `main` (`feat/…`, `fix/…`, or `docs/…`).
+3. Keep the change to that issue only.
+4. Fill in the pull request template and mention the issue number.
 
-## Product surface
+If nobody has replied after a few days, you can still open the PR — just say so
+in the description.
 
-5. **Dashboard: show last benchmark pass rate.** Read the benchmark pass rate
-   (from `src/evals/results/latest.json` or a new `GET /benchmarks` route) and
-   render it on the embedded dashboard next to the smoke `GET /eval` rate.
-6. **Optional live-LLM benchmark (skipped in CI).** Add a benchmark that calls a
-   configured provider and writes `model`, latency, and `costUsd` into the
-   result schema. It must be skipped when no API key is present.
+---
 
-## Docs & hygiene
+## Open starter tasks
 
-7. **API examples.** Keep the `curl` examples in `README.md` and
-   `docs/api/README.md` in sync with the actual `POST /reason` response shape.
-8. **Deployment access notes.** Expand `docs/deployment/API_ACCESS.md` with
-   step-by-step Cloudflare skip-rule instructions for the custom domain.
+### Benchmarks (offline, no API keys)
+
+| Issue | Task |
+|-------|------|
+| [#28](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/28) | Add a second held-out logic puzzle with exact assignment scoring |
+| [#33](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/33) | Add one retrieval query (three passages, exact top-1) |
+| [#34](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/34) | Record a routing fixture and update expected rates |
+
+### Product surface
+
+| Issue | Task |
+|-------|------|
+| [#29](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/29) | Show the latest `GET /eval` pass rate on the dashboard |
+| [#36](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/36) | Optional live-LLM benchmark that skips in CI when no key is set |
+
+### Docs
+
+| Issue | Task |
+|-------|------|
+| [#37](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/37) | Expand Cloudflare access notes for `agi.bleujs.org` |
+
+Docs-only PRs that keep `README.md` and `docs/api/README.md` curl examples in
+sync with `POST /reason` are also welcome — no issue required.
+
+---
+
+## Already shipped (do not reopen)
+
+- Arithmetic benchmark expansion — [#35](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues/35) / [#46](https://github.com/HelloblueAI/bleujs-reasoning-lab/pull/46)
+- Eval result persistence — `pnpm run eval` writes `src/evals/results/latest.json`
 
 ---
 
 ## Before you start
 
 - Read [CONTRIBUTING.md](../CONTRIBUTING.md).
-- Run `pnpm run check` locally; CI enforces the same gate.
-- Keep claims measurable — describe what a change proves, not what it "feels" like.
+- Run `pnpm run check` locally; CI runs the same gate.
+- Keep claims measurable — say what a change proves, not what it "feels" like.

@@ -14,7 +14,7 @@ selection, and agent orchestration — not a claim of AGI or machine consciousne
 |------------|------------|
 | Understand the roadmap | [docs/LAB_PLAN.md](docs/LAB_PLAN.md) |
 | Run the Worker locally | [README.md](README.md#quick-start) |
-| Find starter tasks | [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md) |
+| Find starter tasks | [Open good first issues](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) ([index](docs/GOOD_FIRST_ISSUES.md)) |
 | Learn the layout | [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) |
 
 **Where the code lives:**
@@ -40,6 +40,12 @@ pnpm run check   # format + lint + type-check + unit tests + eval harness
 ```
 
 `pnpm run check` is the single gate CI enforces. Run it before opening a PR.
+
+### Claim an issue
+
+Comment `I'll take this` on the GitHub issue before you start, then open one
+focused PR that says `Closes #N`. The issue is the source of truth; the
+[starter index](docs/GOOD_FIRST_ISSUES.md) is only a map.
 
 ### LLM features locally
 

@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        See [docs/AGI_LAB_PLAN.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/AGI_LAB_PLAN.md) and [docs/GOOD_FIRST_ISSUES.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/GOOD_FIRST_ISSUES.md).
+        Prefer an existing starter task if this is your first PR:
+        [open good first issues](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+        Roadmap: [docs/LAB_PLAN.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/LAB_PLAN.md).
 
   - type: textarea
     id: problem
@@ -28,7 +30,7 @@ body:
     attributes:
       label: Scope alignment
       options:
-        - label: Fits primary worker / lab / eval path (not archived consciousness modules)
+        - label: This is a concrete change to the current lab (worker, evals, routing, retrieval, docs) — not a consciousness, quantum, or AGI-claim feature
           required: true
-        - label: Can be tested with test:eval or test:unit
+        - label: Can be checked with `pnpm run check` (or `test:eval` / `test:unit`)
           required: false

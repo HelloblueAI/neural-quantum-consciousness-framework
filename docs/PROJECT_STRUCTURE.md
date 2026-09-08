@@ -76,7 +76,7 @@ tests/
 ```
 docs/
 ├── LAB_PLAN.md             # measurable roadmap
-├── GOOD_FIRST_ISSUES.md    # scoped starter tasks
+├── GOOD_FIRST_ISSUES.md    # index of labeled starter issues
 ├── PROJECT_STRUCTURE.md    # this file
 ├── api/README.md
 ├── architecture/README.md

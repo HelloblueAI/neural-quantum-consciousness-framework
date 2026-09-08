@@ -11,7 +11,7 @@ mature AGI framework.
 |-----|-------------|
 | [LAB_PLAN.md](LAB_PLAN.md) | Measurable roadmap and north star |
 | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Repository layout |
-| [GOOD_FIRST_ISSUES.md](GOOD_FIRST_ISSUES.md) | Scoped starter tasks |
+| [GOOD_FIRST_ISSUES.md](GOOD_FIRST_ISSUES.md) | Index of labeled starter issues |
 | [api/README.md](api/README.md) | HTTP API reference |
 | [architecture/README.md](architecture/README.md) | Worker + orchestrator design |
 | [development/GITHUB_ACTIONS.md](development/GITHUB_ACTIONS.md) | CI pipeline |

@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting. Please check [API_ACCESS.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/deployment/API_ACCESS.md) if the custom domain returns a Cloudflare challenge.
+        Thanks for reporting. If you meant to pick up a starter task, use an
+        [open good first issue](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) instead.
+        Check [API_ACCESS.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/deployment/API_ACCESS.md) if the custom domain returns a Cloudflare challenge.
 
   - type: textarea
     id: description

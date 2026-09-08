@@ -8,7 +8,7 @@ Thanks for using and contributing to BleuJS Reasoning Lab.
 |------|--------|
 | Bug report or feature request | [GitHub Issues](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues) (use a template) |
 | Setup, PR process, what we accept | [CONTRIBUTING.md](CONTRIBUTING.md) |
-| Starter tasks | [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md) |
+| Starter tasks | [Open good first issues](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) ([index](docs/GOOD_FIRST_ISSUES.md)) |
 | Design discussion | [GitHub Discussions](https://github.com/HelloblueAI/bleujs-reasoning-lab/discussions) |
 | Security vulnerability | [SECURITY.md](SECURITY.md) — private report only |
 
