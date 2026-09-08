@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "types": ["node", "@cloudflare/workers-types"],
     "lib": ["ES2022", "WebWorker"],
     "allowSyntheticDefaultImports": true,
@@ -29,9 +29,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
