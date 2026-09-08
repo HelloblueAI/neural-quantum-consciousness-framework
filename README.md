@@ -108,7 +108,7 @@ See [docs/LAB_PLAN.md](docs/LAB_PLAN.md) for the measurable roadmap.
 
 ## Contributing
 
-1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and pick a task from [docs/GOOD_FIRST_ISSUES.md](docs/GOOD_FIRST_ISSUES.md).
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md) and pick an [open good first issue](https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 2. Run `pnpm run check` before opening a PR.
 3. CI runs the same checks on every pull request ([`.github/workflows/lab-ci.yml`](.github/workflows/lab-ci.yml)).
 

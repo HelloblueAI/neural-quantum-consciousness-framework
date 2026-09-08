@@ -6,9 +6,9 @@ contact_links:
   - name: Contributing guide
     url: https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/CONTRIBUTING.md
     about: Setup, PR process, and what we accept
-  - name: Good first issues (doc)
-    url: https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/GOOD_FIRST_ISSUES.md
-    about: Suggested starter tasks
+  - name: Good first issues
+    url: https://github.com/HelloblueAI/bleujs-reasoning-lab/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+    about: Open labeled starter tasks — comment to claim one
   - name: GitHub Discussions
     url: https://github.com/HelloblueAI/bleujs-reasoning-lab/discussions
     about: Questions and design discussion (not for security reports)

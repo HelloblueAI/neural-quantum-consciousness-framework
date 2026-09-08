@@ -1,0 +1,36 @@
+name: Good first issue (maintainers)
+description: File a scoped starter task with a file path and acceptance checks
+title: ""
+labels: ["good first issue", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when adding a newcomer task. Keep it to one file area and one
+        measurable acceptance line. After filing, add the issue to
+        [docs/GOOD_FIRST_ISSUES.md](https://github.com/HelloblueAI/bleujs-reasoning-lab/blob/main/docs/GOOD_FIRST_ISSUES.md).
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What to do
+      description: Concrete file paths and the change. No jargon.
+      placeholder: Add one entry to RETRIEVAL_QUERIES in src/evals/benchmarks/datasets.ts …
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: Commands a contributor can run offline.
+      value: |
+        - `pnpm run eval` still passes the touched benchmark at 100%.
+        - `pnpm run check` passes.
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        **Claim:** comment `I'll take this` on this issue before you start.
